@@ -1,0 +1,43 @@
+{
+  "schema": "agl.conformance.fr02.native-parity-cases",
+  "schemaVersion": 1,
+  "rule": "Every case is applied to the identical bytes before Foundation JSONDecoder or project DTO decoding.",
+  "cases": [
+    {
+      "name": "duplicate-member",
+      "sourceFile": "raw/duplicate-schema-version.json",
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-JSON-DUPLICATE_MEMBER"
+    },
+    {
+      "name": "unsafe-integer",
+      "sourceFile": "raw/unsafe-integer.json",
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-JSON-UNSAFE_INTEGER"
+    },
+    {
+      "name": "malformed-unicode",
+      "sourceFile": "raw/lone-surrogate.json",
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-JSON-MALFORMED_UNICODE"
+    },
+    {
+      "name": "unknown-nonsemantic-extension",
+      "sourceFile": "project-v3.unknown-nonsemantic-extension.valid.json",
+      "expectedDisposition": "accept",
+      "roundTripExtension": "future.ui.palette@v1"
+    },
+    {
+      "name": "unknown-required-extension",
+      "sourceFile": "project-v3.unknown-required-extension.quarantine.json",
+      "expectedDisposition": "quarantine",
+      "errorIdentity": "AGL-FMT-COMPAT-REQUIRED_EXTENSION_UNSUPPORTED"
+    },
+    {
+      "name": "future-schema",
+      "sourceFile": "project-v4.future.quarantine.json",
+      "expectedDisposition": "quarantine",
+      "errorIdentity": "AGL-FMT-COMPAT-FUTURE_SCHEMA"
+    }
+  ]
+}
