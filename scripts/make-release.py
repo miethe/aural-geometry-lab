@@ -6,6 +6,7 @@ import argparse
 import json
 from pathlib import Path
 import stat
+import subprocess
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -25,6 +26,24 @@ def include(path: Path, output: Path) -> bool:
     return path.is_file() and not path.is_symlink()
 
 
+def candidates(output: Path):
+    """Files eligible for the archive.
+
+    git is authoritative when this is a checkout: .gitignore already states exactly which paths
+    are local state, and a bare filesystem walk ignores it. On a provisioned checkout that walk
+    swept in the whole deployed .claude/ tree -- including .claude/rules/, which carries LAN
+    addresses and credential paths and must never be published -- because gitignored is not the
+    same as absent. Outside a checkout (an exported source tree) fall back to the walk.
+    """
+    result = subprocess.run(
+        ["git", "-C", str(ROOT), "ls-files", "-z", "--cached", "--exclude-standard"],
+        capture_output=True,
+    )
+    if result.returncode == 0:
+        return [ROOT / name for name in result.stdout.decode("utf-8").split("\0") if name]
+    return list(ROOT.rglob("*"))
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("output", type=Path, help="Output ZIP path")
@@ -34,7 +53,7 @@ def main() -> None:
     output.unlink(missing_ok=True)
 
     files = sorted(
-        (path for path in ROOT.rglob("*") if include(path, output)),
+        (path for path in candidates(output) if include(path, output)),
         key=lambda path: path.relative_to(ROOT).as_posix(),
     )
 

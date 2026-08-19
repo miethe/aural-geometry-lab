@@ -4,9 +4,11 @@ import { spawnSync } from "node:child_process";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
+import { assertNodeVersion } from "./lib/toolchain.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const toolchain = JSON.parse(await readFile(path.join(root, "program", "toolchain-lock.json"), "utf8"));
+await assertNodeVersion(toolchain);
 const dist = path.join(root, "dist");
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });

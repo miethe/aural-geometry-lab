@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # macOS because check:all runs the Swift conformance package, which is the whole point of
+  # having it: the same fixtures must parse identically in a second language.
+  check-all:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: python3 -m pip install --disable-pip-version-check jsonschema
+
+      - run: npm install
+
+      - name: Record the toolchain the gate actually ran on
+        run: |
+          node --version
+          npm --version
+          swift --version
+          python3 --version
+
+      - run: npm run check:all
+
+  # The engine floor is declared in program/toolchain-lock.json and was unenforced until
+  # 2026-08-19. This job proves the gate still refuses a runtime below it.
+  toolchain-floor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.19.3"
+      - name: A below-floor runtime must fail the build
+        run: |
+          set +e
+          output=$(node scripts/build.mjs 2>&1)
+          status=$?
+          set -e
+          echo "$output"
+          if [ $status -eq 0 ]; then
+            echo "::error::build succeeded on Node 20.19.3, below the declared engine floor"
+            exit 1
+          fi
+          case "$output" in
+            *"or newer is required"*) echo "build correctly refused a below-floor runtime" ;;
+            *) echo "::error::build failed, but not on the runtime gate — the gate may be bypassed"; exit 1 ;;
+          esac
