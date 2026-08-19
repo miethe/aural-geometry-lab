@@ -37,8 +37,8 @@ demo shell (ADR/roadmap), not the target architecture — do not extend it as if
 | `npm run schema:validate` | `python3 scripts/validate-json-schemas.py` — Draft 2020-12 validation of every `schemas/*.schema.json` against its `conformance/` fixtures/examples. Currently 12/12. |
 | `npm run verify` | `scripts/verify.mjs` — structural/contract checks, including design-token presence (`design/tokens.json`). |
 | `npm run check` | `clean && build && test && schema:validate && verify` — the dev-loop gate. |
-| `npm run check:all` | `scripts/check-all.mjs` — the release-grade gate: everything in `check`, plus Swift tests (11/11), 142 backlog-item dependency checks, 51 FR-01 finding-ownership checks (46/46 Critical/High owned), 11 public-contract hash/runtime-validator checks, Wave-1 evidence-hash and native-fixture-mirror checks, a deterministic release-archive build/re-extract, and an 8-endpoint static HTTP smoke test. |
-| `npm run release:archive` | `python3 scripts/make-release.py` — builds a deterministic, reproducible release archive. |
+| `npm run check:all` | `scripts/check-all.mjs` — the release-grade gate: everything in `check`, plus Swift tests (11/11), 142 backlog-item dependency checks, 51 FR-01 finding-ownership checks (46/46 Critical/High owned), 11 public-contract hash/runtime-validator checks, Wave-1 evidence-hash and native-fixture-mirror checks, a deterministic release-archive build/re-extract (`scripts/release-check.mjs`), and a 9-endpoint static HTTP smoke test (`scripts/smoke-http.mjs`). |
+| `npm run release:archive` | `python3 scripts/make-release.py` — builds a deterministic, reproducible release archive. Its file list comes from `git ls-files`, so `.gitignore` governs what ships; a filesystem walk previously swept gitignored local state (including `.claude/`) into a public artifact. |
 | `npm run clean` | `scripts/clean.mjs` — clears build output. |
 
 `npm run check:all` is the command to run before claiming anything is "done." Do not invent
