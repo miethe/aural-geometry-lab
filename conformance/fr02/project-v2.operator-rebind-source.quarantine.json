@@ -1,0 +1,67 @@
+{
+  "schema": "agl.project",
+  "schemaVersion": 2,
+  "id": "project-fr02-operator-rebind-source",
+  "name": "FR-02 Operator Rebinding Source v2",
+  "createdAt": "2026-08-13T20:00:00Z",
+  "modifiedAt": "2026-08-13T20:00:00Z",
+  "compatibility": {
+    "semanticContractVersion": "wave1-v1",
+    "operatorCatalogVersion": "0.3.0",
+    "stableIdVersion": "agl-stable-id-v1",
+    "deterministicGenerationVersion": "agl-prng-v1",
+    "budgetProfileId": "agl-mvp-budget-v1"
+  },
+  "seedContext": {
+    "algorithm": "agl-prng",
+    "algorithmVersion": 1,
+    "encodingVersion": 1,
+    "seed": "agl-euclidean-rings-v1",
+    "defaultStreamId": "project-default"
+  },
+  "meter": {
+    "numerator": 4,
+    "denominator": 4
+  },
+  "tempoMap": [
+    {
+      "id": "tempo-0",
+      "beat": {
+        "numerator": "0",
+        "denominator": "1"
+      },
+      "bpm": 108,
+      "curve": "step"
+    }
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "node_kick",
+        "type": "rhythm.euclidean",
+        "version": 1,
+        "parameters": {
+          "steps": 16,
+          "pulses": 5,
+          "rotation": 0
+        }
+      }
+    ],
+    "connections": []
+  },
+  "tracks": [],
+  "materials": [],
+  "assets": [],
+  "experiments": {
+    "legacyTrackOperatorNodeIds": {}
+  },
+  "presentation": {
+    "defaultLab": "euclidean-rings",
+    "graphLayout": {
+      "node_kick": {
+        "x": 80,
+        "y": 90
+      }
+    }
+  }
+}
