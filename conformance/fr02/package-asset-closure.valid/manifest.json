@@ -1,0 +1,38 @@
+{
+  "schema": "agl.package.manifest",
+  "schemaVersion": 2,
+  "logicalProfile": "agl.logical-package.v2",
+  "physicalProfile": "agl.portable-archive.v2",
+  "projectSchemaVersion": 3,
+  "projectSemanticId": "project-fr02-asset-closure",
+  "saveGeneration": "save-fr02-asset-1",
+  "projectSemanticDigest": "sha256:0d5d5cc70e333b6846f8c94416c5a95f798a61b45b1a3cb4554e8b60452ccbdd",
+  "declaredTotalBytes": 2649,
+  "members": [
+    {
+      "path": "assets/8114ba94828dac29d70bfc42b76a06687b991592e05ed143a4b23bc79742db36.bin",
+      "entryKind": "file",
+      "role": "asset",
+      "sha256": "8114ba94828dac29d70bfc42b76a06687b991592e05ed143a4b23bc79742db36",
+      "bytes": 37,
+      "compressedBytes": 37,
+      "mediaType": "application/octet-stream",
+      "authoritative": false
+    },
+    {
+      "path": "project.json",
+      "entryKind": "file",
+      "role": "project",
+      "sha256": "121480a39fc7f005a21d186ee3879b0ed47ad33c67f4553b77af72462db06f1d",
+      "bytes": 2612,
+      "compressedBytes": 2612,
+      "mediaType": "application/json",
+      "authoritative": true
+    }
+  ],
+  "compatibility": {
+    "minimumReaderVersion": "0.4.0",
+    "requiredOperatorCatalogDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "canonicalEncodingVersion": "agl-canonical-value-v1"
+  }
+}
