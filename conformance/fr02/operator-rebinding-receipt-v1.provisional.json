@@ -1,0 +1,31 @@
+{
+  "schema": "agl.operator-rebinding-receipt",
+  "schemaVersion": 1,
+  "policyVersion": "agl-legacy-operator-rebinding-v1",
+  "resolvesMigrationId": "migration~2~470059138e3155b0b01ccd5f377ce60ea8ae70f14b103108a7e7601e79cf988f",
+  "sourceBytesDigest": "sha256:f220fd2834b3e420d58808bdbb10a22c272e61ab2bfb7a5d8971494085cad64a",
+  "targetOperatorCatalogDigest": "sha256:8cc9484e49072c46428c4f3bbc9cc71afe467c835bcacd19e1ca2c86d5e07ffb",
+  "bindings": [
+    {
+      "nodeId": "node_kick",
+      "legacyType": "rhythm.euclidean",
+      "legacyVersion": 1,
+      "selectedType": "rhythm.euclidean",
+      "selectedVersion": 1,
+      "selectedOperatorSemanticDigest": "sha256:fda6bd22d4ec4e4cd956061602f996e52cc9f95157f93b1dd597253f03ca3c4a",
+      "parameterValidation": "pass",
+      "portValidation": "pass"
+    }
+  ],
+  "resolvedLossCodes": [
+    "LEGACY_OPERATOR_DIGEST_REQUIRES_CATALOG_REBIND"
+  ],
+  "review": {
+    "reviewerId": "local-user",
+    "reviewedAt": "2026-08-19T20:05:00.000Z",
+    "basis": "manual-exact-type-version-review",
+    "evidenceDigests": []
+  },
+  "receiptDigest": "sha256:7387592051708e6a80fdfc203a82356c5829a13b94ae1fe0c34d7ad6d7c04b18",
+  "receiptId": "rebind~2~7ba8ab1ecca2a6319d125dec1583dd8943a62d2d321dbc08e0110cfdee2f6663"
+}

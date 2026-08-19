@@ -1,0 +1,156 @@
+{
+  "schema": "agl.project",
+  "schemaVersion": 2,
+  "id": "project-fr02-connected-v2",
+  "name": "FR-02 Connected v2 Migration Torture",
+  "createdAt": "2026-08-13T20:00:00Z",
+  "modifiedAt": "2026-08-13T20:00:00Z",
+  "compatibility": {
+    "semanticContractVersion": "wave1-v1",
+    "operatorCatalogVersion": "0.3.0",
+    "stableIdVersion": "agl-stable-id-v1",
+    "deterministicGenerationVersion": "agl-prng-v1",
+    "budgetProfileId": "agl-mvp-budget-v1"
+  },
+  "seedContext": {
+    "algorithm": "agl-prng",
+    "algorithmVersion": 1,
+    "encodingVersion": 1,
+    "seed": "agl-euclidean-rings-v1",
+    "defaultStreamId": "project-default"
+  },
+  "meter": {
+    "numerator": 4,
+    "denominator": 4
+  },
+  "tempoMap": [
+    {
+      "id": "tempo-0",
+      "beat": {
+        "numerator": "0",
+        "denominator": "1"
+      },
+      "bpm": 108,
+      "curve": "step"
+    }
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "node_kick",
+        "type": "rhythm.euclidean",
+        "version": 1,
+        "parameters": {
+          "steps": 16,
+          "pulses": 5,
+          "rotation": 0
+        }
+      },
+      {
+        "id": "node_hat",
+        "type": "rhythm.euclidean",
+        "version": 1,
+        "parameters": {
+          "steps": 12,
+          "pulses": 7,
+          "rotation": 1
+        }
+      },
+      {
+        "id": "node_bell",
+        "type": "rhythm.euclidean",
+        "version": 1,
+        "parameters": {
+          "steps": 9,
+          "pulses": 4,
+          "rotation": 0
+        }
+      }
+    ],
+    "connections": [
+      {
+        "id": "connection-kick-hat",
+        "kind": "provenance",
+        "affectsResult": true,
+        "sourceNodeId": "node_kick",
+        "sourcePortId": "pattern",
+        "targetNodeId": "node_hat",
+        "targetPortId": "pattern"
+      }
+    ]
+  },
+  "tracks": [
+    {
+      "id": "track_kick",
+      "name": "E(5,16)",
+      "kind": "trigger",
+      "materialIds": [],
+      "route": {
+        "muted": false,
+        "solo": false,
+        "gain": 1,
+        "pan": 0
+      }
+    },
+    {
+      "id": "track_hat",
+      "name": "E(7,12)",
+      "kind": "trigger",
+      "materialIds": [],
+      "route": {
+        "muted": false,
+        "solo": false,
+        "gain": 0.8,
+        "pan": 0
+      }
+    },
+    {
+      "id": "track_bell",
+      "name": "E(4,9)",
+      "kind": "trigger",
+      "materialIds": [],
+      "route": {
+        "muted": false,
+        "solo": false,
+        "gain": 0.72,
+        "pan": 0
+      }
+    }
+  ],
+  "materials": [],
+  "assets": [],
+  "experiments": {
+    "migratedLabState": {
+      "activeTick": -1,
+      "visualization": "concentric-rings"
+    },
+    "legacyTrackOperatorNodeIds": {
+      "track_kick": [
+        "node_kick"
+      ],
+      "track_hat": [
+        "node_hat"
+      ],
+      "track_bell": [
+        "node_bell"
+      ]
+    }
+  },
+  "presentation": {
+    "defaultLab": "euclidean-rings",
+    "graphLayout": {
+      "node_kick": {
+        "x": 80,
+        "y": 90
+      },
+      "node_hat": {
+        "x": 80,
+        "y": 220
+      },
+      "node_bell": {
+        "x": 80,
+        "y": 350
+      }
+    }
+  }
+}

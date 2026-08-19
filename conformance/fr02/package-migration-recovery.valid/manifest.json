@@ -1,0 +1,48 @@
+{
+  "schema": "agl.package.manifest",
+  "schemaVersion": 2,
+  "logicalProfile": "agl.logical-package.v2",
+  "physicalProfile": "agl.portable-archive.v2",
+  "projectSchemaVersion": 3,
+  "projectSemanticId": "project-fr02-recovery",
+  "saveGeneration": "save-fr02-recovery-1",
+  "projectSemanticDigest": "sha256:cb0284802bfc7e6fbdfbe6f278a1cecb0c8fe854fb5d5480acf51ba9d1b3cdd9",
+  "declaredTotalBytes": 4449,
+  "members": [
+    {
+      "path": "assets/18817e693800c4008db422dfba1fc76a92897151d85708df4fe5a74342600879.project.json",
+      "entryKind": "file",
+      "role": "asset",
+      "sha256": "18817e693800c4008db422dfba1fc76a92897151d85708df4fe5a74342600879",
+      "bytes": 1041,
+      "compressedBytes": 1041,
+      "mediaType": "application/vnd.auralgeometrylab.project+json",
+      "authoritative": false
+    },
+    {
+      "path": "migration-receipts/d96e381a46242a669bd96e346ff73d3e8b185e727a49b10425fb028fd212889f.json",
+      "entryKind": "file",
+      "role": "migration-receipt",
+      "sha256": "d96e381a46242a669bd96e346ff73d3e8b185e727a49b10425fb028fd212889f",
+      "bytes": 1395,
+      "compressedBytes": 1395,
+      "mediaType": "application/json",
+      "authoritative": false
+    },
+    {
+      "path": "project.json",
+      "entryKind": "file",
+      "role": "project",
+      "sha256": "3d7544e2137b4c3a899503caf34c42b0c7f76084a659daf5308da6ec989739f5",
+      "bytes": 2013,
+      "compressedBytes": 2013,
+      "mediaType": "application/json",
+      "authoritative": true
+    }
+  ],
+  "compatibility": {
+    "minimumReaderVersion": "0.4.0",
+    "requiredOperatorCatalogDigest": "sha256:96b17f660e0ccf495d167d88e4f38ce76233a4574460145f5777a62b1bff46f2",
+    "canonicalEncodingVersion": "agl-canonical-value-v1"
+  }
+}

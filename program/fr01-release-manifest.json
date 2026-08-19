@@ -24,7 +24,7 @@
     "backlogItems": 142,
     "publicContracts": 11,
     "nodeTests": 85,
-    "swiftTests": 11,
+    "swiftTests": 14,
     "schemaFixtures": 12
   },
   "archivePolicy": {
@@ -55,7 +55,8 @@
   "notes": [
     "Contract and reference implementation validation is not production browser/audio/native acceptance.",
     "Every unresolved Critical/High finding has a backlog item and workstream owner.",
-    "sourceFilesInArchive re-baselined 228 -> 243 on 2026-08-19. The 228 described the upstream v0.4.0 tree before AOS onboarding, so make-release.py exited 1 at every commit in this repository and the archive had never been built. Re-baselined only AFTER make-release.py was changed to take its file list from git ls-files: until then the stale count was the sole thing aborting a run that would have packaged gitignored .claude/ state into a public archive."
+    "sourceFilesInArchive re-baselined 228 -> 243 on 2026-08-19. The 228 described the upstream v0.4.0 tree before AOS onboarding, so make-release.py exited 1 at every commit in this repository and the archive had never been built. Re-baselined only AFTER make-release.py was changed to take its file list from git ls-files: until then the stale count was the sole thing aborting a run that would have packaged gitignored .claude/ state into a public archive.",
+    "sourceFilesInArchive re-baselined 243 -> 272 on 2026-08-19 for the FR-02 hostile corpus (29 conformance/native fixtures). The count is a tripwire on what git ls-files ships, not an invariant; it moves whenever tracked files are added, and every move is recorded here. swiftTests re-baselined 11 -> 14: the FR-02 native parity tests add three passing cases plus one deliberately skipped case (AGL-191, strict-byte parser not implemented in Swift)."
   ],
   "validation": {
     "deterministicArchiveBuildsCompared": 2,
@@ -64,7 +65,7 @@
     "cleanExtractionCheckAll": "pass",
     "cleanExtractionSchemaValidation": "pass",
     "staticHttpSmokeEndpoints": 8,
-    "sourceFilesInArchive": 243,
+    "sourceFilesInArchive": 272,
     "generatedBuildStateExcluded": true
   }
 }

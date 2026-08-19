@@ -1,0 +1,14 @@
+{
+  "schema": "agl.operator-catalog-rebinding-target",
+  "schemaVersion": 1,
+  "operatorSemanticDigestVersion": "agl-operator-semantic-digest-v2",
+  "operatorCatalogDigestVersion": "agl-operator-catalog-digest-v2",
+  "operators": [
+    {
+      "type": "rhythm.euclidean",
+      "version": 1,
+      "semanticDigest": "sha256:fda6bd22d4ec4e4cd956061602f996e52cc9f95157f93b1dd597253f03ca3c4a"
+    }
+  ],
+  "catalogDigest": "sha256:8cc9484e49072c46428c4f3bbc9cc71afe467c835bcacd19e1ca2c86d5e07ffb"
+}

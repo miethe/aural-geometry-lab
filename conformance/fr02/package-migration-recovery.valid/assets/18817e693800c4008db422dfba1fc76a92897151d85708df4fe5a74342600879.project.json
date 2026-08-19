@@ -1,0 +1,49 @@
+{
+  "schema": "agl.project",
+  "schemaVersion": 2,
+  "id": "project-fr02-recovery",
+  "name": "FR-02 Recovery Source v2",
+  "createdAt": "2026-08-19T00:00:00Z",
+  "modifiedAt": "2026-08-19T00:00:00Z",
+  "compatibility": {
+    "semanticContractVersion": "wave1-v1",
+    "operatorCatalogVersion": "0.3.0",
+    "stableIdVersion": "agl-stable-id-v1",
+    "deterministicGenerationVersion": "agl-prng-v1",
+    "budgetProfileId": "agl-mvp-budget-v1"
+  },
+  "seedContext": {
+    "algorithm": "agl-prng",
+    "algorithmVersion": 1,
+    "encodingVersion": 1,
+    "seed": "fr02-recovery-seed",
+    "defaultStreamId": "project-default"
+  },
+  "meter": {
+    "numerator": 4,
+    "denominator": 4
+  },
+  "tempoMap": [
+    {
+      "id": "tempo-0",
+      "beat": {
+        "numerator": "0",
+        "denominator": "1"
+      },
+      "bpm": 120,
+      "curve": "step"
+    }
+  ],
+  "graph": {
+    "nodes": [],
+    "connections": []
+  },
+  "tracks": [],
+  "materials": [],
+  "assets": [],
+  "experiments": {
+    "opaqueLegacy": {
+      "value": 42
+    }
+  }
+}

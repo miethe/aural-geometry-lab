@@ -1,0 +1,32 @@
+{
+  "schema": "agl.project.migration-receipt",
+  "schemaVersion": 2,
+  "migrationId": "migration~2~b05cf789c6c8565730537222ee00506c9c5ce74a37a6f4bf2430b2d320d9f10b",
+  "sourceSchemaVersion": 2,
+  "targetSchemaVersion": 3,
+  "sourceSemanticDigest": "sha256:c52a6e8261f720a8174501010caebd07ba34c8b607c0a61f2f826612a10263db",
+  "targetSemanticDigest": "sha256:cb0284802bfc7e6fbdfbe6f278a1cecb0c8fe854fb5d5480acf51ba9d1b3cdd9",
+  "sourceBytesDigest": "sha256:18817e693800c4008db422dfba1fc76a92897151d85708df4fe5a74342600879",
+  "appliedMigrations": [
+    "agl-project-v2-to-v3"
+  ],
+  "losses": [
+    {
+      "code": "LEGACY_OPERATOR_DIGEST_REQUIRES_CATALOG_REBIND",
+      "severity": "blocking",
+      "message": "Project v2 did not persist authoritative operator semantic digests. Migrated nodes are quarantined until explicitly rebound to a sealed operator catalog."
+    },
+    {
+      "code": "LEGACY_PRNG_AND_STABLE_ID_SEMANTICS_CHANGED",
+      "severity": "blocking",
+      "message": "Project v2 declared stable-ID/PRNG v1; v3 replay under v2 algorithms or explicit materialization/review is required before execution."
+    },
+    {
+      "code": "LEGACY_EXPERIMENTS_PRESERVED_OPAQUELY",
+      "severity": "warning",
+      "message": "Project v2 experiments are preserved as an opaque semantic extension."
+    }
+  ],
+  "requiresUserReview": true,
+  "migratedAt": "2026-08-19T20:00:00.000Z"
+}

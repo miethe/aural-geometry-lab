@@ -1,0 +1,206 @@
+{
+  "schema": "agl.conformance.fr02.error-identities",
+  "schemaVersion": 1,
+  "identities": [
+    {
+      "id": "AGL-FMT-JSON-DUPLICATE_MEMBER",
+      "phase": "strict-json",
+      "currentSignal": "Duplicate JSON object member"
+    },
+    {
+      "id": "AGL-FMT-JSON-INVALID_UTF8",
+      "phase": "strict-json",
+      "currentSignal": "fatal UTF-8 decode failure"
+    },
+    {
+      "id": "AGL-FMT-JSON-UNSAFE_INTEGER",
+      "phase": "strict-json",
+      "currentSignal": "outside the safe interoperable range"
+    },
+    {
+      "id": "AGL-FMT-JSON-MALFORMED_UNICODE",
+      "phase": "strict-json",
+      "currentSignal": "unpaired UTF-16 surrogate"
+    },
+    {
+      "id": "AGL-FMT-JSON-TRAILING_CONTENT",
+      "phase": "strict-json",
+      "currentSignal": "Unexpected trailing JSON content"
+    },
+    {
+      "id": "AGL-FMT-LIMIT-DEPTH",
+      "phase": "strict-json/runtime",
+      "currentSignal": "nesting exceeds limit"
+    },
+    {
+      "id": "AGL-FMT-LIMIT-STRING",
+      "phase": "runtime",
+      "currentSignal": "String exceeds limit"
+    },
+    {
+      "id": "AGL-FMT-LIMIT-ARRAY",
+      "phase": "runtime",
+      "currentSignal": "Array exceeds limit"
+    },
+    {
+      "id": "AGL-FMT-LIMIT-OBJECT_KEYS",
+      "phase": "runtime",
+      "currentSignal": "Object key count exceeds limit"
+    },
+    {
+      "id": "AGL-FMT-PROJECT-UNKNOWN_FIELD",
+      "phase": "project-runtime",
+      "currentSignal": "Unknown field"
+    },
+    {
+      "id": "AGL-FMT-COMPAT-FUTURE_SCHEMA",
+      "phase": "compatibility",
+      "currentSignal": "schemaVersion is greater than supported"
+    },
+    {
+      "id": "AGL-FMT-COMPAT-REQUIRED_EXTENSION_UNSUPPORTED",
+      "phase": "compatibility",
+      "currentSignal": "unsupported-semantic-extension"
+    },
+    {
+      "id": "AGL-FMT-COMPAT-OPERATOR_CATALOG_UNSUPPORTED",
+      "phase": "compatibility",
+      "currentSignal": "unsupported-operator-catalog"
+    },
+    {
+      "id": "AGL-FMT-COMPAT-BUDGET_PROFILE_UNSUPPORTED",
+      "phase": "compatibility",
+      "currentSignal": "unsupported-budget-profile"
+    },
+    {
+      "id": "AGL-FMT-COMPAT-NUMERICAL_PROFILE_UNSUPPORTED",
+      "phase": "compatibility",
+      "currentSignal": "policy gap FR02-008"
+    },
+    {
+      "id": "AGL-FMT-RATIONAL-NUMERATOR_SYNTAX",
+      "phase": "rational",
+      "currentSignal": "Numerator is not canonical"
+    },
+    {
+      "id": "AGL-FMT-RATIONAL-DENOMINATOR_SYNTAX",
+      "phase": "rational",
+      "currentSignal": "Denominator must be canonical positive"
+    },
+    {
+      "id": "AGL-FMT-RATIONAL-NOT_NORMALIZED",
+      "phase": "rational",
+      "currentSignal": "Rational wire is not normalized"
+    },
+    {
+      "id": "AGL-FMT-RATIONAL-DIGIT_LIMIT",
+      "phase": "rational",
+      "currentSignal": "components exceed hostile-input limit"
+    },
+    {
+      "id": "AGL-FMT-SEED-EMPTY",
+      "phase": "project-runtime",
+      "currentSignal": "seed must be a non-empty string"
+    },
+    {
+      "id": "AGL-FMT-SEED-LENGTH",
+      "phase": "schema/runtime",
+      "currentSignal": "seed exceeds 4096 characters"
+    },
+    {
+      "id": "AGL-FMT-ID-DUPLICATE",
+      "phase": "project-runtime",
+      "currentSignal": "Duplicate ID"
+    },
+    {
+      "id": "AGL-FMT-ID-CROSS_COLLECTION_COLLISION",
+      "phase": "project-runtime",
+      "currentSignal": "Semantic ID is reused"
+    },
+    {
+      "id": "AGL-FMT-OPERATOR-UNKNOWN_VERSION",
+      "phase": "compile/compatibility",
+      "currentSignal": "GRAPH_UNKNOWN_OPERATOR"
+    },
+    {
+      "id": "AGL-FMT-OPERATOR-DIGEST_MISMATCH",
+      "phase": "compile/compatibility",
+      "currentSignal": "GRAPH_OPERATOR_DIGEST_MISMATCH"
+    },
+    {
+      "id": "AGL-FMT-MIGRATION-OPERATOR_REBIND_REQUIRED",
+      "phase": "migration",
+      "currentSignal": "LEGACY_OPERATOR_DIGEST_REQUIRES_CATALOG_REBIND"
+    },
+    {
+      "id": "AGL-FMT-MIGRATION-CONNECTION_SEMANTICS_CONFLICT",
+      "phase": "migration",
+      "currentSignal": "policy gap FR02-001/005"
+    },
+    {
+      "id": "AGL-FMT-MIGRATION-PRNG_ID_SEMANTICS_CHANGED",
+      "phase": "migration",
+      "currentSignal": "policy gap FR02-003"
+    },
+    {
+      "id": "AGL-FMT-MIGRATION-TARGET_INVALID",
+      "phase": "migration",
+      "currentSignal": "migration candidate fails target schema/runtime validation"
+    },
+    {
+      "id": "AGL-FMT-MIGRATION-RECEIPT_INCONSISTENT",
+      "phase": "migration-receipt",
+      "currentSignal": "blocking loss/review or digest closure mismatch"
+    },
+    {
+      "id": "AGL-FMT-LAB-DEFAULT_UNAVAILABLE",
+      "phase": "presentation",
+      "currentSignal": "fallback to neutral studio"
+    },
+    {
+      "id": "AGL-FMT-VIEW-LAYOUT_UNKNOWN_NODE",
+      "phase": "project-runtime",
+      "currentSignal": "Graph layout references an unknown node"
+    },
+    {
+      "id": "AGL-FMT-LINEAGE-RECEIPT_MISSING",
+      "phase": "project-runtime",
+      "currentSignal": "Unknown receipt"
+    },
+    {
+      "id": "AGL-FMT-LINEAGE-RECIPE_DIGEST_MISMATCH",
+      "phase": "project-runtime",
+      "currentSignal": "source-recipe digest does not match"
+    },
+    {
+      "id": "AGL-FMT-LINEAGE-CYCLE",
+      "phase": "project-runtime",
+      "currentSignal": "Material ancestry contains a cycle"
+    },
+    {
+      "id": "AGL-FMT-ASSET-REFERENCE_DANGLING",
+      "phase": "project-runtime",
+      "currentSignal": "Unknown payload/graph/artifact asset"
+    },
+    {
+      "id": "AGL-FMT-PACKAGE-ASSET_MEMBER_MISSING",
+      "phase": "package-closure",
+      "currentSignal": "policy gap FR02-006"
+    },
+    {
+      "id": "AGL-FMT-PACKAGE-ASSET_DIGEST_MISMATCH",
+      "phase": "package-closure",
+      "currentSignal": "actual SHA-256 does not match manifest"
+    },
+    {
+      "id": "AGL-FMT-PACKAGE-SOURCE_BYTES_MISSING",
+      "phase": "recovery",
+      "currentSignal": "sourceBytesDigest has no measured member"
+    },
+    {
+      "id": "AGL-FMT-PAYLOAD_REF-UNRESOLVED",
+      "phase": "project-compatibility",
+      "currentSignal": "policy gap FR02-010"
+    }
+  ]
+}

@@ -26,13 +26,18 @@ async function readJson(relativePath) {
   }
 }
 
+// The FR-02 hostile corpus is deliberately unparseable (duplicate members, trailing
+// content, invalid UTF-8). It is covered by verifyHostileCorpus below instead of by the
+// "every .json must parse" walk.
+const UNPARSEABLE_BY_DESIGN = new Set([path.join("conformance", "fr02", "raw")]);
+
 async function verifyAllJson(directory) {
   const absolute = path.join(root, directory);
   if (!existsSync(absolute)) { fail(`Missing JSON directory: ${directory}`); return; }
   const entries = await readdir(absolute, { withFileTypes: true });
   for (const entry of entries) {
     const relative = path.join(directory, entry.name);
-    if (entry.isDirectory()) await verifyAllJson(relative);
+    if (entry.isDirectory()) { if (!UNPARSEABLE_BY_DESIGN.has(relative)) await verifyAllJson(relative); }
     else if (entry.name.endsWith(".json")) await readJson(relative);
   }
 }
@@ -292,6 +297,47 @@ for (let adr = 19; adr <= 24; adr += 1) {
   if (adrPrefixCounts.get(prefix) !== 1) fail(`Expected exactly one FR-01 ADR ${prefix}.`);
 }
 
+// FR-02 hostile corpus: every declared case must point at a source that exists, and every
+// file under the unparseable-by-design directory must be claimed by a case. Without this the
+// corpus is inert data that no gate holds.
+const fr02Corpus = await readJson("conformance/fr02/corpus.json");
+let fr02CaseCount = 0;
+if (fr02Corpus !== undefined) {
+  const cases = Array.isArray(fr02Corpus.cases) ? fr02Corpus.cases : [];
+  if (cases.length === 0) fail("conformance/fr02/corpus.json declares no cases.");
+  const claimed = new Set();
+  const ids = new Set();
+  for (const entry of cases) {
+    const id = requiredString(entry?.id, "FR-02 corpus case id");
+    if (id !== undefined) {
+      if (ids.has(id)) fail(`FR-02 corpus case ${id} is declared more than once.`);
+      ids.add(id);
+    }
+    requiredString(entry?.expectedDisposition, `FR-02 corpus case ${id ?? "?"} expectedDisposition`);
+    const source = entry?.source?.file ?? entry?.source?.hexFile;
+    if (typeof source === "string" && source.length > 0) {
+      const relative = path.join("conformance", "fr02", source);
+      fileExists(relative, `FR-02 corpus case ${id ?? "?"} source`);
+      claimed.add(relative);
+      continue;
+    }
+    // Generator-sourced cases carry no committed bytes; the FR-02 runner (AGL-173) derives
+    // them. Hold the declaration shape so a case can never lose its provenance silently.
+    if (typeof entry?.source?.generator !== "string" || entry.source.generator.length === 0) {
+      fail(`FR-02 corpus case ${id ?? "?"} declares neither a source file nor a generator.`);
+    }
+  }
+  fr02CaseCount = ids.size;
+  for (const directory of UNPARSEABLE_BY_DESIGN) {
+    const absolute = path.join(root, directory);
+    if (!existsSync(absolute)) { fail(`Missing FR-02 hostile corpus directory: ${directory}`); continue; }
+    for (const name of await readdir(absolute)) {
+      const relative = path.join(directory, name);
+      if (!claimed.has(relative)) fail(`${relative} is not claimed by any FR-02 corpus case.`);
+    }
+  }
+}
+
 if (failures.length > 0) {
   console.error("Verification failed:\n" + failures.map((failure) => `- ${failure}`).join("\n"));
   process.exit(1);
@@ -299,5 +345,5 @@ if (failures.length > 0) {
 console.log(
   `Verified ${backlogIds.size} backlog items, ${researchIds.size} research runs, ${decisionIds.size} Wave-1 decisions, ` +
   `${labIds.size} labs, ${findingIds.size} FR-01 findings (${criticalHighCount} Critical/High owned), ` +
-  `${publicContractIds.size} public contracts, evidence/contract hashes, native conformance mirrors, runtime validators, and required authority artifacts.`,
+  `${publicContractIds.size} public contracts, ${fr02CaseCount} FR-02 corpus cases, evidence/contract hashes, native conformance mirrors, runtime validators, and required authority artifacts.`,
 );

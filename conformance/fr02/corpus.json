@@ -1,0 +1,436 @@
+{
+  "schema": "agl.conformance.fr02.corpus",
+  "schemaVersion": 1,
+  "baselineCommit": "352f10374f48e21a885b1041fd67af919b7bc166",
+  "policyVersion": "agl-project-format-policy-v1",
+  "cases": [
+    {
+      "id": "FR02-C001",
+      "title": "Duplicate schemaVersion member",
+      "attackClass": "ambiguous-json",
+      "source": {
+        "file": "raw/duplicate-schema-version.json"
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-JSON-DUPLICATE_MEMBER"
+    },
+    {
+      "id": "FR02-C002",
+      "title": "Malformed UTF-8 in string position",
+      "attackClass": "invalid-utf8",
+      "source": {
+        "hexFile": "raw/invalid-utf8.hex"
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-JSON-INVALID_UTF8"
+    },
+    {
+      "id": "FR02-C003",
+      "title": "Unsafe integer literal",
+      "attackClass": "cross-language-number",
+      "source": {
+        "file": "raw/unsafe-integer.json"
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-JSON-UNSAFE_INTEGER"
+    },
+    {
+      "id": "FR02-C004",
+      "title": "Lone surrogate escape",
+      "attackClass": "unicode",
+      "source": {
+        "file": "raw/lone-surrogate.json"
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-JSON-MALFORMED_UNICODE"
+    },
+    {
+      "id": "FR02-C005",
+      "title": "Trailing JSON value",
+      "attackClass": "polyglot-json",
+      "source": {
+        "file": "raw/trailing-content.json"
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-JSON-TRAILING_CONTENT"
+    },
+    {
+      "id": "FR02-C006",
+      "title": "Unknown claimed-v3 core field",
+      "attackClass": "future-field-smuggling",
+      "source": {
+        "file": "project-v3.unknown-core-field.refuse.json"
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-PROJECT-UNKNOWN_FIELD"
+    },
+    {
+      "id": "FR02-C007",
+      "title": "Unknown nonsemantic extension",
+      "attackClass": "future-optional-data",
+      "source": {
+        "file": "project-v3.unknown-nonsemantic-extension.valid.json"
+      },
+      "expectedDisposition": "accept",
+      "errorIdentity": null
+    },
+    {
+      "id": "FR02-C008",
+      "title": "Unknown required semantic extension",
+      "attackClass": "unknown-required-capability",
+      "source": {
+        "file": "project-v3.unknown-required-extension.quarantine.json"
+      },
+      "expectedDisposition": "quarantine",
+      "errorIdentity": "AGL-FMT-COMPAT-REQUIRED_EXTENSION_UNSUPPORTED"
+    },
+    {
+      "id": "FR02-C009",
+      "title": "Future project schema v4",
+      "attackClass": "future-schema",
+      "source": {
+        "file": "project-v4.future.quarantine.json"
+      },
+      "expectedDisposition": "quarantine",
+      "errorIdentity": "AGL-FMT-COMPAT-FUTURE_SCHEMA"
+    },
+    {
+      "id": "FR02-C010",
+      "title": "Unknown default lab",
+      "attackClass": "future-view-preset",
+      "source": {
+        "file": "project-v3.unknown-default-lab.accept-with-loss.json"
+      },
+      "expectedDisposition": "accept-with-loss",
+      "errorIdentity": "AGL-FMT-LAB-DEFAULT_UNAVAILABLE"
+    },
+    {
+      "id": "FR02-C011",
+      "title": "Rational numerator with leading zero",
+      "attackClass": "rational-alias",
+      "source": {
+        "generator": "mutate-rational",
+        "base": "../fr01-minimal.v3.project.json",
+        "path": "tempoMap[0].beat.numerator",
+        "value": "00"
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-RATIONAL-NUMERATOR_SYNTAX"
+    },
+    {
+      "id": "FR02-C012",
+      "title": "Rational zero denominator",
+      "attackClass": "rational-invalid",
+      "source": {
+        "generator": "mutate-rational",
+        "base": "../fr01-minimal.v3.project.json",
+        "path": "tempoMap[0].beat.denominator",
+        "value": "0"
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-RATIONAL-DENOMINATOR_SYNTAX"
+    },
+    {
+      "id": "FR02-C013",
+      "title": "Rational equivalent but unreduced",
+      "attackClass": "rational-alias",
+      "source": {
+        "generator": "mutate-rational-pair",
+        "base": "../fr01-minimal.v3.project.json",
+        "numerator": "2",
+        "denominator": "2"
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-RATIONAL-NOT_NORMALIZED"
+    },
+    {
+      "id": "FR02-C014",
+      "title": "Rational digit exhaustion",
+      "attackClass": "bigint-dos",
+      "source": {
+        "generator": "repeat-digit",
+        "path": "tempoMap[0].beat.numerator",
+        "digit": "9",
+        "count": 4097
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-RATIONAL-DIGIT_LIMIT"
+    },
+    {
+      "id": "FR02-C015",
+      "title": "Empty deterministic seed",
+      "attackClass": "seed-alias",
+      "source": {
+        "generator": "set",
+        "base": "../fr01-minimal.v3.project.json",
+        "path": "seedContext.seed",
+        "value": ""
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-SEED-EMPTY"
+    },
+    {
+      "id": "FR02-C016",
+      "title": "Seed over 4096 characters",
+      "attackClass": "size-exhaustion",
+      "source": {
+        "generator": "repeat-string",
+        "path": "seedContext.seed",
+        "text": "s",
+        "count": 4097
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-SEED-LENGTH"
+    },
+    {
+      "id": "FR02-C017",
+      "title": "Duplicate node ID",
+      "attackClass": "identity-collision",
+      "source": {
+        "generator": "duplicate-array-item-id",
+        "collection": "graph.nodes"
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-ID-DUPLICATE"
+    },
+    {
+      "id": "FR02-C018",
+      "title": "Node and asset share semantic ID",
+      "attackClass": "cross-collection-id-collision",
+      "source": {
+        "generator": "cross-collection-id",
+        "collections": [
+          "graph.nodes",
+          "assets"
+        ]
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-ID-CROSS_COLLECTION_COLLISION"
+    },
+    {
+      "id": "FR02-C019",
+      "title": "Unknown future operator version",
+      "attackClass": "operator-version-skew",
+      "source": {
+        "generator": "set-operator-version",
+        "value": 9007199254740991
+      },
+      "expectedDisposition": "quarantine",
+      "errorIdentity": "AGL-FMT-OPERATOR-UNKNOWN_VERSION"
+    },
+    {
+      "id": "FR02-C020",
+      "title": "Operator semantic digest mismatch",
+      "attackClass": "operator-contract-substitution",
+      "source": {
+        "generator": "set-operator-digest",
+        "value": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+      },
+      "expectedDisposition": "quarantine",
+      "errorIdentity": "AGL-FMT-OPERATOR-DIGEST_MISMATCH"
+    },
+    {
+      "id": "FR02-C021",
+      "title": "v2 connection conflicts with v3 result semantics",
+      "attackClass": "migration-semantic-conflict",
+      "source": {
+        "file": "project-v2.connected-affects-result-conflict.quarantine.json"
+      },
+      "expectedDisposition": "quarantine",
+      "errorIdentity": "AGL-FMT-MIGRATION-CONNECTION_SEMANTICS_CONFLICT"
+    },
+    {
+      "id": "FR02-C022",
+      "title": "v2 PRNG/stable-ID upgrade changes semantics",
+      "attackClass": "migration-determinism",
+      "source": {
+        "file": "project-v2.connected-affects-result-conflict.quarantine.json"
+      },
+      "expectedDisposition": "quarantine",
+      "errorIdentity": "AGL-FMT-MIGRATION-PRNG_ID_SEMANTICS_CHANGED"
+    },
+    {
+      "id": "FR02-C023",
+      "title": "Snapshot lacks materialization receipt",
+      "attackClass": "frozen-lineage-forgery",
+      "source": {
+        "generator": "snapshot-without-receipt"
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-LINEAGE-RECEIPT_MISSING"
+    },
+    {
+      "id": "FR02-C024",
+      "title": "Snapshot recipe digest mismatch",
+      "attackClass": "frozen-lineage-forgery",
+      "source": {
+        "generator": "snapshot-recipe-digest-mismatch"
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-LINEAGE-RECIPE_DIGEST_MISMATCH"
+    },
+    {
+      "id": "FR02-C025",
+      "title": "Edited derivative ancestry cycle",
+      "attackClass": "lineage-cycle",
+      "source": {
+        "generator": "material-parent-cycle",
+        "length": 3
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-LINEAGE-CYCLE"
+    },
+    {
+      "id": "FR02-C026",
+      "title": "Dangling payload asset",
+      "attackClass": "asset-reference",
+      "source": {
+        "generator": "set",
+        "path": "materials[0].payloadAssetId",
+        "value": "missing-asset"
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-ASSET-REFERENCE_DANGLING"
+    },
+    {
+      "id": "FR02-C027",
+      "title": "Package omits project-declared asset member",
+      "attackClass": "package-closure",
+      "source": {
+        "generator": "remove-member",
+        "base": "package-asset-closure.valid/manifest.json",
+        "pathPrefix": "assets/"
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-PACKAGE-ASSET_MEMBER_MISSING"
+    },
+    {
+      "id": "FR02-C028",
+      "title": "Package asset bytes do not match path/manifest digest",
+      "attackClass": "package-integrity",
+      "source": {
+        "generator": "flip-byte",
+        "base": "package-asset-closure.valid"
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-PACKAGE-ASSET_DIGEST_MISMATCH"
+    },
+    {
+      "id": "FR02-C029",
+      "title": "Recovery receipt source bytes are absent",
+      "attackClass": "rollback-forgery",
+      "source": {
+        "generator": "remove-member",
+        "base": "package-migration-recovery.valid/manifest.json",
+        "pathPrefix": "assets/"
+      },
+      "expectedDisposition": "quarantine",
+      "errorIdentity": "AGL-FMT-PACKAGE-SOURCE_BYTES_MISSING"
+    },
+    {
+      "id": "FR02-C030",
+      "title": "Unresolved inline payloadRef",
+      "attackClass": "addressing-ambiguity",
+      "source": {
+        "generator": "user-material-payload-ref",
+        "value": "local-only-key"
+      },
+      "expectedDisposition": "quarantine",
+      "errorIdentity": "AGL-FMT-PAYLOAD_REF-UNRESOLVED"
+    },
+    {
+      "id": "FR02-C031",
+      "title": "JSON nesting depth 129",
+      "attackClass": "depth-exhaustion",
+      "source": {
+        "generator": "nested-array",
+        "depth": 129,
+        "leaf": 0
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-LIMIT-DEPTH"
+    },
+    {
+      "id": "FR02-C032",
+      "title": "Project node count 20001",
+      "attackClass": "collection-exhaustion",
+      "source": {
+        "generator": "repeat-valid-node",
+        "count": 20001
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-LIMIT-ARRAY"
+    },
+    {
+      "id": "FR02-C033",
+      "title": "One string 1000001 UTF-16 code units",
+      "attackClass": "string-exhaustion",
+      "source": {
+        "generator": "repeat-string",
+        "path": "name",
+        "text": "x",
+        "count": 1000001
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-LIMIT-STRING"
+    },
+    {
+      "id": "FR02-C034",
+      "title": "One object 100001 keys",
+      "attackClass": "object-key-exhaustion",
+      "source": {
+        "generator": "object-keys",
+        "count": 100001
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-LIMIT-OBJECT_KEYS"
+    },
+    {
+      "id": "FR02-C035",
+      "title": "Duplicate-key native parity vector",
+      "attackClass": "cross-language-parser-divergence",
+      "source": {
+        "file": "raw/duplicate-schema-version.json"
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-JSON-DUPLICATE_MEMBER",
+      "requiredClients": [
+        "typescript",
+        "swift"
+      ]
+    },
+    {
+      "id": "FR02-C036",
+      "title": "Valid v2 snapshot maps to invalid v3 lineage",
+      "attackClass": "migration-target-invalid",
+      "source": {
+        "generator": "v2-snapshot-with-receipt-id-no-receipt-body"
+      },
+      "expectedDisposition": "quarantine",
+      "errorIdentity": "AGL-FMT-MIGRATION-TARGET_INVALID"
+    },
+    {
+      "id": "FR02-C037",
+      "title": "Receipt says no review despite blocking loss",
+      "attackClass": "migration-receipt-forgery",
+      "source": {
+        "generator": "set",
+        "base": "package-migration-recovery.valid/migration-receipts/*.json",
+        "path": "requiresUserReview",
+        "value": false
+      },
+      "expectedDisposition": "refuse",
+      "errorIdentity": "AGL-FMT-MIGRATION-RECEIPT_INCONSISTENT"
+    },
+    {
+      "id": "FR02-C038",
+      "title": "Operator rebind selects exact node/catalog digest",
+      "attackClass": "catalog-rebinding-control",
+      "source": {
+        "file": "operator-rebinding-receipt-v1.provisional.json"
+      },
+      "expectedDisposition": "accept",
+      "errorIdentity": null
+    }
+  ]
+}
