@@ -41,3 +41,5 @@ coverage/
 # NEVER PUBLISH: all 12 carry LAN addresses, credential paths, IntentTree node ids and incident
 # narratives. This repository is PUBLIC. See .claude/rules/README-PROVENANCE.md.
 .claude/rules/
+.scratch/
+.operator/
