@@ -194,7 +194,9 @@ For Infinite Staircase, candidate measures include perceived acceleration direct
 
 ## 8. Current evidence
 
-Sprint 0 currently passes fourteen automated tests covering:
+The suite currently passes **85 automated tests** (`tests/core.test.mjs` + `tests/fr01.test.mjs`),
+alongside 11 Swift conformance tests and 12 schema fixtures. The fourteen tests listed below were
+the Sprint-0/M0 baseline and are retained as the origin of the invariant set, not as current scope:
 
 1. exact rational arithmetic;
 2. looped pattern timing;
