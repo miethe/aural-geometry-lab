@@ -1,0 +1,868 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://auralgeometrylab.local/schemas/agl-resolved-audio-plan-v2.schema.json",
+  "title": "Aural Geometry Lab Resolved Audio Plan v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schemaVersion",
+    "contractVersion",
+    "timeDomain",
+    "planId",
+    "planDigest",
+    "projectId",
+    "projectEpoch",
+    "projectSemanticDigest",
+    "semanticEnvironmentDigest",
+    "operatorCatalogDigest",
+    "voiceRegistryDigest",
+    "budgetProfileId",
+    "budgetProfileVersion",
+    "quantizationVersion",
+    "range",
+    "tailPolicy",
+    "voiceDefinitions",
+    "assetRefs",
+    "approximations",
+    "events"
+  ],
+  "properties": {
+    "schema": {
+      "const": "agl.audio.render-plan"
+    },
+    "schemaVersion": {
+      "const": 2
+    },
+    "contractVersion": {
+      "const": "agl-resolved-audio-plan-v2"
+    },
+    "timeDomain": {
+      "const": "project-timeline-seconds-v1"
+    },
+    "planId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+    },
+    "planDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "projectId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+    },
+    "projectEpoch": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+    },
+    "projectSemanticDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "semanticEnvironmentDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "operatorCatalogDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "voiceRegistryDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "budgetProfileId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+    },
+    "budgetProfileVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "quantizationVersion": {
+      "const": "seconds-to-frame-v1"
+    },
+    "range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "startSeconds",
+        "endSeconds"
+      ],
+      "properties": {
+        "startSeconds": {
+          "type": "number",
+          "minimum": 0
+        },
+        "endSeconds": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "sourceBeatRange": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "start",
+            "end"
+          ],
+          "properties": {
+            "start": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "numerator",
+                "denominator"
+              ],
+              "properties": {
+                "numerator": {
+                  "type": "string",
+                  "pattern": "^-?(0|[1-9][0-9]*)$",
+                  "maxLength": 4097
+                },
+                "denominator": {
+                  "type": "string",
+                  "pattern": "^[1-9][0-9]*$",
+                  "maxLength": 4096
+                }
+              }
+            },
+            "end": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "numerator",
+                "denominator"
+              ],
+              "properties": {
+                "numerator": {
+                  "type": "string",
+                  "pattern": "^-?(0|[1-9][0-9]*)$",
+                  "maxLength": 4097
+                },
+                "denominator": {
+                  "type": "string",
+                  "pattern": "^[1-9][0-9]*$",
+                  "maxLength": 4096
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "tailPolicy": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "seconds"
+          ],
+          "properties": {
+            "kind": {
+              "const": "fixed"
+            },
+            "seconds": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "maximumSeconds"
+          ],
+          "properties": {
+            "kind": {
+              "const": "voice-declared"
+            },
+            "maximumSeconds": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        }
+      ]
+    },
+    "voiceDefinitions": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "version",
+          "semanticDigest",
+          "activeVoicePolicy"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+          },
+          "version": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "semanticDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "activeVoicePolicy": {
+            "enum": [
+              "preserve-active",
+              "replace-at-generation"
+            ]
+          }
+        }
+      }
+    },
+    "assetRefs": {
+      "type": "array",
+      "maxItems": 100000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetId",
+          "digest"
+        ],
+        "properties": {
+          "assetId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "approximations": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "sourceRef": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+          }
+        }
+      }
+    },
+    "events": {
+      "type": "array",
+      "maxItems": 100000,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "orderKey",
+              "trackId",
+              "voiceId",
+              "idealStartSeconds",
+              "idealEndSeconds",
+              "temporalOrigin",
+              "priority",
+              "latePolicy",
+              "cancellationGroup",
+              "provenanceRef",
+              "kind",
+              "midi",
+              "cents",
+              "velocity"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+              },
+              "orderKey": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+              },
+              "trackId": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+              },
+              "voiceId": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+              },
+              "idealStartSeconds": {
+                "type": "number",
+                "minimum": 0
+              },
+              "idealEndSeconds": {
+                "type": "number",
+                "minimum": 0
+              },
+              "temporalOrigin": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "beat",
+                      "tempoMapDigest"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "musical-beat"
+                      },
+                      "beat": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "numerator",
+                          "denominator"
+                        ],
+                        "properties": {
+                          "numerator": {
+                            "type": "string",
+                            "pattern": "^-?(0|[1-9][0-9]*)$",
+                            "maxLength": 4097
+                          },
+                          "denominator": {
+                            "type": "string",
+                            "pattern": "^[1-9][0-9]*$",
+                            "maxLength": 4096
+                          }
+                        }
+                      },
+                      "tempoMapDigest": {
+                        "type": "string",
+                        "pattern": "^sha256:[a-f0-9]{64}$"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "mappingType",
+                      "mappingVersion",
+                      "mappingDigest"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "analytic"
+                      },
+                      "mappingType": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      "mappingVersion": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 9007199254740991
+                      },
+                      "sourcePhase": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "numerator",
+                          "denominator"
+                        ],
+                        "properties": {
+                          "numerator": {
+                            "type": "string",
+                            "pattern": "^-?(0|[1-9][0-9]*)$",
+                            "maxLength": 4097
+                          },
+                          "denominator": {
+                            "type": "string",
+                            "pattern": "^[1-9][0-9]*$",
+                            "maxLength": 4096
+                          }
+                        }
+                      },
+                      "mappingDigest": {
+                        "type": "string",
+                        "pattern": "^sha256:[a-f0-9]{64}$"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "source"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "absolute-seconds"
+                      },
+                      "source": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      }
+                    }
+                  }
+                ]
+              },
+              "priority": {
+                "enum": [
+                  "critical",
+                  "normal",
+                  "shed-first"
+                ]
+              },
+              "latePolicy": {
+                "enum": [
+                  "strict-drop",
+                  "immediate",
+                  "sample-catch-up",
+                  "coalesce"
+                ]
+              },
+              "cancellationGroup": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+              },
+              "provenanceRef": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+              },
+              "kind": {
+                "const": "note"
+              },
+              "midi": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 127
+              },
+              "cents": {
+                "type": "number"
+              },
+              "velocity": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "orderKey",
+              "trackId",
+              "voiceId",
+              "idealStartSeconds",
+              "idealEndSeconds",
+              "temporalOrigin",
+              "priority",
+              "latePolicy",
+              "cancellationGroup",
+              "provenanceRef",
+              "kind",
+              "velocity"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+              },
+              "orderKey": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+              },
+              "trackId": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+              },
+              "voiceId": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+              },
+              "idealStartSeconds": {
+                "type": "number",
+                "minimum": 0
+              },
+              "idealEndSeconds": {
+                "type": "number",
+                "minimum": 0
+              },
+              "temporalOrigin": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "beat",
+                      "tempoMapDigest"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "musical-beat"
+                      },
+                      "beat": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "numerator",
+                          "denominator"
+                        ],
+                        "properties": {
+                          "numerator": {
+                            "type": "string",
+                            "pattern": "^-?(0|[1-9][0-9]*)$",
+                            "maxLength": 4097
+                          },
+                          "denominator": {
+                            "type": "string",
+                            "pattern": "^[1-9][0-9]*$",
+                            "maxLength": 4096
+                          }
+                        }
+                      },
+                      "tempoMapDigest": {
+                        "type": "string",
+                        "pattern": "^sha256:[a-f0-9]{64}$"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "mappingType",
+                      "mappingVersion",
+                      "mappingDigest"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "analytic"
+                      },
+                      "mappingType": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      "mappingVersion": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 9007199254740991
+                      },
+                      "sourcePhase": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "numerator",
+                          "denominator"
+                        ],
+                        "properties": {
+                          "numerator": {
+                            "type": "string",
+                            "pattern": "^-?(0|[1-9][0-9]*)$",
+                            "maxLength": 4097
+                          },
+                          "denominator": {
+                            "type": "string",
+                            "pattern": "^[1-9][0-9]*$",
+                            "maxLength": 4096
+                          }
+                        }
+                      },
+                      "mappingDigest": {
+                        "type": "string",
+                        "pattern": "^sha256:[a-f0-9]{64}$"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "source"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "absolute-seconds"
+                      },
+                      "source": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      }
+                    }
+                  }
+                ]
+              },
+              "priority": {
+                "enum": [
+                  "critical",
+                  "normal",
+                  "shed-first"
+                ]
+              },
+              "latePolicy": {
+                "enum": [
+                  "strict-drop",
+                  "immediate",
+                  "sample-catch-up",
+                  "coalesce"
+                ]
+              },
+              "cancellationGroup": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+              },
+              "provenanceRef": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+              },
+              "kind": {
+                "const": "trigger"
+              },
+              "velocity": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "orderKey",
+              "trackId",
+              "voiceId",
+              "idealStartSeconds",
+              "idealEndSeconds",
+              "temporalOrigin",
+              "priority",
+              "latePolicy",
+              "cancellationGroup",
+              "provenanceRef",
+              "kind",
+              "target",
+              "value"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+              },
+              "orderKey": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+              },
+              "trackId": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+              },
+              "voiceId": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+              },
+              "idealStartSeconds": {
+                "type": "number",
+                "minimum": 0
+              },
+              "idealEndSeconds": {
+                "type": "number",
+                "minimum": 0
+              },
+              "temporalOrigin": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "beat",
+                      "tempoMapDigest"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "musical-beat"
+                      },
+                      "beat": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "numerator",
+                          "denominator"
+                        ],
+                        "properties": {
+                          "numerator": {
+                            "type": "string",
+                            "pattern": "^-?(0|[1-9][0-9]*)$",
+                            "maxLength": 4097
+                          },
+                          "denominator": {
+                            "type": "string",
+                            "pattern": "^[1-9][0-9]*$",
+                            "maxLength": 4096
+                          }
+                        }
+                      },
+                      "tempoMapDigest": {
+                        "type": "string",
+                        "pattern": "^sha256:[a-f0-9]{64}$"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "mappingType",
+                      "mappingVersion",
+                      "mappingDigest"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "analytic"
+                      },
+                      "mappingType": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      "mappingVersion": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 9007199254740991
+                      },
+                      "sourcePhase": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "numerator",
+                          "denominator"
+                        ],
+                        "properties": {
+                          "numerator": {
+                            "type": "string",
+                            "pattern": "^-?(0|[1-9][0-9]*)$",
+                            "maxLength": 4097
+                          },
+                          "denominator": {
+                            "type": "string",
+                            "pattern": "^[1-9][0-9]*$",
+                            "maxLength": 4096
+                          }
+                        }
+                      },
+                      "mappingDigest": {
+                        "type": "string",
+                        "pattern": "^sha256:[a-f0-9]{64}$"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "source"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "absolute-seconds"
+                      },
+                      "source": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      }
+                    }
+                  }
+                ]
+              },
+              "priority": {
+                "enum": [
+                  "critical",
+                  "normal",
+                  "shed-first"
+                ]
+              },
+              "latePolicy": {
+                "enum": [
+                  "strict-drop",
+                  "immediate",
+                  "sample-catch-up",
+                  "coalesce"
+                ]
+              },
+              "cancellationGroup": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+              },
+              "provenanceRef": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\-]{0,255}$"
+              },
+              "kind": {
+                "const": "control"
+              },
+              "target": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "value": {
+                "type": "number"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

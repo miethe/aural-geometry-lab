@@ -1,0 +1,200 @@
+{
+  "schema": "agl.design.screens",
+  "schemaVersion": 2,
+  "asOf": "2026-08-18",
+  "screens": [
+    {
+      "id": "S01",
+      "slug": "project-library",
+      "name": "Project Library",
+      "platform": "web+native",
+      "mode": "Library",
+      "brief": "Recent projects, labs, new/import",
+      "mockupStatus": "specified"
+    },
+    {
+      "id": "S02",
+      "slug": "risset-explore",
+      "name": "Infinite Staircase Explore",
+      "platform": "web+ipad",
+      "mode": "Explore",
+      "brief": "Log-tempo canvas and primary illusion controls",
+      "mockupStatus": "specified",
+      "requiredStates": [
+        "analytic log-tempo layers",
+        "engineering-default evidence badge",
+        "audio enable/runtime status"
+      ]
+    },
+    {
+      "id": "S03",
+      "slug": "risset-inspect",
+      "name": "Infinite Staircase Inspect",
+      "platform": "web+ipad",
+      "mode": "Inspect",
+      "brief": "Formula, layer state, A/B reset reveal",
+      "mockupStatus": "specified",
+      "requiredStates": [
+        "wrapped/unwrapped views",
+        "mapping/provenance trace",
+        "Risset reset/relabel explanation",
+        "experimental controls separated"
+      ]
+    },
+    {
+      "id": "S04",
+      "slug": "euclidean-compose",
+      "name": "Euclidean Rings Compose",
+      "platform": "web+ipad",
+      "mode": "Compose",
+      "brief": "Concentric rings, timeline, LCM",
+      "mockupStatus": "specified"
+    },
+    {
+      "id": "S05",
+      "slug": "studio-compose",
+      "name": "Full Studio Compose",
+      "platform": "web+ipad",
+      "mode": "Compose",
+      "brief": "Canonical multi-track studio overview",
+      "mockupStatus": "specified",
+      "requiredStates": [
+        "one project/transport/undo",
+        "workspace not capability mode",
+        "current derivation/audio status"
+      ]
+    },
+    {
+      "id": "S06",
+      "slug": "graph-focus",
+      "name": "Operator Graph Focus",
+      "platform": "web+ipad",
+      "mode": "Compose",
+      "brief": "Typed graph, palette, node inspector",
+      "mockupStatus": "specified",
+      "requiredStates": [
+        "compiler-driven compatibility",
+        "atomic rewire",
+        "dependency categories",
+        "keyboard/non-drag path"
+      ]
+    },
+    {
+      "id": "S07",
+      "slug": "timeline-focus",
+      "name": "Timeline Focus",
+      "platform": "web+ipad",
+      "mode": "Compose",
+      "brief": "Generated/frozen/manual material editing",
+      "mockupStatus": "specified",
+      "requiredStates": [
+        "MaterialKind + SourceStatus",
+        "generated edit choice",
+        "materialization receipt",
+        "orphaned event state"
+      ]
+    },
+    {
+      "id": "S08",
+      "slug": "tonnetz",
+      "name": "Tonnetz Walk",
+      "platform": "web+ipad",
+      "mode": "Explore/Compose",
+      "brief": "Harmonic lattice and path",
+      "mockupStatus": "specified"
+    },
+    {
+      "id": "S09",
+      "slug": "fractal",
+      "name": "Fractal Motif",
+      "platform": "web+ipad",
+      "mode": "Explore/Inspect",
+      "brief": "Nested timeline and recursion tree",
+      "mockupStatus": "specified"
+    },
+    {
+      "id": "S10",
+      "slug": "cellular",
+      "name": "Cellular Automaton Orchestra",
+      "platform": "web+ipad",
+      "mode": "Explore/Inspect",
+      "brief": "Grid, rule step, mapping overlay",
+      "mockupStatus": "specified"
+    },
+    {
+      "id": "S11",
+      "slug": "chaos",
+      "name": "Chaos Attractor",
+      "platform": "web+ipad",
+      "mode": "Explore/Inspect",
+      "brief": "Trajectory and causal mappings",
+      "mockupStatus": "specified",
+      "requiredStates": [
+        "causal vs frozen mapping",
+        "numeric profile",
+        "raw vs shaped trace"
+      ]
+    },
+    {
+      "id": "S12",
+      "slug": "penrose-gate",
+      "name": "Penrose Construction Accepted / Artifact Gate",
+      "platform": "web+ipad",
+      "mode": "Explore",
+      "brief": "Exact pentagrid choice, certificate status, missing fixture/oracle artifacts, and permitted non-authoritative preview",
+      "mockupStatus": "specified",
+      "requiredStates": [
+        "evidence scope",
+        "geometry completeness",
+        "clip boundary semantics"
+      ]
+    },
+    {
+      "id": "S13",
+      "slug": "export",
+      "name": "Export",
+      "platform": "web+native",
+      "mode": "Compose",
+      "brief": "Format capabilities and approximation warnings",
+      "mockupStatus": "specified"
+    },
+    {
+      "id": "S14",
+      "slug": "ipad-landscape",
+      "name": "iPad Landscape Studio",
+      "platform": "ipad-native",
+      "mode": "Compose",
+      "brief": "Adaptive native three-surface studio",
+      "mockupStatus": "specified",
+      "requiredStates": [
+        "one dominant surface",
+        "contextual zones",
+        "44pt design targets",
+        "Pencil accelerators with alternatives"
+      ]
+    },
+    {
+      "id": "S15",
+      "slug": "ipad-portrait",
+      "name": "iPad Portrait Explore",
+      "platform": "ipad-native",
+      "mode": "Explore",
+      "brief": "Canvas-first portrait adaptation",
+      "mockupStatus": "specified"
+    },
+    {
+      "id": "S16",
+      "slug": "iphone-companion",
+      "name": "iPhone Companion",
+      "platform": "iphone-native",
+      "mode": "Explore",
+      "brief": "Playback, canvas, parameter cards, inspector",
+      "mockupStatus": "specified",
+      "requiredStates": [
+        "companion not miniature DAW",
+        "play/control/inspect/share only"
+      ]
+    }
+  ],
+  "version": "0.3.0"
+}

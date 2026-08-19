@@ -1,0 +1,78 @@
+{
+  "program": "Aural Geometry Lab",
+  "version": "0.4.0",
+  "asOf": "2026-08-18",
+  "labs": [
+    {
+      "id": "infinite-staircase",
+      "mvpPriority": "P0",
+      "implementationState": "research-integrated-foundation",
+      "research": [
+        "DR-01",
+        "DR-03",
+        "DR-08"
+      ],
+      "architectureStatus": "analytic Risset v1 foundation implemented; graph/audio migration and listening acceptance pending"
+    },
+    {
+      "id": "euclidean-rings",
+      "mvpPriority": "P0",
+      "implementationState": "runnable-vertical-slice",
+      "research": [
+        "DR-02",
+        "DR-08"
+      ],
+      "architectureStatus": "shared mapping/interaction contracts integrated; domain-specific research remains as listed"
+    },
+    {
+      "id": "tonnetz-walk",
+      "mvpPriority": "P1",
+      "implementationState": "computational-preview",
+      "research": [
+        "DR-04",
+        "DR-08"
+      ],
+      "architectureStatus": "shared mapping/interaction contracts integrated; domain-specific research remains as listed"
+    },
+    {
+      "id": "fractal-motif",
+      "mvpPriority": "P1",
+      "implementationState": "computational-preview",
+      "research": [
+        "DR-05",
+        "DR-08"
+      ],
+      "architectureStatus": "shared mapping/interaction contracts integrated; domain-specific research remains as listed"
+    },
+    {
+      "id": "cellular-automaton",
+      "mvpPriority": "P1",
+      "implementationState": "computational-preview",
+      "research": [
+        "DR-06",
+        "DR-08"
+      ],
+      "architectureStatus": "shared mapping/interaction contracts integrated; domain-specific research remains as listed"
+    },
+    {
+      "id": "chaos-attractor",
+      "mvpPriority": "P1",
+      "implementationState": "computational-preview",
+      "research": [
+        "DR-07",
+        "DR-08"
+      ],
+      "architectureStatus": "shared mapping/interaction contracts integrated; domain-specific research remains as listed"
+    },
+    {
+      "id": "penrose-sequencer",
+      "mvpPriority": "P1",
+      "implementationState": "construction-accepted-artifact-gated",
+      "research": [
+        "DR-09",
+        "DR-08"
+      ],
+      "architectureStatus": "exact pentagrid/Q(phi) production choice accepted; golden/oracle recovery and generator implementation pending"
+    }
+  ]
+}

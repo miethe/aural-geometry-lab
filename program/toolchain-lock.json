@@ -1,0 +1,23 @@
+{
+  "schema": "agl.toolchain-lock",
+  "schemaVersion": 1,
+  "release": "0.4.0",
+  "node": {
+    "tested": "22.16.0",
+    "minimum": "22.12.0"
+  },
+  "npm": {
+    "tested": "10.9.2"
+  },
+  "typescript": {
+    "required": "5.8.3"
+  },
+  "swift": {
+    "tested": "6.2.1",
+    "minimum": "6.0.0"
+  },
+  "notes": [
+    "Build fails when the discovered TypeScript compiler is not exactly 5.8.3.",
+    "A globally installed compiler is accepted only when no local compiler exists and its version matches exactly."
+  ]
+}

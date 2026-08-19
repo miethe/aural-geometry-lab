@@ -1,0 +1,780 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://auralgeometrylab.local/schemas/agl-project-v3.schema.json",
+  "title": "Aural Geometry Lab Project v3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schemaVersion",
+    "id",
+    "name",
+    "createdAt",
+    "modifiedAt",
+    "compatibility",
+    "seedContext",
+    "meter",
+    "tempoMap",
+    "graph",
+    "tracks",
+    "materials",
+    "sourceRecipes",
+    "materializationReceipts",
+    "assets",
+    "extensions"
+  ],
+  "properties": {
+    "schema": {
+      "const": "agl.project"
+    },
+    "schemaVersion": {
+      "const": 3
+    },
+    "id": {
+      "$ref": "#/$defs/id"
+    },
+    "name": {
+      "$ref": "#/$defs/text"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "modifiedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "compatibility": {
+      "$ref": "#/$defs/compatibility"
+    },
+    "seedContext": {
+      "$ref": "#/$defs/seedContext"
+    },
+    "meter": {
+      "$ref": "#/$defs/meter"
+    },
+    "tempoMap": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10000,
+      "items": {
+        "$ref": "#/$defs/tempoPoint"
+      }
+    },
+    "graph": {
+      "$ref": "#/$defs/graph"
+    },
+    "tracks": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": {
+        "$ref": "#/$defs/track"
+      }
+    },
+    "materials": {
+      "type": "array",
+      "maxItems": 100000,
+      "items": {
+        "$ref": "#/$defs/material"
+      }
+    },
+    "sourceRecipes": {
+      "type": "array",
+      "maxItems": 100000,
+      "items": {
+        "$ref": "#/$defs/sourceRecipe"
+      }
+    },
+    "materializationReceipts": {
+      "type": "array",
+      "maxItems": 100000,
+      "items": {
+        "$ref": "#/$defs/receipt"
+      }
+    },
+    "assets": {
+      "type": "array",
+      "maxItems": 100000,
+      "items": {
+        "$ref": "#/$defs/asset"
+      }
+    },
+    "extensions": {
+      "type": "array",
+      "maxItems": 1024,
+      "items": {
+        "$ref": "#/$defs/extension"
+      }
+    },
+    "presentation": {
+      "$ref": "#/$defs/presentation"
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/\\/-]{0,255}$"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000000
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "rational": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "numerator",
+        "denominator"
+      ],
+      "properties": {
+        "numerator": {
+          "type": "string",
+          "pattern": "^-?(0|[1-9][0-9]*)$",
+          "maxLength": 4097
+        },
+        "denominator": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$",
+          "maxLength": 4096
+        }
+      }
+    },
+    "range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start",
+        "end"
+      ],
+      "properties": {
+        "start": {
+          "$ref": "#/$defs/rational"
+        },
+        "end": {
+          "$ref": "#/$defs/rational"
+        }
+      }
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "semanticContractVersion",
+        "canonicalEncodingVersion",
+        "canonicalDigestVersion",
+        "operatorSemanticDigestVersion",
+        "operatorCatalogDigestVersion",
+        "graphCompilerVersion",
+        "operatorCatalogVersion",
+        "operatorCatalogDigest",
+        "stableIdVersion",
+        "deterministicGenerationVersion",
+        "budgetProfileId",
+        "budgetProfileVersion",
+        "commandSchemaVersion",
+        "resolvedAudioPlanSchemaVersion",
+        "selectionIdentityVersion",
+        "packageManifestSchemaVersion",
+        "tempoResolutionVersion",
+        "requiredSemanticExtensions"
+      ],
+      "properties": {
+        "semanticContractVersion": {
+          "const": "wave1-fr01-v3"
+        },
+        "canonicalEncodingVersion": {
+          "const": "agl-canonical-value-v1"
+        },
+        "canonicalDigestVersion": {
+          "const": "sha256-canonical-v1"
+        },
+        "operatorCatalogVersion": {
+          "$ref": "#/$defs/text"
+        },
+        "operatorCatalogDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "stableIdVersion": {
+          "const": "agl-stable-id-v2"
+        },
+        "deterministicGenerationVersion": {
+          "const": "agl-prng-v2"
+        },
+        "budgetProfileId": {
+          "$ref": "#/$defs/id"
+        },
+        "budgetProfileVersion": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "commandSchemaVersion": {
+          "const": 2
+        },
+        "resolvedAudioPlanSchemaVersion": {
+          "const": 2
+        },
+        "selectionIdentityVersion": {
+          "const": 2
+        },
+        "packageManifestSchemaVersion": {
+          "const": 2
+        },
+        "tempoResolutionVersion": {
+          "const": "agl-tempo-map-v1"
+        },
+        "numericalProfileId": {
+          "$ref": "#/$defs/id"
+        },
+        "operatorSemanticDigestVersion": {
+          "const": "agl-operator-semantic-digest-v2"
+        },
+        "operatorCatalogDigestVersion": {
+          "const": "agl-operator-catalog-digest-v2"
+        },
+        "graphCompilerVersion": {
+          "const": "agl-graph-compiler-v2"
+        },
+        "requiredSemanticExtensions": {
+          "type": "array",
+          "maxItems": 1024,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9-]+)+@v[1-9][0-9]*$",
+            "maxLength": 256
+          }
+        }
+      }
+    },
+    "seedContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "algorithmVersion",
+        "encodingVersion",
+        "seed",
+        "defaultStreamId"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "agl-mulberry32-named-stream-v2"
+        },
+        "algorithmVersion": {
+          "const": 2
+        },
+        "encodingVersion": {
+          "const": 1
+        },
+        "seed": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "defaultStreamId": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "meter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "numerator",
+        "denominator"
+      ],
+      "properties": {
+        "numerator": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1024
+        },
+        "denominator": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1024
+        }
+      }
+    },
+    "tempoPoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "beat",
+        "bpm",
+        "curve"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "beat": {
+          "$ref": "#/$defs/rational"
+        },
+        "bpm": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1000000
+        },
+        "curve": {
+          "enum": [
+            "step",
+            "linear"
+          ]
+        }
+      }
+    },
+    "graph": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "nodes",
+        "connections"
+      ],
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "maxItems": 20000,
+          "items": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        "connections": {
+          "type": "array",
+          "maxItems": 100000,
+          "items": {
+            "$ref": "#/$defs/connection"
+          }
+        }
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "version",
+        "operatorSemanticDigest",
+        "parameters"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "type": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*(?:\\.[a-z0-9-]+)+$"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "operatorSemanticDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "parameters": {
+          "type": "object"
+        }
+      }
+    },
+    "connection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "sourceNodeId",
+        "sourcePortId",
+        "targetNodeId",
+        "targetPortId"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "enum": [
+            "dataflow",
+            "control",
+            "reference",
+            "provenance"
+          ]
+        },
+        "sourceNodeId": {
+          "$ref": "#/$defs/id"
+        },
+        "sourcePortId": {
+          "$ref": "#/$defs/id"
+        },
+        "targetNodeId": {
+          "$ref": "#/$defs/id"
+        },
+        "targetPortId": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "track": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "kind",
+        "materialIds",
+        "route"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "kind": {
+          "enum": [
+            "trigger",
+            "note",
+            "audio",
+            "control"
+          ]
+        },
+        "materialIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "route": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "muted",
+            "solo",
+            "gain",
+            "pan"
+          ],
+          "properties": {
+            "muted": {
+              "type": "boolean"
+            },
+            "solo": {
+              "type": "boolean"
+            },
+            "gain": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 16
+            },
+            "pan": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1
+            },
+            "voiceId": {
+              "$ref": "#/$defs/id"
+            }
+          }
+        }
+      }
+    },
+    "materialSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "producerNodeId",
+        "outputPortId",
+        "dependencyDigestAtMaterialization",
+        "sourceRecipeId",
+        "sourceRecipeDigestAtMaterialization"
+      ],
+      "properties": {
+        "producerNodeId": {
+          "$ref": "#/$defs/id"
+        },
+        "outputPortId": {
+          "$ref": "#/$defs/id"
+        },
+        "dependencyDigestAtMaterialization": {
+          "$ref": "#/$defs/digest"
+        },
+        "sourceRecipeId": {
+          "$ref": "#/$defs/id"
+        },
+        "parentMaterialId": {
+          "$ref": "#/$defs/id"
+        },
+        "sourceRecipeDigestAtMaterialization": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "material": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "name",
+        "trackId",
+        "range"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "enum": [
+            "user-authored",
+            "live-generated",
+            "snapshot",
+            "edited-derivative"
+          ]
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "trackId": {
+          "$ref": "#/$defs/id"
+        },
+        "range": {
+          "$ref": "#/$defs/range"
+        },
+        "payloadRef": {
+          "$ref": "#/$defs/id"
+        },
+        "payloadAssetId": {
+          "$ref": "#/$defs/id"
+        },
+        "source": {
+          "$ref": "#/$defs/materialSource"
+        },
+        "materializationReceiptId": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "sourceRecipe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "producerNodeId",
+        "outputPortId",
+        "dependencyDigest",
+        "semanticEnvironmentDigest",
+        "operatorCatalogDigest",
+        "budgetProfileId",
+        "budgetProfileVersion",
+        "seedStreamId",
+        "range"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "producerNodeId": {
+          "$ref": "#/$defs/id"
+        },
+        "outputPortId": {
+          "$ref": "#/$defs/id"
+        },
+        "dependencyDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "semanticEnvironmentDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "operatorCatalogDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "budgetProfileId": {
+          "$ref": "#/$defs/id"
+        },
+        "budgetProfileVersion": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "seedStreamId": {
+          "$ref": "#/$defs/id"
+        },
+        "range": {
+          "$ref": "#/$defs/range"
+        },
+        "graphSnapshotAssetId": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "preparationId",
+        "materialId",
+        "sourceRecipeId",
+        "sourceRecipeDigest",
+        "dependencyDigest",
+        "semanticEnvironmentDigest",
+        "operatorCatalogDigest",
+        "budgetProfileId",
+        "budgetProfileVersion",
+        "seedStreamId",
+        "artifactAssetId",
+        "artifactDigest",
+        "range",
+        "committedAt"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "preparationId": {
+          "$ref": "#/$defs/id"
+        },
+        "materialId": {
+          "$ref": "#/$defs/id"
+        },
+        "sourceRecipeId": {
+          "$ref": "#/$defs/id"
+        },
+        "dependencyDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "semanticEnvironmentDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "artifactAssetId": {
+          "$ref": "#/$defs/id"
+        },
+        "artifactDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "range": {
+          "$ref": "#/$defs/range"
+        },
+        "committedAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+        },
+        "sourceRecipeDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "operatorCatalogDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "budgetProfileId": {
+          "$ref": "#/$defs/id"
+        },
+        "budgetProfileVersion": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "seedStreamId": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "digest",
+        "mediaType",
+        "bytes",
+        "rights"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "mediaType": {
+          "$ref": "#/$defs/text"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "rights": {
+          "enum": [
+            "user-provided",
+            "bundled",
+            "generated",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "extension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "namespace",
+        "schemaVersion",
+        "affectsSemantics",
+        "payload"
+      ],
+      "properties": {
+        "namespace": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z0-9-]+)+$"
+        },
+        "schemaVersion": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "affectsSemantics": {
+          "type": "boolean"
+        },
+        "payload": {}
+      }
+    },
+    "presentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "defaultLab": {
+          "type": "string"
+        },
+        "graphLayout": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "x",
+              "y"
+            ],
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

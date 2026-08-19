@@ -1,0 +1,69 @@
+{
+  "schema": "agl.program.fr01-release-manifest",
+  "schemaVersion": 1,
+  "program": "Aural Geometry Lab",
+  "release": "0.4.0",
+  "asOf": "2026-08-18",
+  "milestone": "M0.9",
+  "status": "clean-extraction-validated",
+  "authority": {
+    "review": "docs/24-fr01-whole-system-adversarial-repository-review.md",
+    "findings": "program/fr01-findings-register.json",
+    "contracts": "program/fr01-contract-manifest.json",
+    "validation": "docs/26-fr01-validation-report.md",
+    "handoff": "docs/27-fr01-swarm-handoff-amendment.md"
+  },
+  "counts": {
+    "findings": 51,
+    "critical": 9,
+    "high": 37,
+    "medium": 5,
+    "fixedOrContractHardened": 33,
+    "openOwned": 18,
+    "criticalHighOwned": 46,
+    "backlogItems": 142,
+    "publicContracts": 11,
+    "nodeTests": 85,
+    "swiftTests": 11,
+    "schemaFixtures": 12
+  },
+  "archivePolicy": {
+    "prefix": "aural-geometry-lab/",
+    "deterministicTimestamp": "1980-01-01T00:00:00Z",
+    "excludedPathComponents": [
+      ".git",
+      ".build",
+      ".swiftpm",
+      "node_modules",
+      "dist",
+      "coverage",
+      "__pycache__",
+      ".pytest_cache",
+      ".mypy_cache"
+    ],
+    "excludedNames": [
+      ".DS_Store"
+    ],
+    "symlinksIncluded": false
+  },
+  "validationCommands": [
+    "npm run check:all",
+    "python3 scripts/validate-json-schemas.py",
+    "python3 scripts/make-release.py <output.zip>",
+    "unzip -t <output.zip>"
+  ],
+  "notes": [
+    "Contract and reference implementation validation is not production browser/audio/native acceptance.",
+    "Every unresolved Critical/High finding has a backlog item and workstream owner."
+  ],
+  "validation": {
+    "deterministicArchiveBuildsCompared": 2,
+    "deterministicArchiveByteIdentity": true,
+    "zipIntegrity": "pass",
+    "cleanExtractionCheckAll": "pass",
+    "cleanExtractionSchemaValidation": "pass",
+    "staticHttpSmokeEndpoints": 8,
+    "sourceFilesInArchive": 228,
+    "generatedBuildStateExcluded": true
+  }
+}

@@ -1,0 +1,1740 @@
+{
+  "schema": "agl.program.backlog",
+  "schemaVersion": 1,
+  "program": "Aural Geometry Lab",
+  "asOf": "2026-08-18",
+  "statusVocabulary": [
+    "done",
+    "started",
+    "ready",
+    "blocked",
+    "research-integrated",
+    "research-gated",
+    "planned",
+    "deferred"
+  ],
+  "items": [
+    {
+      "id": "AGL-001",
+      "epic": "E0",
+      "priority": "P0",
+      "status": "done",
+      "title": "Program charter and MVP boundaries",
+      "dependsOn": [],
+      "acceptanceSummary": "Mission, users, scope, gates, and exit criteria are recorded."
+    },
+    {
+      "id": "AGL-002",
+      "epic": "E0",
+      "priority": "P0",
+      "status": "done",
+      "title": "Exact rational musical time",
+      "dependsOn": [],
+      "acceptanceSummary": "Normalized arithmetic and drift-free loop fixtures pass."
+    },
+    {
+      "id": "AGL-003",
+      "epic": "E0",
+      "priority": "P0",
+      "status": "done",
+      "title": "Canonical event and pattern model",
+      "dependsOn": [],
+      "acceptanceSummary": "Interval query, event budgets, and looping behavior are tested."
+    },
+    {
+      "id": "AGL-004",
+      "epic": "E0",
+      "priority": "P0",
+      "status": "done",
+      "title": "Typed and versioned operator catalog",
+      "dependsOn": [],
+      "acceptanceSummary": "Initial definitions and port families compile."
+    },
+    {
+      "id": "AGL-005",
+      "epic": "E0",
+      "priority": "P0",
+      "status": "done",
+      "title": "Seed and stable-ID utilities",
+      "dependsOn": [],
+      "acceptanceSummary": "Deterministic fixtures pass."
+    },
+    {
+      "id": "AGL-006",
+      "epic": "E0",
+      "priority": "P0",
+      "status": "done",
+      "title": "Mathematical operator kernels",
+      "dependsOn": [],
+      "acceptanceSummary": "Euclidean, Risset, Tonnetz, fractal, CA, and Lorenz kernels exist."
+    },
+    {
+      "id": "AGL-007",
+      "epic": "E0",
+      "priority": "P0",
+      "status": "done",
+      "title": "Runnable browser foundation",
+      "dependsOn": [],
+      "acceptanceSummary": "Static browser application builds and serves."
+    },
+    {
+      "id": "AGL-008",
+      "epic": "E0",
+      "priority": "P0",
+      "status": "done",
+      "title": "Initial invariant test harness",
+      "dependsOn": [],
+      "acceptanceSummary": "Eighty-five TypeScript/Node invariant, contract, integration, and hostile-input tests pass in the FR-01 v0.4 baseline."
+    },
+    {
+      "id": "AGL-010",
+      "epic": "E1",
+      "priority": "P0",
+      "status": "started",
+      "title": "Project v3 schema and semantic compatibility contract",
+      "dependsOn": [
+        "AGL-003"
+      ],
+      "acceptanceSummary": "Strict project v3 runtime validation and Draft 2020-12 schema exist; finish hostile corpus, compatibility negotiation, and schema freeze."
+    },
+    {
+      "id": "AGL-011",
+      "epic": "E1",
+      "priority": "P0",
+      "status": "started",
+      "title": "Loss-aware sequential migration framework",
+      "dependsOn": [
+        "AGL-010"
+      ],
+      "acceptanceSummary": "V1→v2→v3 migration emits canonical receipts and explicit blocking losses; finish source-byte preservation, catalog rebinding, and migration torture corpus."
+    },
+    {
+      "id": "AGL-012",
+      "epic": "E1",
+      "priority": "P0",
+      "status": "started",
+      "title": "Semantic command v2 bus and history",
+      "dependsOn": [
+        "AGL-010"
+      ],
+      "acceptanceSummary": "Atomic clone-first transaction application, core-generated inverses, preconditions, no-op suppression, and edit-session coalescing are tested; implement production handlers and history persistence."
+    },
+    {
+      "id": "AGL-013",
+      "epic": "E1",
+      "priority": "P0",
+      "status": "ready",
+      "title": "IndexedDB project repository",
+      "dependsOn": [
+        "AGL-010",
+        "AGL-012"
+      ],
+      "acceptanceSummary": "Autosave, recovery, list/open/duplicate/delete, and storage diagnostics work."
+    },
+    {
+      "id": "AGL-014",
+      "epic": "E1",
+      "priority": "P0",
+      "status": "started",
+      "title": "Asset store",
+      "dependsOn": [
+        "AGL-013"
+      ],
+      "acceptanceSummary": "Logical package manifest, safe member paths, and content-addressed asset semantics are defined; complete native-directory and portable-archive adapters."
+    },
+    {
+      "id": "AGL-015",
+      "epic": "E1",
+      "priority": "P1",
+      "status": "started",
+      "title": "Portable project package",
+      "dependsOn": [
+        "AGL-011",
+        "AGL-014"
+      ],
+      "acceptanceSummary": "Logical package profile is accepted; complete browser/native round-trip and conflict proof."
+    },
+    {
+      "id": "AGL-020",
+      "epic": "E2",
+      "priority": "P0",
+      "status": "started",
+      "title": "Executable operator interface",
+      "dependsOn": [
+        "AGL-004"
+      ],
+      "acceptanceSummary": "Wave-1 operator metadata now includes conformance, causality, identity, budget, and provenance semantics; complete executable interface."
+    },
+    {
+      "id": "AGL-021",
+      "epic": "E2",
+      "priority": "P0",
+      "status": "started",
+      "title": "Port type checker",
+      "dependsOn": [
+        "AGL-020"
+      ],
+      "acceptanceSummary": "The graph compiler uses one port/type/cardinality service; wire the same service into React/native connection preview, import, migration, and keyboard insertion."
+    },
+    {
+      "id": "AGL-022",
+      "epic": "E2",
+      "priority": "P0",
+      "status": "started",
+      "title": "Graph compiler",
+      "dependsOn": [
+        "AGL-021"
+      ],
+      "acceptanceSummary": "A deterministic compiler validates operator digests, parameters, port types, cardinality, dependencies, and cycles; integrate it with workers and production graph commands."
+    },
+    {
+      "id": "AGL-023",
+      "epic": "E2",
+      "priority": "P0",
+      "status": "started",
+      "title": "Worker evaluator",
+      "dependsOn": [
+        "AGL-022"
+      ],
+      "acceptanceSummary": "Evaluation request/result v2 contracts carry epoch, scope, channel, generation, hashes, budgets, progress, and integrity; implement worker execution and hard-stop fallback."
+    },
+    {
+      "id": "AGL-024",
+      "epic": "E2",
+      "priority": "P0",
+      "status": "started",
+      "title": "Deterministic evaluation cache",
+      "dependsOn": [
+        "AGL-022"
+      ],
+      "acceptanceSummary": "Exact derivation publication and cache-only stale results are specified; implement exact/profile-numeric namespaces and backend-aware numeric cache policy."
+    },
+    {
+      "id": "AGL-025",
+      "epic": "E2",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Evaluation budget service",
+      "dependsOn": [
+        "AGL-020"
+      ],
+      "acceptanceSummary": "Versioned work/memory/event/recursion/geometry profiles preflight every generative operation and surface deterministic recovery."
+    },
+    {
+      "id": "AGL-026",
+      "epic": "E2",
+      "priority": "P1",
+      "status": "planned",
+      "title": "Explicit state and delay operators",
+      "dependsOn": [
+        "AGL-022"
+      ],
+      "acceptanceSummary": "Bounded feedback works without zero-delay cycles."
+    },
+    {
+      "id": "AGL-027",
+      "epic": "E2",
+      "priority": "P1",
+      "status": "started",
+      "title": "Graph freeze-to-clip",
+      "dependsOn": [
+        "AGL-023",
+        "AGL-032"
+      ],
+      "acceptanceSummary": "Prepare-then-commit materialization with half-open ranges, source digests, immutable receipts, content-addressed artifacts, and lineage is defined and tested."
+    },
+    {
+      "id": "AGL-030",
+      "epic": "E3",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Production app scaffold",
+      "dependsOn": [],
+      "acceptanceSummary": "React/Vite build, routes, error boundaries, state seams, and CI exist."
+    },
+    {
+      "id": "AGL-031",
+      "epic": "E3",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Transport",
+      "dependsOn": [
+        "AGL-030",
+        "AGL-041"
+      ],
+      "acceptanceSummary": "Transport uses an epoch and maps rational project time into an active ResolvedAudioPlan generation."
+    },
+    {
+      "id": "AGL-032",
+      "epic": "E3",
+      "priority": "P0",
+      "status": "started",
+      "title": "Timeline and clips",
+      "dependsOn": [
+        "AGL-030",
+        "AGL-031"
+      ],
+      "acceptanceSummary": "MaterialKind and derived SourceStatus semantics are accepted; complete timeline rendering, commands, receipts, and source comparison."
+    },
+    {
+      "id": "AGL-033",
+      "epic": "E3",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Tracks and mixer",
+      "dependsOn": [
+        "AGL-030",
+        "AGL-041"
+      ],
+      "acceptanceSummary": "Mute, solo, gain, pan, voice selection, and safe master path work."
+    },
+    {
+      "id": "AGL-034",
+      "epic": "E3",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Typed visual operator graph",
+      "dependsOn": [
+        "AGL-021",
+        "AGL-030"
+      ],
+      "acceptanceSummary": "Graph editor uses compiler compatibility, atomic rewires/insertion, keyboard parity, non-drag alternatives, and explicit local layout."
+    },
+    {
+      "id": "AGL-035",
+      "epic": "E3",
+      "priority": "P0",
+      "status": "started",
+      "title": "Mathematical inspector",
+      "dependsOn": [
+        "AGL-023",
+        "AGL-030"
+      ],
+      "acceptanceSummary": "MappingTrace and structured provenance stage records exist; complete inspector projection and state/window/random/constraint explanations."
+    },
+    {
+      "id": "AGL-036",
+      "epic": "E3",
+      "priority": "P0",
+      "status": "started",
+      "title": "Linked selection",
+      "dependsOn": [
+        "AGL-032",
+        "AGL-034",
+        "AGL-035",
+        "AGL-050"
+      ],
+      "acceptanceSummary": "Selection/focus/hover/related/orphan semantics are defined and tested; complete projection adapters and accessibility announcements."
+    },
+    {
+      "id": "AGL-037",
+      "epic": "E3",
+      "priority": "P1",
+      "status": "planned",
+      "title": "Guided experiment player",
+      "dependsOn": [
+        "AGL-035"
+      ],
+      "acceptanceSummary": "Claim, manipulation, observation, explanation, and reset steps are versioned."
+    },
+    {
+      "id": "AGL-038",
+      "epic": "E3",
+      "priority": "P1",
+      "status": "planned",
+      "title": "Preset browser",
+      "dependsOn": [
+        "AGL-013"
+      ],
+      "acceptanceSummary": "Tags, lineage, compatibility, and evidence status are displayed."
+    },
+    {
+      "id": "AGL-040",
+      "epic": "E4",
+      "priority": "P0",
+      "status": "started",
+      "title": "Native Web Audio reference backend",
+      "dependsOn": [],
+      "acceptanceSummary": "Sprint-0 preview is expanded behind a stable render-plan interface."
+    },
+    {
+      "id": "AGL-041",
+      "epic": "E4",
+      "priority": "P0",
+      "status": "started",
+      "title": "Audio render plan",
+      "dependsOn": [
+        "AGL-003",
+        "AGL-040"
+      ],
+      "acceptanceSummary": "ResolvedAudioPlan v1 separates exact origins, ideal seconds, and backend schedules; complete compiler, serialization, and voice/resource plan."
+    },
+    {
+      "id": "AGL-042",
+      "epic": "E4",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Instrument voice registry",
+      "dependsOn": [
+        "AGL-041"
+      ],
+      "acceptanceSummary": "Oscillator, noise/percussion, sampler, envelopes, and filters are registered."
+    },
+    {
+      "id": "AGL-043",
+      "epic": "E4",
+      "priority": "P0",
+      "status": "research-integrated",
+      "title": "Scheduler hardening",
+      "dependsOn": [
+        "DR-03",
+        "AGL-041"
+      ],
+      "acceptanceSummary": "Implement absolute-time scheduler starting at benchmark candidate 25 ms wake / 100 ms horizon / 250 ms ceiling with adaptive jitter policy."
+    },
+    {
+      "id": "AGL-044",
+      "epic": "E4",
+      "priority": "P0",
+      "status": "research-integrated",
+      "title": "AudioWorklet bridge",
+      "dependsOn": [
+        "DR-03",
+        "AGL-041"
+      ],
+      "acceptanceSummary": "Implement bounded MessagePort worklet protocol, generation gates, preallocated queues, and measured dense-voice escalation."
+    },
+    {
+      "id": "AGL-045",
+      "epic": "E4",
+      "priority": "P0",
+      "status": "research-integrated",
+      "title": "Offline WAV render",
+      "dependsOn": [
+        "AGL-041",
+        "AGL-042"
+      ],
+      "acceptanceSummary": "Offline backend consumes the same ResolvedAudioPlan; semantic/sample-frame equality and DSP tolerances are explicit."
+    },
+    {
+      "id": "AGL-046",
+      "epic": "E4",
+      "priority": "P1",
+      "status": "deferred",
+      "title": "Optional Tone.js adapter",
+      "dependsOn": [
+        "DR-03",
+        "AGL-041"
+      ],
+      "acceptanceSummary": "Tone.js remains a replaceable P1 voice/effect adapter and never owns canonical transport/time/project semantics."
+    },
+    {
+      "id": "AGL-047",
+      "epic": "E4",
+      "priority": "P1",
+      "status": "deferred",
+      "title": "Faust and WASM DSP proof",
+      "dependsOn": [
+        "DR-03",
+        "AGL-044"
+      ],
+      "acceptanceSummary": "Faust/WASM may enter as precompiled bounded DSP only after benchmark and dependency/license review."
+    },
+    {
+      "id": "AGL-048",
+      "epic": "E4",
+      "priority": "P1",
+      "status": "research-integrated",
+      "title": "Web MIDI adapter",
+      "dependsOn": [
+        "DR-03",
+        "AGL-031"
+      ],
+      "acceptanceSummary": "Web MIDI is optional progressive enhancement; native Core MIDI UMP is a future adapter. Neither owns project time."
+    },
+    {
+      "id": "AGL-049",
+      "epic": "E4",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Gain and emergency-stop safety",
+      "dependsOn": [
+        "AGL-040"
+      ],
+      "acceptanceSummary": "Conservative defaults, master dynamics, and grouped teardown pass."
+    },
+    {
+      "id": "AGL-050",
+      "epic": "E5",
+      "priority": "P0",
+      "status": "started",
+      "title": "Visualization projection contract",
+      "dependsOn": [
+        "AGL-020"
+      ],
+      "acceptanceSummary": "Projection contracts carry semantic IDs, hit regions, source lineage, accessibility descriptions, renderer hints, and raw/shaped mapping stages."
+    },
+    {
+      "id": "AGL-051",
+      "epic": "E5",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Shared 2D canvas",
+      "dependsOn": [
+        "AGL-050",
+        "AGL-030"
+      ],
+      "acceptanceSummary": "Zoom, pan, pick, export, high-DPI, and bounded rendering work."
+    },
+    {
+      "id": "AGL-052",
+      "epic": "E5",
+      "priority": "P1",
+      "status": "planned",
+      "title": "3D canvas adapter",
+      "dependsOn": [
+        "AGL-050",
+        "AGL-030"
+      ],
+      "acceptanceSummary": "3D is performance-bounded and has reduced-motion alternatives."
+    },
+    {
+      "id": "AGL-053",
+      "epic": "E5",
+      "priority": "P0",
+      "status": "started",
+      "title": "Accessible mathematical descriptions",
+      "dependsOn": [
+        "AGL-050"
+      ],
+      "acceptanceSummary": "Accessible ordered descriptions derive from the same semantic model as sound and graphics; complete keyboard traversal and announcements."
+    },
+    {
+      "id": "AGL-054",
+      "epic": "E5",
+      "priority": "P1",
+      "status": "planned",
+      "title": "Visual snapshot and video export",
+      "dependsOn": [
+        "AGL-051"
+      ],
+      "acceptanceSummary": "Deterministic frames include attribution and metadata."
+    },
+    {
+      "id": "AGL-060",
+      "epic": "E6",
+      "priority": "P0",
+      "status": "started",
+      "title": "Infinite Staircase canonical graph migration",
+      "dependsOn": [
+        "AGL-022",
+        "AGL-041"
+      ],
+      "acceptanceSummary": "Migrate Infinite Staircase to source pattern + rhythm.risset@1 + explicit optional stages on the common graph/runtime."
+    },
+    {
+      "id": "AGL-061",
+      "epic": "E6",
+      "priority": "P0",
+      "status": "research-integrated",
+      "title": "Risset psychoacoustic parameter profile",
+      "dependsOn": [
+        "DR-01"
+      ],
+      "acceptanceSummary": "Canonical profile accepted: ratio 2, 20 s cycle, 120 BPM nominal center, raised-cosine B=2 linear partition; values remain engineering defaults pending listening validation."
+    },
+    {
+      "id": "AGL-062",
+      "epic": "E6",
+      "priority": "P0",
+      "status": "research-integrated",
+      "title": "Log-tempo visualization",
+      "dependsOn": [
+        "AGL-050",
+        "AGL-060"
+      ],
+      "acceptanceSummary": "Visualize wrapped log-tempo closure and unwrapped local acceleration from the same analytic operator state."
+    },
+    {
+      "id": "AGL-063",
+      "epic": "E6",
+      "priority": "P0",
+      "status": "research-integrated",
+      "title": "Source-pattern and subdivision engine",
+      "dependsOn": [
+        "DR-01",
+        "AGL-060"
+      ],
+      "acceptanceSummary": "Subdivision shedding and 3:2 ambiguity are explicit independent stages/presets, never hidden Risset semantics."
+    },
+    {
+      "id": "AGL-064",
+      "epic": "E6",
+      "priority": "P1",
+      "status": "research-integrated",
+      "title": "Shepard pitch coupling",
+      "dependsOn": [
+        "DR-01",
+        "AGL-060"
+      ],
+      "acceptanceSummary": "Shepard/Risset pitch coupling is independent, default-off, and excluded from rhythm-only acceptance stimuli."
+    },
+    {
+      "id": "AGL-065",
+      "epic": "E6",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Infinite Staircase listening-test fixture",
+      "dependsOn": [
+        "DR-01",
+        "AGL-061"
+      ],
+      "acceptanceSummary": "Run product validation with fixed synthetic stimuli; measure perceived direction, reset detection, preference, and individual variation without claiming a universal threshold."
+    },
+    {
+      "id": "AGL-070",
+      "epic": "E7",
+      "priority": "P0",
+      "status": "started",
+      "title": "Multi-ring canonical Euclidean sequencer",
+      "dependsOn": [
+        "AGL-022",
+        "AGL-041"
+      ],
+      "acceptanceSummary": "One to eight rings play and export exact patterns."
+    },
+    {
+      "id": "AGL-071",
+      "epic": "E7",
+      "priority": "P0",
+      "status": "research-gated",
+      "title": "Euclidean algorithm and preset evidence",
+      "dependsOn": [
+        "DR-02"
+      ],
+      "acceptanceSummary": "Conventions, fixtures, and labels are accepted."
+    },
+    {
+      "id": "AGL-072",
+      "epic": "E7",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Direct ring manipulation",
+      "dependsOn": [
+        "AGL-051",
+        "AGL-070"
+      ],
+      "acceptanceSummary": "Rotation and phase support pointer and keyboard interaction."
+    },
+    {
+      "id": "AGL-073",
+      "epic": "E7",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Composite cycle analysis",
+      "dependsOn": [
+        "AGL-070"
+      ],
+      "acceptanceSummary": "Gaps, alignment, and bounded LCM summaries are exact."
+    },
+    {
+      "id": "AGL-074",
+      "epic": "E7",
+      "priority": "P1",
+      "status": "planned",
+      "title": "Accent and probability layer",
+      "dependsOn": [
+        "DR-08",
+        "AGL-070"
+      ],
+      "acceptanceSummary": "Seeded variation is separate from Euclidean generation."
+    },
+    {
+      "id": "AGL-080",
+      "epic": "E8",
+      "priority": "P1",
+      "status": "started",
+      "title": "Tonnetz computational preview migration",
+      "dependsOn": [
+        "AGL-022"
+      ],
+      "acceptanceSummary": "Existing coordinate and triad kernel becomes versioned operator."
+    },
+    {
+      "id": "AGL-081",
+      "epic": "E8",
+      "priority": "P1",
+      "status": "research-gated",
+      "title": "Tonnetz convention and transformations",
+      "dependsOn": [
+        "DR-04"
+      ],
+      "acceptanceSummary": "Exact model and terminology are selected."
+    },
+    {
+      "id": "AGL-082",
+      "epic": "E8",
+      "priority": "P1",
+      "status": "ready",
+      "title": "Interactive Tonnetz path editor",
+      "dependsOn": [
+        "AGL-051",
+        "AGL-081"
+      ],
+      "acceptanceSummary": "Paths are editable and use stable graph IDs."
+    },
+    {
+      "id": "AGL-083",
+      "epic": "E8",
+      "priority": "P1",
+      "status": "ready",
+      "title": "Deterministic voicing optimizer",
+      "dependsOn": [
+        "DR-04",
+        "AGL-081"
+      ],
+      "acceptanceSummary": "Cost model, constraints, tie breaking, and provenance are explicit."
+    },
+    {
+      "id": "AGL-084",
+      "epic": "E8",
+      "priority": "P1",
+      "status": "planned",
+      "title": "Tonnetz MIDI and MusicXML export",
+      "dependsOn": [
+        "AGL-083",
+        "AGL-130",
+        "AGL-131"
+      ],
+      "acceptanceSummary": "Independent consumer fixtures pass."
+    },
+    {
+      "id": "AGL-090",
+      "epic": "E9",
+      "priority": "P1",
+      "status": "started",
+      "title": "Bounded fractal recursion preview",
+      "dependsOn": [],
+      "acceptanceSummary": "Existing kernel is retained and generalized."
+    },
+    {
+      "id": "AGL-091",
+      "epic": "E9",
+      "priority": "P1",
+      "status": "research-gated",
+      "title": "Fractal grammar and model selection",
+      "dependsOn": [
+        "DR-05"
+      ],
+      "acceptanceSummary": "Accepted formal semantics and claims are integrated."
+    },
+    {
+      "id": "AGL-092",
+      "epic": "E9",
+      "priority": "P1",
+      "status": "ready",
+      "title": "Fractal seed motif editor",
+      "dependsOn": [
+        "AGL-032",
+        "AGL-091"
+      ],
+      "acceptanceSummary": "Users draw, play, or import a bounded seed motif."
+    },
+    {
+      "id": "AGL-093",
+      "epic": "E9",
+      "priority": "P1",
+      "status": "ready",
+      "title": "Recursion tree and ancestry",
+      "dependsOn": [
+        "AGL-050",
+        "AGL-091"
+      ],
+      "acceptanceSummary": "Any event traces its generation path."
+    },
+    {
+      "id": "AGL-094",
+      "epic": "E9",
+      "priority": "P1",
+      "status": "ready",
+      "title": "Fractal growth forecast and freeze",
+      "dependsOn": [
+        "AGL-025",
+        "AGL-027",
+        "AGL-091"
+      ],
+      "acceptanceSummary": "Growth is predicted, capped, and materializable."
+    },
+    {
+      "id": "AGL-100",
+      "epic": "E10",
+      "priority": "P1",
+      "status": "started",
+      "title": "Elementary CA preview migration",
+      "dependsOn": [
+        "AGL-022"
+      ],
+      "acceptanceSummary": "All rules, boundaries, and seeds use canonical state."
+    },
+    {
+      "id": "AGL-101",
+      "epic": "E10",
+      "priority": "P1",
+      "status": "research-gated",
+      "title": "CA sonification and richer-mode scope",
+      "dependsOn": [
+        "DR-06",
+        "DR-08"
+      ],
+      "acceptanceSummary": "Musically meaningful mappings and richer mode are selected."
+    },
+    {
+      "id": "AGL-102",
+      "epic": "E10",
+      "priority": "P1",
+      "status": "ready",
+      "title": "CA rule-step inspector",
+      "dependsOn": [
+        "AGL-035",
+        "AGL-100"
+      ],
+      "acceptanceSummary": "Neighborhood bits and rule result are explained."
+    },
+    {
+      "id": "AGL-103",
+      "epic": "E10",
+      "priority": "P1",
+      "status": "ready",
+      "title": "CA lineage and event provenance",
+      "dependsOn": [
+        "AGL-036",
+        "AGL-100"
+      ],
+      "acceptanceSummary": "Grid cells link to events and history."
+    },
+    {
+      "id": "AGL-104",
+      "epic": "E10",
+      "priority": "P1",
+      "status": "planned",
+      "title": "Validated richer CA mode",
+      "dependsOn": [
+        "AGL-101",
+        "AGL-023"
+      ],
+      "acceptanceSummary": "Accepted 2D or alternative extension runs within worker budgets."
+    },
+    {
+      "id": "AGL-110",
+      "epic": "E11",
+      "priority": "P1",
+      "status": "started",
+      "title": "Lorenz RK4 preview migration",
+      "dependsOn": [
+        "AGL-022"
+      ],
+      "acceptanceSummary": "Existing implementation becomes parameterized operator."
+    },
+    {
+      "id": "AGL-111",
+      "epic": "E11",
+      "priority": "P1",
+      "status": "research-gated",
+      "title": "Chaos numerical and mapping profile",
+      "dependsOn": [
+        "DR-07",
+        "DR-08"
+      ],
+      "acceptanceSummary": "Integrators, windows, smoothing, and claims are selected."
+    },
+    {
+      "id": "AGL-112",
+      "epic": "E11",
+      "priority": "P1",
+      "status": "started",
+      "title": "Control-signal pipeline",
+      "dependsOn": [
+        "DR-08",
+        "AGL-110"
+      ],
+      "acceptanceSummary": "ControlSignal, DimensionSpec, TemporalSemantics, and explicit source→sample→normalize→smooth→transform→quantize→constrain→target contracts exist; complete operator implementations."
+    },
+    {
+      "id": "AGL-113",
+      "epic": "E11",
+      "priority": "P1",
+      "status": "started",
+      "title": "Live and frozen trajectory modes",
+      "dependsOn": [
+        "AGL-111"
+      ],
+      "acceptanceSummary": "Compiler distinguishes causal live, bounded-lookahead, and frozen whole-window mappings; complete runtime checkpoints and UI labeling."
+    },
+    {
+      "id": "AGL-114",
+      "epic": "E11",
+      "priority": "P1",
+      "status": "planned",
+      "title": "Nearby-initial-condition comparison",
+      "dependsOn": [
+        "AGL-111",
+        "AGL-052"
+      ],
+      "acceptanceSummary": "Synchronized divergence uses identical mappings."
+    },
+    {
+      "id": "AGL-120",
+      "epic": "E12",
+      "priority": "P1",
+      "status": "research-integrated",
+      "title": "Exact Penrose implementation selection",
+      "dependsOn": [
+        "DR-09"
+      ],
+      "acceptanceSummary": "Production choice accepted: certified regular de Bruijn pentagrid emitting exact P3 rhombs; repository artifact recovery remains a completion gate."
+    },
+    {
+      "id": "AGL-121",
+      "epic": "E12",
+      "priority": "P1",
+      "status": "ready",
+      "title": "Deterministic finite Penrose patch generator",
+      "dependsOn": [
+        "AGL-120",
+        "AGL-023"
+      ],
+      "acceptanceSummary": "Implement exact finite-query generator using integer addresses and Q(phi), with core/halo completeness and viewport-independent IDs."
+    },
+    {
+      "id": "AGL-122",
+      "epic": "E12",
+      "priority": "P1",
+      "status": "ready",
+      "title": "Penrose adjacency graph",
+      "dependsOn": [
+        "AGL-121"
+      ],
+      "acceptanceSummary": "Build adjacency from canonical shared edges only; clipping is a projection artifact and cannot create topology."
+    },
+    {
+      "id": "AGL-123",
+      "epic": "E12",
+      "priority": "P1",
+      "status": "ready",
+      "title": "Penrose traversal and mapping engine",
+      "dependsOn": [
+        "AGL-122",
+        "DR-08"
+      ],
+      "acceptanceSummary": "Implement finite versioned traversals and feed typed Penrose features into the shared mapping pipeline."
+    },
+    {
+      "id": "AGL-124",
+      "epic": "E12",
+      "priority": "P1",
+      "status": "started",
+      "title": "Honest Penrose research-gated UI",
+      "dependsOn": [],
+      "acceptanceSummary": "Replace the research gate with an evidence-aware construction-accepted/artifact-pending state, then exact implementation status."
+    },
+    {
+      "id": "AGL-130",
+      "epic": "E13",
+      "priority": "P1",
+      "status": "ready",
+      "title": "MIDI file exporter",
+      "dependsOn": [
+        "AGL-003"
+      ],
+      "acceptanceSummary": "Tempo, meter, notes, triggers, and quantization warnings export deterministically."
+    },
+    {
+      "id": "AGL-131",
+      "epic": "E13",
+      "priority": "P1",
+      "status": "ready",
+      "title": "MusicXML subset exporter",
+      "dependsOn": [
+        "AGL-003"
+      ],
+      "acceptanceSummary": "Supported subset and validator fixtures are documented."
+    },
+    {
+      "id": "AGL-132",
+      "epic": "E13",
+      "priority": "P0",
+      "status": "started",
+      "title": "Accessibility baseline",
+      "dependsOn": [
+        "AGL-030"
+      ],
+      "acceptanceSummary": "Accessibility is a semantic projection contract: keyboard, non-drag, non-color, reduced motion, text alternatives, and screen-reader state."
+    },
+    {
+      "id": "AGL-133",
+      "epic": "E13",
+      "priority": "P0",
+      "status": "started",
+      "title": "Property and invariant test suite",
+      "dependsOn": [
+        "AGL-002",
+        "AGL-006"
+      ],
+      "acceptanceSummary": "Thirty-two tests now exercise Wave-1 contracts; expand property, metamorphic, golden, migration, cross-platform, and perceptual fixtures."
+    },
+    {
+      "id": "AGL-134",
+      "epic": "E13",
+      "priority": "P0",
+      "status": "research-integrated",
+      "title": "Cross-browser audio harness",
+      "dependsOn": [
+        "DR-03",
+        "AGL-043"
+      ],
+      "acceptanceSummary": "Harness specification accepted; execute on declared browser/OS/hardware matrix before M2 scheduler limits freeze."
+    },
+    {
+      "id": "AGL-135",
+      "epic": "E13",
+      "priority": "P0",
+      "status": "ready",
+      "title": "End-to-end lab smoke suite",
+      "dependsOn": [
+        "AGL-013",
+        "AGL-031",
+        "AGL-045"
+      ],
+      "acceptanceSummary": "Open, play, change, save, reopen, and export pass for every lab."
+    },
+    {
+      "id": "AGL-136",
+      "epic": "E13",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Dependency and license review",
+      "dependsOn": [
+        "AGL-030",
+        "AGL-042"
+      ],
+      "acceptanceSummary": "Lockfile, notices, sample rights, and reciprocal-license boundaries are approved."
+    },
+    {
+      "id": "AGL-137",
+      "epic": "E13",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Private-beta release gate",
+      "dependsOn": [
+        "AGL-135",
+        "AGL-136"
+      ],
+      "acceptanceSummary": "Charter exit criteria and risk exceptions are signed."
+    },
+    {
+      "id": "AGL-140",
+      "epic": "E14",
+      "priority": "P0",
+      "status": "done",
+      "title": "Final cross-platform UI/UX design specification",
+      "dependsOn": [],
+      "acceptanceSummary": "UI/UX spec v1.1 incorporates Wave-1 workspace, material, mapping, provenance, accessibility, and native-layout semantics."
+    },
+    {
+      "id": "AGL-141",
+      "epic": "E14",
+      "priority": "P0",
+      "status": "done",
+      "title": "Cross-surface selection and interaction contract",
+      "dependsOn": [],
+      "acceptanceSummary": "Interaction contract includes separated state strata, semantic commands, generated identities, materialization, and async freshness."
+    },
+    {
+      "id": "AGL-142",
+      "epic": "E14",
+      "priority": "P0",
+      "status": "done",
+      "title": "Platform-neutral design tokens and manifests",
+      "dependsOn": [
+        "AGL-140"
+      ],
+      "acceptanceSummary": "Design tokens/manifests v0.3 include material axes, async/audio states, mapping stages, accessibility, and responsive native surfaces."
+    },
+    {
+      "id": "AGL-143",
+      "epic": "E14",
+      "priority": "P1",
+      "status": "done",
+      "title": "Compile-tested Swift portable-contract spike",
+      "dependsOn": [
+        "AGL-141"
+      ],
+      "acceptanceSummary": "Swift package decodes project v1/v2/v3 and passes shared selection v1/v2, exact-wire, material, audio-frame, package-profile, canonical SHA-256, stable-ID v2, PRNG v2, and Penrose-certificate fixtures."
+    },
+    {
+      "id": "AGL-144",
+      "epic": "E14",
+      "priority": "P0",
+      "status": "ready",
+      "title": "React production shell from final design contract",
+      "dependsOn": [
+        "AGL-140",
+        "AGL-141",
+        "AGL-142"
+      ],
+      "acceptanceSummary": "Responsive shell implements toolbar, navigator, canvas, inspector, timeline, graph drawer, selection linkage, and focus surfaces."
+    },
+    {
+      "id": "AGL-145",
+      "epic": "E14",
+      "priority": "P0",
+      "status": "started",
+      "title": "Harden graph/timeline/direct-manipulation command semantics",
+      "dependsOn": [
+        "DR-14",
+        "AGL-141"
+      ],
+      "acceptanceSummary": "Research-derived state machines and model tests are integrated; complete production command/history store and React adapters before editor wiring."
+    },
+    {
+      "id": "AGL-146",
+      "epic": "E14",
+      "priority": "P1",
+      "status": "started",
+      "title": "Expand cross-platform golden conformance fixtures",
+      "dependsOn": [
+        "AGL-141",
+        "AGL-143"
+      ],
+      "acceptanceSummary": "Shared corpus includes exact wire, sample frames, material status, selection v2, canonical SHA/stable IDs, PRNG v2, project v3, and Penrose certificate; expand per operator and export."
+    },
+    {
+      "id": "AGL-147",
+      "epic": "E15",
+      "priority": "P2",
+      "status": "ready",
+      "title": "Native iPad proof-of-architecture",
+      "dependsOn": [
+        "DR-12",
+        "DR-15",
+        "AGL-143"
+      ],
+      "acceptanceSummary": "Native architecture is unblocked for a bounded POA after logical-package/container and FileDocument conflict tests; no full native parity commitment."
+    },
+    {
+      "id": "AGL-148",
+      "epic": "E15",
+      "priority": "P2",
+      "status": "planned",
+      "title": "iPhone companion experience",
+      "dependsOn": [
+        "AGL-147"
+      ],
+      "acceptanceSummary": "Playback, guided lab, primary parameters, inspector, and sharing work without pretending to offer full desktop graph parity."
+    },
+    {
+      "id": "AGL-149",
+      "epic": "E14",
+      "priority": "P1",
+      "status": "ready",
+      "title": "Canonical high-fidelity mockup set",
+      "dependsOn": [
+        "AGL-140",
+        "AGL-142",
+        "DR-11"
+      ],
+      "acceptanceSummary": "Generate and critique S01–S16 against v0.3 semantic states and the three-interpretation mockup campaign."
+    },
+    {
+      "id": "AGL-150",
+      "epic": "E14",
+      "priority": "P0",
+      "status": "research-gated",
+      "title": "Multimodal accessibility hardening",
+      "dependsOn": [
+        "DR-13",
+        "AGL-132"
+      ],
+      "acceptanceSummary": "Each complex canvas has keyboard, semantic, non-color, and reduced-motion equivalents validated by tests and review."
+    },
+    {
+      "id": "AGL-151",
+      "epic": "E14",
+      "priority": "P1",
+      "status": "research-gated",
+      "title": "Guided experiment curriculum hardening",
+      "dependsOn": [
+        "DR-16"
+      ],
+      "acceptanceSummary": "Each lab has evidence-tagged guided experiments with prediction, observation, explanation, misconception, and accessibility layers."
+    },
+    {
+      "id": "AGL-152",
+      "epic": "E1",
+      "priority": "P0",
+      "status": "done",
+      "title": "Wave-1 research evidence archive",
+      "dependsOn": [
+        "AGL-001"
+      ],
+      "acceptanceSummary": "All eight reports and eight Integration Packets are copied immutably with SHA-256 receipts."
+    },
+    {
+      "id": "AGL-153",
+      "epic": "E1",
+      "priority": "P0",
+      "status": "done",
+      "title": "Wave-1 cross-run decision register",
+      "dependsOn": [
+        "AGL-152"
+      ],
+      "acceptanceSummary": "Every accepted, conditional, deferred, and rejected cross-run decision has one machine-readable owner and rationale."
+    },
+    {
+      "id": "AGL-154",
+      "epic": "E1",
+      "priority": "P0",
+      "status": "done",
+      "title": "Integrated architecture baseline v0.3",
+      "dependsOn": [
+        "AGL-153"
+      ],
+      "acceptanceSummary": "Master architecture and ADRs reconcile time, project, mapping, audio, UX, geometry, native, and conformance semantics."
+    },
+    {
+      "id": "AGL-155",
+      "epic": "E1",
+      "priority": "P0",
+      "status": "started",
+      "title": "Canonical semantic digest service",
+      "dependsOn": [
+        "AGL-010",
+        "AGL-020"
+      ],
+      "acceptanceSummary": "Canonical-value v1 encoding, SHA-256 digest, stable ID v2, and project semantic digest are implemented and tested in TypeScript; finish full Swift canonical-object parity and content-addressed stores."
+    },
+    {
+      "id": "AGL-156",
+      "epic": "E1",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Logical package profile proof",
+      "dependsOn": [
+        "AGL-014",
+        "AGL-015"
+      ],
+      "acceptanceSummary": "Native directory and portable archive profiles round-trip to the same logical member set and semantic package digest; hostile archive inputs are bounded."
+    },
+    {
+      "id": "AGL-157",
+      "epic": "E1",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Materialization receipt and source-recipe store",
+      "dependsOn": [
+        "AGL-027",
+        "AGL-155"
+      ],
+      "acceptanceSummary": "Snapshots retain immutable payload, source recipe/subgraph, dependency digest, exact range, lineage, and deterministic status derivation."
+    },
+    {
+      "id": "AGL-158",
+      "epic": "E2",
+      "priority": "P0",
+      "status": "started",
+      "title": "Shared mapping semantic spine",
+      "dependsOn": [
+        "AGL-020",
+        "AGL-112"
+      ],
+      "acceptanceSummary": "Dimension, temporal, mapping-stage, constraint, randomness, trace, and purpose contracts compile and serialize across labs."
+    },
+    {
+      "id": "AGL-159",
+      "epic": "E2",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Generated identity capability registry",
+      "dependsOn": [
+        "AGL-020",
+        "AGL-005"
+      ],
+      "acceptanceSummary": "Every generator declares stable, successor-mapped, or ephemeral identity and passes corresponding selection/exception fixtures."
+    },
+    {
+      "id": "AGL-160",
+      "epic": "E2",
+      "priority": "P0",
+      "status": "started",
+      "title": "Derivation protocol and stale-result barrier",
+      "dependsOn": [
+        "AGL-023",
+        "AGL-024",
+        "AGL-155"
+      ],
+      "acceptanceSummary": "Evaluation protocol v2 and stale-result classifier are implemented and tested; wire them into real Worker, geometry, plan, export, and materialization jobs."
+    },
+    {
+      "id": "AGL-161",
+      "epic": "E4",
+      "priority": "P0",
+      "status": "started",
+      "title": "ResolvedAudioPlan v2 production completion",
+      "dependsOn": [
+        "AGL-041",
+        "AGL-158"
+      ],
+      "acceptanceSummary": "Immutable plan v2 and separate runtime AudioScheduleBinding v1 are defined; migrate all players/backends, scheduler, voices, tails, and offline renderer."
+    },
+    {
+      "id": "AGL-162",
+      "epic": "E6",
+      "priority": "P0",
+      "status": "started",
+      "title": "Analytic Risset operator v1",
+      "dependsOn": [
+        "AGL-061",
+        "AGL-161"
+      ],
+      "acceptanceSummary": "Exact rate/gain/phase relabel closure, bounded inverse-phase event generation, provenance, and event-load prediction replace the legacy slot prototype."
+    },
+    {
+      "id": "AGL-163",
+      "epic": "E12",
+      "priority": "P1",
+      "status": "blocked",
+      "title": "Recover DR-09 fixture and oracle artifacts",
+      "dependsOn": [
+        "AGL-120"
+      ],
+      "acceptanceSummary": "Golden JSON bytes, pentagrid and cut-and-project prototype sources, regularity certificate, legal star corpus, and matching tables are checked in and independently regenerated."
+    },
+    {
+      "id": "AGL-164",
+      "epic": "E12",
+      "priority": "P1",
+      "status": "started",
+      "title": "Exact Q(phi) kernel and Penrose identity foundation",
+      "dependsOn": [
+        "AGL-120"
+      ],
+      "acceptanceSummary": "Exact Q(phi), bounded cryptographic Penrose identities, certified phase/query validation, and Float64 projection boundary pass; full exact patch generation remains gated."
+    },
+    {
+      "id": "AGL-165",
+      "epic": "E14",
+      "priority": "P0",
+      "status": "done",
+      "title": "Wave-1 UI/UX semantic amendment",
+      "dependsOn": [
+        "AGL-140",
+        "AGL-141",
+        "AGL-158"
+      ],
+      "acceptanceSummary": "The design specification defines workspaces, material axes, causal mappings, linked selection, preview/commit, source status, async/audio states, and native adaptations."
+    },
+    {
+      "id": "AGL-166",
+      "epic": "E13",
+      "priority": "P0",
+      "status": "done",
+      "title": "Wave-1 cross-run adversarial architecture review",
+      "dependsOn": [
+        "AGL-154"
+      ],
+      "acceptanceSummary": "The initial cross-run contradiction review is complete; FR-01 repository hardening is tracked separately in AGL-188."
+    },
+    {
+      "id": "AGL-167",
+      "epic": "E15",
+      "priority": "P1",
+      "status": "ready",
+      "title": "Native document conflict and container POA",
+      "dependsOn": [
+        "AGL-147",
+        "AGL-156"
+      ],
+      "acceptanceSummary": "Offline divergent edits, Files/iCloud conflicts, move/rename, eviction, multiwindow, and browser/native containers preserve both versions without corruption."
+    },
+    {
+      "id": "AGL-168",
+      "epic": "E15",
+      "priority": "P1",
+      "status": "ready",
+      "title": "Process-wide native audio/MIDI coordinator",
+      "dependsOn": [
+        "AGL-147",
+        "AGL-161"
+      ],
+      "acceptanceSummary": "One audible project owns AVAudioSession for MVP; route/interruption/media reset and Core MIDI endpoints are coordinated above document sessions."
+    },
+    {
+      "id": "AGL-169",
+      "epic": "E13",
+      "priority": "P0",
+      "status": "started",
+      "title": "Scientific claim and evidence registry",
+      "dependsOn": [
+        "AGL-152",
+        "AGL-035"
+      ],
+      "acceptanceSummary": "A machine-readable claim registry and trusted-evidence gate exist; wire them into UI copy, export, docs build, and release review."
+    },
+    {
+      "id": "AGL-170",
+      "epic": "E13",
+      "priority": "P1",
+      "status": "ready",
+      "title": "Numerical conformance profile",
+      "dependsOn": [
+        "AGL-158",
+        "AGL-133"
+      ],
+      "acceptanceSummary": "Exact versus profile-numeric outputs, tolerances, NaN/signed-zero policy, checkpoints, branch quantization, and cache identity are versioned."
+    },
+    {
+      "id": "AGL-171",
+      "epic": "E13",
+      "priority": "P1",
+      "status": "ready",
+      "title": "Performance workload and evidence gate",
+      "dependsOn": [
+        "AGL-025",
+        "AGL-134"
+      ],
+      "acceptanceSummary": "Canonical browser/iPad workloads calibrate scheduler, geometry, event density, memory, cancellation, and any future shared-core decision."
+    },
+    {
+      "id": "AGL-172",
+      "epic": "E1",
+      "priority": "P0",
+      "status": "started",
+      "title": "Project v3 semantic freeze and hostile compatibility corpus",
+      "dependsOn": [
+        "AGL-010",
+        "AGL-011",
+        "AGL-155"
+      ],
+      "owner": [
+        "WS-RUNTIME",
+        "WS-QUALITY"
+      ],
+      "acceptanceSummary": "Project v3, compatibility negotiation, canonical semantic digest, strict unknown-field policy, hostile limits, and valid/invalid/migration corpora are frozen and pass."
+    },
+    {
+      "id": "AGL-173",
+      "epic": "E1",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Loss-aware catalog rebinding and migration review workflow",
+      "dependsOn": [
+        "AGL-172",
+        "AGL-020"
+      ],
+      "owner": [
+        "WS-RUNTIME",
+        "WS-PRODUCT"
+      ],
+      "acceptanceSummary": "Blocking migration losses quarantine execution until the user reviews opaque extensions and explicitly rebinds every legacy operator to a sealed catalog digest."
+    },
+    {
+      "id": "AGL-174",
+      "epic": "E1",
+      "priority": "P0",
+      "status": "started",
+      "title": "Command v2 production handlers and persistent history store",
+      "dependsOn": [
+        "AGL-012",
+        "AGL-172"
+      ],
+      "owner": [
+        "WS-RUNTIME"
+      ],
+      "acceptanceSummary": "All production commands implement validated apply/inverse semantics, atomic transactions, undo/redo branching, grouped gestures, crash recovery, and model-based tests."
+    },
+    {
+      "id": "AGL-175",
+      "epic": "E2",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Graph compiler v2 production and UI compatibility service",
+      "dependsOn": [
+        "AGL-021",
+        "AGL-022",
+        "AGL-174"
+      ],
+      "owner": [
+        "WS-RUNTIME",
+        "WS-PRODUCT"
+      ],
+      "acceptanceSummary": "Compiler output is content-addressed, workers execute only compiled plans, and web/native graph editors cannot commit an edge or rewire the compiler rejects."
+    },
+    {
+      "id": "AGL-176",
+      "epic": "E2",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Evaluation protocol v2 worker, cancellation, and freshness runtime",
+      "dependsOn": [
+        "AGL-023",
+        "AGL-024",
+        "AGL-025"
+      ],
+      "owner": [
+        "WS-RUNTIME"
+      ],
+      "acceptanceSummary": "All derived jobs use epoch/scope/channel/generation/hash acceptance, cooperative cancellation, bounded progress, cache-only stale results, and hard worker termination after deadline."
+    },
+    {
+      "id": "AGL-177",
+      "epic": "E4",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Audio plan v2 backend cutover and generation/transport binding",
+      "dependsOn": [
+        "AGL-161",
+        "AGL-176"
+      ],
+      "owner": [
+        "WS-AUDIO"
+      ],
+      "acceptanceSummary": "Legacy players no longer compute timing; real-time and offline adapters consume finalized plan v2, runtime generation/transport epochs live only in bindings, and absolute endpoints quantize once."
+    },
+    {
+      "id": "AGL-178",
+      "epic": "E4",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Realtime/offline/browser audio benchmark and conformance matrix",
+      "dependsOn": [
+        "AGL-177",
+        "AGL-134"
+      ],
+      "owner": [
+        "WS-AUDIO",
+        "WS-QUALITY"
+      ],
+      "acceptanceSummary": "Chrome/Firefox/Safari hardware runs calibrate horizon, late policy, native/worklet thresholds, sample-frame agreement, cancellation cutover, and waveform-feature tolerances."
+    },
+    {
+      "id": "AGL-179",
+      "epic": "E1",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Package v2 hostile archive and native-directory adapters",
+      "dependsOn": [
+        "AGL-156",
+        "AGL-172"
+      ],
+      "owner": [
+        "WS-RUNTIME",
+        "WS-QUALITY"
+      ],
+      "acceptanceSummary": "Streaming import rejects traversal, links, duplicate/case-colliding paths, bombs, size/hash mismatches, undeclared members, and corrupt projects; directory/archive logical round-trip matches."
+    },
+    {
+      "id": "AGL-180",
+      "epic": "E13",
+      "priority": "P0",
+      "status": "ready",
+      "title": "WAV, MIDI, MusicXML, and package export implementation with loss manifests",
+      "dependsOn": [
+        "AGL-177",
+        "AGL-130",
+        "AGL-131",
+        "AGL-179"
+      ],
+      "owner": [
+        "WS-AUDIO",
+        "WS-PRODUCT",
+        "WS-QUALITY"
+      ],
+      "acceptanceSummary": "Every export binds immutable source state, output hash, provenance, recipes/receipts, exact range, and explicit representational losses; no exporter reruns hidden sonification."
+    },
+    {
+      "id": "AGL-181",
+      "epic": "E14",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Accessibility semantic mirror integration and parity suite",
+      "dependsOn": [
+        "AGL-132",
+        "AGL-144",
+        "AGL-175"
+      ],
+      "owner": [
+        "WS-PRODUCT",
+        "WS-QUALITY",
+        "WS-NATIVE"
+      ],
+      "acceptanceSummary": "Canvas/timeline/graph expose one acyclic semantic hierarchy, exact value actions, non-drag alternatives, text state, focus/selection separation, announcements, and web/native parity."
+    },
+    {
+      "id": "AGL-182",
+      "epic": "E15",
+      "priority": "P1",
+      "status": "started",
+      "title": "Cross-platform project v3, canonical digest, ID, PRNG, and selection conformance",
+      "dependsOn": [
+        "AGL-143",
+        "AGL-146",
+        "AGL-172"
+      ],
+      "owner": [
+        "WS-NATIVE",
+        "WS-QUALITY"
+      ],
+      "acceptanceSummary": "Swift and TypeScript pass identical project v3, canonical SHA, stable-ID v2, named PRNG, selection v2, sample-frame, package, and per-operator fixtures."
+    },
+    {
+      "id": "AGL-183",
+      "epic": "E13",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Claim registry enforcement in UI, documentation, examples, and release build",
+      "dependsOn": [
+        "AGL-169",
+        "AGL-144"
+      ],
+      "owner": [
+        "WS-PRODUCT",
+        "WS-QUALITY"
+      ],
+      "acceptanceSummary": "Every scientific/product claim resolves to an allowed surface, exact qualification digest, citations, and trusted gate evidence; forbidden or ungated copy fails CI."
+    },
+    {
+      "id": "AGL-184",
+      "epic": "E1",
+      "priority": "P1",
+      "status": "planned",
+      "title": "Legacy v1/v2 contract quarantine and removal plan",
+      "dependsOn": [
+        "AGL-173",
+        "AGL-174",
+        "AGL-177"
+      ],
+      "owner": [
+        "WS-RUNTIME"
+      ],
+      "acceptanceSummary": "Legacy readers are isolated migration-only modules, new writes cannot emit v1/v2, telemetry confirms migration coverage, and removal criteria are documented."
+    },
+    {
+      "id": "AGL-185",
+      "epic": "E6",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Risset production render-plan integration and perceptual acceptance",
+      "dependsOn": [
+        "AGL-162",
+        "AGL-177",
+        "AGL-178"
+      ],
+      "owner": [
+        "WS-AUDIO",
+        "WS-LABS",
+        "WS-QUALITY"
+      ],
+      "acceptanceSummary": "Analytic Risset replaces slot playback, unsafe horizons fail before enumeration, relabel closure/gain fixtures pass, and the blinded listening protocol establishes qualified preset claims."
+    },
+    {
+      "id": "AGL-186",
+      "epic": "E12",
+      "priority": "P0",
+      "status": "blocked",
+      "title": "Exact Penrose generator, independent oracles, matching corpus, and traversal",
+      "dependsOn": [
+        "AGL-163",
+        "AGL-164",
+        "AGL-175"
+      ],
+      "owner": [
+        "WS-LABS",
+        "WS-QUALITY"
+      ],
+      "acceptanceSummary": "Pentagrid patches, cut-and-project and hierarchy oracles, legal stars/matching, exact adjacency/query halo, stable traversal, and golden hashes pass before the lab leaves research-gated status."
+    },
+    {
+      "id": "AGL-187",
+      "epic": "E13",
+      "priority": "P1",
+      "status": "ready",
+      "title": "FR-01 property, mutation, schema-differential, and fuzz corpus",
+      "dependsOn": [
+        "AGL-172",
+        "AGL-174",
+        "AGL-175",
+        "AGL-176",
+        "AGL-179"
+      ],
+      "owner": [
+        "WS-QUALITY"
+      ],
+      "acceptanceSummary": "Property/model tests and bounded fuzzers attack canonicalization, migration, command atomicity, graph compile, package import, materialization, selection, export, and schema/runtime differential behavior."
+    },
+    {
+      "id": "AGL-188",
+      "epic": "E13",
+      "priority": "P0",
+      "status": "done",
+      "title": "FR-01 repository-wide adversarial hardening baseline v0.4",
+      "dependsOn": [
+        "AGL-154",
+        "AGL-166"
+      ],
+      "owner": [
+        "WS-QUALITY"
+      ],
+      "acceptanceSummary": "Findings register, accepted ADRs, versioned contract replacements, TypeScript/Swift tests, schema validation, owned residual gates, and clean reproducible archive are complete."
+    },
+    {
+      "id": "AGL-189",
+      "epic": "E5",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Operator implementation conformance receipts and semantic-version enforcement",
+      "dependsOn": [
+        "AGL-175",
+        "AGL-187"
+      ],
+      "owner": [
+        "WS-RUNTIME",
+        "WS-QUALITY"
+      ],
+      "acceptanceSummary": "Every released operator implementation binds evaluator build identity to type/version/semantic digest plus accepted golden/property fixtures; behavior change under an unchanged semantic version fails release verification."
+    },
+    {
+      "id": "AGL-190",
+      "epic": "E4",
+      "priority": "P1",
+      "status": "ready",
+      "title": "Streaming canonical digest and fragmented render-plan/export pipeline",
+      "dependsOn": [
+        "AGL-172",
+        "AGL-177",
+        "AGL-180"
+      ],
+      "owner": [
+        "WS-RUNTIME",
+        "WS-AUDIO",
+        "WS-QUALITY"
+      ],
+      "acceptanceSummary": "Large canonical projects and audio/export plans are hashed and processed incrementally with deterministic fragment identity, bounded memory, cancellation, and equivalence to the current v1/v2 whole-value contracts."
+    },
+    {
+      "id": "AGL-191",
+      "epic": "E14",
+      "priority": "P0",
+      "status": "ready",
+      "title": "Native strict-JSON and hostile package-import conformance",
+      "dependsOn": [
+        "AGL-179",
+        "AGL-182"
+      ],
+      "owner": [
+        "WS-NATIVE",
+        "WS-QUALITY"
+      ],
+      "acceptanceSummary": "Swift/native import rejects duplicate keys, malformed Unicode/UTF-8, unsafe integers, trailing data, ambiguous paths, links, size/hash mismatches, and produces the same accepted/rejected hostile corpus outcomes as TypeScript."
+    }
+  ]
+}

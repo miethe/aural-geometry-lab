@@ -1,0 +1,23 @@
+{
+  "schema": "agl.accessibility.mirror",
+  "schemaVersion": 1,
+  "contractVersion": "agl-accessibility-mirror-v1",
+  "projectEpoch": "epoch-1",
+  "projectionDigest": "sha256:e0a37bcd3613321fb01994851766d475e1aed015eccef5d1b6d9e2c8d526473f",
+  "roots": [
+    "a11y-root"
+  ],
+  "nodes": [
+    {
+      "id": "a11y-root",
+      "order": 0,
+      "surface": "canvas",
+      "role": "application",
+      "label": "Aural Geometry Lab canvas",
+      "stateText": [
+        "Ready"
+      ],
+      "actions": []
+    }
+  ]
+}

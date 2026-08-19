@@ -1,0 +1,273 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://auralgeometrylab.local/schemas/agl-accessibility-mirror-v1.schema.json",
+  "title": "AGL Accessibility Semantic Mirror v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schemaVersion",
+    "contractVersion",
+    "projectEpoch",
+    "projectionDigest",
+    "roots",
+    "nodes"
+  ],
+  "properties": {
+    "schema": {
+      "const": "agl.accessibility.mirror"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "contractVersion": {
+      "const": "agl-accessibility-mirror-v1"
+    },
+    "projectEpoch": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "projectionDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "roots": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "maxItems": 1000000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "order",
+          "surface",
+          "role",
+          "label",
+          "actions"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "parentId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "surface": {
+            "enum": [
+              "library",
+              "navigator",
+              "canvas",
+              "timeline",
+              "graph",
+              "inspector",
+              "guide",
+              "mixer",
+              "export"
+            ]
+          },
+          "semanticRef": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "entityKind",
+              "entityId"
+            ],
+            "properties": {
+              "entityKind": {
+                "enum": [
+                  "project",
+                  "track",
+                  "clip",
+                  "material",
+                  "event",
+                  "operator-node",
+                  "operator-edge",
+                  "geometry-object",
+                  "geometry-element",
+                  "mapping-stage",
+                  "provenance-step",
+                  "lab-step",
+                  "asset"
+                ]
+              },
+              "entityId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          },
+          "role": {
+            "enum": [
+              "application",
+              "group",
+              "button",
+              "toggle",
+              "slider",
+              "spinbutton",
+              "list",
+              "listitem",
+              "tree",
+              "treeitem",
+              "grid",
+              "row",
+              "gridcell",
+              "status",
+              "document",
+              "img"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string"
+          },
+          "valueText": {
+            "type": "string"
+          },
+          "stateText": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "disabled": {
+            "type": "boolean"
+          },
+          "selected": {
+            "type": "boolean"
+          },
+          "focused": {
+            "type": "boolean"
+          },
+          "draggable": {
+            "type": "boolean"
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "kind",
+                    "label"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "kind": {
+                      "enum": [
+                        "activate",
+                        "toggle",
+                        "increment",
+                        "decrement",
+                        "set-value",
+                        "show-details",
+                        "delete"
+                      ]
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "kind",
+                    "label",
+                    "direction"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "kind": {
+                      "const": "move"
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "direction": {
+                      "enum": [
+                        "up",
+                        "down",
+                        "left",
+                        "right",
+                        "before",
+                        "after"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "kind",
+                    "label",
+                    "dialogId"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "kind": {
+                      "const": "open-dialog"
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "dialogId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

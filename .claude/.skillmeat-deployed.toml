@@ -1,0 +1,111 @@
+[[deployed]]
+artifact_name = "reviewer-gate"
+artifact_type = "orchestration"
+from_collection = "enterprise"
+deployed_at = "2026-08-19T01:13:29.848758+00:00"
+artifact_path = "workflows/reviewer-gate.js"
+content_hash = "14433b1478bce8cad3206b1150a5dafdecd9a3df5dac57eff46d25756a64d683"
+collection_sha = "14433b1478bce8cad3206b1150a5dafdecd9a3df5dac57eff46d25756a64d683"
+local_modifications = false
+enterprise_version = "cas-1411784b"
+enterprise_files = [
+    "workflows/reviewer-gate.js",
+]
+
+[[deployed]]
+artifact_name = "auto-feature"
+artifact_type = "orchestration"
+from_collection = "enterprise"
+deployed_at = "2026-08-19T01:14:16.907579+00:00"
+artifact_path = "workflows/auto-feature.js"
+content_hash = "923651f1b5a8f11ebe847a77759f3ebfd925a6cbcadfead6119363f21e78a4e0"
+collection_sha = "923651f1b5a8f11ebe847a77759f3ebfd925a6cbcadfead6119363f21e78a4e0"
+local_modifications = false
+enterprise_version = "cas-37db7444"
+enterprise_files = [
+    "workflows/auto-feature.js",
+]
+
+[[deployed]]
+artifact_name = "review-council"
+artifact_type = "orchestration"
+from_collection = "enterprise"
+deployed_at = "2026-08-19T01:14:25.615312+00:00"
+artifact_path = "workflows/review-council.js"
+content_hash = "9bb35a80e096ee810bc0a626e9ce737cf806feffb27966cb3283cdf1016bfbcb"
+collection_sha = "9bb35a80e096ee810bc0a626e9ce737cf806feffb27966cb3283cdf1016bfbcb"
+local_modifications = false
+enterprise_version = "cas-f2a8274e"
+enterprise_files = [
+    "workflows/review-council.js",
+]
+
+[[deployed]]
+artifact_name = "execute-contract"
+artifact_type = "command"
+from_collection = "enterprise"
+deployed_at = "2026-08-19T01:20:24.895869+00:00"
+artifact_path = "commands/execute-contract.js"
+content_hash = "977fab96c26b0850f788de88079b8b242a0f9896287b8740ee96957633a9d5f1"
+collection_sha = "977fab96c26b0850f788de88079b8b242a0f9896287b8740ee96957633a9d5f1"
+local_modifications = false
+enterprise_version = "cas-e72202e3"
+enterprise_files = [
+    "commands/execute-contract.js",
+]
+
+[[deployed]]
+artifact_name = "execute-plan"
+artifact_type = "command"
+from_collection = "enterprise"
+deployed_at = "2026-08-19T01:20:27.271624+00:00"
+artifact_path = "commands/execute-plan.js"
+content_hash = "27787d3900f2e11b7675c1062dfb8763d87c92c7be10e2d7afde1051db55dd5b"
+collection_sha = "27787d3900f2e11b7675c1062dfb8763d87c92c7be10e2d7afde1051db55dd5b"
+local_modifications = false
+enterprise_version = "cas-3e016675"
+enterprise_files = [
+    "commands/execute-plan.js",
+]
+
+[[deployed]]
+artifact_name = "explore"
+artifact_type = "command"
+from_collection = "enterprise"
+deployed_at = "2026-08-19T01:20:29.248698+00:00"
+artifact_path = "commands/explore.js"
+content_hash = "97349e015eae9fff1fb592a1ce8d8c017f123d88f51bfb5f773e38615805591c"
+collection_sha = "97349e015eae9fff1fb592a1ce8d8c017f123d88f51bfb5f773e38615805591c"
+local_modifications = false
+enterprise_version = "cas-281fa87b"
+enterprise_files = [
+    "commands/explore.js",
+]
+
+[[deployed]]
+artifact_name = "spike"
+artifact_type = "command"
+from_collection = "enterprise"
+deployed_at = "2026-08-19T01:20:31.465577+00:00"
+artifact_path = "commands/spike.js"
+content_hash = "7e3c7d3dc1738500b1d35dabb062980613a26b56e23b71345ac9de367675ec01"
+collection_sha = "7e3c7d3dc1738500b1d35dabb062980613a26b56e23b71345ac9de367675ec01"
+local_modifications = false
+enterprise_version = "cas-9578b78e"
+enterprise_files = [
+    "commands/spike.js",
+]
+
+[[deployed]]
+artifact_name = "aos-writeback.sh"
+artifact_type = "hook"
+from_collection = "enterprise"
+deployed_at = "2026-08-19T01:22:34.533336+00:00"
+artifact_path = "hooks/aos-writeback.sh.sh"
+content_hash = "2a768a81b24ef7991a34c2f64ed6a16263de4d18cc06a178a7d76a47c0159b0e"
+collection_sha = "2a768a81b24ef7991a34c2f64ed6a16263de4d18cc06a178a7d76a47c0159b0e"
+local_modifications = false
+enterprise_version = "1.0.0"
+enterprise_files = [
+    "hooks/aos-writeback.sh.sh",
+]

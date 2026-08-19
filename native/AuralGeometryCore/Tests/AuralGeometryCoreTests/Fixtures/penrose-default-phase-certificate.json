@@ -1,0 +1,20 @@
+{
+  "schema": "agl.conformance.penrose-default-phase-certificate",
+  "schemaVersion": 1,
+  "construction": "de-bruijn-regular-pentagrid-p3-v1",
+  "phase": ["0", "1/5", "2/5", "-1/5", "-2/5"],
+  "triples": [
+    { "families": [0,1,2], "qphi": ["3/5", "-1/5"] },
+    { "families": [0,1,3], "qphi": ["-2/5", "1/5"] },
+    { "families": [0,1,4], "qphi": ["-1/5", "0"] },
+    { "families": [0,2,3], "qphi": ["1/5", "0"] },
+    { "families": [0,2,4], "qphi": ["-2/5", "2/5"] },
+    { "families": [0,3,4], "qphi": ["-2/5", "1/5"] },
+    { "families": [1,2,3], "qphi": ["2/5", "-2/5"] },
+    { "families": [1,2,4], "qphi": ["-1", "3/5"] },
+    { "families": [1,3,4], "qphi": ["-3/5", "1/5"] },
+    { "families": [2,3,4], "qphi": ["-1/5", "1/5"] }
+  ],
+  "regular": true,
+  "artifactGate": "The full DR-09 golden tile fixture and independent oracle source remain required before exact generator acceptance."
+}

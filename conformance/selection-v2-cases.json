@@ -1,0 +1,95 @@
+{
+  "schema": "agl.conformance.selection-v2",
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "authored-projection-independent",
+      "semantic": {
+        "kind": "event",
+        "id": "event-1"
+      },
+      "projections": [
+        {
+          "surface": "timeline",
+          "projectionPath": "track/0"
+        },
+        {
+          "surface": "canvas",
+          "projectionPath": "ring/2"
+        }
+      ],
+      "expectedSemanticKey": "21:semantic-selection-v2|5:event|7:event-1",
+      "expectedProjectionKeys": [
+        "42:21:semantic-selection-v2|5:event|7:event-1|8:timeline|7:track/0",
+        "42:21:semantic-selection-v2|5:event|7:event-1|6:canvas|6:ring/2"
+      ]
+    },
+    {
+      "name": "generated-display-id-and-fingerprint-independent",
+      "semantic": {
+        "kind": "event",
+        "id": "display-A",
+        "generated": {
+          "producerId": "node-euclidean",
+          "outputPortId": "pattern",
+          "keySchema": "euclidean-onset",
+          "keyVersion": 2,
+          "stableKey": "ring:0/step:3",
+          "sourceFingerprint": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "alternate": {
+        "kind": "event",
+        "id": "display-B",
+        "generated": {
+          "producerId": "node-euclidean",
+          "outputPortId": "pattern",
+          "keySchema": "euclidean-onset",
+          "keyVersion": 2,
+          "stableKey": "ring:0/step:3",
+          "sourceFingerprint": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+      },
+      "projections": [
+        {
+          "surface": "timeline",
+          "projectionPath": "track/0/event/3"
+        },
+        {
+          "surface": "canvas",
+          "projectionPath": "ring/0/step/3"
+        }
+      ],
+      "expectedSemanticKey": "21:semantic-selection-v2|5:event|14:node-euclidean|7:pattern|15:euclidean-onset|1:2|13:ring:0/step:3",
+      "expectedAlternateSemanticKey": "21:semantic-selection-v2|5:event|14:node-euclidean|7:pattern|15:euclidean-onset|1:2|13:ring:0/step:3",
+      "expectedProjectionKeys": [
+        "100:21:semantic-selection-v2|5:event|14:node-euclidean|7:pattern|15:euclidean-onset|1:2|13:ring:0/step:3|8:timeline|15:track/0/event/3",
+        "100:21:semantic-selection-v2|5:event|14:node-euclidean|7:pattern|15:euclidean-onset|1:2|13:ring:0/step:3|6:canvas|13:ring/0/step/3"
+      ]
+    },
+    {
+      "name": "unicode-generated-key",
+      "semantic": {
+        "kind": "geometry-element",
+        "id": "display-α",
+        "generated": {
+          "producerId": "node-π",
+          "outputPortId": "tiles",
+          "keySchema": "tile-address",
+          "keyVersion": 1,
+          "stableKey": "τ:厚"
+        }
+      },
+      "projections": [
+        {
+          "surface": "canvas",
+          "projectionPath": "tile/厚"
+        }
+      ],
+      "expectedSemanticKey": "21:semantic-selection-v2|16:geometry-element|7:node-π|5:tiles|12:tile-address|1:1|6:τ:厚",
+      "expectedProjectionKeys": [
+        "91:21:semantic-selection-v2|16:geometry-element|7:node-π|5:tiles|12:tile-address|1:1|6:τ:厚|6:canvas|8:tile/厚"
+      ]
+    }
+  ]
+}

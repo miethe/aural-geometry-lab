@@ -1,0 +1,617 @@
+{
+  "schema": "agl.program.wave1-decision-register",
+  "schemaVersion": 1,
+  "program": "Aural Geometry Lab",
+  "asOf": "2026-08-18",
+  "decisions": [
+    {
+      "id": "W1-001",
+      "title": "Semantic authority precedence",
+      "decision": "Normative schemas, ADRs, mathematical contracts, and language-neutral fixtures outrank any individual implementation or research recommendation.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-14",
+        "DR-15"
+      ],
+      "scope": [
+        "architecture",
+        "governance"
+      ],
+      "reason": "Prevents TypeScript, Swift, or a generated mockup from becoming an accidental specification.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-002",
+      "title": "Project schema v2 and exact wire arithmetic",
+      "decision": "Use canonical decimal strings for arbitrary-size rational numerator/denominator values; preserve source bytes/digest separately from normalized semantic model/digest.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-12",
+        "DR-14",
+        "DR-15"
+      ],
+      "scope": [
+        "project",
+        "persistence",
+        "conformance"
+      ],
+      "reason": "Exact musical time and future migration cannot rely on JSON numbers or destructive canonicalization.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-003",
+      "title": "Logical package and physical container profiles",
+      "decision": "Define one logical AGL package and permit native-directory and portable-archive physical profiles with the same logical member set and semantic package hash.",
+      "disposition": "ADOPT WITH CONDITIONS",
+      "sources": [
+        "DR-12",
+        "DR-15"
+      ],
+      "scope": [
+        "project-package",
+        "web",
+        "native"
+      ],
+      "reason": "A directory package is natural on iPad, while browser interchange generally requires an archive; the logical format must remain one product contract.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-004",
+      "title": "Project state versus studio session state",
+      "decision": "Persist authored semantic/project state and selected presentation metadata only; keep selection, focus, hover, transport, audio route, workspace layout, preview, and runtime state outside the semantic project digest.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-11",
+        "DR-12",
+        "DR-14"
+      ],
+      "scope": [
+        "project",
+        "ux",
+        "runtime"
+      ],
+      "reason": "Avoids nondeterministic files, noisy undo history, and platform-specific project semantics.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-005",
+      "title": "Conformance-first selective core",
+      "decision": "Keep TypeScript as the browser reference during stabilization, implement only required Swift semantics, and share schemas/fixtures before sharing implementation.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-12",
+        "DR-15"
+      ],
+      "scope": [
+        "cross-platform",
+        "runtime"
+      ],
+      "reason": "This is the least-regret path while the project schema and evaluator semantics are still changing.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-006",
+      "title": "Shared systems core evidence gate",
+      "decision": "Do not adopt Rust, Swift/Wasm, or production JavaScriptCore now; JSC is a pinned test oracle only, and a shared kernel requires measured workload or maintenance evidence.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-15"
+      ],
+      "scope": [
+        "cross-platform",
+        "performance"
+      ],
+      "reason": "No evidence-grade AGL benchmark currently establishes the burden of proof for a third production toolchain.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-007",
+      "title": "Three temporal domains",
+      "decision": "Keep exact rational musical/source time above audio, resolve analytic/tempo mappings into ideal seconds in the backend-neutral audio plan, then quantize once into integer sample frames.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-01",
+        "DR-03",
+        "DR-12",
+        "DR-15"
+      ],
+      "scope": [
+        "time",
+        "audio",
+        "render-plan"
+      ],
+      "reason": "Risset event seconds are generally logarithmic and not rational, while project beat semantics must remain exact.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-008",
+      "title": "Canonical audio plan boundary",
+      "decision": "One immutable, backend-neutral ResolvedAudioPlan drives real-time and offline rendering; native and web schedules are derived projections, not alternate event models.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-01",
+        "DR-03",
+        "DR-12",
+        "DR-15"
+      ],
+      "scope": [
+        "audio",
+        "offline",
+        "native"
+      ],
+      "reason": "Creates a meaningful equivalence boundary without promising cross-engine PCM identity.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-009",
+      "title": "Sample-frame quantization v1",
+      "decision": "For nonnegative ideal seconds, sample frame v1 is floor(seconds * sampleRate + 0.5); the conversion version is recorded in plan/provenance.",
+      "disposition": "ADOPT WITH CONDITIONS",
+      "sources": [
+        "DR-03",
+        "DR-12"
+      ],
+      "scope": [
+        "audio",
+        "conformance"
+      ],
+      "reason": "A versioned absolute-time mapping prevents accumulated rounding drift; boundary fixtures remain mandatory.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-010",
+      "title": "Browser audio responsibility split",
+      "decision": "Dedicated Worker evaluates graphs and expands plans; the main thread owns AudioContext/control-plane scheduling; AudioWorklet owns bounded DSP and dense event dispatch only.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-03",
+        "DR-15"
+      ],
+      "scope": [
+        "web-audio",
+        "runtime"
+      ],
+      "reason": "Matches platform exposure and keeps unbounded domain work off the rendering thread.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-011",
+      "title": "Adaptive look-ahead scheduler",
+      "decision": "Benchmark from a 25 ms wake, 100 ms horizon, adaptive growth from observed jitter, and a provisional 250 ms ceiling; treat all numeric thresholds as calibration candidates.",
+      "disposition": "ADOPT WITH CONDITIONS",
+      "sources": [
+        "DR-03"
+      ],
+      "scope": [
+        "web-audio",
+        "performance"
+      ],
+      "reason": "The architecture is accepted, but cross-browser/device measurements remain a release gate.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-012",
+      "title": "Generation-based audio cutover",
+      "decision": "Edits, seeks, loops, and plan revisions create generation IDs and future cutover times/frames; stale native/worklet events are silenced or rejected, while already-emitted audio is history.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-03",
+        "DR-14"
+      ],
+      "scope": [
+        "audio",
+        "interaction"
+      ],
+      "reason": "Provides one backend-independent cancellation and live-edit semantic.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-013",
+      "title": "Canonical sonification pipeline",
+      "decision": "Use explicit versioned stages: Source \u2192 Sample \u2192 Normalize \u2192 Smooth \u2192 Transform \u2192 Quantize/Threshold \u2192 Constrain \u2192 Target, allowing repeated stages but no hidden shaping.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-08"
+      ],
+      "scope": [
+        "mapping",
+        "operators",
+        "provenance"
+      ],
+      "reason": "Sampling, normalization, smoothing, and musicality are authored representational choices, not renderer details.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-014",
+      "title": "Temporal semantics of mappings",
+      "decision": "Every mapping declares pointwise, causal-stateful, bounded-lookahead, or whole-window/frozen semantics; live zero-latency graphs reject future-dependent stages.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-08",
+        "DR-14"
+      ],
+      "scope": [
+        "mapping",
+        "runtime",
+        "compiler"
+      ],
+      "reason": "Prevents acausal normalization or smoothing from silently changing previously produced live output.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-015",
+      "title": "Explicit randomness and constraints",
+      "decision": "Random variation is a seeded/keyed operator; musical constraints are deterministic downstream stages with hard/soft priority and traceable deltas.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-08",
+        "DR-14",
+        "DR-15"
+      ],
+      "scope": [
+        "mapping",
+        "determinism",
+        "provenance"
+      ],
+      "reason": "Supports reproducibility and explains how final musical output differs from raw mapped data.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-016",
+      "title": "One studio, three workspace projections",
+      "decision": "Explore, Compose, and Inspect are layout/emphasis presets over one project, selection, command bus, transport, and undo history; they are not capability modes.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-11"
+      ],
+      "scope": [
+        "ux",
+        "architecture"
+      ],
+      "reason": "Reduces density without creating multiple semantic products or hidden permission boundaries.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-017",
+      "title": "Selection, focus, hover, and relations are distinct",
+      "decision": "Maintain actionable selection, primary selection, keyboard focus, pointer hover, related/provenance highlight, range anchors, and orphaned generated references separately.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-11",
+        "DR-14"
+      ],
+      "scope": [
+        "ux",
+        "accessibility",
+        "interaction"
+      ],
+      "reason": "Focus navigation must remain cheap and must not silently change command intent or trigger expensive selection work.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-018",
+      "title": "Semantic gesture lifecycle",
+      "decision": "High-frequency interaction uses begin \u2192 preview* \u2192 commit/cancel; preview never mutates canonical project/history, and one continuous gesture creates at most one transaction.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-11",
+        "DR-12",
+        "DR-14"
+      ],
+      "scope": [
+        "commands",
+        "undo",
+        "ux"
+      ],
+      "reason": "Pointer sample rate is not semantic history granularity.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-019",
+      "title": "Authoritative command envelope and inverses",
+      "decision": "Commands carry project epoch, transaction/action identity, actor/origin metadata, schema versions, canonical target/write sets, and fine-grained preconditions; the core derives inverses from validated pre-state.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-14",
+        "DR-15"
+      ],
+      "scope": [
+        "commands",
+        "undo",
+        "collaboration-shape"
+      ],
+      "reason": "Global revision equality alone is too coarse, and UI-supplied inverses are unsafe.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-020",
+      "title": "Generated identity capability",
+      "decision": "Every generator declares stable, successor-mapped, or ephemeral output identity. Missing generated references never retarget by proximity.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-09",
+        "DR-11",
+        "DR-14"
+      ],
+      "scope": [
+        "operators",
+        "selection",
+        "generated-content"
+      ],
+      "reason": "Sparse exceptions and persistent generated selection are only valid when correspondence semantics are explicit.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-021",
+      "title": "Material model uses separate axes",
+      "decision": "Persist material kind (user-authored/live-generated/snapshot/edited-derivative) and source linkage; compute source status (current/changed/missing/detached) from the semantic dependency digest rather than storing a flat state enum.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-11",
+        "DR-14"
+      ],
+      "scope": [
+        "project",
+        "timeline",
+        "provenance"
+      ],
+      "reason": "Staleness is a source relationship, not a material origin, and unrelated project edits must not stale a snapshot.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-022",
+      "title": "Prepare-then-commit materialization",
+      "decision": "Materialization evaluates a half-open exact interval asynchronously, records immutable lineage and content-addressed artifacts, and commits only if the relevant source dependency digest still matches.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-11",
+        "DR-12",
+        "DR-14"
+      ],
+      "scope": [
+        "materialization",
+        "assets",
+        "commands"
+      ],
+      "reason": "Prevents freezing a result different from the one the user requested.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-023",
+      "title": "Temporary A/B overrides deferred",
+      "decision": "Do not include A/B overrides in MVP canonical architecture until edit routing, baseline drift, local/global undo, nesting, and commit/rebase semantics are resolved.",
+      "disposition": "DEFER",
+      "sources": [
+        "DR-14"
+      ],
+      "scope": [
+        "ux",
+        "commands"
+      ],
+      "reason": "The research identifies unresolved architecture-level behavior rather than a safe implementation contract.",
+      "status": "deferred"
+    },
+    {
+      "id": "W1-024",
+      "title": "Classical Risset terminology",
+      "decision": "Define rhythm.risset@1 with 2:1 tempo-octave equivalence; expose other ratios as generalized barberpole-tempo behavior.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-01"
+      ],
+      "scope": [
+        "risset",
+        "operator-semantics"
+      ],
+      "reason": "Preserves historical/mathematical terminology while retaining the generalized kernel.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-025",
+      "title": "Risset envelope and default reconciliation",
+      "decision": "Make envelope domain and normalization explicit. Use the completed DR-01 report default: raised-cosine linear partition, half-width B=2, 20 s cycle, 120 BPM reference; retain nominal equal-power/L2 as a comparison mode, and label all perceptual defaults provisional.",
+      "disposition": "ADOPT WITH CONDITIONS",
+      "sources": [
+        "DR-01"
+      ],
+      "scope": [
+        "risset",
+        "defaults",
+        "audio"
+      ],
+      "reason": "The report supplies a cleaner B=2 constant-sum derivation; the packet proposed a conflicting power-domain default without access to the report body.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-026",
+      "title": "Orthogonal Risset stages",
+      "decision": "Core Risset owns rate law, analytic phase, envelope, normalization, and direction; subdivision shedding, metric ambiguity, anchor pulse, and pitch coupling are separate bypassable stages.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-01",
+        "DR-08"
+      ],
+      "scope": [
+        "risset",
+        "mapping",
+        "graph"
+      ],
+      "reason": "Supports controlled experiments, provenance, undo, and honest user-facing claims.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-027",
+      "title": "Exact Penrose production construction",
+      "decision": "Use a certified regular de Bruijn pentagrid emitting P3 rhombs, exact integer/Q(phi) topology, stable line/tuple IDs, and cut-and-project/Robinson validation oracles.",
+      "disposition": "ADOPT WITH CONDITIONS",
+      "sources": [
+        "DR-09",
+        "DR-15"
+      ],
+      "scope": [
+        "penrose",
+        "geometry",
+        "cross-platform"
+      ],
+      "reason": "The mathematical choice is accepted, but fixture bytes, legal-star corpus, matching decoration corpus, and prototype receipts must be checked in before completion.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-028",
+      "title": "Penrose query and clipping semantics",
+      "decision": "A finite patch is a query into one configured infinite tiling; clipping is visualization-only, synthetic clip edges never create adjacency, and completeness/halo status is explicit.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-09"
+      ],
+      "scope": [
+        "penrose",
+        "geometry",
+        "visualization"
+      ],
+      "reason": "Prevents viewport state from changing mathematical identity or inventing topology.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-029",
+      "title": "Native client as ports-and-adapters",
+      "decision": "Native iPad uses canonical schemas/commands/plans/projections with SwiftUI, AVAudioEngine, Core MIDI, Metal, and Files as adapters; one active audible project per process is the MVP policy.",
+      "disposition": "ADOPT WITH CONDITIONS",
+      "sources": [
+        "DR-12",
+        "DR-15"
+      ],
+      "scope": [
+        "native",
+        "audio",
+        "documents"
+      ],
+      "reason": "Process-global audio/session resources and limited staffing make a second product core or multi-project mixer premature.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-030",
+      "title": "MIDI posture",
+      "decision": "Web MIDI is optional progressive enhancement; native uses UMP/MIDIEventList internally and down-converts only at explicit MIDI 1 or Standard MIDI File boundaries.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-03",
+        "DR-12"
+      ],
+      "scope": [
+        "midi",
+        "web",
+        "native"
+      ],
+      "reason": "Avoids making nonportable browser capability or 7-bit fields canonical.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-031",
+      "title": "Accessibility from shared semantics",
+      "decision": "Every auditory, visual, motion, graph, and geometry meaning must have an equivalent semantic/text/keyboard representation generated from the same model; no core operation is drag-only or color-only.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-08",
+        "DR-11",
+        "DR-12",
+        "DR-14"
+      ],
+      "scope": [
+        "accessibility",
+        "ux",
+        "projection"
+      ],
+      "reason": "Accessibility cannot be reconstructed reliably from pixels or audio after implementation.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-032",
+      "title": "Scientific claim registry",
+      "decision": "User-facing claims carry evidence status: direct, qualified, experimental, or prohibited; presets also record evidence provenance and product-defined validation thresholds.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-01",
+        "DR-08",
+        "DR-09"
+      ],
+      "scope": [
+        "research",
+        "ux",
+        "education"
+      ],
+      "reason": "Separates theorem/evidence from engineering defaults and avoids presenting finite visualizations or unvalidated presets as scientific proof.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-033",
+      "title": "Semantic and execution provenance split",
+      "decision": "Semantic provenance records source/operator/version/seed/profile/lineage; execution provenance separately records backend/build/browser/device/sample rate/approximations and performance.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-03",
+        "DR-08",
+        "DR-09",
+        "DR-15"
+      ],
+      "scope": [
+        "provenance",
+        "reproducibility"
+      ],
+      "reason": "Backend identity must not contaminate project meaning, while reproducibility still requires execution receipts.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-034",
+      "title": "Async acceptance barrier",
+      "decision": "Derived results become current only when project epoch, scope, channel, generation, input digest, semantic-environment digest, and integrity all match; cancellation is resource control, not freshness proof.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-14",
+        "DR-15"
+      ],
+      "scope": [
+        "workers",
+        "cache",
+        "interaction"
+      ],
+      "reason": "Prevents out-of-order results from overwriting current preview or committed state.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-035",
+      "title": "Performance limits remain empirical",
+      "decision": "Treat scheduler, event-density, geometry, memory, shared-core, and device thresholds as provisional benchmark profiles until accepted workloads run on declared environments.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-03",
+        "DR-09",
+        "DR-12",
+        "DR-15"
+      ],
+      "scope": [
+        "performance",
+        "governance"
+      ],
+      "reason": "The reports provide architectures and harnesses, not physical browser/iPad measurements.",
+      "status": "accepted"
+    },
+    {
+      "id": "W1-036",
+      "title": "Realtime callback isolation",
+      "decision": "No project decoding, graph evaluation, BigInt/exact geometry, provenance allocation, JavaScript VM, locks, file/network I/O, or unbounded work may execute in an audio render callback.",
+      "disposition": "ADOPT",
+      "sources": [
+        "DR-03",
+        "DR-12",
+        "DR-15"
+      ],
+      "scope": [
+        "audio",
+        "safety"
+      ],
+      "reason": "This is a hard platform invariant independent of implementation language.",
+      "status": "accepted"
+    }
+  ]
+}

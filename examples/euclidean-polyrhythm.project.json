@@ -1,0 +1,72 @@
+{
+  "schema": "agl.project",
+  "schemaVersion": 1,
+  "id": "project_euclidean_polyrhythm_demo",
+  "name": "Three-Ring Euclidean Polyrhythm",
+  "createdAt": "2026-08-13T20:00:00Z",
+  "modifiedAt": "2026-08-13T20:00:00Z",
+  "seed": "agl-euclidean-rings-v1",
+  "tempo": {
+    "bpm": 108,
+    "numerator": 4,
+    "denominator": 4
+  },
+  "tracks": [
+    {
+      "id": "track_kick",
+      "name": "E(5,16)",
+      "kind": "trigger",
+      "operatorNodeIds": ["node_kick"],
+      "muted": false,
+      "solo": false,
+      "gain": 1
+    },
+    {
+      "id": "track_hat",
+      "name": "E(7,12)",
+      "kind": "trigger",
+      "operatorNodeIds": ["node_hat"],
+      "muted": false,
+      "solo": false,
+      "gain": 0.8
+    },
+    {
+      "id": "track_bell",
+      "name": "E(4,9)",
+      "kind": "trigger",
+      "operatorNodeIds": ["node_bell"],
+      "muted": false,
+      "solo": false,
+      "gain": 0.72
+    }
+  ],
+  "nodes": [
+    {
+      "id": "node_kick",
+      "type": "rhythm.euclidean",
+      "version": 1,
+      "parameters": { "steps": 16, "pulses": 5, "rotation": 0 },
+      "position": { "x": 80, "y": 90 }
+    },
+    {
+      "id": "node_hat",
+      "type": "rhythm.euclidean",
+      "version": 1,
+      "parameters": { "steps": 12, "pulses": 7, "rotation": 1 },
+      "position": { "x": 80, "y": 220 }
+    },
+    {
+      "id": "node_bell",
+      "type": "rhythm.euclidean",
+      "version": 1,
+      "parameters": { "steps": 9, "pulses": 4, "rotation": 0 },
+      "position": { "x": 80, "y": 350 }
+    }
+  ],
+  "connections": [],
+  "activeLab": "euclidean-rings",
+  "labState": {
+    "activeTick": -1,
+    "visualization": "concentric-rings"
+  }
+}

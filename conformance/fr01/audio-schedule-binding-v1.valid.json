@@ -1,0 +1,11 @@
+{
+  "schema": "agl.audio.schedule-binding",
+  "schemaVersion": 1,
+  "contractVersion": "agl-audio-schedule-binding-v1",
+  "generation": "2",
+  "transportEpoch": "3",
+  "timelineAnchorSeconds": 0,
+  "effectiveAtBackendSeconds": 10,
+  "fadeSeconds": 0.01,
+  "supersedesGeneration": "1"
+}

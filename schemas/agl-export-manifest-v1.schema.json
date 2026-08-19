@@ -1,0 +1,554 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://auralgeometrylab.local/schemas/agl-export-manifest-v1.schema.json",
+  "title": "AGL Export Manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schemaVersion",
+    "exportId",
+    "exportKind",
+    "createdAt",
+    "source",
+    "semanticEnvironmentDigest",
+    "operatorCatalogDigest",
+    "exporter",
+    "output",
+    "losses",
+    "provenanceRefs"
+  ],
+  "properties": {
+    "schema": {
+      "const": "agl.export.manifest"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "exportId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "exportKind": {
+      "enum": [
+        "audio-wav",
+        "midi-smf",
+        "musicxml",
+        "project-package"
+      ]
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "projectId",
+        "projectEpoch",
+        "projectSchemaVersion",
+        "projectSemanticDigest",
+        "materialMode",
+        "materialIds",
+        "sourceRecipeIds",
+        "materializationReceiptIds",
+        "range"
+      ],
+      "properties": {
+        "projectId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "projectEpoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "projectSchemaVersion": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "projectSemanticDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "materialMode": {
+          "enum": [
+            "live-resolved",
+            "snapshot",
+            "edited-derivative",
+            "user-authored"
+          ]
+        },
+        "materialIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "sourceRecipeIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "materializationReceiptIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "range": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "start",
+            "end"
+          ],
+          "properties": {
+            "start": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "numerator",
+                "denominator"
+              ],
+              "properties": {
+                "numerator": {
+                  "type": "string",
+                  "pattern": "^-?(0|[1-9][0-9]*)$"
+                },
+                "denominator": {
+                  "type": "string",
+                  "pattern": "^[1-9][0-9]*$"
+                }
+              }
+            },
+            "end": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "numerator",
+                "denominator"
+              ],
+              "properties": {
+                "numerator": {
+                  "type": "string",
+                  "pattern": "^-?(0|[1-9][0-9]*)$"
+                },
+                "denominator": {
+                  "type": "string",
+                  "pattern": "^[1-9][0-9]*$"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "semanticEnvironmentDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "operatorCatalogDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "renderPlanDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "exporter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mediaType",
+        "sha256",
+        "bytes"
+      ],
+      "properties": {
+        "mediaType": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "sampleRate": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 768000
+        },
+        "channels": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        }
+      }
+    },
+    "losses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "severity",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "severity": {
+            "enum": [
+              "info",
+              "warning"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sourceRef": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        }
+      }
+    },
+    "provenanceRefs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "exportKind": {
+            "const": "audio-wav"
+          }
+        },
+        "required": [
+          "exportKind"
+        ]
+      },
+      "then": {
+        "required": [
+          "renderPlanDigest"
+        ],
+        "properties": {
+          "output": {
+            "properties": {
+              "mediaType": {
+                "const": "audio/wav"
+              }
+            },
+            "required": [
+              "sampleRate",
+              "channels"
+            ]
+          }
+        }
+      },
+      "else": {
+        "not": {
+          "required": [
+            "renderPlanDigest"
+          ]
+        },
+        "properties": {
+          "output": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "sampleRate"
+                  ]
+                },
+                {
+                  "required": [
+                    "channels"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "exportKind": {
+            "const": "midi-smf"
+          }
+        },
+        "required": [
+          "exportKind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "output": {
+            "properties": {
+              "mediaType": {
+                "const": "audio/midi"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "exportKind": {
+            "const": "musicxml"
+          }
+        },
+        "required": [
+          "exportKind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "output": {
+            "properties": {
+              "mediaType": {
+                "const": "application/vnd.recordare.musicxml+xml"
+              }
+            }
+          },
+          "losses": {
+            "contains": {
+              "properties": {
+                "code": {
+                  "const": "MUSICXML_REPRESENTATION_SCOPE"
+                }
+              },
+              "required": [
+                "code"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "exportKind": {
+            "const": "project-package"
+          }
+        },
+        "required": [
+          "exportKind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "output": {
+            "properties": {
+              "mediaType": {
+                "const": "application/vnd.agl.project+zip"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "source": {
+            "properties": {
+              "materialMode": {
+                "const": "live-resolved"
+              }
+            },
+            "required": [
+              "materialMode"
+            ]
+          }
+        },
+        "required": [
+          "source"
+        ]
+      },
+      "then": {
+        "properties": {
+          "source": {
+            "properties": {
+              "sourceRecipeIds": {
+                "minItems": 1
+              },
+              "materializationReceiptIds": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "source": {
+            "properties": {
+              "materialMode": {
+                "enum": [
+                  "snapshot",
+                  "edited-derivative"
+                ]
+              }
+            },
+            "required": [
+              "materialMode"
+            ]
+          }
+        },
+        "required": [
+          "source"
+        ]
+      },
+      "then": {
+        "properties": {
+          "source": {
+            "properties": {
+              "sourceRecipeIds": {
+                "minItems": 1
+              },
+              "materializationReceiptIds": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "source": {
+            "properties": {
+              "materialMode": {
+                "const": "user-authored"
+              }
+            },
+            "required": [
+              "materialMode"
+            ]
+          }
+        },
+        "required": [
+          "source"
+        ]
+      },
+      "then": {
+        "properties": {
+          "source": {
+            "properties": {
+              "sourceRecipeIds": {
+                "maxItems": 0
+              },
+              "materializationReceiptIds": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "exportKind": {
+            "enum": [
+              "midi-smf",
+              "musicxml"
+            ]
+          },
+          "source": {
+            "properties": {
+              "materialMode": {
+                "const": "live-resolved"
+              }
+            },
+            "required": [
+              "materialMode"
+            ]
+          }
+        },
+        "required": [
+          "exportKind",
+          "source"
+        ]
+      },
+      "then": {
+        "properties": {
+          "losses": {
+            "contains": {
+              "properties": {
+                "code": {
+                  "const": "PROCEDURAL_MATERIAL_RESOLVED"
+                }
+              },
+              "required": [
+                "code"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

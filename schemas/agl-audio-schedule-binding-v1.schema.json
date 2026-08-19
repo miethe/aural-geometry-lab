@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://auralgeometrylab.local/schemas/agl-audio-schedule-binding-v1.schema.json",
+  "title": "Aural Geometry Lab Audio Schedule Binding v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schemaVersion",
+    "contractVersion",
+    "generation",
+    "transportEpoch",
+    "timelineAnchorSeconds",
+    "effectiveAtBackendSeconds",
+    "fadeSeconds"
+  ],
+  "properties": {
+    "schema": {
+      "const": "agl.audio.schedule-binding"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "contractVersion": {
+      "const": "agl-audio-schedule-binding-v1"
+    },
+    "generation": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)$",
+      "maxLength": 4096
+    },
+    "transportEpoch": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)$",
+      "maxLength": 4096
+    },
+    "timelineAnchorSeconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "effectiveAtBackendSeconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "fadeSeconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "supersedesGeneration": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)$",
+      "maxLength": 4096
+    }
+  }
+}

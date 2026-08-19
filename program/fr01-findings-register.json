@@ -1,0 +1,1039 @@
+{
+  "schema": "agl.program.fr01-findings-register",
+  "schemaVersion": 1,
+  "program": "Aural Geometry Lab",
+  "review": "FR-01 Whole-System Adversarial Architecture Review",
+  "baselineReviewed": "0.3.0",
+  "hardenedBaseline": "0.4.0",
+  "asOf": "2026-08-18",
+  "severityVocabulary": [
+    "Critical",
+    "High",
+    "Medium",
+    "Low"
+  ],
+  "statusVocabulary": [
+    "fixed",
+    "fixed-contract-owned-implementation",
+    "fixed-contract-owned-cross-platform",
+    "fixed-contract-owned-ui",
+    "fixed-contract-owned-lab",
+    "fixed-contract-owned-integration",
+    "fixed-foundation-owned-generator",
+    "fixed-foundation-owned-expansion",
+    "fixed-tooling-owned-continuation",
+    "open-owned",
+    "open-owned-blocked",
+    "deferred-owned"
+  ],
+  "completionRule": "No unresolved Critical or High finding may omit a backlog owner and workstream. Fixed contracts may retain owned production-integration work.",
+  "findings": [
+    {
+      "id": "FR01-001",
+      "title": "Project schemas, runtime validator, and examples described incompatible v3 semantics",
+      "severity": "Critical",
+      "status": "fixed-contract-owned-implementation",
+      "domain": "project-format",
+      "failureScenario": "A swarm can produce a file that passes one schema or example but is rejected by the runtime, or silently omit compatibility fields that control execution.",
+      "affectedFilesOrContracts": "src/core/project-schema.ts; schemas/agl-project-v3.schema.json; examples/fr01-minimal.v3.project.json",
+      "repair": "Establish project v3 as the sole new-write authority, add strict compatibility versions and unknown-field checks, align JSON Schema/examples, and validate every fixture against both schema and runtime.",
+      "regressionTests": [
+        "FR-01 project v3 validation and semantic digest",
+        "Draft 2020-12 schema validation of v3 example"
+      ],
+      "adr": "docs/adr/0019-project-v3-canonical-compatibility-and-loss-aware-migration.md",
+      "backlogOwner": {
+        "backlogId": "AGL-172",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "project 2\u21923"
+    },
+    {
+      "id": "FR01-002",
+      "title": "Legacy migration represented semantic loss as a clean upgrade",
+      "severity": "Critical",
+      "status": "fixed-contract-owned-implementation",
+      "domain": "migration",
+      "failureScenario": "A v1/v2 project opens as v3 while operator meaning, track membership, or lab state cannot be reconstructed; agents then execute a plausible but different composition.",
+      "affectedFilesOrContracts": "src/core/project-schema.ts; schemas/agl-migration-receipt-v2.schema.json",
+      "repair": "Emit migration receipt v2 with source/target digests, preserved opaque extensions, blocking loss records, and requiresUserReview; quarantine catalog rebinding.",
+      "regressionTests": [
+        "FR-01 legacy migration explicit-loss test",
+        "migration-receipt-v2 schema fixture"
+      ],
+      "adr": "docs/adr/0019-project-v3-canonical-compatibility-and-loss-aware-migration.md",
+      "backlogOwner": {
+        "backlogId": "AGL-173",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "migration receipt 1\u21922"
+    },
+    {
+      "id": "FR01-003",
+      "title": "Command JSON schema and TypeScript envelope used incompatible grammars and trusted UI inverse data",
+      "severity": "Critical",
+      "status": "fixed-contract-owned-implementation",
+      "domain": "commands-history",
+      "failureScenario": "A command serialized by one agent cannot be replayed by another; worse, a stale or malicious UI can provide an inverse that corrupts Undo.",
+      "affectedFilesOrContracts": "src/core/commands.ts; schemas/agl-command-v2.schema.json; conformance/fr01/command-v2.valid.json",
+      "repair": "Replace with command v2: one PascalCase grammar, typed target/write sets, preconditions, clone-first atomic transactions, core-generated validated inverses, no-op suppression, and explicit history semantics.",
+      "regressionTests": [
+        "FR-01 command grammar/atomicity test",
+        "FR-01 core inverse/stale-guard test",
+        "FR-01 coalescing test"
+      ],
+      "adr": "docs/adr/0020-command-v2-atomic-application-and-history.md",
+      "backlogOwner": {
+        "backlogId": "AGL-174",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "command 1\u21922"
+    },
+    {
+      "id": "FR01-004",
+      "title": "Persistent IDs and random streams were collision-prone and evaluation-order dependent",
+      "severity": "Critical",
+      "status": "fixed-contract-owned-cross-platform",
+      "domain": "identity-determinism",
+      "failureScenario": "Different tuples can share the same legacy serialized input/hash; adding a draw in one branch changes sibling generated output and invalidates stable selections, exceptions, or project replay.",
+      "affectedFilesOrContracts": "src/core/canonical.ts; src/core/random.ts; native/AuralGeometryCore/Sources/AuralGeometryCore/CanonicalV2.swift",
+      "repair": "Introduce typed canonical value encoding, SHA-256 digests, bounded stable-ID v2, and immutable named PRNG streams derived from root seed plus path. Keep v1 migration-only.",
+      "regressionTests": [
+        "FR-01 canonical encoding/SHA test",
+        "FR-01 stable ID ambiguity test",
+        "FR-01 PRNG branch independence test",
+        "Swift PRNG/stable-ID conformance"
+      ],
+      "adr": "docs/adr/0021-canonical-identity-prng-and-tempo-semantics.md",
+      "backlogOwner": {
+        "backlogId": "AGL-182",
+        "workstream": "WS-NATIVE"
+      },
+      "contractVersionChange": "stable ID 1\u21922; PRNG 1\u21922"
+    },
+    {
+      "id": "FR01-005",
+      "title": "Audio plan mixed immutable musical content with runtime generation/transport state and quantized duration incorrectly",
+      "severity": "Critical",
+      "status": "fixed-contract-owned-implementation",
+      "domain": "audio-rendering",
+      "failureScenario": "The same plan hashes differently per playback, offline and realtime disagree, and a short event can become zero or gain a frame because duration is rounded separately instead of quantizing absolute endpoints.",
+      "affectedFilesOrContracts": "src/core/render-plan.ts; schemas/agl-resolved-audio-plan-v2.schema.json; schemas/agl-audio-schedule-binding-v1.schema.json",
+      "repair": "Define immutable ResolvedAudioPlan v2 in project-timeline seconds, separate AudioScheduleBinding v1 for generation/transport/backend epoch, and quantize absolute start/end once.",
+      "regressionTests": [
+        "FR-01 plan/schema authority test",
+        "FR-01 endpoint quantization test"
+      ],
+      "adr": "docs/adr/0022-resolved-audio-plan-v2-and-generation-epoch-cutover.md",
+      "backlogOwner": {
+        "backlogId": "AGL-177",
+        "workstream": "WS-AUDIO"
+      },
+      "contractVersionChange": "resolved audio plan 1\u21922; schedule binding new v1"
+    },
+    {
+      "id": "FR01-006",
+      "title": "Cancellation was capable of being mistaken for async freshness",
+      "severity": "Critical",
+      "status": "fixed-contract-owned-implementation",
+      "domain": "async-runtime",
+      "failureScenario": "A canceled worker finishes late and publishes stale geometry, provenance, materialization, or audio plan because cancellation state\u2014not current semantic identity\u2014is treated as proof.",
+      "affectedFilesOrContracts": "src/core/derivation.ts; src/core/evaluation-protocol.ts; schemas/agl-evaluation-request-v2.schema.json",
+      "repair": "Use project epoch, scope, channel, generation, input/environment/catalog/budget hashes, payload integrity, and current desired identity; cancellation is resource control only.",
+      "regressionTests": [
+        "FR-01 derivation publication/integrity test",
+        "FR-01 evaluation channel/progress test"
+      ],
+      "adr": "docs/adr/0024-evaluation-protocol-graph-compilation-and-cross-platform-conformance.md",
+      "backlogOwner": {
+        "backlogId": "AGL-176",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "evaluation protocol new v2"
+    },
+    {
+      "id": "FR01-007",
+      "title": "Package manifest trusted declared paths, sizes, and hashes without verifying actual archive members",
+      "severity": "Critical",
+      "status": "fixed-contract-owned-implementation",
+      "domain": "package-security",
+      "failureScenario": "A hostile archive uses traversal, links, case collisions, compression bombs, undeclared files, or false sizes/hashes to overwrite files or bypass semantic validation.",
+      "affectedFilesOrContracts": "src/core/project-package.ts; schemas/agl-package-manifest-v2.schema.json",
+      "repair": "Define package manifest v2, strict portable paths, content-addressed assets, measured member metadata, no links/devices, no extra/missing members, bounded totals/ratios, and validated authoritative project.",
+      "regressionTests": [
+        "FR-01 package hostile member test",
+        "package-manifest-v2 schema fixture"
+      ],
+      "adr": "docs/adr/0023-hostile-package-export-accessibility-and-claim-contracts.md",
+      "backlogOwner": {
+        "backlogId": "AGL-179",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "package manifest 1\u21922"
+    },
+    {
+      "id": "FR01-008",
+      "title": "Exact rational construction accepted unsafe or approximate Number input",
+      "severity": "High",
+      "status": "fixed",
+      "domain": "time-math",
+      "failureScenario": "An integer beyond 2^53 or decimal parsed through binary floating point silently changes a beat, range, seed input, or cache key.",
+      "affectedFilesOrContracts": "src/core/rational.ts",
+      "repair": "Require exact string/scientific/fraction parsing, canonical rational wire validation, and an explicitly named approximate-number conversion seam.",
+      "regressionTests": [
+        "FR-01 rational exact parse/wire test"
+      ],
+      "adr": "docs/adr/0021-canonical-identity-prng-and-tempo-semantics.md",
+      "backlogOwner": {
+        "backlogId": "AGL-172",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "rational constructor behavior hardened"
+    },
+    {
+      "id": "FR01-009",
+      "title": "Tempo curve meaning and beat/seconds conversion were underdefined",
+      "severity": "High",
+      "status": "fixed-contract-owned-implementation",
+      "domain": "time-math",
+      "failureScenario": "Web and native agents implement different linear-tempo interpolation or repeatedly add floating deltas, causing drift and cross-platform event disagreement.",
+      "affectedFilesOrContracts": "src/core/tempo-map.ts; ProjectCompatibilityV3.tempoResolutionVersion",
+      "repair": "Version tempo-map v1; keep beats exact, define step and linear-BPM-over-beat analytic integration/inversion, and emit deterministic seconds only at the render boundary.",
+      "regressionTests": [
+        "FR-01 tempo analytic conversion/roundtrip test"
+      ],
+      "adr": "docs/adr/0022-resolved-audio-plan-v2-and-generation-epoch-cutover.md",
+      "backlogOwner": {
+        "backlogId": "AGL-177",
+        "workstream": "WS-AUDIO"
+      },
+      "contractVersionChange": "tempo resolution new v1"
+    },
+    {
+      "id": "FR01-010",
+      "title": "Operator definitions and catalogs could mutate after registration",
+      "severity": "High",
+      "status": "fixed-contract-owned-implementation",
+      "domain": "operator-catalog",
+      "failureScenario": "One agent modifies a shared definition object after another computed a project or graph digest; the same type/version then means different behavior.",
+      "affectedFilesOrContracts": "src/core/operator.ts; ProjectOperatorNodeV3.operatorSemanticDigest",
+      "repair": "Deep-clone/freeze definitions, validate parameters including explicit null, compute versioned semantic digests, seal catalogs, and persist catalog/operator digests.",
+      "regressionTests": [
+        "FR-01 operator registry freeze/null/seal test"
+      ],
+      "adr": "docs/adr/0024-evaluation-protocol-graph-compilation-and-cross-platform-conformance.md",
+      "backlogOwner": {
+        "backlogId": "AGL-175",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "operator semantic/catalog digest v2"
+    },
+    {
+      "id": "FR01-011",
+      "title": "No single graph compiler enforced types, cardinality, cycles, and operator digests",
+      "severity": "High",
+      "status": "fixed-contract-owned-implementation",
+      "domain": "graph-runtime",
+      "failureScenario": "The UI accepts a wire that the evaluator rejects, or different agents compute dependency closure/order differently, creating invalid saved graphs and divergent sound.",
+      "affectedFilesOrContracts": "src/core/graph.ts; src/core/operator.ts",
+      "repair": "Compile through one deterministic service that verifies catalog digest, node parameters, ports/types/dimensions/cardinality/required inputs, result cycles, topological order, and dependency closure.",
+      "regressionTests": [
+        "FR-01 graph compiler types/cardinality/cycle test"
+      ],
+      "adr": "docs/adr/0024-evaluation-protocol-graph-compilation-and-cross-platform-conformance.md",
+      "backlogOwner": {
+        "backlogId": "AGL-175",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "graph compiler new v2"
+    },
+    {
+      "id": "FR01-012",
+      "title": "Transaction application could partially mutate caller state before failure",
+      "severity": "High",
+      "status": "fixed-contract-owned-implementation",
+      "domain": "commands-history",
+      "failureScenario": "Command 2 of 3 fails after command 1 mutates a shared object, leaving project state changed without a committed transaction or inverse.",
+      "affectedFilesOrContracts": "src/core/commands.ts",
+      "repair": "Clone before apply, validate all transaction envelope invariants, compute/validate inverse per command, and only publish the final clone after all commands succeed.",
+      "regressionTests": [
+        "FR-01 mutating-failure atomicity test"
+      ],
+      "adr": "docs/adr/0020-command-v2-atomic-application-and-history.md",
+      "backlogOwner": {
+        "backlogId": "AGL-174",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "command v2"
+    },
+    {
+      "id": "FR01-013",
+      "title": "Time-only command coalescing could merge distinct user intents",
+      "severity": "High",
+      "status": "fixed-contract-owned-implementation",
+      "domain": "commands-history",
+      "failureScenario": "Two edits close in time become one Undo step, or one gesture becomes many steps across platforms.",
+      "affectedFilesOrContracts": "src/core/commands.ts; src/core/interaction.ts",
+      "repair": "Coalesce only one explicit edit session with identical action, target set, and write set; preserve first-before/final-after; no time-only merge.",
+      "regressionTests": [
+        "FR-01 command coalescing test"
+      ],
+      "adr": "docs/adr/0020-command-v2-atomic-application-and-history.md",
+      "backlogOwner": {
+        "backlogId": "AGL-174",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "command v2"
+    },
+    {
+      "id": "FR01-014",
+      "title": "Looped pattern evaluation could exceed budgets before checking and omit long events crossing the query boundary",
+      "severity": "High",
+      "status": "fixed",
+      "domain": "event-pattern",
+      "failureScenario": "A recursive/looping clip allocates millions of events before failure, while long notes begun in a prior cycle disappear from playback or export.",
+      "affectedFilesOrContracts": "src/core/pattern.ts",
+      "repair": "Preflight conservative event counts, include prior cycles needed for overlapping durations, enforce half-open interval semantics, stable ordering, and bounded IDs.",
+      "regressionTests": [
+        "FR-01 loop budget/long-event test",
+        "FR-01 point-event half-open test"
+      ],
+      "adr": "docs/adr/0024-evaluation-protocol-graph-compilation-and-cross-platform-conformance.md",
+      "backlogOwner": {
+        "backlogId": "AGL-175",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "pattern query hardened"
+    },
+    {
+      "id": "FR01-015",
+      "title": "Material source status conflated unknown evidence with missing source",
+      "severity": "High",
+      "status": "fixed-contract-owned-ui",
+      "domain": "generated-material",
+      "failureScenario": "A snapshot whose current digest is not yet evaluated is shown as missing or changed, prompting destructive rematerialization or false provenance claims.",
+      "affectedFilesOrContracts": "src/core/materialization.ts; native Contracts.swift; conformance/wave1/material-status-cases.json",
+      "repair": "Add unresolved state; derive status from material kind, source existence/detachment, and exact dependency digest rather than persist it as truth.",
+      "regressionTests": [
+        "FR-01 unresolved source-status test",
+        "TS/Swift material-status fixtures"
+      ],
+      "adr": "docs/adr/0020-command-v2-atomic-application-and-history.md",
+      "backlogOwner": {
+        "backlogId": "AGL-157",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "source status vocabulary extended"
+    },
+    {
+      "id": "FR01-016",
+      "title": "Materialization could commit output prepared from an obsolete source",
+      "severity": "High",
+      "status": "fixed-contract-owned-implementation",
+      "domain": "generated-material",
+      "failureScenario": "The generator changes while freeze runs; completion writes a snapshot different from what the user saw/requested.",
+      "affectedFilesOrContracts": "src/core/materialization.ts; project v3 source recipes/receipts",
+      "repair": "Use prepare-then-commit with exact half-open range, project epoch, dependency/recipe/environment/catalog/artifact hashes, ID collision checks, and atomic commit failure on drift.",
+      "regressionTests": [
+        "FR-01 hash-guarded materialization test"
+      ],
+      "adr": "docs/adr/0020-command-v2-atomic-application-and-history.md",
+      "backlogOwner": {
+        "backlogId": "AGL-157",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "materialization receipt v3"
+    },
+    {
+      "id": "FR01-017",
+      "title": "Selection identity included projection path or generated display ID",
+      "severity": "High",
+      "status": "fixed-contract-owned-integration",
+      "domain": "selection-hci",
+      "failureScenario": "Selecting one mathematical entity in timeline and canvas produces two selections, or regenerated display IDs orphan/rebind the wrong entity.",
+      "affectedFilesOrContracts": "src/core/interaction.ts; native Contracts.swift; conformance/selection-v2-cases.json",
+      "repair": "Define semantic selection v2 independent of projection and generated display/fingerprint; projection keys are separate; orphan reactivation requires exact key and unchanged intent epoch.",
+      "regressionTests": [
+        "FR-01 selection semantic identity/orphan test",
+        "Swift selection v2 fixture"
+      ],
+      "adr": "docs/adr/0024-evaluation-protocol-graph-compilation-and-cross-platform-conformance.md",
+      "backlogOwner": {
+        "backlogId": "AGL-181",
+        "workstream": "WS-PRODUCT"
+      },
+      "contractVersionChange": "selection identity 1\u21922"
+    },
+    {
+      "id": "FR01-018",
+      "title": "Export could silently flatten procedural or geometric meaning",
+      "severity": "High",
+      "status": "fixed-contract-owned-implementation",
+      "domain": "export",
+      "failureScenario": "MIDI or MusicXML appears to preserve a live generator/Penrose structure when it only contains a bounded note realization; later audit cannot identify source recipes, receipts, range, plan, or losses.",
+      "affectedFilesOrContracts": "src/core/export.ts; schemas/agl-export-manifest-v1.schema.json",
+      "repair": "Require immutable source/project/environment/catalog/plan bindings, mode-consistent recipes/receipts, output hash, provenance, exact range, canonical media type, and explicit procedural/MusicXML loss records.",
+      "regressionTests": [
+        "FR-01 export manifest loss/binding test",
+        "export-manifest schema fixture"
+      ],
+      "adr": "docs/adr/0023-hostile-package-export-accessibility-and-claim-contracts.md",
+      "backlogOwner": {
+        "backlogId": "AGL-180",
+        "workstream": "WS-QUALITY"
+      },
+      "contractVersionChange": "export manifest new v1"
+    },
+    {
+      "id": "FR01-019",
+      "title": "Accessibility semantics were at risk of becoming separate per-surface approximations",
+      "severity": "High",
+      "status": "fixed-contract-owned-integration",
+      "domain": "accessibility",
+      "failureScenario": "Canvas supports only drag/color/motion, keyboard focus forms cycles or follows expensive selection, and web/native announce different states.",
+      "affectedFilesOrContracts": "src/core/accessibility.ts; schemas/agl-accessibility-mirror-v1.schema.json",
+      "repair": "Use one acyclic semantic mirror with stable order/roles/state text/actions, exact value controls, non-drag alternatives, one focus locus, and shared projection data.",
+      "regressionTests": [
+        "FR-01 accessibility mirror hierarchy/action test",
+        "accessibility schema fixture"
+      ],
+      "adr": "docs/adr/0023-hostile-package-export-accessibility-and-claim-contracts.md",
+      "backlogOwner": {
+        "backlogId": "AGL-181",
+        "workstream": "WS-PRODUCT"
+      },
+      "contractVersionChange": "accessibility mirror new v1"
+    },
+    {
+      "id": "FR01-020",
+      "title": "Research-gated claim authorization trusted caller-supplied evidence IDs",
+      "severity": "High",
+      "status": "fixed-contract-owned-integration",
+      "domain": "claims",
+      "failureScenario": "UI code passes an arbitrary evidence string and publishes \u201cexact Penrose\u201d or \u201cvalidated Risset\u201d before the required implementation/study exists.",
+      "affectedFilesOrContracts": "src/core/claims.ts; program/claim-register.json",
+      "repair": "Bind claims to allowed surfaces, exact qualification digest, sources, and trusted release-context gate evidence; caller strings cannot satisfy gates.",
+      "regressionTests": [
+        "FR-01 claim trusted-evidence test"
+      ],
+      "adr": "docs/adr/0023-hostile-package-export-accessibility-and-claim-contracts.md",
+      "backlogOwner": {
+        "backlogId": "AGL-183",
+        "workstream": "WS-QUALITY"
+      },
+      "contractVersionChange": "claim registry hardened"
+    },
+    {
+      "id": "FR01-021",
+      "title": "Risset event ordinals could exceed safe integer identity space",
+      "severity": "High",
+      "status": "fixed-contract-owned-lab",
+      "domain": "risset",
+      "failureScenario": "Very long/high-rate queries round event ordinals, collide IDs, loop indefinitely, or generate nonfinite inverse times.",
+      "affectedFilesOrContracts": "src/operators/risset.ts",
+      "repair": "Preflight bounded horizon/event count, require safe layer/ordinal indices and finite phase/rate/inverse time, and fail deterministically before enumeration.",
+      "regressionTests": [
+        "FR-01 Risset bounded closure/unsafe ordinal test"
+      ],
+      "adr": "docs/adr/0021-canonical-identity-prng-and-tempo-semantics.md",
+      "backlogOwner": {
+        "backlogId": "AGL-185",
+        "workstream": "WS-AUDIO"
+      },
+      "contractVersionChange": "operator behavior hardened"
+    },
+    {
+      "id": "FR01-022",
+      "title": "Penrose canonical identity and topology could depend on unbounded text or Float64 projection",
+      "severity": "High",
+      "status": "fixed-foundation-owned-generator",
+      "domain": "penrose",
+      "failureScenario": "Huge exact addresses create giant persisted IDs/DoS, or two vertices/edges merge because their rendered coordinates fall within an epsilon.",
+      "affectedFilesOrContracts": "src/geometry/penrose.ts; src/geometry/qphi.ts",
+      "repair": "Validate family/address ranges and canonical tuples, use bounded SHA-256 IDs over exact addresses, keep Q(phi) topology exact, and reject nonfinite Float64 projection.",
+      "regressionTests": [
+        "FR-01 Penrose ID/topology validation test",
+        "FR-01 Q(phi) overflow test"
+      ],
+      "adr": "docs/adr/0015-exact-penrose-production-geometry.md",
+      "backlogOwner": {
+        "backlogId": "AGL-186",
+        "workstream": "WS-LABS"
+      },
+      "contractVersionChange": "Penrose identity v2"
+    },
+    {
+      "id": "FR01-023",
+      "title": "Public JSON schemas and runtime validators could drift independently",
+      "severity": "High",
+      "status": "fixed-tooling-owned-continuation",
+      "domain": "schema-conformance",
+      "failureScenario": "A fixture passes Draft 2020-12 schema but fails runtime\u2014or vice versa\u2014so autonomous agents choose different authorities.",
+      "affectedFilesOrContracts": "schemas/*; scripts/validate-json-schemas.py; conformance/fr01/*",
+      "repair": "Align versioned schemas/fixtures and run all public examples/fixtures through JSON Schema plus runtime validators in check:all; fail missing/mismatched artifacts.",
+      "regressionTests": [
+        "10 public schema/example validations",
+        "FR-01 plan/schema authority test"
+      ],
+      "adr": "docs/adr/0024-evaluation-protocol-graph-compilation-and-cross-platform-conformance.md",
+      "backlogOwner": {
+        "backlogId": "AGL-188",
+        "workstream": "WS-QUALITY"
+      },
+      "contractVersionChange": "tooling gate"
+    },
+    {
+      "id": "FR01-024",
+      "title": "Swift contracts lagged project v3, semantic selection, source status, stable IDs, and PRNG",
+      "severity": "High",
+      "status": "fixed-foundation-owned-expansion",
+      "domain": "cross-platform",
+      "failureScenario": "The iPad opens the file but assigns different generated identities/random output or treats the same canvas/timeline entity as different selections.",
+      "affectedFilesOrContracts": "native/AuralGeometryCore; conformance/selection-v2-cases.json; conformance/prng-v2-cases.json",
+      "repair": "Add project v3 DTOs, unresolved source status, package profile v2, semantic selection v2, pure SHA-256/canonical stable-ID v2, named PRNG v2, and shared fixtures.",
+      "regressionTests": [
+        "11 Swift contract tests including v3/selection/PRNG"
+      ],
+      "adr": "docs/adr/0024-evaluation-protocol-graph-compilation-and-cross-platform-conformance.md",
+      "backlogOwner": {
+        "backlogId": "AGL-182",
+        "workstream": "WS-NATIVE"
+      },
+      "contractVersionChange": "Swift portable contract expanded"
+    },
+    {
+      "id": "FR01-025",
+      "title": "Playable prototypes still bypass the production render-plan/backend architecture",
+      "severity": "High",
+      "status": "open-owned",
+      "domain": "audio-rendering",
+      "failureScenario": "The current demo sounds correct while production scheduler/offline/native paths execute different timing, voice, cancellation, or safety semantics.",
+      "affectedFilesOrContracts": "src/audio/*; src/app/*; ResolvedAudioPlan v2 adapters",
+      "repair": "Migrate Infinite Staircase/Euclidean and all voices to finalized plan v2 plus schedule binding; prohibit lab-local timing authority.",
+      "regressionTests": [
+        "future backend adapter conformance",
+        "future P0 lab smoke suite"
+      ],
+      "adr": "docs/adr/0022-resolved-audio-plan-v2-and-generation-epoch-cutover.md",
+      "backlogOwner": {
+        "backlogId": "AGL-177",
+        "workstream": "WS-AUDIO"
+      },
+      "contractVersionChange": "implementation migration"
+    },
+    {
+      "id": "FR01-026",
+      "title": "Cross-browser scheduler and realtime/offline tolerances are unmeasured",
+      "severity": "High",
+      "status": "open-owned",
+      "domain": "audio-validation",
+      "failureScenario": "A hard-coded 25/100 ms profile works on one desktop but misses notes, makes edits sluggish, or overloads native nodes elsewhere.",
+      "affectedFilesOrContracts": "DR-03 benchmark harness; AGL audio diagnostics",
+      "repair": "Run declared browser/OS/hardware matrix; calibrate horizon, late policy, native/worklet threshold, cancellation, latency telemetry, and feature tolerances.",
+      "regressionTests": [
+        "future scheduler benchmark corpus"
+      ],
+      "adr": "docs/adr/0022-resolved-audio-plan-v2-and-generation-epoch-cutover.md",
+      "backlogOwner": {
+        "backlogId": "AGL-178",
+        "workstream": "WS-AUDIO"
+      },
+      "contractVersionChange": "evidence gate"
+    },
+    {
+      "id": "FR01-027",
+      "title": "Exact Penrose runtime still lacks recovered golden/oracle/matching artifacts and generator",
+      "severity": "High",
+      "status": "open-owned-blocked",
+      "domain": "penrose",
+      "failureScenario": "A visually convincing patch ships without exact matching, adjacency/query completeness, or independent oracle proof.",
+      "affectedFilesOrContracts": "DR-09 artifacts; src/geometry/penrose.ts; lab implementation",
+      "repair": "Recover or regenerate fixture bytes/prototypes/legal stars/matching tables; implement exact pentagrid generator, cut-and-project/hierarchy oracles, halo, clipping, adjacency, and traversal.",
+      "regressionTests": [
+        "future DR-09 goldens and property suite"
+      ],
+      "adr": "docs/adr/0015-exact-penrose-production-geometry.md",
+      "backlogOwner": {
+        "backlogId": "AGL-186",
+        "workstream": "WS-LABS"
+      },
+      "contractVersionChange": "blocked implementation"
+    },
+    {
+      "id": "FR01-028",
+      "title": "Export manifests exist but WAV/MIDI/MusicXML/package codecs are not production implementations",
+      "severity": "High",
+      "status": "open-owned",
+      "domain": "export",
+      "failureScenario": "A swarm treats the manifest contract as evidence that real export is complete, while codec timing, tails, quantization, loss records, and transactional output are untested.",
+      "affectedFilesOrContracts": "src/core/export.ts; AGL-130/131; offline renderer",
+      "repair": "Implement codecs from canonical events/plans, transactional files, tails, loss fixtures, and round-trip tests.",
+      "regressionTests": [
+        "future export corpus and end-to-end smoke"
+      ],
+      "adr": "docs/adr/0023-hostile-package-export-accessibility-and-claim-contracts.md",
+      "backlogOwner": {
+        "backlogId": "AGL-180",
+        "workstream": "WS-QUALITY"
+      },
+      "contractVersionChange": "implementation"
+    },
+    {
+      "id": "FR01-029",
+      "title": "Claim registry enforcement is not yet wired to product copy/build",
+      "severity": "High",
+      "status": "open-owned",
+      "domain": "claims",
+      "failureScenario": "A component bypasses claim resolution and hard-codes an overclaim even though the registry is correct.",
+      "affectedFilesOrContracts": "program/claim-register.json; UI/docs/build pipeline",
+      "repair": "Require registered claim IDs for scientific copy, lint generated docs/examples/UI, and make missing qualification/gate fail CI/release review.",
+      "regressionTests": [
+        "future claim-surface snapshot/lint suite"
+      ],
+      "adr": "docs/adr/0023-hostile-package-export-accessibility-and-claim-contracts.md",
+      "backlogOwner": {
+        "backlogId": "AGL-183",
+        "workstream": "WS-QUALITY"
+      },
+      "contractVersionChange": "implementation"
+    },
+    {
+      "id": "FR01-030",
+      "title": "Profile-numeric behavior remains undefined for chaos and other floating workloads",
+      "severity": "High",
+      "status": "open-owned",
+      "domain": "numerics",
+      "failureScenario": "TypeScript and Swift choose different branch/quantization outcomes from tiny float differences, changing persisted events, IDs, or cache results.",
+      "affectedFilesOrContracts": "program/backlog AGL-170; chaos/control operators; cache policy",
+      "repair": "Define exact versus profile-numeric classes, checkpoints, absolute/relative/ULP tolerances, NaN/signed-zero, branch quantization, backend provenance, and cache namespace.",
+      "regressionTests": [
+        "future numerical conformance corpus"
+      ],
+      "adr": "docs/adr/0024-evaluation-protocol-graph-compilation-and-cross-platform-conformance.md",
+      "backlogOwner": {
+        "backlogId": "AGL-170",
+        "workstream": "WS-QUALITY"
+      },
+      "contractVersionChange": "new numerical profile"
+    },
+    {
+      "id": "FR01-031",
+      "title": "Legacy migrated operators require explicit sealed-catalog rebinding",
+      "severity": "High",
+      "status": "open-owned",
+      "domain": "migration",
+      "failureScenario": "A legacy type/version is assigned a synthetic digest and executed as if it had authoritative historical semantics.",
+      "affectedFilesOrContracts": "src/core/project-schema.ts; migration UI/runtime",
+      "repair": "Prevent execution while blocking loss exists; show preserved source, choose compatible catalog definition, record signed rebinding receipt, or keep read-only.",
+      "regressionTests": [
+        "future migration/catalog torture tests"
+      ],
+      "adr": "docs/adr/0019-project-v3-canonical-compatibility-and-loss-aware-migration.md",
+      "backlogOwner": {
+        "backlogId": "AGL-173",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "workflow"
+    },
+    {
+      "id": "FR01-032",
+      "title": "Physical package profile and iCloud/File Provider conflict behavior remain unproven",
+      "severity": "High",
+      "status": "open-owned",
+      "domain": "native-persistence",
+      "failureScenario": "Web archive and native directory package produce different logical files or two offline edits overwrite one another without preserving both versions.",
+      "affectedFilesOrContracts": "native package adapter; browser archive adapter; DR-12 POA",
+      "repair": "Prove identical logical member set/digest, single-writer policy, conflict preservation, rename/move/eviction, hostile archive, and rollback.",
+      "regressionTests": [
+        "future browser/native package POA"
+      ],
+      "adr": "docs/adr/0023-hostile-package-export-accessibility-and-claim-contracts.md",
+      "backlogOwner": {
+        "backlogId": "AGL-167",
+        "workstream": "WS-NATIVE"
+      },
+      "contractVersionChange": "implementation/evidence"
+    },
+    {
+      "id": "FR01-033",
+      "title": "Transport generation cutover and runtime graph failure behavior are contracts without production state machines",
+      "severity": "High",
+      "status": "open-owned",
+      "domain": "audio-runtime",
+      "failureScenario": "A valid document edit compiles late; the UI shows new graph while old audio keeps playing silently, or stale worklet events fire after seek.",
+      "affectedFilesOrContracts": "transport; audio backend; graph candidate/active plan state",
+      "repair": "Implement project/transport epochs, last-valid/candidate/armed/active plan states, exact effective frame, failure/mute scope, tail policy, and telemetry.",
+      "regressionTests": [
+        "future model tests and audio cutover tests"
+      ],
+      "adr": "docs/adr/0022-resolved-audio-plan-v2-and-generation-epoch-cutover.md",
+      "backlogOwner": {
+        "backlogId": "AGL-177",
+        "workstream": "WS-AUDIO"
+      },
+      "contractVersionChange": "implementation"
+    },
+    {
+      "id": "FR01-034",
+      "title": "Real-time callback boundary is not yet mechanically enforced",
+      "severity": "High",
+      "status": "open-owned",
+      "domain": "audio-realtime",
+      "failureScenario": "An agent calls graph evaluation, allocates provenance, logs, parses JSON, or locks from AudioWorklet/native render callback, causing glitches or deadlocks.",
+      "affectedFilesOrContracts": "AudioWorklet/native audio modules; code ownership rules",
+      "repair": "Restrict render path to bounded preallocated queue/voice/DSP code, add static dependency checks and stress tests, and keep domain core off real-time thread.",
+      "regressionTests": [
+        "future architecture lint and underrun stress"
+      ],
+      "adr": "docs/adr/0022-resolved-audio-plan-v2-and-generation-epoch-cutover.md",
+      "backlogOwner": {
+        "backlogId": "AGL-178",
+        "workstream": "WS-AUDIO"
+      },
+      "contractVersionChange": "implementation"
+    },
+    {
+      "id": "FR01-035",
+      "title": "Generated identity capability is not yet proven for every operator/lab",
+      "severity": "High",
+      "status": "open-owned",
+      "domain": "generated-identity",
+      "failureScenario": "Sparse exceptions or persistent selections target an output whose topology/key changes under parameter edits, then silently affect the wrong event/tile.",
+      "affectedFilesOrContracts": "operator metadata; each lab fixtures",
+      "repair": "Require stable/successor-mapped/ephemeral declaration, key schema/version, metamorphic identity tests, and capability-gated UI actions.",
+      "regressionTests": [
+        "future per-operator identity fixture corpus"
+      ],
+      "adr": "docs/adr/0024-evaluation-protocol-graph-compilation-and-cross-platform-conformance.md",
+      "backlogOwner": {
+        "backlogId": "AGL-159",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "operator metadata completion"
+    },
+    {
+      "id": "FR01-036",
+      "title": "Source-byte preservation and canonical semantic digest serve different purposes",
+      "severity": "Medium",
+      "status": "fixed-contract-owned-implementation",
+      "domain": "migration",
+      "failureScenario": "Canonicalization destroys original bytes needed for forensic migration receipts, while raw byte hash cannot identify semantic equality.",
+      "affectedFilesOrContracts": "src/core/project-schema.ts; package repository",
+      "repair": "Persist source bytes/hash separately from normalized project semantic digest; never use one as a substitute for the other.",
+      "regressionTests": [
+        "migration receipt source/target digest fixture"
+      ],
+      "adr": "docs/adr/0019-project-v3-canonical-compatibility-and-loss-aware-migration.md",
+      "backlogOwner": {
+        "backlogId": "AGL-172",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "contract clarified"
+    },
+    {
+      "id": "FR01-037",
+      "title": "Command field preconditions need a versioned canonical path vocabulary",
+      "severity": "Medium",
+      "status": "open-owned",
+      "domain": "commands-history",
+      "failureScenario": "Free-form string paths change meaning after schema migration, making stale guards or future collaboration unsafe.",
+      "affectedFilesOrContracts": "src/core/commands.ts; command schemas",
+      "repair": "Define field/path IDs by command payload schema, migrate versions explicitly, and forbid arbitrary JSON pointer mutation commands.",
+      "regressionTests": [
+        "future command path fixture corpus"
+      ],
+      "adr": "docs/adr/0020-command-v2-atomic-application-and-history.md",
+      "backlogOwner": {
+        "backlogId": "AGL-174",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "command payload evolution"
+    },
+    {
+      "id": "FR01-038",
+      "title": "Exact and profile-numeric cache results require separate compatibility rules",
+      "severity": "Medium",
+      "status": "open-owned",
+      "domain": "cache",
+      "failureScenario": "A raw floating result from one engine is reused under another backend/profile and changes threshold or event decisions.",
+      "affectedFilesOrContracts": "evaluation cache; numerical profile; provenance",
+      "repair": "Use backend-independent exact keys only for exact/canonical outputs; include numerical profile/backend/build for raw numeric results until canonicalized.",
+      "regressionTests": [
+        "future cache cross-backend tests"
+      ],
+      "adr": "docs/adr/0024-evaluation-protocol-graph-compilation-and-cross-platform-conformance.md",
+      "backlogOwner": {
+        "backlogId": "AGL-170",
+        "workstream": "WS-QUALITY"
+      },
+      "contractVersionChange": "cache namespace"
+    },
+    {
+      "id": "FR01-039",
+      "title": "MIDI runtime I/O and Standard MIDI File export could be conflated",
+      "severity": "Medium",
+      "status": "open-owned",
+      "domain": "midi",
+      "failureScenario": "Web/native live device timestamps, permissions, UMP/MIDI2 resolution, and SMF quantization are handled as one API and silently lose resolution or clock meaning.",
+      "affectedFilesOrContracts": "AGL-048; AGL-130; native Core MIDI adapter",
+      "repair": "Keep ephemeral runtime I/O separate from canonical export; preserve UMP resolution natively, map clocks explicitly, and disclose SMF quantization.",
+      "regressionTests": [
+        "future MIDI fixtures/hardware matrix"
+      ],
+      "adr": "docs/adr/0023-hostile-package-export-accessibility-and-claim-contracts.md",
+      "backlogOwner": {
+        "backlogId": "AGL-180",
+        "workstream": "WS-AUDIO"
+      },
+      "contractVersionChange": "implementation"
+    },
+    {
+      "id": "FR01-040",
+      "title": "Pinned toolchain exists but dependency lock and connected install proof remain incomplete",
+      "severity": "Medium",
+      "status": "open-owned",
+      "domain": "build-reproducibility",
+      "failureScenario": "A local agent resolves a different transitive dependency or uses an unreviewed global toolchain, producing nonreproducible output despite passing source tests.",
+      "affectedFilesOrContracts": "package.json; program/toolchain-lock.json; future package-lock.json/CI",
+      "repair": "Run connected npm install, commit lockfile/integrity metadata, enforce exact Node/npm/TS/Swift CI images, license/SBOM, and clean-build receipts.",
+      "regressionTests": [
+        "future connected CI clean build"
+      ],
+      "adr": "docs/adr/0018-performance-and-shared-core-evidence-gates.md",
+      "backlogOwner": {
+        "backlogId": "AGL-136",
+        "workstream": "WS-QUALITY"
+      },
+      "contractVersionChange": "build gate"
+    },
+    {
+      "id": "FR01-041",
+      "title": "Canonical encoding admitted hidden JavaScript state and malformed Unicode ambiguity",
+      "severity": "High",
+      "status": "fixed",
+      "domain": "canonicalization",
+      "failureScenario": "Two values that look identical through normal enumeration can carry accessors, symbol keys, non-enumerable properties, sparse/custom arrays, or lone surrogates and therefore hash or execute inconsistently across JavaScript, UTF-8 encoders, and Swift.",
+      "affectedFilesOrContracts": "src/core/canonical.ts; agl-canonical-value-v1; sha256-canonical-v1",
+      "repair": "Reject unsupported object shapes and hidden state, validate Unicode scalar well-formedness, enforce depth/node/string/collection/encoded-byte limits, and test SHA parity across block boundaries.",
+      "regressionTests": [
+        "FR-01 canonical hidden-state/Unicode/limit rejection",
+        "FR-01 SHA-256 Node parity across block boundaries"
+      ],
+      "adr": "docs/adr/0021-canonical-identity-prng-and-tempo-semantics.md",
+      "backlogOwner": {
+        "backlogId": "AGL-187",
+        "workstream": "WS-QUALITY"
+      },
+      "contractVersionChange": "canonical-value-v1 behavior clarified and fail-closed without reinterpreting accepted values"
+    },
+    {
+      "id": "FR01-042",
+      "title": "Authoritative JSON could be interpreted differently because duplicate keys, unsafe integers, or malformed UTF-8 were accepted",
+      "severity": "Critical",
+      "status": "fixed-contract-owned-cross-platform",
+      "domain": "json-trust-boundary",
+      "failureScenario": "One reader accepts the first duplicate key, another the last, and another rejects it; or a large integer/lone surrogate changes during decode, allowing schema, hash, project ID, or package metadata substitution.",
+      "affectedFilesOrContracts": "src/core/strict-json.ts; src/core/project-package.ts; schemas/*; native import boundary",
+      "repair": "Introduce strict UTF-8 JSON parsing with duplicate-member, unsafe-integer, malformed-Unicode, trailing-data, depth/node/collection limits before schema/runtime validation; require native parity.",
+      "regressionTests": [
+        "FR-01 strict JSON duplicate key/unsafe integer/malformed UTF-8 corpus",
+        "public schema validation"
+      ],
+      "adr": "docs/adr/0023-hostile-package-export-accessibility-and-claim-contracts.md",
+      "backlogOwner": {
+        "backlogId": "AGL-179",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "new agl-strict-json-v1 trust-boundary contract"
+    },
+    {
+      "id": "FR01-043",
+      "title": "Graph compatibility compared only coarse port labels and omitted complete dimension semantics",
+      "severity": "High",
+      "status": "fixed-contract-owned-implementation",
+      "domain": "graph-type-system",
+      "failureScenario": "UI/compiler accepts a connection whose value kind matches but measurement model, unit, circular period, domain categories/bounds, or missing-value policy differs, producing plausible but semantically invalid mappings.",
+      "affectedFilesOrContracts": "src/core/graph.ts; operator port DimensionSpec; UI compatibility service",
+      "repair": "Hash and compare complete dimension semantics and make the compiler compatibility service the sole UI/import authority.",
+      "regressionTests": [
+        "FR-01 full dimension-domain compatibility cases"
+      ],
+      "adr": "docs/adr/0024-evaluation-protocol-graph-compilation-and-cross-platform-conformance.md",
+      "backlogOwner": {
+        "backlogId": "AGL-175",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "graph compiler v2 compatibility semantics hardened"
+    },
+    {
+      "id": "FR01-044",
+      "title": "Worker results could self-declare an exact determinism class and poison exact caches",
+      "severity": "Critical",
+      "status": "fixed-contract-owned-implementation",
+      "domain": "worker-cache-integrity",
+      "failureScenario": "A compromised, stale, or buggy worker marks profile-numeric/render-only output as exact, causing backend-dependent values to enter backend-independent cache keys and later publish as authoritative.",
+      "affectedFilesOrContracts": "src/core/derivation.ts; src/core/evaluation-protocol.ts; evaluation request/result v2",
+      "repair": "Make determinism class host-owned from the sealed operator/catalog contract; worker results echo it only for mismatch detection and cannot promote cache semantics.",
+      "regressionTests": [
+        "FR-01 host-owned determinism-class mismatch rejection",
+        "cache policy tests"
+      ],
+      "adr": "docs/adr/0024-evaluation-protocol-graph-compilation-and-cross-platform-conformance.md",
+      "backlogOwner": {
+        "backlogId": "AGL-176",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "evaluation protocol v2 host authority clarified"
+    },
+    {
+      "id": "FR01-045",
+      "title": "Custom transaction cloning could retain references to authoritative nested state",
+      "severity": "High",
+      "status": "fixed",
+      "domain": "command-atomicity",
+      "failureScenario": "A custom clone function returns a shallow copy; a failing handler mutates nested authoritative state before the transaction is rejected, violating atomicity despite clone-first architecture.",
+      "affectedFilesOrContracts": "src/core/commands.ts; command v2 transaction executor",
+      "repair": "Validate deep graph independence between pre-state, clone, and committed result; reject aliasing custom clones.",
+      "regressionTests": [
+        "FR-01 shallow custom clone rejection and authoritative-state preservation"
+      ],
+      "adr": "docs/adr/0020-command-v2-atomic-application-and-history.md",
+      "backlogOwner": {
+        "backlogId": "AGL-174",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "command v2 extension seam hardened"
+    },
+    {
+      "id": "FR01-046",
+      "title": "Audio plan runtime, schema, and canonicalization limits disagreed",
+      "severity": "High",
+      "status": "fixed-contract-owned-implementation",
+      "domain": "audio-plan-bounds",
+      "failureScenario": "A plan passes JSON Schema but runtime rejects it, or runtime accepts a plan that exhausts canonicalization memory, causing browser/native/offline differential behavior and denial of service.",
+      "affectedFilesOrContracts": "src/core/render-plan.ts; schemas/agl-resolved-audio-plan-v2.schema.json; canonical encoder limits",
+      "repair": "Align collection ceilings, lower event limits to bounded MVP values, apply audio-specific canonical limits, and validate plan/schema fixtures together.",
+      "regressionTests": [
+        "FR-01 audio-plan schema/runtime collection limit parity",
+        "resolved plan canonical-size rejection"
+      ],
+      "adr": "docs/adr/0022-resolved-audio-plan-v2-and-generation-epoch-cutover.md",
+      "backlogOwner": {
+        "backlogId": "AGL-177",
+        "workstream": "WS-AUDIO"
+      },
+      "contractVersionChange": "resolved audio plan v2 safety limits clarified"
+    },
+    {
+      "id": "FR01-047",
+      "title": "Canonical digest and resolved plans are whole-value in-memory operations",
+      "severity": "High",
+      "status": "open-owned",
+      "domain": "large-artifact-boundedness",
+      "failureScenario": "A legitimate large project or long export stays below per-collection caps but still requires duplicate whole-object canonical bytes and a whole plan in memory, causing OOM or long uninterruptible work.",
+      "affectedFilesOrContracts": "src/core/canonical.ts; src/core/render-plan.ts; export pipeline; package writer",
+      "repair": "Define streaming canonical digest equivalence and deterministic plan/export fragmentation with bounded memory, resumable cancellation, stable fragment IDs, and whole-value compatibility fixtures.",
+      "regressionTests": [
+        "future streaming-vs-whole digest equivalence corpus",
+        "future fragmented-vs-whole plan/export equivalence and cancellation tests"
+      ],
+      "adr": "docs/adr/0021-canonical-identity-prng-and-tempo-semantics.md",
+      "backlogOwner": {
+        "backlogId": "AGL-190",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "future streaming canonical/profile and plan-fragment contract"
+    },
+    {
+      "id": "FR01-048",
+      "title": "Operator semantic metadata digest does not prove evaluator implementation identity",
+      "severity": "High",
+      "status": "open-owned",
+      "domain": "operator-versioning",
+      "failureScenario": "An agent changes executable operator behavior but leaves type, semantic version, metadata, and digest projection unchanged; projects and caches appear compatible while outputs drift.",
+      "affectedFilesOrContracts": "src/core/operator.ts; src/operators/*; sealed catalog; release evidence",
+      "repair": "Create implementation-conformance receipts binding evaluator build/source identity to operator type/version/digest and accepted golden/property fixtures; fail release on behavior change without version advance.",
+      "regressionTests": [
+        "future evaluator mutation test",
+        "future operator receipt/source-build/fixture verification"
+      ],
+      "adr": "docs/adr/0024-evaluation-protocol-graph-compilation-and-cross-platform-conformance.md",
+      "backlogOwner": {
+        "backlogId": "AGL-189",
+        "workstream": "WS-RUNTIME"
+      },
+      "contractVersionChange": "new operator implementation-conformance receipt contract"
+    },
+    {
+      "id": "FR01-049",
+      "title": "Export manifest validation did not prove it described the actual artifact bytes",
+      "severity": "High",
+      "status": "fixed-contract-owned-implementation",
+      "domain": "export-integrity",
+      "failureScenario": "A manifest passes validation while the produced WAV/MIDI/MusicXML/archive has different bytes, media type, or length, allowing accidental or malicious substitution after semantic checks.",
+      "affectedFilesOrContracts": "src/core/export.ts; agl-export-manifest-v1; future codecs",
+      "repair": "Verify actual bytes, byte count, media type, and SHA-256 against the completed manifest before release or download.",
+      "regressionTests": [
+        "FR-01 export actual-byte hash/length/media verification"
+      ],
+      "adr": "docs/adr/0023-hostile-package-export-accessibility-and-claim-contracts.md",
+      "backlogOwner": {
+        "backlogId": "AGL-180",
+        "workstream": "WS-QUALITY"
+      },
+      "contractVersionChange": "export manifest v1 completion semantics hardened"
+    },
+    {
+      "id": "FR01-050",
+      "title": "Accessibility and claim runtime vocabularies could drift from their JSON schemas and registers",
+      "severity": "High",
+      "status": "fixed-contract-owned-integration",
+      "domain": "accessibility-claims",
+      "failureScenario": "Schema accepts a role/surface/claim class that runtime silently handles differently, or release code omits the declared claim vocabulary, creating inaccessible actions or unauthorized copy.",
+      "affectedFilesOrContracts": "src/core/accessibility.ts; src/core/claims.ts; schemas/agl-accessibility-mirror-v1.schema.json; schemas/agl-claim-register-v1.schema.json; program/claim-register.json",
+      "repair": "Validate runtime enum vocabularies and top-level register metadata, add a public claim-register schema, and include both contracts in schema/runtime/release verification.",
+      "regressionTests": [
+        "FR-01 accessibility enum runtime rejection",
+        "FR-01 claim register metadata/class validation",
+        "Draft 2020-12 claim-register validation"
+      ],
+      "adr": "docs/adr/0023-hostile-package-export-accessibility-and-claim-contracts.md",
+      "backlogOwner": {
+        "backlogId": "AGL-181",
+        "workstream": "WS-PRODUCT"
+      },
+      "contractVersionChange": "new public claim-register-v1 schema; accessibility mirror v1 runtime parity hardened"
+    },
+    {
+      "id": "FR01-051",
+      "title": "Swift/native project import still relies on ordinary JSONDecoder rather than the strict hostile JSON contract",
+      "severity": "High",
+      "status": "open-owned",
+      "domain": "native-portability-security",
+      "failureScenario": "The browser rejects duplicate keys, malformed Unicode, or unsafe numbers while the native client decodes them differently and opens a semantically different project/package.",
+      "affectedFilesOrContracts": "native/AuralGeometryCore; future FileDocument/package adapter; agl-strict-json-v1",
+      "repair": "Implement or wrap a strict byte-level native JSON/package preflight and run the identical accepted/rejected hostile corpus before native editing or execution.",
+      "regressionTests": [
+        "future Swift strict-JSON duplicate-key/UTF-8/unsafe-integer corpus",
+        "future web/native hostile-package differential suite"
+      ],
+      "adr": "docs/adr/0023-hostile-package-export-accessibility-and-claim-contracts.md",
+      "backlogOwner": {
+        "backlogId": "AGL-191",
+        "workstream": "WS-NATIVE"
+      },
+      "contractVersionChange": "native agl-strict-json-v1 conformance gate"
+    }
+  ],
+  "summary": {
+    "total": 51,
+    "bySeverity": {
+      "Critical": 9,
+      "High": 37,
+      "Medium": 5,
+      "Low": 0
+    },
+    "fixedOrContractHardened": 33,
+    "openOwned": 18
+  }
+}

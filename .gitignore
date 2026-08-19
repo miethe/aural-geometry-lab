@@ -1,0 +1,38 @@
+# --- build / tooling ---
+node_modules/
+dist/
+.DS_Store
+*.log
+coverage/
+.build/
+.swiftpm/
+
+# --- Agentic OS (AOS) artifact layer ---------------------------------------
+# Treated exactly like a package manager's tree:
+#
+#   COMMITTED (the manifest + the lockfile — reproducibility inputs):
+#     .claude/aos-artifacts.yaml        <- package.json  (what this project declares)
+#     .claude/.skillmeat-deployed.toml  <- package-lock  (what was deployed, with content hashes)
+#     .claude/settings.json             <- project tool config
+#     CLAUDE.md / AGENTS.md             <- project context, hand-authored
+#
+#   IGNORED (the installed packages — reproducible, never hand-edited):
+#     everything below. Restore with the commands in .claude/aos-artifacts.yaml's header.
+#
+# Edit an artifact at its UPSTREAM, never at the deployed copy here.
+.claude/skills/
+.claude/agents/
+.claude/commands/
+.claude/workflows/
+.claude/hooks/
+.claude/context/
+.claude/mcp/
+.claude/orchestration/
+
+# machine-local state (absolute paths, server UUIDs, per-user overrides)
+.claude/settings.local.json
+.claude/.skillmeat-project.toml
+.claude/.aos-writeback-state
+.claude/*.skillmeat-lock
+.claude/**/.*.skillmeat-lock
+.skillmeat/

@@ -1,0 +1,251 @@
+{
+  "schema": "agl.program.fr01-contract-manifest",
+  "schemaVersion": 1,
+  "program": "Aural Geometry Lab",
+  "release": "0.4.0",
+  "asOf": "2026-08-18",
+  "authorityDocuments": [
+    "docs/24-fr01-whole-system-adversarial-repository-review.md",
+    "docs/25-fr01-contract-and-migration-amendment.md",
+    "docs/26-fr01-validation-report.md",
+    "docs/27-fr01-swarm-handoff-amendment.md",
+    "docs/adr/0019-project-v3-canonical-compatibility-and-loss-aware-migration.md",
+    "docs/adr/0020-command-v2-atomic-application-and-history.md",
+    "docs/adr/0021-canonical-identity-prng-and-tempo-semantics.md",
+    "docs/adr/0022-resolved-audio-plan-v2-and-generation-epoch-cutover.md",
+    "docs/adr/0023-hostile-package-export-accessibility-and-claim-contracts.md",
+    "docs/adr/0024-evaluation-protocol-graph-compilation-and-cross-platform-conformance.md"
+  ],
+  "semanticVersions": {
+    "semanticContract": "wave1-fr01-v3",
+    "canonicalEncoding": "agl-canonical-value-v1",
+    "strictJson": "agl-strict-json-v1",
+    "canonicalDigest": "sha256-canonical-v1",
+    "rationalWire": "agl-rational-wire-v1",
+    "operatorSemanticDigest": "agl-operator-semantic-digest-v2",
+    "operatorCatalogDigest": "agl-operator-catalog-digest-v2",
+    "operatorImplementationReceipt": "pending-agl-189-v1",
+    "graphCompiler": "agl-graph-compiler-v2",
+    "stableId": "agl-stable-id-v2",
+    "deterministicGeneration": "agl-prng-v2",
+    "tempoResolution": "agl-tempo-map-v1",
+    "evaluationProtocol": "agl-evaluation-protocol-v2",
+    "resolvedAudioPlan": "agl-resolved-audio-plan-v2",
+    "audioScheduleBinding": "agl-audio-schedule-binding-v1",
+    "sampleFrameQuantization": "seconds-to-frame-v1",
+    "logicalPackageManifest": "agl-package-manifest-v2",
+    "exportManifest": "agl-export-manifest-v1",
+    "accessibilityMirror": "agl-accessibility-mirror-v1",
+    "claimRegister": "agl-claim-register-v1",
+    "selectionIdentity": 2,
+    "budgetProfile": "agl-mvp-budget-v2",
+    "numericalProfile": "pending-agl-170",
+    "streamingCanonicalDigest": "pending-agl-190",
+    "penroseIdentity": "penrose-id-v2",
+    "penroseConstruction": "de-bruijn-regular-pentagrid-p3-v1",
+    "risset": "rhythm.risset@1"
+  },
+  "publicContracts": [
+    {
+      "id": "project",
+      "version": 3,
+      "schema": "schemas/agl-project-v3.schema.json",
+      "schemaSha256": "53c924e4d806a8d07e7fff0b486e8a57c193abff3c1eec78e4d492495ecc50c9",
+      "fixtures": [
+        {
+          "path": "examples/fr01-minimal.v3.project.json",
+          "sha256": "dc9b5f6724e7f30a0a0c163bb8fab776b7beee486e3ceee86e05cfa0b4de707d"
+        }
+      ]
+    },
+    {
+      "id": "migration-receipt",
+      "version": 2,
+      "schema": "schemas/agl-migration-receipt-v2.schema.json",
+      "schemaSha256": "8067e1149bb6b229423dc37b1bac3e3bd212a271600d355b8cf293205d09e927",
+      "fixtures": [
+        {
+          "path": "conformance/fr01/migration-receipt-v2.valid.json",
+          "sha256": "cf46d3d1da58dfa469d190f8de73a1c029fdb6db910a7527be428780f8fa52e9"
+        }
+      ]
+    },
+    {
+      "id": "semantic-command",
+      "version": 2,
+      "schema": "schemas/agl-command-v2.schema.json",
+      "schemaSha256": "a1ffc704111bc1b03447903f5900bb2846937538f5fd26ded5bc0f9fc0b3e66f",
+      "fixtures": [
+        {
+          "path": "conformance/fr01/command-v2.valid.json",
+          "sha256": "f36f563edc191730d48f9d1336c76b0f828b46709d858f6f45dee4f1510bfce2"
+        }
+      ]
+    },
+    {
+      "id": "evaluation-request",
+      "version": 2,
+      "schema": "schemas/agl-evaluation-request-v2.schema.json",
+      "schemaSha256": "db1bc856099e307d78ceac265379de6012d4cff9a308ae4fc2a03e67a4b94136",
+      "fixtures": [
+        {
+          "path": "conformance/fr01/evaluation-request-v2.valid.json",
+          "sha256": "5d3b91bebb6b2f601ca090ca6a24332afe603dff3124163a1e52e496bc6a4579"
+        }
+      ]
+    },
+    {
+      "id": "resolved-audio-plan",
+      "version": 2,
+      "schema": "schemas/agl-resolved-audio-plan-v2.schema.json",
+      "schemaSha256": "b239e1c0ed3002ec2a73bd10e3c672cdafa13c35564edbcceb02e0a02cd31aee",
+      "fixtures": [
+        {
+          "path": "conformance/fr01/resolved-audio-plan-v2.valid.json",
+          "sha256": "32c49a25dd9e2eacf41ff6b1dcc91551379454d00e7278c20067d04e85d4abd7"
+        }
+      ]
+    },
+    {
+      "id": "audio-schedule-binding",
+      "version": 1,
+      "schema": "schemas/agl-audio-schedule-binding-v1.schema.json",
+      "schemaSha256": "5a864df5306aac46160406a6dace985cb4f88d73f9ea50a3bc3b707b1c568c09",
+      "fixtures": [
+        {
+          "path": "conformance/fr01/audio-schedule-binding-v1.valid.json",
+          "sha256": "87c7c002127551b4c2b492bfaa2f66ba9a698e9db775da8e15b54ff761bcc650"
+        }
+      ]
+    },
+    {
+      "id": "logical-package",
+      "version": 2,
+      "schema": "schemas/agl-package-manifest-v2.schema.json",
+      "schemaSha256": "830e9a652be957a893b04f364e3808decf5e47d013371edb43949300bc46f04b",
+      "fixtures": [
+        {
+          "path": "conformance/fr01/package-manifest-v2.valid.json",
+          "sha256": "855e8d1f2b7736a9c82a0e32d140a92acaa89df56874b9efd2c3412941d2c7e1"
+        }
+      ]
+    },
+    {
+      "id": "export-manifest",
+      "version": 1,
+      "schema": "schemas/agl-export-manifest-v1.schema.json",
+      "schemaSha256": "80bebe9656cfb51bde4bc5b03e9d069528a0e4b69832fe0aac51d38d71dfb137",
+      "fixtures": [
+        {
+          "path": "conformance/fr01/export-manifest-v1.valid.json",
+          "sha256": "77177262f76c41f70339021070f5bfe5b68e0874806886e75e6bef76e8695159"
+        }
+      ]
+    },
+    {
+      "id": "accessibility-mirror",
+      "version": 1,
+      "schema": "schemas/agl-accessibility-mirror-v1.schema.json",
+      "schemaSha256": "e37d69ba3f026b8a48b8d2ed1be1e4a0e9fe6bae664fd894e671a097e7b6bd5c",
+      "fixtures": [
+        {
+          "path": "conformance/fr01/accessibility-mirror-v1.valid.json",
+          "sha256": "96f155408fd4e909f4c326f2d74ecd5b8c520336d3eefedde94bea91672be64b"
+        }
+      ]
+    },
+    {
+      "id": "mapping-trace",
+      "version": 1,
+      "schema": "schemas/agl-mapping-trace-v1.schema.json",
+      "schemaSha256": "a26f3b9c74b001444a9943f91bbba2f81137f05f01f92fd52c241bacf0339a36",
+      "fixtures": []
+    },
+    {
+      "id": "claim-register",
+      "version": 1,
+      "schema": "schemas/agl-claim-register-v1.schema.json",
+      "schemaSha256": "ec7c64bbeb7960b178973ed7256d4cfd9c551cf5ee4b0d5601a7b79210e5718e",
+      "fixtures": [
+        {
+          "path": "program/claim-register.json",
+          "sha256": "144aa8e30c4ba26df50ed7db00969342d643a2994820265024cec9e5835c8d9a"
+        }
+      ]
+    }
+  ],
+  "sharedConformanceFixtures": [
+    {
+      "path": "conformance/selection-v2-cases.json",
+      "sha256": "22b0e1a19fd0b55b2dc9fb0c6d77937beac6dd5a9997bd975060fea41cfce584"
+    },
+    {
+      "path": "conformance/prng-v2-cases.json",
+      "sha256": "9cc67d26e5c843bb0f78249fcb464d1ac179ee1b6d63ffdefd2caf003df02a9c"
+    },
+    {
+      "path": "conformance/wave1/audio-frame-cases.json",
+      "sha256": "c7416818942ea6ba6e25514ce5d885679636fb1bcda2ad47ba0369fd16412b64"
+    },
+    {
+      "path": "conformance/wave1/exact-wire-cases.json",
+      "sha256": "78b53314857ce5bb6d69fbb8b7e0afc0e229cc913798c2f5bc40f2f974286c00"
+    },
+    {
+      "path": "conformance/wave1/material-status-cases.json",
+      "sha256": "f9be1c157ec4108eaca4342c2bc0bba6eb6a000a3db3f4eb01f534af20f82726"
+    },
+    {
+      "path": "conformance/wave1/penrose-default-phase-certificate.json",
+      "sha256": "66495f5b4a1ec52c9a307edfcd5df4e364fde80760ad6ed0697401f5380cd137"
+    }
+  ],
+  "migrationOnlyContracts": [
+    {
+      "id": "project",
+      "version": 1,
+      "reason": "prototype read/migration source only"
+    },
+    {
+      "id": "project",
+      "version": 2,
+      "reason": "Wave-1 read/migration source only"
+    },
+    {
+      "id": "semantic-command",
+      "version": 1,
+      "reason": "incompatible grammar/inverse semantics; no new writes"
+    },
+    {
+      "id": "resolved-audio-plan",
+      "version": 1,
+      "reason": "mixed runtime ownership; no new writes"
+    },
+    {
+      "id": "logical-package",
+      "version": 1,
+      "reason": "insufficient hostile-member semantics; no new writes"
+    },
+    {
+      "id": "stable-id",
+      "version": 1,
+      "reason": "collision-prone and ambiguous; existing legacy identities only"
+    },
+    {
+      "id": "prng",
+      "version": 1,
+      "reason": "fork depends on mutable draw state; legacy replay only"
+    },
+    {
+      "id": "selection-identity",
+      "version": 1,
+      "reason": "projection-coupled; legacy UI/session compatibility only"
+    }
+  ],
+  "releaseRules": [
+    "No in-place reinterpretation of a public contract.",
+    "Schema/runtime/fixture/cross-platform changes travel together.",
+    "Legacy contracts are readers/migrations only.",
+    "Every unresolved Critical/High FR-01 finding has a backlog owner."
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "agl.conformance.material-status",
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "authored",
+      "kind": "user-authored",
+      "hasSource": false,
+      "detached": false,
+      "sourceExists": false,
+      "receiptDigest": null,
+      "currentDigest": null,
+      "expected": "not-applicable"
+    },
+    {
+      "name": "current-snapshot",
+      "kind": "snapshot",
+      "hasSource": true,
+      "detached": false,
+      "sourceExists": true,
+      "receiptDigest": "sha256:aaa",
+      "currentDigest": "sha256:aaa",
+      "expected": "current"
+    },
+    {
+      "name": "changed-snapshot",
+      "kind": "snapshot",
+      "hasSource": true,
+      "detached": false,
+      "sourceExists": true,
+      "receiptDigest": "sha256:aaa",
+      "currentDigest": "sha256:bbb",
+      "expected": "changed"
+    },
+    {
+      "name": "missing-source",
+      "kind": "edited-derivative",
+      "hasSource": true,
+      "detached": false,
+      "sourceExists": false,
+      "receiptDigest": "sha256:aaa",
+      "currentDigest": null,
+      "expected": "missing"
+    },
+    {
+      "name": "detached",
+      "kind": "snapshot",
+      "hasSource": true,
+      "detached": true,
+      "sourceExists": true,
+      "receiptDigest": "sha256:aaa",
+      "currentDigest": "sha256:aaa",
+      "expected": "detached"
+    },
+    {
+      "name": "live-generated-current",
+      "kind": "live-generated",
+      "hasSource": true,
+      "detached": false,
+      "sourceExists": true,
+      "receiptDigest": null,
+      "currentDigest": null,
+      "expected": "current"
+    },
+    {
+      "name": "unresolved-snapshot",
+      "kind": "snapshot",
+      "hasSource": true,
+      "detached": false,
+      "sourceExists": true,
+      "receiptDigest": "sha256:aaa",
+      "currentDigest": null,
+      "expected": "unresolved"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# pre-push — refuses a push whose `npm run check:all` is not green.
+#
+# WHY: this repo's whole value is that its contracts are *verified* — 85 TS tests, 11 Swift
+# conformance tests, 12 JSON-Schema fixture validations, and the verify pass. None of that is
+# enforced anywhere else: there is no .github/ directory, so there is no CI. A gate that is
+# configured but never consulted is the failure mode this project's own program docs warn about,
+# so this hook exists to make the release-grade gate actually block something.
+#
+# INSTALL (repo-local, once per clone):
+#     git config core.hooksPath .githooks
+#
+# ⚠️ core.hooksPath lives in .git/config, which git CANNOT commit. On a fresh clone this guard is
+# SILENTLY ABSENT until the command above is run. Committing this file is not the same as arming
+# it — verify with: git config --get core.hooksPath
+#
+# CONTRACT:
+#   - default-on; hard off with a falsy AOS_CHECK_GATE (0/false/no/off), silently.
+#   - a true no-op when there is nothing to check (no package.json, no npm, no check:all script).
+#   - bypass a single push with CHECK_GATE_SKIP=1, which announces that it was used.
+#   - scope limit, stated so nobody over-reads a green push: this checks the WORKING TREE, not the
+#     specific commits being pushed.
+set -uo pipefail
+
+case "${AOS_CHECK_GATE:-1}" in 0|false|no|off) exit 0 ;; esac
+
+cd "$(git rev-parse --show-toplevel)" || exit 0
+
+[ -f package.json ] || exit 0
+command -v npm >/dev/null 2>&1 || { echo "[check-gate] npm not found — skipping (no-op)."; exit 0; }
+node -e 'process.exit(require("./package.json").scripts?.["check:all"]?0:1)' 2>/dev/null || {
+  echo "[check-gate] no check:all script — skipping (no-op)."; exit 0; }
+
+if [ "${CHECK_GATE_SKIP:-0}" = "1" ]; then
+  echo "[check-gate] BYPASSED via CHECK_GATE_SKIP=1 — the suite did not run."
+  exit 0
+fi
+
+echo "[check-gate] running: npm run check:all"
+if npm run check:all; then
+  echo "[check-gate] green."
+  exit 0
+fi
+echo ""
+echo "[check-gate] REFUSING PUSH — npm run check:all is not green."
+echo "[check-gate] Fix it, or push a deliberate exception with CHECK_GATE_SKIP=1."
+exit 1

@@ -1,0 +1,28 @@
+{
+  "schema": "agl.package.manifest",
+  "schemaVersion": 2,
+  "logicalProfile": "agl.logical-package.v2",
+  "physicalProfile": "agl.portable-archive.v2",
+  "projectSchemaVersion": 3,
+  "projectSemanticId": "project-fr01-minimal",
+  "saveGeneration": "save-1",
+  "projectSemanticDigest": "sha256:670b0978b27db2c88d530292d1aabcc6d5058e4a796de96d8fdbfeffe7e0613f",
+  "declaredTotalBytes": 1744,
+  "members": [
+    {
+      "path": "project.json",
+      "role": "project",
+      "sha256": "dc9b5f6724e7f30a0a0c163bb8fab776b7beee486e3ceee86e05cfa0b4de707d",
+      "bytes": 1744,
+      "compressedBytes": 872,
+      "mediaType": "application/json",
+      "authoritative": true,
+      "entryKind": "file"
+    }
+  ],
+  "compatibility": {
+    "minimumReaderVersion": "0.4.0",
+    "requiredOperatorCatalogDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "canonicalEncodingVersion": "agl-canonical-value-v1"
+  }
+}

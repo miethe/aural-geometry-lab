@@ -1,0 +1,132 @@
+{
+  "schema": "agl.conformance.prng-v2",
+  "schemaVersion": 1,
+  "algorithm": "agl-mulberry32-named-stream-v2",
+  "version": "agl-prng-v2",
+  "streams": [
+    {
+      "name": "root",
+      "rootSeed": "seed",
+      "streamPath": [],
+      "canonicalSeedMaterial": "a3:[s30:agl-mulberry32-named-stream-v2s4:seeda0:[]]",
+      "seedMaterialDigest": "sha256:361acc145abd1473c52f3393469cb011f22fb5b0f618fcb68d08270465c500f8",
+      "streamIdentity": "rng~2~27937c748e40b98e2062c695a4de0c94cc15d4f1ea6d954c1a1eaf88b6b5f2c2",
+      "firstUint32": [
+        3052464656,
+        549741489,
+        2975081435,
+        465446364,
+        2470579313,
+        3303156169,
+        2508056492,
+        2524699660
+      ],
+      "boundedIntegers": [
+        -1,
+        -8,
+        18,
+        -13,
+        16,
+        -8,
+        -5,
+        3
+      ]
+    },
+    {
+      "name": "alpha",
+      "rootSeed": "seed",
+      "streamPath": [
+        "alpha"
+      ],
+      "canonicalSeedMaterial": "a3:[s30:agl-mulberry32-named-stream-v2s4:seeda1:[s5:alpha]]",
+      "seedMaterialDigest": "sha256:bbbc0ec0580534cc8932672c16530a095a9b583ff97005242b52cbad8a0e2234",
+      "streamIdentity": "rng~2~19c303056a2a91677e94a5b71f650ff9ea854326150c64f37872839d97810390",
+      "firstUint32": [
+        559397568,
+        2612059261,
+        2093445706,
+        2979143858,
+        2966695468,
+        1254224769,
+        635177000,
+        4159283248
+      ],
+      "boundedIntegers": [
+        -9,
+        4,
+        9,
+        1,
+        11,
+        -8,
+        -17,
+        -9
+      ]
+    },
+    {
+      "name": "unicode",
+      "rootSeed": "fr01-π",
+      "streamPath": [
+        "lab",
+        "τ"
+      ],
+      "canonicalSeedMaterial": "a3:[s30:agl-mulberry32-named-stream-v2s7:fr01-πa2:[s3:labs2:τ]]",
+      "seedMaterialDigest": "sha256:aa8fbffb8d4d355ccf653c95b61ac774a9ca08905fa6a433459f70fb3555a20b",
+      "streamIdentity": "rng~2~79331c0a72a9cafeaffdcc2b7788508a042efed2e60964fb6464ba375f95a54c",
+      "firstUint32": [
+        2557603740,
+        1027337995,
+        2076835318,
+        355616217,
+        4180202439,
+        3741227911,
+        3710009341,
+        1812249935
+      ],
+      "boundedIntegers": [
+        3,
+        18,
+        21,
+        0,
+        22,
+        14,
+        4,
+        -2
+      ]
+    }
+  ],
+  "stableIds": [
+    {
+      "name": "ambiguous-concatenation-left",
+      "prefix": "entity",
+      "parts": [
+        "ab",
+        "c"
+      ],
+      "canonicalParts": "a2:[s2:abs1:c]",
+      "expected": "entity~2~44cf4e2025cb2575a2d6e5058764574703230779de540b22c115883efd53d1f7"
+    },
+    {
+      "name": "ambiguous-concatenation-right",
+      "prefix": "entity",
+      "parts": [
+        "a",
+        "bc"
+      ],
+      "canonicalParts": "a2:[s1:as2:bc]",
+      "expected": "entity~2~ebf3eba01f6054218acddfcd09c109a1f58533290fcf19a1dc1229a5b820006e"
+    },
+    {
+      "name": "nested-unicode",
+      "prefix": "fixture",
+      "parts": [
+        "α",
+        [
+          "β",
+          "γ"
+        ]
+      ],
+      "canonicalParts": "a2:[s2:αa2:[s2:βs2:γ]]",
+      "expected": "fixture~2~9a2d1d189808ad4d174acb078bad513b2794618fee56fb974cdada9575956003"
+    }
+  ]
+}

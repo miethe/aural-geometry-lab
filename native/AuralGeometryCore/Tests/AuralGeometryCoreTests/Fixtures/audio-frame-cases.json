@@ -1,0 +1,12 @@
+{
+  "schema": "agl.conformance.audio-frame",
+  "schemaVersion": 1,
+  "quantizationVersion": "seconds-to-frame-v1",
+  "cases": [
+    { "seconds": 0, "sampleRate": 48000, "expectedFrame": 0 },
+    { "seconds": 0.000010416666666666667, "sampleRate": 48000, "expectedFrame": 1 },
+    { "seconds": 0.5, "sampleRate": 44100, "expectedFrame": 22050 },
+    { "seconds": 1.00001, "sampleRate": 48000, "expectedFrame": 48000 },
+    { "seconds": 20, "sampleRate": 48000, "expectedFrame": 960000 }
+  ]
+}

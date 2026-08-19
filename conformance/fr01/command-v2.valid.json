@@ -1,0 +1,39 @@
+{
+  "schema": "agl.command",
+  "schemaVersion": 2,
+  "contractVersion": "agl-command-contract-v2",
+  "commandId": "cmd-001",
+  "transactionId": "tx-001",
+  "logicalActionId": "edit-operator-gain",
+  "editSessionId": "gesture-001",
+  "projectId": "project-demo",
+  "projectEpoch": "epoch-001",
+  "baseRevision": "7",
+  "actor": {
+    "actorId": "local-user",
+    "sequence": "18"
+  },
+  "origin": "user",
+  "kind": "SetOperatorParameter",
+  "payloadVersion": 1,
+  "payload": {
+    "nodeId": "node-1",
+    "parameterId": "gain",
+    "value": 0.75
+  },
+  "targetSet": [
+    "node-1"
+  ],
+  "writeSet": [
+    "operator.parameter.gain@v1"
+  ],
+  "preconditions": [
+    {
+      "kind": "field-digest-equals",
+      "entityId": "node-1",
+      "fieldPathId": "agl.operator.parameter@v1",
+      "expectedDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "issuedAt": "2026-08-18T00:00:00.000Z"
+}

@@ -1,0 +1,107 @@
+{
+  "schema": "agl.program.frontier-run-register",
+  "schemaVersion": 1,
+  "program": "Aural Geometry Lab",
+  "asOf": "2026-08-18",
+  "runs": [
+    {
+      "id": "FR-01",
+      "title": "Whole-System Adversarial Architecture Review",
+      "cadence": "before-M1-and-each-major-merge",
+      "status": "completed-repository-hardening",
+      "spec": "docs/17-frontier-model-runbook.md",
+      "result": "docs/24-fr01-whole-system-adversarial-repository-review.md",
+      "completedAt": "2026-08-18",
+      "baselineResult": "docs/20-wave1-adversarial-architecture-review.md",
+      "findings": "program/fr01-findings-register.json",
+      "hardenedRelease": "0.4.0",
+      "followUp": "Repeat after each major parallel merge through FR-10 and before M1/M2 architecture freeze.",
+      "findingCount": 51,
+      "criticalHighOwned": 46,
+      "acceptedAdrs": "0019-0024",
+      "validation": "docs/26-fr01-validation-report.md"
+    },
+    {
+      "id": "FR-02",
+      "title": "Project Format and Migration Torture Test",
+      "cadence": "before-project-v2",
+      "status": "ready",
+      "spec": "docs/17-frontier-model-runbook.md"
+    },
+    {
+      "id": "FR-03",
+      "title": "Interaction Model State-Machine Audit",
+      "cadence": "after-DR-14",
+      "status": "completed-foundation",
+      "spec": "docs/17-frontier-model-runbook.md",
+      "result": "docs/21-interaction-state-machine-conformance.md",
+      "completedAt": "2026-08-18",
+      "followUp": "Repeat against production command/history implementation before editor beta."
+    },
+    {
+      "id": "FR-04",
+      "title": "Mathematical Operator Oracle Expansion",
+      "cadence": "per-operator-before-acceptance",
+      "status": "ready",
+      "spec": "docs/17-frontier-model-runbook.md"
+    },
+    {
+      "id": "FR-05",
+      "title": "Lab Scientific/Mathematical Claim Audit",
+      "cadence": "after-domain-research",
+      "status": "ready",
+      "spec": "docs/17-frontier-model-runbook.md"
+    },
+    {
+      "id": "FR-06",
+      "title": "UI/UX Mockup Synthesis and Critique",
+      "cadence": "per-mockup-wave",
+      "status": "ready",
+      "spec": "docs/17-frontier-model-runbook.md"
+    },
+    {
+      "id": "FR-07",
+      "title": "Cross-Platform Conformance Expansion",
+      "cadence": "before-native-spike",
+      "status": "ready",
+      "spec": "docs/17-frontier-model-runbook.md"
+    },
+    {
+      "id": "FR-08",
+      "title": "Performance Workload and Budget Design",
+      "cadence": "before-optimization",
+      "status": "ready",
+      "spec": "docs/17-frontier-model-runbook.md"
+    },
+    {
+      "id": "FR-09",
+      "title": "Import/Export and Local-First Security Review",
+      "cadence": "before-package-import-beta",
+      "status": "ready",
+      "spec": "docs/17-frontier-model-runbook.md"
+    },
+    {
+      "id": "FR-10",
+      "title": "Swarm Consistency Review",
+      "cadence": "each-major-merge",
+      "status": "ready",
+      "spec": "docs/17-frontier-model-runbook.md"
+    },
+    {
+      "id": "FR-11",
+      "title": "Research-to-Engineering Distillation",
+      "cadence": "after-each-deep-research-run",
+      "status": "completed-wave1",
+      "spec": "docs/17-frontier-model-runbook.md",
+      "result": "research/completed/wave-1/",
+      "completedAt": "2026-08-18"
+    },
+    {
+      "id": "FR-12",
+      "title": "Release-Candidate Product Coherence Review",
+      "cadence": "before-M6",
+      "status": "ready",
+      "spec": "docs/17-frontier-model-runbook.md"
+    }
+  ]
+}

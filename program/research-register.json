@@ -1,0 +1,265 @@
+{
+  "schema": "agl.program.research-register",
+  "schemaVersion": 1,
+  "program": "Aural Geometry Lab",
+  "asOf": "2026-08-18",
+  "runs": [
+    {
+      "id": "DR-01",
+      "title": "Risset Rhythm Psychoacoustics and Infinite-Staircase Design",
+      "priorityClass": "immediate-blocker",
+      "status": "completed-integrated",
+      "dependsOn": [],
+      "unblocks": [
+        "AGL-061",
+        "AGL-063",
+        "AGL-065"
+      ],
+      "charter": "research/DR-01-risset-psychoacoustics-and-infinite-staircase.md",
+      "completedAt": "2026-08-18",
+      "report": "research/completed/wave-1/reports/DR-01-report.md",
+      "integrationPacket": "research/completed/wave-1/integration-packets/DR-01-integration-packet.md",
+      "integratedBy": "docs/18-wave1-system-integration.md"
+    },
+    {
+      "id": "DR-02",
+      "title": "Euclidean Polyrhythm and Cyclic Rhythm Design",
+      "priorityClass": "lab-hardening",
+      "status": "chartered",
+      "dependsOn": [
+        "DR-08"
+      ],
+      "unblocks": [
+        "AGL-071",
+        "AGL-073",
+        "AGL-074"
+      ],
+      "charter": "research/DR-02-euclidean-polyrhythm-and-cyclic-rhythm-design.md"
+    },
+    {
+      "id": "DR-03",
+      "title": "Browser Audio Scheduling, Latency, and Rendering Architecture",
+      "priorityClass": "immediate-blocker",
+      "status": "completed-integrated",
+      "dependsOn": [],
+      "unblocks": [
+        "AGL-043",
+        "AGL-044",
+        "AGL-046",
+        "AGL-047",
+        "AGL-048",
+        "AGL-134"
+      ],
+      "charter": "research/DR-03-browser-audio-scheduling-latency-and-rendering.md",
+      "completedAt": "2026-08-18",
+      "report": "research/completed/wave-1/reports/DR-03-report.md",
+      "integrationPacket": "research/completed/wave-1/integration-packets/DR-03-integration-packet.md",
+      "integratedBy": "docs/18-wave1-system-integration.md"
+    },
+    {
+      "id": "DR-04",
+      "title": "Tonnetz and Harmonic Geometry for Interactive Composition",
+      "priorityClass": "lab-hardening",
+      "status": "chartered",
+      "dependsOn": [
+        "DR-08"
+      ],
+      "unblocks": [
+        "AGL-081",
+        "AGL-083",
+        "AGL-084"
+      ],
+      "charter": "research/DR-04-tonnetz-and-harmonic-geometry.md"
+    },
+    {
+      "id": "DR-05",
+      "title": "Fractal, Recursive, and L-System Composition",
+      "priorityClass": "lab-hardening",
+      "status": "chartered",
+      "dependsOn": [
+        "DR-08"
+      ],
+      "unblocks": [
+        "AGL-091",
+        "AGL-093",
+        "AGL-094"
+      ],
+      "charter": "research/DR-05-fractal-recursive-and-l-system-composition.md"
+    },
+    {
+      "id": "DR-06",
+      "title": "Cellular Automata Sonification and Emergent Musical Structure",
+      "priorityClass": "lab-hardening",
+      "status": "chartered",
+      "dependsOn": [
+        "DR-08"
+      ],
+      "unblocks": [
+        "AGL-101",
+        "AGL-102",
+        "AGL-103",
+        "AGL-104"
+      ],
+      "charter": "research/DR-06-cellular-automata-sonification.md"
+    },
+    {
+      "id": "DR-07",
+      "title": "Chaotic Dynamics Sonification, Numerical Stability, and Musical Mapping",
+      "priorityClass": "lab-hardening",
+      "status": "chartered",
+      "dependsOn": [
+        "DR-08"
+      ],
+      "unblocks": [
+        "AGL-111",
+        "AGL-112",
+        "AGL-113",
+        "AGL-114"
+      ],
+      "charter": "research/DR-07-chaotic-dynamics-sonification.md"
+    },
+    {
+      "id": "DR-08",
+      "title": "General Sonification Mapping, Musical Constraint, Explainability, and Evaluation Framework",
+      "priorityClass": "immediate-blocker",
+      "status": "completed-integrated",
+      "dependsOn": [],
+      "unblocks": [
+        "AGL-035",
+        "AGL-050",
+        "AGL-053",
+        "AGL-074",
+        "AGL-101",
+        "AGL-111",
+        "AGL-123"
+      ],
+      "charter": "research/DR-08-general-sonification-mapping-and-evaluation.md",
+      "completedAt": "2026-08-18",
+      "report": "research/completed/wave-1/reports/DR-08-report.md",
+      "integrationPacket": "research/completed/wave-1/integration-packets/DR-08-integration-packet.md",
+      "integratedBy": "docs/18-wave1-system-integration.md"
+    },
+    {
+      "id": "DR-09",
+      "title": "Exact Penrose Tiling Generation, Adjacency, Traversal, and Musical Sequencing",
+      "priorityClass": "immediate-blocker",
+      "status": "completed-integrated",
+      "dependsOn": [
+        "DR-08"
+      ],
+      "unblocks": [
+        "AGL-120",
+        "AGL-121",
+        "AGL-122",
+        "AGL-123"
+      ],
+      "charter": "research/DR-09-exact-penrose-tiling-sequencer.md",
+      "completedAt": "2026-08-18",
+      "report": "research/completed/wave-1/reports/DR-09-report.md",
+      "integrationPacket": "research/completed/wave-1/integration-packets/DR-09-integration-packet.md",
+      "integratedBy": "docs/18-wave1-system-integration.md"
+    },
+    {
+      "id": "DR-10",
+      "title": "Post-MVP Audio Import, Time Stretch, Transcription, and Source Separation",
+      "priorityClass": "post-mvp",
+      "status": "chartered",
+      "dependsOn": [
+        "DR-03",
+        "DR-08"
+      ],
+      "unblocks": [],
+      "charter": "research/DR-10-audio-import-time-stretch-and-source-separation-post-mvp.md"
+    },
+    {
+      "id": "DR-11",
+      "title": "Professional Music-Tool UX and Progressive Disclosure",
+      "priorityClass": "pre-handoff-high-leverage",
+      "status": "completed-integrated",
+      "dependsOn": [],
+      "unblocks": [
+        "AGL-149"
+      ],
+      "charter": "research/DR-11-professional-music-tool-ux-and-progressive-disclosure.md",
+      "completedAt": "2026-08-18",
+      "report": "research/completed/wave-1/reports/DR-11-report.md",
+      "integrationPacket": "research/completed/wave-1/integration-packets/DR-11-integration-packet.md",
+      "integratedBy": "docs/18-wave1-system-integration.md"
+    },
+    {
+      "id": "DR-12",
+      "title": "Native iPad Audio, Document, MIDI, Pencil, and Adaptive-UI Architecture",
+      "priorityClass": "stretch-architecture",
+      "status": "completed-integrated",
+      "dependsOn": [
+        "DR-03"
+      ],
+      "unblocks": [
+        "AGL-147"
+      ],
+      "charter": "research/DR-12-native-ipad-audio-document-midi-pencil-architecture.md",
+      "completedAt": "2026-08-18",
+      "report": "research/completed/wave-1/reports/DR-12-report.md",
+      "integrationPacket": "research/completed/wave-1/integration-packets/DR-12-integration-packet.md",
+      "integratedBy": "docs/18-wave1-system-integration.md"
+    },
+    {
+      "id": "DR-13",
+      "title": "Multimodal Mathematical Visualization and Accessibility",
+      "priorityClass": "pre-handoff-high-leverage",
+      "status": "chartered",
+      "dependsOn": [
+        "DR-08"
+      ],
+      "unblocks": [
+        "AGL-150"
+      ],
+      "charter": "research/DR-13-multimodal-math-visualization-accessibility.md"
+    },
+    {
+      "id": "DR-14",
+      "title": "Cross-Surface Editing, Node-Graph, Timeline, and Undo Semantics",
+      "priorityClass": "pre-handoff-high-leverage",
+      "status": "completed-integrated",
+      "dependsOn": [],
+      "unblocks": [
+        "AGL-145"
+      ],
+      "charter": "research/DR-14-cross-surface-editing-node-graph-and-undo-semantics.md",
+      "completedAt": "2026-08-18",
+      "report": "research/completed/wave-1/reports/DR-14-report.md",
+      "integrationPacket": "research/completed/wave-1/integration-packets/DR-14-integration-packet.md",
+      "integratedBy": "docs/18-wave1-system-integration.md"
+    },
+    {
+      "id": "DR-15",
+      "title": "Cross-Platform Core Strategy: TypeScript, Swift, or Shared Systems Core",
+      "priorityClass": "stretch-architecture",
+      "status": "completed-integrated",
+      "dependsOn": [
+        "DR-03"
+      ],
+      "unblocks": [
+        "AGL-147"
+      ],
+      "charter": "research/DR-15-cross-platform-core-typescript-swift-rust-strategy.md",
+      "completedAt": "2026-08-18",
+      "report": "research/completed/wave-1/reports/DR-15-report.md",
+      "integrationPacket": "research/completed/wave-1/integration-packets/DR-15-integration-packet.md",
+      "integratedBy": "docs/18-wave1-system-integration.md"
+    },
+    {
+      "id": "DR-16",
+      "title": "Guided Math–Music Learning and Experiment Design",
+      "priorityClass": "lab-hardening",
+      "status": "chartered",
+      "dependsOn": [
+        "DR-08"
+      ],
+      "unblocks": [
+        "AGL-151"
+      ],
+      "charter": "research/DR-16-guided-math-music-learning-and-experiment-design.md"
+    }
+  ]
+}

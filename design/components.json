@@ -1,0 +1,284 @@
+{
+  "schema": "agl.design.components",
+  "schemaVersion": 2,
+  "asOf": "2026-08-18",
+  "components": [
+    {
+      "id": "shell.app",
+      "name": "AppShell",
+      "family": "shell",
+      "purpose": "Owns responsive panel composition; never project semantics."
+    },
+    {
+      "id": "shell.transport",
+      "name": "Transport",
+      "family": "shell",
+      "purpose": "Play/stop/loop/global audio controls."
+    },
+    {
+      "id": "shell.mode",
+      "name": "ModeSwitcher",
+      "family": "shell",
+      "purpose": "Explore/Compose/Inspect view depth."
+    },
+    {
+      "id": "shell.navigator",
+      "name": "Navigator",
+      "family": "shell",
+      "purpose": "Project/lab/surface navigation."
+    },
+    {
+      "id": "shell.inspector",
+      "name": "Inspector",
+      "family": "shell",
+      "purpose": "Contextual mathematical/provenance explanation."
+    },
+    {
+      "id": "shell.timeline",
+      "name": "TimelineDrawer",
+      "family": "shell",
+      "purpose": "Tracks, clips, events, compact mixer."
+    },
+    {
+      "id": "shell.graph",
+      "name": "GraphDrawer",
+      "family": "shell",
+      "purpose": "Typed operator graph surface."
+    },
+    {
+      "id": "control.numeric",
+      "name": "NumericField",
+      "family": "control",
+      "purpose": "Exact numeric input with unit/reset/increment."
+    },
+    {
+      "id": "control.scrub",
+      "name": "ScrubbableNumber",
+      "family": "control",
+      "purpose": "Pointer/Pencil scrubbing with exact entry fallback."
+    },
+    {
+      "id": "control.slider",
+      "name": "ParameterSlider",
+      "family": "control",
+      "purpose": "Relative continuous parameter plus numeric value."
+    },
+    {
+      "id": "control.segment",
+      "name": "SegmentedControl",
+      "family": "control",
+      "purpose": "2–4 mutually exclusive modes."
+    },
+    {
+      "id": "control.toggle",
+      "name": "Toggle",
+      "family": "control",
+      "purpose": "Independent boolean state."
+    },
+    {
+      "id": "control.budget",
+      "name": "BudgetMeter",
+      "family": "control",
+      "purpose": "Predicted load, limit, and recovery."
+    },
+    {
+      "id": "control.ab",
+      "name": "ABCompare",
+      "family": "control",
+      "purpose": "Temporary audition override with Apply B."
+    },
+    {
+      "id": "music.track",
+      "name": "TrackHeader",
+      "family": "music",
+      "purpose": "Track identity, mute/solo/gain/pan/instrument."
+    },
+    {
+      "id": "music.clip.generated",
+      "name": "GeneratedClip",
+      "family": "music",
+      "purpose": "Projection of live generator; not directly mutable."
+    },
+    {
+      "id": "music.clip.frozen",
+      "name": "FrozenClip",
+      "family": "music",
+      "purpose": "Editable snapshot retaining lineage."
+    },
+    {
+      "id": "music.clip.manual",
+      "name": "ManualClip",
+      "family": "music",
+      "purpose": "Authored editable event clip."
+    },
+    {
+      "id": "music.event.trigger",
+      "name": "TriggerEventGlyph",
+      "family": "music",
+      "purpose": "Trigger event projection."
+    },
+    {
+      "id": "music.event.note",
+      "name": "NoteEventGlyph",
+      "family": "music",
+      "purpose": "Note event projection."
+    },
+    {
+      "id": "graph.node",
+      "name": "OperatorNode",
+      "family": "graph",
+      "purpose": "Versioned operator projection with typed ports."
+    },
+    {
+      "id": "graph.port",
+      "name": "TypedPort",
+      "family": "graph",
+      "purpose": "Shape+label typed connection endpoint."
+    },
+    {
+      "id": "graph.edge",
+      "name": "OperatorEdge",
+      "family": "graph",
+      "purpose": "Typed data-flow relationship."
+    },
+    {
+      "id": "graph.palette",
+      "name": "NodePalette",
+      "family": "graph",
+      "purpose": "Search/add operator by concept and type."
+    },
+    {
+      "id": "math.canvas",
+      "name": "MathCanvas",
+      "family": "math",
+      "purpose": "Lab-specific mathematical projection and direct manipulation."
+    },
+    {
+      "id": "math.formula",
+      "name": "FormulaPanel",
+      "family": "math",
+      "purpose": "Expression, live substitution, explanation."
+    },
+    {
+      "id": "math.mapping",
+      "name": "MappingPipeline",
+      "family": "math",
+      "purpose": "Source→sampling→normalization→mapping→shaping→constraints."
+    },
+    {
+      "id": "math.provenance",
+      "name": "ProvenanceTrace",
+      "family": "math",
+      "purpose": "Causal ancestry and operator steps."
+    },
+    {
+      "id": "math.research",
+      "name": "ResearchGate",
+      "family": "math",
+      "purpose": "Transparent research-gated state."
+    },
+    {
+      "id": "lab.risset",
+      "name": "RissetTempoBands",
+      "family": "lab",
+      "purpose": "Infinite Staircase log-tempo visualization."
+    },
+    {
+      "id": "lab.euclidean",
+      "name": "EuclideanRingSet",
+      "family": "lab",
+      "purpose": "Concentric cyclic-rhythm manipulation."
+    },
+    {
+      "id": "lab.tonnetz",
+      "name": "TonnetzLattice",
+      "family": "lab",
+      "purpose": "Harmonic lattice/path visualization."
+    },
+    {
+      "id": "lab.fractal",
+      "name": "RecursionTree",
+      "family": "lab",
+      "purpose": "Motif ancestry and growth visualization."
+    },
+    {
+      "id": "lab.ca",
+      "name": "AutomatonGrid",
+      "family": "lab",
+      "purpose": "Automaton state and mapping projection."
+    },
+    {
+      "id": "lab.chaos",
+      "name": "AttractorPlot",
+      "family": "lab",
+      "purpose": "Dynamical trajectory and mapping projection."
+    },
+    {
+      "id": "lab.penrose",
+      "name": "PenroseTilingCanvas",
+      "family": "lab",
+      "purpose": "Validated exact tiling/traversal after research gate."
+    },
+    {
+      "id": "status.material",
+      "name": "MaterialStateBadge",
+      "family": "status",
+      "purpose": "Combines MaterialKind and derived SourceStatus without flattening them into one enum."
+    },
+    {
+      "id": "status.derivation",
+      "name": "DerivationStatus",
+      "family": "status",
+      "purpose": "Shows preview/evaluation/current/cache-only/stale/error/cancelled state with text and non-color cues."
+    },
+    {
+      "id": "status.evidence",
+      "name": "EvidenceBadge",
+      "family": "status",
+      "purpose": "Declares established, inferred, engineering-default, experimental, or research-gated claims."
+    },
+    {
+      "id": "control.parameter",
+      "name": "ParameterEditor",
+      "family": "control",
+      "purpose": "Type-aware direct manipulation, exact entry, units, nudge, reset, wrap/clamp/reject, and accessible actions from one ParameterSpec."
+    },
+    {
+      "id": "mapping.pipeline",
+      "name": "MappingPipeline",
+      "family": "mapping",
+      "purpose": "Displays explicit source→sample→normalize→smooth→transform→quantize→constrain→target stages and causal/frozen status."
+    },
+    {
+      "id": "mapping.trace",
+      "name": "WhyThisEvent",
+      "family": "mapping",
+      "purpose": "Shows source value, every stage, random decision, constraint delta, final target, and evidence/diagnostic context."
+    },
+    {
+      "id": "graph.compatibility",
+      "name": "TypedConnectionPreview",
+      "family": "graph",
+      "purpose": "Uses compiler compatibility to preview valid targets and structured reasons before commit."
+    },
+    {
+      "id": "material.choice",
+      "name": "GeneratedEditChoice",
+      "family": "material",
+      "purpose": "Routes generated edits to generator, downstream exception/operator, fork, or materialization."
+    },
+    {
+      "id": "audio.runtime",
+      "name": "AudioRuntimeStatus",
+      "family": "audio",
+      "purpose": "Communicates enable/arming/generation cutover/interruption/reconfiguration/error/panic without implying project mutation."
+    },
+    {
+      "id": "geometry.query",
+      "name": "GeometryCompletenessStatus",
+      "family": "geometry",
+      "purpose": "Shows core/halo completeness, truncation, synthetic clip boundaries, and validation scope."
+    }
+  ],
+  "version": "0.3.0"
+}

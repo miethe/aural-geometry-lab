@@ -1,0 +1,27 @@
+{
+  "schema": "agl.project.migration-receipt",
+  "schemaVersion": 2,
+  "migrationId": "migration~2~add63748e17601c6890c3fc60df519bd19fd02bc143852994605b3fe9222cf88",
+  "sourceSchemaVersion": 2,
+  "targetSchemaVersion": 3,
+  "sourceSemanticDigest": "sha256:a2240894416b7a23688105551b3af7a1a5aaa946ad8e707fd232670de1fe094a",
+  "targetSemanticDigest": "sha256:d6f9f447c963ec975d95f35c4c2c2f0e543f5687fcf790e3674d8e59fda9fdee",
+  "sourceBytesDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "appliedMigrations": [
+    "agl-project-v2-to-v3"
+  ],
+  "losses": [
+    {
+      "code": "LEGACY_OPERATOR_DIGEST_REQUIRES_CATALOG_REBIND",
+      "severity": "blocking",
+      "message": "Project v2 did not persist authoritative operator semantic digests. Migrated nodes are quarantined until explicitly rebound to a sealed operator catalog."
+    },
+    {
+      "code": "LEGACY_EXPERIMENTS_PRESERVED_OPAQUELY",
+      "severity": "warning",
+      "message": "Project v2 experiments are preserved as an opaque semantic extension."
+    }
+  ],
+  "requiresUserReview": true,
+  "migratedAt": "2026-08-18T00:00:00.000Z"
+}

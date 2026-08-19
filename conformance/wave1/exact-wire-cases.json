@@ -1,0 +1,9 @@
+{
+  "schema": "agl.conformance.exact-wire",
+  "schemaVersion": 1,
+  "cases": [
+    { "name": "zero", "input": { "numerator": "0", "denominator": "1" }, "canonical": { "numerator": "0", "denominator": "1" } },
+    { "name": "negative-large", "input": { "numerator": "-123456789012345678901234567890", "denominator": "960" }, "canonical": { "numerator": "-4115226300411522630041152263", "denominator": "32" } },
+    { "name": "one-third", "input": { "numerator": "1", "denominator": "3" }, "canonical": { "numerator": "1", "denominator": "3" } }
+  ]
+}

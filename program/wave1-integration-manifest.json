@@ -1,0 +1,47 @@
+{
+  "schema": "agl.program.wave1-integration-manifest",
+  "schemaVersion": 1,
+  "program": "Aural Geometry Lab",
+  "baseline": "0.3.0",
+  "integratedAt": "2026-08-18",
+  "researchRuns": [
+    "DR-01",
+    "DR-03",
+    "DR-08",
+    "DR-09",
+    "DR-11",
+    "DR-12",
+    "DR-14",
+    "DR-15"
+  ],
+  "counts": {
+    "reports": 8,
+    "integrationPackets": 8,
+    "crossRunDecisions": 36,
+    "acceptedAdrs": 13,
+    "typescriptTests": 35,
+    "swiftTests": 8,
+    "backlogItems": 122,
+    "labs": 7
+  },
+  "outputs": {
+    "architecture": "docs/18-wave1-system-integration.md",
+    "uiUx": "docs/19-ui-ux-wave1-integrated-amendment.md",
+    "adversarialReview": "docs/20-wave1-adversarial-architecture-review.md",
+    "interactionAudit": "docs/21-interaction-state-machine-conformance.md",
+    "swarmHandoff": "docs/22-swarm-implementation-handoff.md",
+    "decisionRegister": "program/wave1-decision-register.json",
+    "claimRegister": "program/claim-register.json",
+    "architectureManifest": "program/architecture-manifest.json",
+    "evidenceManifest": "research/completed/wave-1/evidence-manifest.json",
+    "validationReport": "docs/23-wave1-validation-report.md"
+  },
+  "knownEvidenceGates": [
+    "browser and hardware scheduler benchmark",
+    "Risset listening validation",
+    "DR-09 golden/oracle artifact recovery or independent regeneration",
+    "project/container conflict proof",
+    "numerical conformance profile",
+    "representative accessibility and user validation"
+  ]
+}

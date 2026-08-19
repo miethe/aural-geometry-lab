@@ -1,0 +1,47 @@
+{
+  "schema": "agl.export.manifest",
+  "schemaVersion": 1,
+  "exportId": "export-1",
+  "exportKind": "audio-wav",
+  "createdAt": "2026-08-18T00:00:00.000Z",
+  "source": {
+    "projectId": "project-fr01-minimal",
+    "projectEpoch": "epoch-1",
+    "projectSchemaVersion": 3,
+    "projectSemanticDigest": "sha256:e9164eaab9480672758675eb21db81c1116257f4b998a91a7978653984fb6561",
+    "materialMode": "user-authored",
+    "materialIds": [
+      "material-1"
+    ],
+    "sourceRecipeIds": [],
+    "materializationReceiptIds": [],
+    "range": {
+      "start": {
+        "numerator": "0",
+        "denominator": "1"
+      },
+      "end": {
+        "numerator": "4",
+        "denominator": "1"
+      }
+    }
+  },
+  "semanticEnvironmentDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "operatorCatalogDigest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+  "renderPlanDigest": "sha256:a3196a0aedd667b546d6eb3702cab1311724ee6f4e75803d109f29cc21cf1be8",
+  "exporter": {
+    "id": "agl-wav-exporter",
+    "version": "1.0.0"
+  },
+  "output": {
+    "mediaType": "audio/wav",
+    "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+    "bytes": 1024,
+    "sampleRate": 48000,
+    "channels": 2
+  },
+  "losses": [],
+  "provenanceRefs": [
+    "provenance-1"
+  ]
+}

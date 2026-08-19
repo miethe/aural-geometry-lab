@@ -1,0 +1,105 @@
+{
+  "schema": "agl.research.evidence-manifest",
+  "schemaVersion": 1,
+  "program": "Aural Geometry Lab",
+  "wave": "wave-1",
+  "integratedAt": "2026-08-18",
+  "items": [
+    {
+      "path": "research/completed/wave-1/integration-packets/DR-01-integration-packet.md",
+      "sha256": "5ac3f74f3bc938e241ab867c0533075b38eca3227142ca5079b257dc21104eaa",
+      "bytes": 98011,
+      "words": 12240
+    },
+    {
+      "path": "research/completed/wave-1/integration-packets/DR-03-integration-packet.md",
+      "sha256": "3ba71c777fe7ce7afada8ef8203a50f94e42b50c2409d4c7a2349c9a3415a627",
+      "bytes": 102078,
+      "words": 12693
+    },
+    {
+      "path": "research/completed/wave-1/integration-packets/DR-08-integration-packet.md",
+      "sha256": "3400da7d08a863e2f3c7eda1f1645271e0ac819e104f37a591f46c9514050315",
+      "bytes": 139871,
+      "words": 17016
+    },
+    {
+      "path": "research/completed/wave-1/integration-packets/DR-09-integration-packet.md",
+      "sha256": "f371762386e69eb69a9c48abeca8f6a926a090bc2e421b95df027db9a83eab5b",
+      "bytes": 121667,
+      "words": 16218
+    },
+    {
+      "path": "research/completed/wave-1/integration-packets/DR-11-integration-packet.md",
+      "sha256": "f5b31bfaa9845b1d4ac340dba164b6fe5a5ee889b55b9d141025cd173ab45604",
+      "bytes": 131518,
+      "words": 17709
+    },
+    {
+      "path": "research/completed/wave-1/integration-packets/DR-12-integration-packet.md",
+      "sha256": "e13aa6fc9120780f527ff13cf317f098146970d7fd53ea0b46be3cc9f357f534",
+      "bytes": 147057,
+      "words": 19433
+    },
+    {
+      "path": "research/completed/wave-1/integration-packets/DR-14-integration-packet.md",
+      "sha256": "c9bdb3e1abe7dc451f88ebccd2eafdc2b33c8a831766d6604ed209126b569cd9",
+      "bytes": 199902,
+      "words": 20321
+    },
+    {
+      "path": "research/completed/wave-1/integration-packets/DR-15-integration-packet.md",
+      "sha256": "cdc623ced0299f107177e3219fa1d85ef40f7b29b73c33a95f36a6d6cc484ffe",
+      "bytes": 129592,
+      "words": 17460
+    },
+    {
+      "path": "research/completed/wave-1/reports/DR-01-report.md",
+      "sha256": "0154f9d92032182e7eecc8c73f41eb19a3c1348f2c91a81497f3b9188db53bb8",
+      "bytes": 66629,
+      "words": 8511
+    },
+    {
+      "path": "research/completed/wave-1/reports/DR-03-report.md",
+      "sha256": "c7e0e4cb5c86459f652eacf9e1c4cfae0b0516be55128db04a5016a635544448",
+      "bytes": 51948,
+      "words": 6889
+    },
+    {
+      "path": "research/completed/wave-1/reports/DR-08-report.md",
+      "sha256": "17ba0066b3639c364fc959f4586effd5e77ebeddeb5c98d0a1388bd726905ea7",
+      "bytes": 72339,
+      "words": 9081
+    },
+    {
+      "path": "research/completed/wave-1/reports/DR-09-report.md",
+      "sha256": "98c05a0647e60add208cf64bca96d22d1704a4fd13e191b4c7f80f48c559bbbc",
+      "bytes": 55494,
+      "words": 7055
+    },
+    {
+      "path": "research/completed/wave-1/reports/DR-11-report.md",
+      "sha256": "d18eb5765c4d9e150a697a4828cb0ed53cd817ae89333866ac6b8e2800b680a2",
+      "bytes": 79821,
+      "words": 9373
+    },
+    {
+      "path": "research/completed/wave-1/reports/DR-12-report.md",
+      "sha256": "c1535aeddec1f4da9045090b55ba0c6392b51a80bd76fb032fa924e794a7e382",
+      "bytes": 83595,
+      "words": 9435
+    },
+    {
+      "path": "research/completed/wave-1/reports/DR-14-report.md",
+      "sha256": "403cdb9c7004174ba19c9a3a89c5790838f0a87fa7e663cb6fb3cea800dceb88",
+      "bytes": 69599,
+      "words": 9344
+    },
+    {
+      "path": "research/completed/wave-1/reports/DR-15-report.md",
+      "sha256": "2a906a20c6e813033434df254e7805eb377745e114c84818e9017287405e9224",
+      "bytes": 57528,
+      "words": 7459
+    }
+  ]
+}

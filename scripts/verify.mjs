@@ -1,0 +1,303 @@
+import { createHash } from "node:crypto";
+import { existsSync } from "node:fs";
+import { readFile, readdir } from "node:fs/promises";
+import path from "node:path";
+import process from "node:process";
+import { fileURLToPath, pathToFileURL } from "node:url";
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const failures = [];
+function fail(message) { failures.push(message); }
+function requiredString(value, label) {
+  if (typeof value !== "string" || value.length === 0) { fail(`${label} must be a non-empty string.`); return undefined; }
+  return value;
+}
+function fileExists(relativePath, label = relativePath) {
+  if (!existsSync(path.join(root, relativePath))) { fail(`Missing ${label}: ${relativePath}`); return false; }
+  return true;
+}
+
+async function readJson(relativePath) {
+  const absolute = path.join(root, relativePath);
+  try { return JSON.parse(await readFile(absolute, "utf8")); }
+  catch (error) {
+    fail(`${relativePath}: ${error instanceof Error ? error.message : String(error)}`);
+    return undefined;
+  }
+}
+
+async function verifyAllJson(directory) {
+  const absolute = path.join(root, directory);
+  if (!existsSync(absolute)) { fail(`Missing JSON directory: ${directory}`); return; }
+  const entries = await readdir(absolute, { withFileTypes: true });
+  for (const entry of entries) {
+    const relative = path.join(directory, entry.name);
+    if (entry.isDirectory()) await verifyAllJson(relative);
+    else if (entry.name.endsWith(".json")) await readJson(relative);
+  }
+}
+
+async function sha256(relativePath) {
+  const bytes = await readFile(path.join(root, relativePath));
+  return createHash("sha256").update(bytes).digest("hex");
+}
+
+const distIndex = path.join(root, "dist", "src", "core", "index.js");
+if (!existsSync(distIndex)) fail("dist is missing; run the build before verification.");
+
+for (const directory of ["program", "examples", "design", "conformance", "schemas", "research/completed/wave-1"]) {
+  await verifyAllJson(directory);
+}
+
+const backlog = await readJson("program/backlog.json");
+const research = await readJson("program/research-register.json");
+const labs = await readJson("program/lab-manifest.json");
+const decisions = await readJson("program/wave1-decision-register.json");
+const evidence = await readJson("research/completed/wave-1/evidence-manifest.json");
+const designTokens = await readJson("design/tokens.json");
+const findings = await readJson("program/fr01-findings-register.json");
+const contractManifest = await readJson("program/fr01-contract-manifest.json");
+const architectureManifest = await readJson("program/architecture-manifest.json");
+const frontierRuns = await readJson("program/frontier-run-register.json");
+const toolchain = await readJson("program/toolchain-lock.json");
+const packageMetadata = await readJson("package.json");
+const claimRegister = await readJson("program/claim-register.json");
+const releaseManifest = await readJson("program/fr01-release-manifest.json");
+
+const backlogIds = new Set();
+const backlogById = new Map();
+const statusVocabulary = new Set(Array.isArray(backlog?.statusVocabulary) ? backlog.statusVocabulary : []);
+for (const item of Array.isArray(backlog?.items) ? backlog.items : []) {
+  if (typeof item?.id !== "string") { fail("Backlog contains an item without a string id."); continue; }
+  if (backlogIds.has(item.id)) fail(`Duplicate backlog id: ${item.id}`);
+  backlogIds.add(item.id);
+  backlogById.set(item.id, item);
+  if (!statusVocabulary.has(item.status)) fail(`${item.id} uses unknown status ${String(item.status)}.`);
+}
+
+const researchIds = new Set();
+for (const run of Array.isArray(research?.runs) ? research.runs : []) {
+  if (typeof run?.id !== "string") { fail("Research register contains a run without a string id."); continue; }
+  if (researchIds.has(run.id)) fail(`Duplicate research id: ${run.id}`);
+  researchIds.add(run.id);
+  if (typeof run.charter !== "string" || !fileExists(run.charter, `${run.id} charter`)) continue;
+  if (run.status === "completed-integrated") {
+    for (const key of ["report", "integrationPacket", "integratedBy"]) {
+      if (typeof run[key] !== "string" || !fileExists(run[key], `${run.id} ${key}`)) {
+        fail(`${run.id} completed-integrated but ${key} is missing: ${String(run[key])}`);
+      }
+    }
+  }
+}
+
+for (const item of Array.isArray(backlog?.items) ? backlog.items : []) {
+  for (const dependency of Array.isArray(item.dependsOn) ? item.dependsOn : []) {
+    const known = String(dependency).startsWith("DR-") ? researchIds.has(dependency) : backlogIds.has(dependency);
+    if (!known) fail(`${item.id} depends on unknown item ${dependency}.`);
+  }
+}
+
+const labIds = new Set();
+for (const lab of Array.isArray(labs?.labs) ? labs.labs : []) {
+  if (labIds.has(lab.id)) fail(`Duplicate lab id: ${lab.id}`);
+  labIds.add(lab.id);
+  for (const researchId of Array.isArray(lab.research) ? lab.research : []) {
+    if (!researchIds.has(researchId)) fail(`${lab.id} references unknown research run ${researchId}.`);
+  }
+}
+
+const decisionIds = new Set();
+for (const decision of Array.isArray(decisions?.decisions) ? decisions.decisions : []) {
+  if (decisionIds.has(decision.id)) fail(`Duplicate Wave-1 decision id: ${decision.id}`);
+  decisionIds.add(decision.id);
+  if (!Array.isArray(decision.sources) || decision.sources.length === 0) fail(`${decision.id} has no source runs.`);
+  for (const source of decision.sources ?? []) if (!researchIds.has(source)) fail(`${decision.id} references unknown research source ${source}.`);
+}
+
+for (const item of Array.isArray(evidence?.items) ? evidence.items : []) {
+  if (!fileExists(item.path, "evidence file")) continue;
+  if (await sha256(item.path) !== item.sha256) fail(`Evidence hash mismatch for ${item.path}.`);
+}
+
+// FR-01 finding completion and ownership gates.
+const findingIds = new Set();
+const findingSeverityVocabulary = new Set(Array.isArray(findings?.severityVocabulary) ? findings.severityVocabulary : []);
+const findingStatusVocabulary = new Set(Array.isArray(findings?.statusVocabulary) ? findings.statusVocabulary : []);
+let criticalHighCount = 0;
+let openOwnedCount = 0;
+for (const finding of Array.isArray(findings?.findings) ? findings.findings : []) {
+  if (typeof finding?.id !== "string") { fail("FR-01 finding without a string id."); continue; }
+  if (findingIds.has(finding.id)) fail(`Duplicate FR-01 finding id: ${finding.id}`);
+  findingIds.add(finding.id);
+  if (!findingSeverityVocabulary.has(finding.severity)) fail(`${finding.id} uses unknown severity ${String(finding.severity)}.`);
+  if (!findingStatusVocabulary.has(finding.status)) fail(`${finding.id} uses unknown status ${String(finding.status)}.`);
+  if (finding.status.startsWith("open") || finding.status.startsWith("deferred")) openOwnedCount += 1;
+  for (const field of ["title", "failureScenario", "affectedFilesOrContracts", "repair", "adr", "contractVersionChange"]) {
+    requiredString(finding[field], `${finding.id}.${field}`);
+  }
+  if (!Array.isArray(finding.regressionTests) || finding.regressionTests.length === 0) fail(`${finding.id} has no regression tests.`);
+  if (typeof finding.adr === "string") fileExists(finding.adr, `${finding.id} ADR`);
+  if (["Critical", "High"].includes(finding.severity)) {
+    criticalHighCount += 1;
+    const owner = finding.backlogOwner;
+    if (typeof owner?.backlogId !== "string" || typeof owner?.workstream !== "string") {
+      fail(`${finding.id} is ${finding.severity} without backlogId and workstream ownership.`);
+      continue;
+    }
+    const backlogItem = backlogById.get(owner.backlogId);
+    if (backlogItem === undefined) fail(`${finding.id} references unknown backlog owner ${owner.backlogId}.`);
+    else if (Array.isArray(backlogItem.owner) && !backlogItem.owner.includes(owner.workstream)) fail(`${finding.id} workstream ${owner.workstream} is not an owner of ${owner.backlogId}.`);
+  }
+}
+const computedSeverity = {};
+for (const severity of findingSeverityVocabulary) computedSeverity[severity] = 0;
+for (const finding of Array.isArray(findings?.findings) ? findings.findings : []) computedSeverity[finding.severity] = (computedSeverity[finding.severity] ?? 0) + 1;
+if (findings?.summary?.total !== findingIds.size) fail(`FR-01 summary total ${String(findings?.summary?.total)} does not equal ${findingIds.size}.`);
+for (const [severity, count] of Object.entries(computedSeverity)) {
+  if (findings?.summary?.bySeverity?.[severity] !== count) fail(`FR-01 ${severity} summary mismatch.`);
+}
+if (findings?.summary?.openOwned !== openOwnedCount) fail(`FR-01 open-owned summary mismatch: expected ${openOwnedCount}.`);
+if (findings?.summary?.fixedOrContractHardened !== findingIds.size - openOwnedCount) fail(`FR-01 fixed/contract-hardened summary mismatch: expected ${findingIds.size - openOwnedCount}.`);
+
+// FR-01 contract manifest: every schema/fixture is present and hash-pinned.
+const publicContractIds = new Set();
+for (const document of Array.isArray(contractManifest?.authorityDocuments) ? contractManifest.authorityDocuments : []) fileExists(document, "FR-01 authority document");
+for (const contract of Array.isArray(contractManifest?.publicContracts) ? contractManifest.publicContracts : []) {
+  if (publicContractIds.has(contract.id)) fail(`Duplicate FR-01 public contract id: ${contract.id}`);
+  publicContractIds.add(contract.id);
+  if (!fileExists(contract.schema, `${contract.id} schema`)) continue;
+  if (await sha256(contract.schema) !== contract.schemaSha256) fail(`Schema hash mismatch for ${contract.schema}.`);
+  for (const fixture of Array.isArray(contract.fixtures) ? contract.fixtures : []) {
+    if (!fileExists(fixture.path, `${contract.id} fixture`)) continue;
+    if (await sha256(fixture.path) !== fixture.sha256) fail(`Fixture hash mismatch for ${fixture.path}.`);
+  }
+}
+for (const fixture of Array.isArray(contractManifest?.sharedConformanceFixtures) ? contractManifest.sharedConformanceFixtures : []) {
+  if (!fileExists(fixture.path, "shared conformance fixture")) continue;
+  if (await sha256(fixture.path) !== fixture.sha256) fail(`Shared conformance fixture hash mismatch for ${fixture.path}.`);
+  const nativeCopy = path.join("native", "AuralGeometryCore", "Tests", "AuralGeometryCoreTests", "Fixtures", path.basename(fixture.path));
+  if (!fileExists(nativeCopy, "native conformance fixture copy")) continue;
+  if (await sha256(fixture.path) !== await sha256(nativeCopy)) fail(`Native fixture diverges from canonical fixture: ${fixture.path}`);
+}
+// Project-v3 fixture is also a native wire-contract fixture under a filesystem-safe name.
+const nativeProjectFixture = "native/AuralGeometryCore/Tests/AuralGeometryCoreTests/Fixtures/fr01-minimal-v3-project.json";
+if (fileExists(nativeProjectFixture, "native project-v3 fixture")) {
+  if (await sha256("examples/fr01-minimal.v3.project.json") !== await sha256(nativeProjectFixture)) fail("Native project-v3 fixture diverges from the canonical example.");
+}
+
+// Architecture manifest must advertise the same public contracts and baseline.
+if (architectureManifest?.baseline !== contractManifest?.release) fail("Architecture baseline and FR-01 contract release diverge.");
+if (architectureManifest?.schemaVersion !== 2 || architectureManifest?.adrRange?.last !== "0024") fail("Architecture manifest is not the FR-01 v0.4 authority shape.");
+if (packageMetadata?.version !== contractManifest?.release || toolchain?.release !== contractManifest?.release) fail("Package, toolchain, architecture, and contract releases diverge.");
+const architectureContracts = new Map((architectureManifest?.publicContracts ?? []).map((item) => [item.id, item]));
+for (const contract of contractManifest?.publicContracts ?? []) {
+  const architectureContract = architectureContracts.get(contract.id);
+  if (architectureContract === undefined) fail(`Architecture manifest omits public contract ${contract.id}.`);
+  else if (architectureContract.version !== contract.version || architectureContract.schema !== contract.schema) fail(`Architecture manifest diverges for contract ${contract.id}.`);
+}
+const fr01Run = (frontierRuns?.runs ?? []).find((run) => run.id === "FR-01");
+if (fr01Run?.status !== "completed-repository-hardening") fail("Frontier register does not mark FR-01 completed-repository-hardening.");
+if (fr01Run?.hardenedRelease !== contractManifest?.release) fail("FR-01 frontier release diverges from contract manifest.");
+
+if (releaseManifest?.release !== contractManifest?.release || releaseManifest?.milestone !== "M0.9") fail("FR-01 release manifest diverges from the contract baseline.");
+for (const authorityPath of Object.values(releaseManifest?.authority ?? {})) {
+  if (typeof authorityPath !== "string" || !fileExists(authorityPath, "FR-01 release authority")) fail("FR-01 release manifest contains an invalid authority path.");
+}
+const releaseCounts = releaseManifest?.counts ?? {};
+const expectedReleaseCounts = {
+  findings: findingIds.size,
+  critical: computedSeverity.Critical ?? 0,
+  high: computedSeverity.High ?? 0,
+  medium: computedSeverity.Medium ?? 0,
+  fixedOrContractHardened: findingIds.size - openOwnedCount,
+  openOwned: openOwnedCount,
+  criticalHighOwned: criticalHighCount,
+  backlogItems: backlogIds.size,
+  publicContracts: publicContractIds.size,
+};
+for (const [key, value] of Object.entries(expectedReleaseCounts)) {
+  if (releaseCounts[key] !== value) fail(`FR-01 release manifest count ${key}=${String(releaseCounts[key])} does not equal ${value}.`);
+}
+if (!["pending-clean-extraction-validation", "clean-extraction-validated"].includes(releaseManifest?.status)) fail("FR-01 release manifest uses an unknown release status.");
+if (releaseManifest?.status === "clean-extraction-validated") {
+  const releaseValidation = releaseManifest?.validation ?? {};
+  if (releaseValidation.deterministicArchiveBuildsCompared < 2 || releaseValidation.deterministicArchiveByteIdentity !== true) fail("FR-01 release manifest lacks deterministic archive evidence.");
+  if (releaseValidation.zipIntegrity !== "pass" || releaseValidation.cleanExtractionCheckAll !== "pass" || releaseValidation.cleanExtractionSchemaValidation !== "pass") fail("FR-01 release manifest lacks clean archive validation evidence.");
+  if (releaseValidation.staticHttpSmokeEndpoints < 8 || releaseValidation.generatedBuildStateExcluded !== true) fail("FR-01 release manifest lacks static-smoke or generated-state exclusion evidence.");
+}
+
+for (const stateFamily of ["materialKind", "sourceStatus", "derivation", "audio", "evidence", "mappingStage", "selection"]) {
+  if (!Array.isArray(designTokens?.semanticStates?.[stateFamily])) fail(`Design tokens missing semantic state family ${stateFamily}.`);
+}
+
+if (existsSync(distIndex)) {
+  const core = await import(pathToFileURL(distIndex).href);
+  const exampleNames = (await readdir(path.join(root, "examples"))).filter((name) => name.endsWith(".project.json"));
+  for (const name of exampleNames) {
+    const project = await readJson(path.join("examples", name));
+    if (project !== undefined) {
+      const issues = core.validateProject(project);
+      if (issues.length > 0) fail(`${name} failed project validation: ${JSON.stringify(issues)}`);
+    }
+  }
+
+  const audioPlanFixture = await readJson("conformance/fr01/resolved-audio-plan-v2.valid.json");
+  const runtimeFixtures = [
+    ["conformance/fr01/command-v2.valid.json", (value) => core.validateCommandEnvelopeV2(value) === undefined ? [] : [core.validateCommandEnvelopeV2(value)]],
+    ["conformance/fr01/evaluation-request-v2.valid.json", core.validateEvaluationRequestV2],
+    ["conformance/fr01/resolved-audio-plan-v2.valid.json", core.validateResolvedAudioPlanV2],
+    ["conformance/fr01/audio-schedule-binding-v1.valid.json", (value) => audioPlanFixture === undefined ? ["missing audio plan fixture"] : core.validateAudioScheduleBindingV1(value, audioPlanFixture)],
+    ["conformance/fr01/package-manifest-v2.valid.json", core.validatePackageManifestV2],
+    ["conformance/fr01/accessibility-mirror-v1.valid.json", core.validateAccessibilityMirrorV1],
+    ["conformance/fr01/export-manifest-v1.valid.json", core.validateExportManifestV1],
+  ];
+  if (claimRegister !== undefined) {
+    const claimIssues = core.validateClaimRegisterV1(claimRegister);
+    if (!Array.isArray(claimIssues) || claimIssues.length > 0) fail(`program/claim-register.json failed runtime validation: ${JSON.stringify(claimIssues)}`);
+  }
+
+  for (const [fixturePath, validator] of runtimeFixtures) {
+    const fixture = await readJson(fixturePath);
+    if (fixture === undefined) continue;
+    const issues = validator(fixture);
+    if (!Array.isArray(issues) || issues.length > 0) fail(`${fixturePath} failed runtime contract validation: ${JSON.stringify(issues)}`);
+  }
+}
+
+for (const required of [
+  "docs/18-wave1-system-integration.md",
+  "docs/19-ui-ux-wave1-integrated-amendment.md",
+  "docs/21-interaction-state-machine-conformance.md",
+  "docs/24-fr01-whole-system-adversarial-repository-review.md",
+  "docs/25-fr01-contract-and-migration-amendment.md",
+  "docs/26-fr01-validation-report.md",
+  "docs/27-fr01-swarm-handoff-amendment.md",
+  "program/fr01-findings-register.json",
+  "program/fr01-contract-manifest.json",
+  "program/fr01-release-manifest.json",
+  "src/core/mapping.ts",
+  "src/core/commands.ts",
+  "src/core/evaluation-protocol.ts",
+  "src/core/render-plan.ts",
+  "src/core/strict-json.ts",
+  "schemas/agl-claim-register-v1.schema.json",
+  "src/geometry/qphi.ts",
+]) fileExists(required, "required integrated artifact");
+const adrFiles = (await readdir(path.join(root, "docs", "adr"))).filter((name) => /^\d{4}-.+\.md$/.test(name));
+const adrPrefixCounts = new Map();
+for (const name of adrFiles) adrPrefixCounts.set(name.slice(0, 4), (adrPrefixCounts.get(name.slice(0, 4)) ?? 0) + 1);
+for (const [prefix, count] of adrPrefixCounts) if (count !== 1) fail(`ADR prefix ${prefix} occurs ${count} times.`);
+for (let adr = 19; adr <= 24; adr += 1) {
+  const prefix = String(adr).padStart(4, "0");
+  if (adrPrefixCounts.get(prefix) !== 1) fail(`Expected exactly one FR-01 ADR ${prefix}.`);
+}
+
+if (failures.length > 0) {
+  console.error("Verification failed:\n" + failures.map((failure) => `- ${failure}`).join("\n"));
+  process.exit(1);
+}
+console.log(
+  `Verified ${backlogIds.size} backlog items, ${researchIds.size} research runs, ${decisionIds.size} Wave-1 decisions, ` +
+  `${labIds.size} labs, ${findingIds.size} FR-01 findings (${criticalHighCount} Critical/High owned), ` +
+  `${publicContractIds.size} public contracts, evidence/contract hashes, native conformance mirrors, runtime validators, and required authority artifacts.`,
+);

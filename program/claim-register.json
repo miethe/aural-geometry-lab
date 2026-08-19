@@ -1,0 +1,233 @@
+{
+  "schema": "agl.program.claim-register",
+  "schemaVersion": 1,
+  "program": "Aural Geometry Lab",
+  "asOf": "2026-08-18",
+  "classes": [
+    "established",
+    "strong-inference",
+    "engineering-default",
+    "experimental",
+    "research-gated",
+    "prohibited"
+  ],
+  "claims": [
+    {
+      "id": "CLAIM-RISSET-001",
+      "class": "established",
+      "text": "A classical Risset rhythm uses octave-related tempo layers and local acceleration or deceleration with global closure under layer relabeling.",
+      "sources": [
+        "DR-01"
+      ],
+      "allowedSurfaces": [
+        "help",
+        "guide",
+        "inspector"
+      ]
+    },
+    {
+      "id": "CLAIM-RISSET-002",
+      "class": "engineering-default",
+      "text": "AGL's canonical MVP starting profile uses a 2:1 ratio, 20-second cycle, 120 BPM nominal center, raised-cosine half-width B=2, and linear-partition normalization.",
+      "qualification": "These are construction-informed product defaults, not universal psychoacoustic optima.",
+      "sources": [
+        "DR-01"
+      ],
+      "allowedSurfaces": [
+        "inspector",
+        "preset-detail",
+        "research"
+      ]
+    },
+    {
+      "id": "CLAIM-RISSET-003",
+      "class": "experimental",
+      "text": "A 3:2 metric overlay may alter or strengthen the perceived endless-tempo effect.",
+      "qualification": "Polyrhythmic ambiguity is supported, but Risset-specific enhancement is unvalidated.",
+      "sources": [
+        "DR-01"
+      ],
+      "allowedSurfaces": [
+        "experiment",
+        "research"
+      ]
+    },
+    {
+      "id": "CLAIM-RISSET-004",
+      "class": "prohibited",
+      "text": "The composite has a single physical BPM that literally increases forever.",
+      "sources": [
+        "DR-01"
+      ]
+    },
+    {
+      "id": "CLAIM-TROY-001",
+      "class": "established",
+      "text": "Christopher Nolan publicly described the Troy sequence in The Odyssey as using a Risset rhythm and continuous acceleration.",
+      "qualification": "This does not disclose the exact soundtrack/session implementation.",
+      "sources": [
+        "DR-01"
+      ],
+      "allowedSurfaces": [
+        "guide",
+        "research"
+      ]
+    },
+    {
+      "id": "CLAIM-TROY-002",
+      "class": "prohibited",
+      "text": "AGL's preset exactly reconstructs Ludwig G\u00f6ransson's production session or the soundtrack track Troy.",
+      "sources": [
+        "DR-01"
+      ]
+    },
+    {
+      "id": "CLAIM-AUDIO-001",
+      "class": "established",
+      "text": "Web Audio scheduling time, not JavaScript timer wake time, is the musical timing authority for scheduled browser audio.",
+      "sources": [
+        "DR-03"
+      ],
+      "allowedSurfaces": [
+        "developer-docs",
+        "diagnostics"
+      ]
+    },
+    {
+      "id": "CLAIM-AUDIO-002",
+      "class": "engineering-default",
+      "text": "The initial scheduler benchmark candidate is a 25 ms wake interval, 100 ms horizon, and 250 ms maximum adaptive horizon.",
+      "qualification": "These values require target browser/hardware calibration.",
+      "sources": [
+        "DR-03"
+      ],
+      "allowedSurfaces": [
+        "diagnostics",
+        "research"
+      ]
+    },
+    {
+      "id": "CLAIM-AUDIO-003",
+      "class": "prohibited",
+      "text": "Different browser engines will render byte-identical PCM for the same Web Audio graph.",
+      "sources": [
+        "DR-03"
+      ]
+    },
+    {
+      "id": "CLAIM-SON-001",
+      "class": "established",
+      "text": "Sonification maps information or data relationships into acoustic relationships that support interpretation or communication.",
+      "sources": [
+        "DR-08"
+      ],
+      "allowedSurfaces": [
+        "guide",
+        "help",
+        "inspector"
+      ]
+    },
+    {
+      "id": "CLAIM-SON-002",
+      "class": "established",
+      "text": "No single auditory dimension is universally best across tasks, listeners, contexts, and simultaneous mappings.",
+      "sources": [
+        "DR-08"
+      ],
+      "allowedSurfaces": [
+        "guide",
+        "help",
+        "mapping-inspector"
+      ]
+    },
+    {
+      "id": "CLAIM-SON-003",
+      "class": "prohibited",
+      "text": "High pitch universally and intuitively means more for every user and source concept.",
+      "sources": [
+        "DR-08"
+      ]
+    },
+    {
+      "id": "CLAIM-SAFETY-001",
+      "class": "prohibited",
+      "text": "A browser gain value, limiter, or dBFS target guarantees hearing-safe sound pressure at the listener's ears.",
+      "sources": [
+        "DR-08"
+      ]
+    },
+    {
+      "id": "CLAIM-PENROSE-001",
+      "class": "established",
+      "text": "A regular de Bruijn pentagrid can generate a P3 Penrose rhomb tiling with exact integer/algebraic topology.",
+      "sources": [
+        "DR-09"
+      ],
+      "allowedSurfaces": [
+        "guide",
+        "help",
+        "inspector"
+      ]
+    },
+    {
+      "id": "CLAIM-PENROSE-002",
+      "class": "research-gated",
+      "text": "The current AGL runtime produces validated exact Penrose patches.",
+      "qualification": "Not permitted until the generator, recovered/regenerated golden/oracle corpus, matching validation, and property suite pass.",
+      "sources": [
+        "DR-09"
+      ],
+      "allowedSurfaces": [
+        "research-gate"
+      ],
+      "gateEvidenceIds": [
+        "EVIDENCE-PENROSE-EXACT-RUNTIME-V1"
+      ]
+    },
+    {
+      "id": "CLAIM-PENROSE-003",
+      "class": "prohibited",
+      "text": "A finite rendered patch by itself proves global aperiodicity or self-similarity.",
+      "sources": [
+        "DR-09"
+      ]
+    },
+    {
+      "id": "CLAIM-UX-001",
+      "class": "strong-inference",
+      "text": "Explore, Compose, and Inspect should be coordinated workspaces over one project rather than separate semantic modes.",
+      "sources": [
+        "DR-11",
+        "DR-14"
+      ],
+      "allowedSurfaces": [
+        "product-docs",
+        "developer-docs"
+      ]
+    },
+    {
+      "id": "CLAIM-NATIVE-001",
+      "class": "engineering-default",
+      "text": "The native MVP proof should use a ports-and-adapters client with one active audible project and shared cross-platform fixtures.",
+      "qualification": "This is an architecture choice, not an iPadOS platform requirement.",
+      "sources": [
+        "DR-12",
+        "DR-15"
+      ],
+      "allowedSurfaces": [
+        "developer-docs"
+      ]
+    },
+    {
+      "id": "CLAIM-CORE-001",
+      "class": "engineering-default",
+      "text": "AGL shares contracts and conformance before sharing implementation; Rust or Swift/Wasm require measured evidence before adoption.",
+      "sources": [
+        "DR-15"
+      ],
+      "allowedSurfaces": [
+        "developer-docs"
+      ]
+    }
+  ]
+}

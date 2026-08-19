@@ -1,0 +1,68 @@
+{
+  "schema": "agl.audio.render-plan",
+  "schemaVersion": 2,
+  "contractVersion": "agl-resolved-audio-plan-v2",
+  "projectId": "project-fr01-minimal",
+  "projectEpoch": "epoch-1",
+  "projectSemanticDigest": "sha256:e9164eaab9480672758675eb21db81c1116257f4b998a91a7978653984fb6561",
+  "semanticEnvironmentDigest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+  "operatorCatalogDigest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+  "voiceRegistryDigest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+  "budgetProfileId": "agl-mvp-budget-v2",
+  "budgetProfileVersion": 2,
+  "quantizationVersion": "seconds-to-frame-v1",
+  "range": {
+    "startSeconds": 0,
+    "endSeconds": 1,
+    "sourceBeatRange": {
+      "start": {
+        "numerator": "0",
+        "denominator": "1"
+      },
+      "end": {
+        "numerator": "2",
+        "denominator": "1"
+      }
+    }
+  },
+  "tailPolicy": {
+    "kind": "none"
+  },
+  "voiceDefinitions": [
+    {
+      "id": "voice-click",
+      "version": "1.0.0",
+      "semanticDigest": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+      "activeVoicePolicy": "replace-at-generation"
+    }
+  ],
+  "assetRefs": [],
+  "approximations": [],
+  "events": [
+    {
+      "kind": "trigger",
+      "id": "event-1",
+      "orderKey": "0001",
+      "trackId": "track-1",
+      "voiceId": "voice-click",
+      "idealStartSeconds": 0.125,
+      "idealEndSeconds": 0.13001041666666668,
+      "temporalOrigin": {
+        "kind": "musical-beat",
+        "beat": {
+          "numerator": "1",
+          "denominator": "4"
+        },
+        "tempoMapDigest": "sha256:6666666666666666666666666666666666666666666666666666666666666666"
+      },
+      "priority": "critical",
+      "latePolicy": "strict-drop",
+      "cancellationGroup": "track-1",
+      "provenanceRef": "trace-1",
+      "velocity": 0.8
+    }
+  ],
+  "timeDomain": "project-timeline-seconds-v1",
+  "planId": "plan~2~f8a3a9d847a2114ccb9c6b64dfd4dd196508a44b1554a14a3b7a4ed736725d0c",
+  "planDigest": "sha256:f8a3a9d847a2114ccb9c6b64dfd4dd196508a44b1554a14a3b7a4ed736725d0c"
+}

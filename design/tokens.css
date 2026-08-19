@@ -1,0 +1,58 @@
+:root {
+  --agl-bg-canvas: #0B0D10;
+  --agl-bg-panel: #11151A;
+  --agl-bg-raised: #181E25;
+  --agl-bg-input: #0F1318;
+  --agl-text-primary: #F3F6F8;
+  --agl-text-secondary: #B8C0C8;
+  --agl-text-muted: #7E8995;
+  --agl-border-default: #2A333D;
+  --agl-border-strong: #3A4653;
+  --agl-accent-selection: #7DD3FC;
+  --agl-accent-music: #67E8F9;
+  --agl-accent-math: #C4B5FD;
+  --agl-accent-mapping: #FDE68A;
+  --agl-provenance-related: #A7F3D0;
+  --agl-status-success: #86EFAC;
+  --agl-status-warning: #FBBF24;
+  --agl-status-error: #FCA5A5;
+  --agl-status-research: #D8B4FE;
+  --agl-space-1: 4px;
+  --agl-space-2: 8px;
+  --agl-space-3: 12px;
+  --agl-space-4: 16px;
+  --agl-space-6: 24px;
+  --agl-space-8: 32px;
+  --agl-space-10: 40px;
+  --agl-space-12: 48px;
+  --agl-radius-xs: 4px;
+  --agl-radius-sm: 6px;
+  --agl-radius-md: 8px;
+  --agl-radius-lg: 12px;
+  --agl-radius-pill: 999px;
+}
+
+/* Wave-1 semantic-state aliases. Color is never the sole state carrier. */
+:root {
+  --agl-material-user-authored: var(--agl-text-primary);
+  --agl-material-live-generated: var(--agl-accent-music);
+  --agl-material-snapshot: var(--agl-accent-math);
+  --agl-material-edited-derivative: var(--agl-accent-mapping);
+
+  --agl-source-current: var(--agl-status-success);
+  --agl-source-changed: var(--agl-status-warning);
+  --agl-source-missing: var(--agl-status-error);
+  --agl-source-detached: var(--agl-text-muted);
+
+  --agl-derivation-preview: var(--agl-accent-selection);
+  --agl-derivation-evaluating: var(--agl-accent-math);
+  --agl-derivation-current: var(--agl-status-success);
+  --agl-derivation-stale: var(--agl-status-warning);
+  --agl-derivation-error: var(--agl-status-error);
+
+  --agl-evidence-established: var(--agl-status-success);
+  --agl-evidence-inference: var(--agl-accent-selection);
+  --agl-evidence-engineering: var(--agl-accent-mapping);
+  --agl-evidence-experimental: var(--agl-status-research);
+  --agl-evidence-gated: var(--agl-status-warning);
+}

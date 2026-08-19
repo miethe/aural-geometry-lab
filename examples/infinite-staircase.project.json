@@ -1,0 +1,77 @@
+{
+  "schema": "agl.project",
+  "schemaVersion": 1,
+  "id": "project_infinite_staircase_demo",
+  "name": "Infinite Staircase Demonstration",
+  "createdAt": "2026-08-13T20:00:00Z",
+  "modifiedAt": "2026-08-13T20:00:00Z",
+  "seed": "agl-infinite-staircase-v1",
+  "tempo": {
+    "bpm": 72,
+    "numerator": 4,
+    "denominator": 4
+  },
+  "tracks": [
+    {
+      "id": "track_clicks",
+      "name": "Risset Click Layers",
+      "kind": "trigger",
+      "operatorNodeIds": ["node_source", "node_risset", "node_synth"],
+      "muted": false,
+      "solo": false,
+      "gain": 0.72
+    }
+  ],
+  "nodes": [
+    {
+      "id": "node_source",
+      "type": "pattern.pulse",
+      "version": 1,
+      "parameters": { "division": "1/4" },
+      "position": { "x": 80, "y": 140 }
+    },
+    {
+      "id": "node_risset",
+      "type": "rhythm.risset",
+      "version": 1,
+      "parameters": {
+        "baseBpm": 72,
+        "cycleSeconds": 14,
+        "tempoRatio": 2,
+        "layerCount": 7,
+        "envelope": "raised-cosine",
+        "direction": "accelerate"
+      },
+      "position": { "x": 340, "y": 140 }
+    },
+    {
+      "id": "node_synth",
+      "type": "audio.click-synth",
+      "version": 1,
+      "parameters": { "waveform": "triangle", "frequency": 820 },
+      "position": { "x": 620, "y": 140 }
+    }
+  ],
+  "connections": [
+    {
+      "id": "connection_source_risset",
+      "sourceNodeId": "node_source",
+      "sourcePortId": "pattern",
+      "targetNodeId": "node_risset",
+      "targetPortId": "pattern"
+    },
+    {
+      "id": "connection_risset_synth",
+      "sourceNodeId": "node_risset",
+      "sourcePortId": "pattern",
+      "targetNodeId": "node_synth",
+      "targetPortId": "triggers"
+    }
+  ],
+  "activeLab": "infinite-staircase",
+  "labState": {
+    "phase": 0,
+    "anchorEnabled": false,
+    "visualization": "log-tempo-lanes"
+  }
+}

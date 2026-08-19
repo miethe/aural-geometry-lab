@@ -1,0 +1,173 @@
+{
+  "schema": "agl.program.plan",
+  "schemaVersion": 1,
+  "program": "Aural Geometry Lab",
+  "asOf": "2026-08-18",
+  "capacityAssumption": {
+    "productEngineers": 2,
+    "productUxFte": 1,
+    "researchAudioSupportFte": "0.25-0.5",
+    "qaAccessibilitySupport": "fractional"
+  },
+  "workstreams": [
+    {
+      "id": "WS-PRODUCT",
+      "name": "Product and UX"
+    },
+    {
+      "id": "WS-RUNTIME",
+      "name": "Domain and graph runtime"
+    },
+    {
+      "id": "WS-AUDIO",
+      "name": "Audio and rendering"
+    },
+    {
+      "id": "WS-VIS",
+      "name": "Visualization"
+    },
+    {
+      "id": "WS-LABS",
+      "name": "Laboratories"
+    },
+    {
+      "id": "WS-QUALITY",
+      "name": "Research, validation, and quality"
+    },
+    {
+      "id": "WS-NATIVE",
+      "name": "Native Apple stretch and cross-platform conformance"
+    }
+  ],
+  "milestones": [
+    {
+      "id": "M0",
+      "name": "Program start and executable foundation",
+      "status": "complete",
+      "exit": [
+        "clean build",
+        "fourteen tests pass",
+        "handoff package complete"
+      ]
+    },
+    {
+      "id": "M0.5",
+      "name": "Pre-handoff design and cross-platform hardening",
+      "status": "complete",
+      "exit": [
+        "final UI/UX design spec",
+        "platform-neutral interaction contract",
+        "design manifests",
+        "Swift contract spike passes",
+        "six additional research charters"
+      ]
+    },
+    {
+      "id": "M0.75",
+      "name": "Wave-1 evidence and architecture integration",
+      "status": "complete",
+      "exit": [
+        "eight reports and packets archived",
+        "cross-run decisions and ADRs accepted",
+        "project/mapping/audio/interaction contracts compile",
+        "35 TypeScript tests pass",
+        "Swift conformance package passes",
+        "adversarial integration review complete"
+      ]
+    },
+    {
+      "id": "M0.9",
+      "name": "FR-01 repository-wide adversarial hardening",
+      "status": "complete",
+      "exit": [
+        "51 findings owned",
+        "project v3/command v2/audio plan v2/package v2 accepted",
+        "85 TypeScript/Node tests pass",
+        "11 Swift tests pass",
+        "public schemas and fixtures validate",
+        "clean release archive reproducible"
+      ]
+    },
+    {
+      "id": "M1",
+      "name": "Production project v3 and runtime spine",
+      "status": "started",
+      "exit": [
+        "project v3 and package v2 physical round-trip",
+        "loss-aware sequential migration and catalog rebinding",
+        "graph compiler/evaluator v2",
+        "semantic command v2/history store",
+        "event/mapping provenance trace",
+        "hostile import failures"
+      ],
+      "entryGate": "FR-01 v0.4 accepted; FR-02 torture test remains required before declaring project v3 frozen."
+    },
+    {
+      "id": "M2",
+      "name": "Audio/render spine and rhythm-lab alpha",
+      "status": "planned",
+      "exit": [
+        "scheduler benchmark accepted",
+        "offline/real-time plan agreement",
+        "Infinite Staircase and Euclidean acceptance"
+      ],
+      "entryGate": "FR-01 audio-plan v2 accepted; production backend cutover and physical browser scheduler matrix remain required."
+    },
+    {
+      "id": "M3",
+      "name": "Harmonic and recursive composition alpha",
+      "status": "planned",
+      "exit": [
+        "Tonnetz and Fractal acceptance",
+        "MIDI/MusicXML fixtures",
+        "cross-lab example"
+      ]
+    },
+    {
+      "id": "M4",
+      "name": "Emergent systems alpha",
+      "status": "planned",
+      "exit": [
+        "CA and Chaos acceptance",
+        "bounded control pipeline",
+        "worker cancellation/performance"
+      ]
+    },
+    {
+      "id": "M5",
+      "name": "Aperiodic geometry and full studio beta",
+      "status": "planned",
+      "exit": [
+        "Penrose geometry accepted",
+        "seven labs functional",
+        "project package and WAV export"
+      ],
+      "entryGate": "DR-09 construction accepted; recovered fixture/oracle corpus and exact generator still required."
+    },
+    {
+      "id": "M6",
+      "name": "Private MVP hardening and release gate",
+      "status": "planned",
+      "exit": [
+        "browser/accessibility/performance gates",
+        "license review",
+        "representative user validation",
+        "reproducible CI build"
+      ]
+    },
+    {
+      "id": "M7",
+      "name": "Native iPad proof-of-architecture (stretch)",
+      "status": "planned",
+      "stretch": true,
+      "exit": [
+        "native Euclidean document round-trip",
+        "AVAudioEngine playback",
+        "shared conformance fixtures",
+        "adaptive iPad layout",
+        "go/no-go native architecture decision"
+      ]
+    }
+  ],
+  "architectureBaseline": "0.4.0"
+}

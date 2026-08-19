@@ -1,0 +1,44 @@
+{
+  "schema": "agl.evaluation.request",
+  "schemaVersion": 2,
+  "protocolVersion": "agl-evaluation-protocol-v2",
+  "identity": {
+    "schema": "agl.derivation.identity",
+    "schemaVersion": 2,
+    "projectEpoch": "epoch-1",
+    "scopeId": "scope-main",
+    "channel": "committed",
+    "generation": "1",
+    "requestId": "request-1",
+    "inputDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "semanticEnvironmentDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "evaluatorVersion": "agl-evaluator-v2",
+    "operatorCatalogDigest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+    "budgetProfileId": "agl-mvp-budget-v2",
+    "budgetProfileVersion": 2,
+    "cacheNamespace": "agl-evaluation-v2",
+    "workerInstanceId": "worker-1",
+    "attempt": 1
+  },
+  "determinismClass": "exact",
+  "interval": {
+    "start": {
+      "numerator": "0",
+      "denominator": "1"
+    },
+    "end": {
+      "numerator": "4",
+      "denominator": "1"
+    }
+  },
+  "requestPayloadDigest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+  "budget": {
+    "profileId": "agl-mvp-budget-v2",
+    "profileVersion": 2,
+    "maxWorkUnits": 1000000,
+    "maxEvents": 10000,
+    "maxMemoryBytes": 67108864,
+    "maxWallMilliseconds": 5000,
+    "cancellationPollWorkUnits": 1000
+  }
+}

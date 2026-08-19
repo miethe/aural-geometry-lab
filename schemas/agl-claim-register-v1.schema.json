@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://auralgeometrylab.example/schemas/agl-claim-register-v1.schema.json",
+  "title": "Aural Geometry Lab Claim Register v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "schemaVersion", "program", "asOf", "classes", "claims"],
+  "properties": {
+    "schema": { "const": "agl.program.claim-register" },
+    "schemaVersion": { "const": 1 },
+    "program": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "asOf": { "type": "string", "format": "date" },
+    "classes": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "established",
+          "strong-inference",
+          "engineering-default",
+          "experimental",
+          "research-gated",
+          "prohibited"
+        ]
+      }
+    },
+    "claims": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": { "$ref": "#/$defs/claim" }
+    }
+  },
+  "$defs": {
+    "portableId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~/-]{0,255}$"
+    },
+    "nonEmptyText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16384,
+      "pattern": ".*\\S.*"
+    },
+    "portableIdArray": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10000,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/portableId" }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "class", "text", "sources"],
+      "properties": {
+        "id": { "$ref": "#/$defs/portableId" },
+        "class": {
+          "enum": [
+            "established",
+            "strong-inference",
+            "engineering-default",
+            "experimental",
+            "research-gated",
+            "prohibited"
+          ]
+        },
+        "text": { "$ref": "#/$defs/nonEmptyText" },
+        "qualification": { "$ref": "#/$defs/nonEmptyText" },
+        "sources": { "$ref": "#/$defs/portableIdArray" },
+        "allowedSurfaces": { "$ref": "#/$defs/portableIdArray" },
+        "gateEvidenceIds": { "$ref": "#/$defs/portableIdArray" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "class": { "const": "prohibited" } }, "required": ["class"] },
+          "then": {
+            "not": {
+              "anyOf": [
+                { "required": ["allowedSurfaces"] },
+                { "required": ["gateEvidenceIds"] }
+              ]
+            }
+          },
+          "else": { "required": ["allowedSurfaces"] }
+        },
+        {
+          "if": { "properties": { "class": { "const": "research-gated" } }, "required": ["class"] },
+          "then": { "required": ["qualification", "gateEvidenceIds"] },
+          "else": { "not": { "required": ["gateEvidenceIds"] } }
+        }
+      ]
+    }
+  }
+}

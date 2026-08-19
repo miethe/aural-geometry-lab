@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://auralgeometrylab.local/schemas/agl-package-manifest-v2.schema.json",
+  "title": "AGL Package Manifest v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schemaVersion",
+    "logicalProfile",
+    "physicalProfile",
+    "projectSchemaVersion",
+    "projectSemanticId",
+    "saveGeneration",
+    "projectSemanticDigest",
+    "declaredTotalBytes",
+    "members",
+    "compatibility"
+  ],
+  "properties": {
+    "schema": {
+      "const": "agl.package.manifest"
+    },
+    "schemaVersion": {
+      "const": 2
+    },
+    "logicalProfile": {
+      "const": "agl.logical-package.v2"
+    },
+    "physicalProfile": {
+      "enum": [
+        "agl.native-directory-package.v2",
+        "agl.portable-archive.v2"
+      ]
+    },
+    "projectSchemaVersion": {
+      "const": 3
+    },
+    "projectSemanticId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "saveGeneration": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "projectSemanticDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "declaredTotalBytes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "members": {
+      "type": "array",
+      "maxItems": 100000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "entryKind",
+          "role",
+          "sha256",
+          "bytes",
+          "mediaType",
+          "authoritative"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024,
+            "pattern": "^[a-z0-9._/-]+$"
+          },
+          "role": {
+            "enum": [
+              "project",
+              "asset",
+              "preview",
+              "research-receipt",
+              "migration-receipt"
+            ]
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "compressedBytes": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "mediaType": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          },
+          "authoritative": {
+            "type": "boolean"
+          },
+          "entryKind": {
+            "const": "file"
+          }
+        }
+      }
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "minimumReaderVersion",
+        "requiredOperatorCatalogDigest",
+        "canonicalEncodingVersion"
+      ],
+      "properties": {
+        "minimumReaderVersion": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "requiredOperatorCatalogDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "canonicalEncodingVersion": {
+          "const": "agl-canonical-value-v1"
+        }
+      }
+    }
+  }
+}

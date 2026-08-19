@@ -1,0 +1,138 @@
+{
+  "schema": "agl.project",
+  "schemaVersion": 2,
+  "id": "project_infinite_staircase_demo",
+  "name": "Infinite Staircase Demonstration — Wave 1 v2",
+  "createdAt": "2026-08-13T20:00:00Z",
+  "modifiedAt": "2026-08-13T20:00:00Z",
+  "compatibility": {
+    "semanticContractVersion": "wave1-v1",
+    "operatorCatalogVersion": "0.3.0",
+    "stableIdVersion": "agl-stable-id-v1",
+    "deterministicGenerationVersion": "agl-prng-v1",
+    "budgetProfileId": "agl-mvp-budget-v1"
+  },
+  "seedContext": {
+    "algorithm": "agl-prng",
+    "algorithmVersion": 1,
+    "encodingVersion": 1,
+    "seed": "agl-infinite-staircase-v1",
+    "defaultStreamId": "project-default"
+  },
+  "meter": {
+    "numerator": 4,
+    "denominator": 4
+  },
+  "tempoMap": [
+    {
+      "id": "tempo-0",
+      "beat": {
+        "numerator": "0",
+        "denominator": "1"
+      },
+      "bpm": 72,
+      "curve": "step"
+    }
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "node_source",
+        "type": "pattern.pulse",
+        "version": 1,
+        "parameters": {
+          "division": "1/4"
+        }
+      },
+      {
+        "id": "node_risset",
+        "type": "rhythm.risset",
+        "version": 1,
+        "parameters": {
+          "baseBpm": 72,
+          "cycleSeconds": 14,
+          "tempoRatio": 2,
+          "layerCount": 7,
+          "envelope": "raised-cosine",
+          "direction": "accelerate"
+        }
+      },
+      {
+        "id": "node_synth",
+        "type": "audio.click-synth",
+        "version": 1,
+        "parameters": {
+          "waveform": "triangle",
+          "frequency": 820
+        }
+      }
+    ],
+    "connections": [
+      {
+        "id": "connection_source_risset",
+        "sourceNodeId": "node_source",
+        "sourcePortId": "pattern",
+        "targetNodeId": "node_risset",
+        "targetPortId": "pattern",
+        "kind": "dataflow",
+        "affectsResult": true
+      },
+      {
+        "id": "connection_risset_synth",
+        "sourceNodeId": "node_risset",
+        "sourcePortId": "pattern",
+        "targetNodeId": "node_synth",
+        "targetPortId": "triggers",
+        "kind": "dataflow",
+        "affectsResult": true
+      }
+    ]
+  },
+  "tracks": [
+    {
+      "id": "track_clicks",
+      "name": "Risset Click Layers",
+      "kind": "trigger",
+      "materialIds": [],
+      "route": {
+        "muted": false,
+        "solo": false,
+        "gain": 0.72,
+        "pan": 0
+      }
+    }
+  ],
+  "materials": [],
+  "assets": [],
+  "experiments": {
+    "migratedLabState": {
+      "phase": 0,
+      "anchorEnabled": false,
+      "visualization": "log-tempo-lanes"
+    },
+    "legacyTrackOperatorNodeIds": {
+      "track_clicks": [
+        "node_source",
+        "node_risset",
+        "node_synth"
+      ]
+    }
+  },
+  "presentation": {
+    "defaultLab": "infinite-staircase",
+    "graphLayout": {
+      "node_source": {
+        "x": 80,
+        "y": 140
+      },
+      "node_risset": {
+        "x": 340,
+        "y": 140
+      },
+      "node_synth": {
+        "x": 620,
+        "y": 140
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://auralgeometrylab.local/schemas/agl-resolved-audio-plan-v1.schema.json",
+  "title": "Aural Geometry Lab Resolved Audio Plan v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "schemaVersion", "planId", "planDigest", "generation", "projectId", "projectEpoch", "projectSemanticDigest", "semanticEnvironmentDigest", "quantizationVersion", "range", "voiceDefinitions", "assetRefs", "approximations", "events"],
+  "properties": {
+    "schema": { "const": "agl.audio.render-plan" },
+    "schemaVersion": { "const": 1 },
+    "planId": { "type": "string", "minLength": 1 },
+    "planDigest": { "type": "string", "minLength": 1 },
+    "generation": { "type": "string", "minLength": 1 },
+    "projectId": { "type": "string", "minLength": 1 },
+    "projectEpoch": { "type": "string", "minLength": 1 },
+    "projectSemanticDigest": { "type": "string", "minLength": 1 },
+    "semanticEnvironmentDigest": { "type": "string", "minLength": 1 },
+    "quantizationVersion": { "const": "seconds-to-frame-v1" },
+    "range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["startSeconds", "endSeconds"],
+      "properties": {
+        "startSeconds": { "type": "number", "minimum": 0 },
+        "endSeconds": { "type": "number", "minimum": 0 },
+        "sourceBeatRange": { "type": "object" }
+      }
+    },
+    "voiceDefinitions": { "type": "array", "items": { "type": "object", "required": ["id", "version"] } },
+    "assetRefs": { "type": "array", "items": { "type": "string" } },
+    "approximations": { "type": "array", "items": { "type": "object", "required": ["code", "message"] } },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "trackId", "voiceId", "idealTimeSeconds", "durationSeconds", "temporalOrigin", "priority", "latePolicy", "cancellationGroup", "provenanceRef", "kind"],
+        "properties": {
+          "id": { "type": "string" },
+          "trackId": { "type": "string" },
+          "voiceId": { "type": "string" },
+          "idealTimeSeconds": { "type": "number", "minimum": 0 },
+          "durationSeconds": { "type": "number", "minimum": 0 },
+          "temporalOrigin": { "type": "object" },
+          "priority": { "enum": ["critical", "normal", "shed-first"] },
+          "latePolicy": { "enum": ["strict-drop", "immediate", "sample-catch-up", "coalesce"] },
+          "cancellationGroup": { "type": "string" },
+          "provenanceRef": { "type": "string" },
+          "kind": { "enum": ["note", "trigger", "control"] }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "schema": "agl.design.interactions",
+  "schemaVersion": 2,
+  "asOf": "2026-08-18",
+  "rules": [
+    {
+      "id": "INT-001",
+      "name": "linked-selection",
+      "trigger": "select semantic entity in any surface",
+      "effect": "update shared selection; related projections highlight",
+      "projectDirty": false
+    },
+    {
+      "id": "INT-002",
+      "name": "direct-parameter-manipulation",
+      "trigger": "drag mathematical affordance",
+      "effect": "preview locally; commit one canonical command on end",
+      "projectDirty": true
+    },
+    {
+      "id": "INT-003",
+      "name": "edit-generated-event",
+      "trigger": "attempt event mutation on live generated material",
+      "effect": "offer freeze-region or downstream-edit-operator; never mutate projection",
+      "projectDirty": "only after explicit choice"
+    },
+    {
+      "id": "INT-004",
+      "name": "ab-audition-deferred",
+      "trigger": "enable comparison override",
+      "effect": "not part of MVP canonical architecture; prototypes must isolate override state and local history",
+      "projectDirty": false,
+      "status": "deferred"
+    },
+    {
+      "id": "INT-005",
+      "name": "budget-preflight",
+      "trigger": "parameter change predicts over-budget result",
+      "effect": "show predicted count/load before commit and recovery options",
+      "projectDirty": false
+    },
+    {
+      "id": "INT-006",
+      "name": "stale-result-rejection",
+      "trigger": "async result epoch/scope/channel/generation/input or semantic-environment digest differs",
+      "effect": "result may be admitted to deterministic cache only when eligible; never publish as current",
+      "projectDirty": false
+    },
+    {
+      "id": "INT-007",
+      "name": "focus-surface",
+      "trigger": "user focuses Canvas/Timeline/Graph/Inspector",
+      "effect": "maximize surface while preserving project/selection/view state",
+      "projectDirty": false
+    },
+    {
+      "id": "INT-008",
+      "name": "research-gate",
+      "trigger": "open research-gated lab",
+      "effect": "show transparent gate and allowed previews; no false claim",
+      "projectDirty": false
+    },
+    {
+      "id": "INT-009",
+      "name": "focus-without-selection",
+      "trigger": "keyboard focus moves across graph/timeline/canvas entity",
+      "effect": "move focus only; selection and expensive inspection remain unchanged until explicit select/activate",
+      "projectDirty": false
+    },
+    {
+      "id": "INT-010",
+      "name": "semantic-gesture",
+      "trigger": "pointer/touch/Pencil/keyboard continuous edit begins",
+      "effect": "begin→preview*→commit/cancel; zero or one canonical transaction and undo step",
+      "projectDirty": "only on non-no-op commit"
+    },
+    {
+      "id": "INT-011",
+      "name": "materialize-range",
+      "trigger": "user converts bounded generated output",
+      "effect": "prepare artifact asynchronously, then atomically commit only if source dependency digest still matches",
+      "projectDirty": "on successful guarded commit"
+    },
+    {
+      "id": "INT-012",
+      "name": "source-status",
+      "trigger": "inspect snapshot or edited derivative",
+      "effect": "derive current/changed/missing/detached from source recipe and dependency digest; unrelated project edits do not stale material",
+      "projectDirty": false
+    },
+    {
+      "id": "INT-013",
+      "name": "typed-edge-rewire",
+      "trigger": "user drags or keyboard-connects a graph edge",
+      "effect": "preview compiler-compatible targets; one atomic validated rewire on commit; never mutate the live graph during drag",
+      "projectDirty": "only on valid commit"
+    },
+    {
+      "id": "INT-014",
+      "name": "audio-generation-cutover",
+      "trigger": "committed project edit/seek/loop change produces a new plan",
+      "effect": "prepare new generation and atomically switch at an explicit audio time/frame; stale queues are gated",
+      "projectDirty": false
+    },
+    {
+      "id": "INT-015",
+      "name": "mapping-causality",
+      "trigger": "mapping is placed in live context",
+      "effect": "reject whole-window and excessive-lookahead stages; require explicit frozen fit or declared latency",
+      "projectDirty": false
+    },
+    {
+      "id": "INT-016",
+      "name": "orphaned-generated-selection",
+      "trigger": "selected generated identity disappears",
+      "effect": "retain explanatory non-actionable orphan; never retarget by proximity; exact identity may reactivate only while intent epoch is unchanged",
+      "projectDirty": false
+    }
+  ],
+  "version": "0.3.0"
+}

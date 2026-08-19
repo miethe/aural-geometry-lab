@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://auralgeometrylab.local/schemas/agl-mapping-trace-v1.schema.json",
+  "title": "Aural Geometry Lab Mapping Trace v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["traceId", "sourceRef", "intent", "steps", "finalTarget"],
+  "properties": {
+    "traceId": { "type": "string" },
+    "sourceRef": { "type": "string" },
+    "intent": {
+      "type": "object",
+      "required": ["technique", "primaryPurpose", "fidelityPriority"]
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["operatorInstanceId", "operatorType", "operatorVersion", "stage", "bypassed", "temporal", "input", "output", "parametersDigest", "diagnostics"]
+      }
+    },
+    "finalTarget": {}
+  }
+}

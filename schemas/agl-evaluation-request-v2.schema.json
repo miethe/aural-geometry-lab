@@ -1,0 +1,246 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://auralgeometrylab.local/schemas/agl-evaluation-request-v2.schema.json",
+  "title": "AGL Evaluation Request v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schemaVersion",
+    "protocolVersion",
+    "identity",
+    "determinismClass",
+    "interval",
+    "requestPayloadDigest",
+    "budget"
+  ],
+  "properties": {
+    "schema": {
+      "const": "agl.evaluation.request"
+    },
+    "schemaVersion": {
+      "const": 2
+    },
+    "protocolVersion": {
+      "const": "agl-evaluation-protocol-v2"
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "schemaVersion",
+        "projectEpoch",
+        "scopeId",
+        "channel",
+        "generation",
+        "requestId",
+        "inputDigest",
+        "semanticEnvironmentDigest",
+        "evaluatorVersion",
+        "operatorCatalogDigest",
+        "budgetProfileId",
+        "budgetProfileVersion",
+        "cacheNamespace",
+        "workerInstanceId",
+        "attempt"
+      ],
+      "properties": {
+        "schema": {
+          "const": "agl.derivation.identity"
+        },
+        "schemaVersion": {
+          "const": 2
+        },
+        "projectEpoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scopeId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "channel": {
+          "enum": [
+            "committed",
+            "preview",
+            "override",
+            "export",
+            "materialization"
+          ]
+        },
+        "generation": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 4096
+        },
+        "requestId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "inputDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "semanticEnvironmentDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "evaluatorVersion": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operatorCatalogDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "budgetProfileId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "budgetProfileVersion": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "numericalProfileId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "cacheNamespace": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "workerInstanceId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "attempt": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "numericalProfileVersion": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "numericalBackendDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        }
+      }
+    },
+    "determinismClass": {
+      "enum": [
+        "exact",
+        "profile-numeric",
+        "render-only"
+      ]
+    },
+    "interval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start",
+        "end"
+      ],
+      "properties": {
+        "start": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "numerator",
+            "denominator"
+          ],
+          "properties": {
+            "numerator": {
+              "type": "string",
+              "pattern": "^-?(0|[1-9][0-9]*)$"
+            },
+            "denominator": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          }
+        },
+        "end": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "numerator",
+            "denominator"
+          ],
+          "properties": {
+            "numerator": {
+              "type": "string",
+              "pattern": "^-?(0|[1-9][0-9]*)$"
+            },
+            "denominator": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          }
+        }
+      }
+    },
+    "requestPayloadDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profileId",
+        "profileVersion",
+        "maxWorkUnits",
+        "maxEvents",
+        "maxMemoryBytes",
+        "maxWallMilliseconds",
+        "cancellationPollWorkUnits"
+      ],
+      "properties": {
+        "profileId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "profileVersion": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxWorkUnits": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000000000
+        },
+        "maxEvents": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "maxMemoryBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967296
+        },
+        "maxWallMilliseconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400000
+        },
+        "cancellationPollWorkUnits": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        }
+      }
+    }
+  }
+}

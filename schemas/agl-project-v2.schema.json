@@ -1,0 +1,208 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://auralgeometrylab.local/schemas/agl-project-v2.schema.json",
+  "title": "Aural Geometry Lab Project v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "schemaVersion", "id", "name", "createdAt", "modifiedAt", "compatibility", "seedContext", "meter", "tempoMap", "graph", "tracks", "materials", "assets", "experiments"],
+  "properties": {
+    "schema": { "const": "agl.project" },
+    "schemaVersion": { "const": 2 },
+    "id": { "$ref": "#/$defs/nonEmptyString" },
+    "name": { "$ref": "#/$defs/nonEmptyString" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "modifiedAt": { "type": "string", "format": "date-time" },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["semanticContractVersion", "operatorCatalogVersion", "stableIdVersion", "deterministicGenerationVersion", "budgetProfileId"],
+      "properties": {
+        "semanticContractVersion": { "$ref": "#/$defs/nonEmptyString" },
+        "operatorCatalogVersion": { "$ref": "#/$defs/nonEmptyString" },
+        "stableIdVersion": { "$ref": "#/$defs/nonEmptyString" },
+        "deterministicGenerationVersion": { "$ref": "#/$defs/nonEmptyString" },
+        "budgetProfileId": { "$ref": "#/$defs/nonEmptyString" },
+        "numericalProfileId": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "seedContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "algorithmVersion", "encodingVersion", "seed", "defaultStreamId"],
+      "properties": {
+        "algorithm": { "$ref": "#/$defs/nonEmptyString" },
+        "algorithmVersion": { "type": "integer", "minimum": 1 },
+        "encodingVersion": { "type": "integer", "minimum": 1 },
+        "seed": { "type": "string" },
+        "defaultStreamId": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "meter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["numerator", "denominator"],
+      "properties": {
+        "numerator": { "type": "integer", "minimum": 1 },
+        "denominator": { "type": "integer", "enum": [1, 2, 4, 8, 16, 32, 64] }
+      }
+    },
+    "tempoMap": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "beat", "bpm", "curve"],
+        "properties": {
+          "id": { "$ref": "#/$defs/nonEmptyString" },
+          "beat": { "$ref": "#/$defs/rational" },
+          "bpm": { "type": "number", "exclusiveMinimum": 0 },
+          "curve": { "enum": ["step", "linear"] }
+        }
+      }
+    },
+    "graph": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nodes", "connections"],
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "type", "version", "parameters"],
+            "properties": {
+              "id": { "$ref": "#/$defs/nonEmptyString" },
+              "type": { "$ref": "#/$defs/nonEmptyString" },
+              "version": { "type": "integer", "minimum": 1 },
+              "parameters": { "type": "object" }
+            }
+          }
+        },
+        "connections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "kind", "affectsResult", "sourceNodeId", "sourcePortId", "targetNodeId", "targetPortId"],
+            "properties": {
+              "id": { "$ref": "#/$defs/nonEmptyString" },
+              "kind": { "enum": ["dataflow", "control", "reference", "provenance"] },
+              "affectsResult": { "type": "boolean" },
+              "sourceNodeId": { "$ref": "#/$defs/nonEmptyString" },
+              "sourcePortId": { "$ref": "#/$defs/nonEmptyString" },
+              "targetNodeId": { "$ref": "#/$defs/nonEmptyString" },
+              "targetPortId": { "$ref": "#/$defs/nonEmptyString" }
+            }
+          }
+        }
+      }
+    },
+    "tracks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "kind", "materialIds", "route"],
+        "properties": {
+          "id": { "$ref": "#/$defs/nonEmptyString" },
+          "name": { "$ref": "#/$defs/nonEmptyString" },
+          "kind": { "enum": ["trigger", "note", "audio", "control"] },
+          "materialIds": { "type": "array", "items": { "$ref": "#/$defs/nonEmptyString" }, "uniqueItems": true },
+          "route": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["muted", "solo", "gain", "pan"],
+            "properties": {
+              "muted": { "type": "boolean" },
+              "solo": { "type": "boolean" },
+              "gain": { "type": "number", "minimum": 0 },
+              "pan": { "type": "number", "minimum": -1, "maximum": 1 },
+              "voiceId": { "$ref": "#/$defs/nonEmptyString" }
+            }
+          }
+        }
+      }
+    },
+    "materials": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "name", "trackId", "range"],
+        "properties": {
+          "id": { "$ref": "#/$defs/nonEmptyString" },
+          "kind": { "enum": ["user-authored", "live-generated", "snapshot", "edited-derivative"] },
+          "name": { "$ref": "#/$defs/nonEmptyString" },
+          "trackId": { "$ref": "#/$defs/nonEmptyString" },
+          "range": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["start", "end"],
+            "properties": { "start": { "$ref": "#/$defs/rational" }, "end": { "$ref": "#/$defs/rational" } }
+          },
+          "payloadRef": { "$ref": "#/$defs/nonEmptyString" },
+          "source": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["producerNodeId", "outputPortId", "dependencyDigest", "sourceRecipeRef"],
+            "properties": {
+              "producerNodeId": { "$ref": "#/$defs/nonEmptyString" },
+              "outputPortId": { "$ref": "#/$defs/nonEmptyString" },
+              "dependencyDigest": { "$ref": "#/$defs/digest" },
+              "sourceRecipeRef": { "$ref": "#/$defs/nonEmptyString" },
+              "parentMaterialId": { "$ref": "#/$defs/nonEmptyString" }
+            }
+          },
+          "materializationReceiptId": { "$ref": "#/$defs/nonEmptyString" }
+        }
+      }
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "sha256", "mediaType", "bytes", "rights"],
+        "properties": {
+          "id": { "$ref": "#/$defs/nonEmptyString" },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "mediaType": { "$ref": "#/$defs/nonEmptyString" },
+          "bytes": { "type": "integer", "minimum": 0 },
+          "rights": { "enum": ["user-provided", "bundled", "generated", "unknown"] }
+        }
+      }
+    },
+    "experiments": { "type": "object" },
+    "presentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "defaultLab": { "type": "string" },
+        "graphLayout": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["x", "y"],
+            "properties": { "x": { "type": "number" }, "y": { "type": "number" } }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": { "type": "string", "minLength": 1 },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "rational": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["numerator", "denominator"],
+      "properties": {
+        "numerator": { "type": "string", "pattern": "^-?(0|[1-9][0-9]*)$" },
+        "denominator": { "type": "string", "pattern": "^[1-9][0-9]*$" }
+      }
+    }
+  }
+}

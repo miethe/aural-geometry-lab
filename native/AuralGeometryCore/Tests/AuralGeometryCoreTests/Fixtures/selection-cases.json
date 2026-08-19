@@ -1,0 +1,21 @@
+{
+  "schema": "agl.conformance.selection",
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "ascii-event",
+      "ref": { "kind": "event", "id": "event-1", "projectionPath": "track/0" },
+      "expectedKey": "5:event|7:event-1|7:track/0"
+    },
+    {
+      "name": "unicode-id",
+      "ref": { "kind": "event", "id": "evt:α", "projectionPath": "track/1" },
+      "expectedKey": "5:event|6:evt:α|7:track/1"
+    },
+    {
+      "name": "no-projection-path",
+      "ref": { "kind": "operator-node", "id": "node|risset" },
+      "expectedKey": "13:operator-node|11:node|risset|0:"
+    }
+  ]
+}

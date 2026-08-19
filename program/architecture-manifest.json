@@ -1,0 +1,214 @@
+{
+  "schema": "agl.program.architecture-manifest",
+  "schemaVersion": 2,
+  "program": "Aural Geometry Lab",
+  "baseline": "0.4.0",
+  "asOf": "2026-08-18",
+  "authorityOrder": [
+    "mathematical-and-standards-invariants",
+    "accepted-fr01-adrs-and-findings",
+    "language-neutral-schemas-and-conformance-fixtures",
+    "hardened-reference-implementation-behavior",
+    "wave1-research-and-ui-presentation"
+  ],
+  "authoritativeDocuments": [
+    "docs/24-fr01-whole-system-adversarial-repository-review.md",
+    "docs/25-fr01-contract-and-migration-amendment.md",
+    "docs/26-fr01-validation-report.md",
+    "docs/27-fr01-swarm-handoff-amendment.md",
+    "docs/18-wave1-system-integration.md",
+    "docs/19-ui-ux-wave1-integrated-amendment.md",
+    "docs/21-interaction-state-machine-conformance.md"
+  ],
+  "adrRange": {
+    "first": "0006",
+    "last": "0024"
+  },
+  "fr01Adrs": [
+    "0019",
+    "0020",
+    "0021",
+    "0022",
+    "0023",
+    "0024"
+  ],
+  "publicContracts": [
+    {
+      "id": "project",
+      "version": 3,
+      "schema": "schemas/agl-project-v3.schema.json"
+    },
+    {
+      "id": "migration-receipt",
+      "version": 2,
+      "schema": "schemas/agl-migration-receipt-v2.schema.json"
+    },
+    {
+      "id": "semantic-command",
+      "version": 2,
+      "schema": "schemas/agl-command-v2.schema.json"
+    },
+    {
+      "id": "evaluation-request",
+      "version": 2,
+      "schema": "schemas/agl-evaluation-request-v2.schema.json"
+    },
+    {
+      "id": "resolved-audio-plan",
+      "version": 2,
+      "schema": "schemas/agl-resolved-audio-plan-v2.schema.json"
+    },
+    {
+      "id": "audio-schedule-binding",
+      "version": 1,
+      "schema": "schemas/agl-audio-schedule-binding-v1.schema.json"
+    },
+    {
+      "id": "logical-package",
+      "version": 2,
+      "schema": "schemas/agl-package-manifest-v2.schema.json"
+    },
+    {
+      "id": "export-manifest",
+      "version": 1,
+      "schema": "schemas/agl-export-manifest-v1.schema.json"
+    },
+    {
+      "id": "accessibility-mirror",
+      "version": 1,
+      "schema": "schemas/agl-accessibility-mirror-v1.schema.json"
+    },
+    {
+      "id": "mapping-trace",
+      "version": 1,
+      "schema": "schemas/agl-mapping-trace-v1.schema.json"
+    },
+    {
+      "id": "claim-register",
+      "version": 1,
+      "schema": "schemas/agl-claim-register-v1.schema.json"
+    }
+  ],
+  "semanticVersions": {
+    "semanticContract": "wave1-fr01-v3",
+    "canonicalEncoding": "agl-canonical-value-v1",
+    "strictJson": "agl-strict-json-v1",
+    "canonicalDigest": "sha256-canonical-v1",
+    "rationalWire": "agl-rational-wire-v1",
+    "operatorSemanticDigest": "agl-operator-semantic-digest-v2",
+    "operatorCatalogDigest": "agl-operator-catalog-digest-v2",
+    "operatorImplementationReceipt": "pending-agl-189-v1",
+    "graphCompiler": "agl-graph-compiler-v2",
+    "stableId": "agl-stable-id-v2",
+    "deterministicGeneration": "agl-prng-v2",
+    "tempoResolution": "agl-tempo-map-v1",
+    "evaluationProtocol": "agl-evaluation-protocol-v2",
+    "resolvedAudioPlan": "agl-resolved-audio-plan-v2",
+    "audioScheduleBinding": "agl-audio-schedule-binding-v1",
+    "sampleFrameQuantization": "seconds-to-frame-v1",
+    "logicalPackageManifest": "agl-package-manifest-v2",
+    "exportManifest": "agl-export-manifest-v1",
+    "accessibilityMirror": "agl-accessibility-mirror-v1",
+    "claimRegister": "agl-claim-register-v1",
+    "selectionIdentity": 2,
+    "budgetProfile": "agl-mvp-budget-v2",
+    "numericalProfile": "pending-agl-170",
+    "streamingCanonicalDigest": "pending-agl-190",
+    "penroseIdentity": "penrose-id-v2",
+    "penroseConstruction": "de-bruijn-regular-pentagrid-p3-v1",
+    "risset": "rhythm.risset@1"
+  },
+  "migrationOnlyContracts": [
+    {
+      "id": "project",
+      "version": 1,
+      "reason": "prototype read/migration source only"
+    },
+    {
+      "id": "project",
+      "version": 2,
+      "reason": "Wave-1 read/migration source only"
+    },
+    {
+      "id": "semantic-command",
+      "version": 1,
+      "reason": "incompatible grammar/inverse semantics; no new writes"
+    },
+    {
+      "id": "resolved-audio-plan",
+      "version": 1,
+      "reason": "mixed runtime ownership; no new writes"
+    },
+    {
+      "id": "logical-package",
+      "version": 1,
+      "reason": "insufficient hostile-member semantics; no new writes"
+    },
+    {
+      "id": "stable-id",
+      "version": 1,
+      "reason": "collision-prone and ambiguous; existing legacy identities only"
+    },
+    {
+      "id": "prng",
+      "version": 1,
+      "reason": "fork depends on mutable draw state; legacy replay only"
+    },
+    {
+      "id": "selection-identity",
+      "version": 1,
+      "reason": "projection-coupled; legacy UI/session compatibility only"
+    }
+  ],
+  "openArchitectureGates": [
+    {
+      "backlogId": "AGL-170",
+      "gate": "Profile-numeric cross-platform conformance"
+    },
+    {
+      "backlogId": "AGL-177",
+      "gate": "Production audio-plan/backend cutover"
+    },
+    {
+      "backlogId": "AGL-178",
+      "gate": "Browser/device scheduler and realtime/offline measurements"
+    },
+    {
+      "backlogId": "AGL-179",
+      "gate": "Physical package adapters and hostile archive proof"
+    },
+    {
+      "backlogId": "AGL-180",
+      "gate": "Production WAV/MIDI/MusicXML/package codecs"
+    },
+    {
+      "backlogId": "AGL-181",
+      "gate": "Accessible semantic mirror adapter parity"
+    },
+    {
+      "backlogId": "AGL-183",
+      "gate": "Claim registry wired into copy/build release"
+    },
+    {
+      "backlogId": "AGL-186",
+      "gate": "Exact Penrose runtime and oracle corpus"
+    },
+    {
+      "backlogId": "AGL-189",
+      "gate": "Operator implementation-conformance receipts"
+    },
+    {
+      "backlogId": "AGL-190",
+      "gate": "Streaming digest and fragmented plan/export"
+    },
+    {
+      "backlogId": "AGL-191",
+      "gate": "Native strict JSON/package parity"
+    }
+  ],
+  "validationDocuments": [
+    "docs/26-fr01-validation-report.md",
+    "program/fr01-findings-register.json",
+    "program/fr01-contract-manifest.json"
+  ]
+}

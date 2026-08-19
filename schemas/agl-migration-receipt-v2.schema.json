@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://auralgeometrylab.local/schemas/agl-migration-receipt-v2.schema.json",
+  "title": "AGL Project Migration Receipt v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schemaVersion",
+    "migrationId",
+    "sourceSchemaVersion",
+    "targetSchemaVersion",
+    "sourceSemanticDigest",
+    "targetSemanticDigest",
+    "appliedMigrations",
+    "losses",
+    "requiresUserReview",
+    "migratedAt"
+  ],
+  "properties": {
+    "schema": {
+      "const": "agl.project.migration-receipt"
+    },
+    "schemaVersion": {
+      "const": 2
+    },
+    "migrationId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "sourceSchemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "targetSchemaVersion": {
+      "const": 3
+    },
+    "sourceSemanticDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "targetSemanticDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "sourceBytesDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "appliedMigrations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256
+      }
+    },
+    "losses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "severity",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "blocking"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "preservedAt": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "requiresUserReview": {
+      "type": "boolean"
+    },
+    "migratedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
