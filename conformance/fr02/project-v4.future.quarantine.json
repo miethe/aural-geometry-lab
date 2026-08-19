@@ -1,0 +1,64 @@
+{
+  "schema": "agl.project",
+  "schemaVersion": 4,
+  "id": "project-fr02-future-v4",
+  "name": "FR-02 Future v4 Opaque Project",
+  "createdAt": "2026-08-18T00:00:00Z",
+  "modifiedAt": "2026-08-18T00:00:00Z",
+  "compatibility": {
+    "semanticContractVersion": "wave1-fr01-v3",
+    "canonicalEncodingVersion": "agl-canonical-value-v1",
+    "canonicalDigestVersion": "sha256-canonical-v1",
+    "operatorSemanticDigestVersion": "agl-operator-semantic-digest-v2",
+    "operatorCatalogDigestVersion": "agl-operator-catalog-digest-v2",
+    "graphCompilerVersion": "agl-graph-compiler-v2",
+    "operatorCatalogVersion": "0.4.0",
+    "operatorCatalogDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "stableIdVersion": "agl-stable-id-v2",
+    "deterministicGenerationVersion": "agl-prng-v2",
+    "budgetProfileId": "agl-mvp-budget-v2",
+    "budgetProfileVersion": 2,
+    "commandSchemaVersion": 2,
+    "resolvedAudioPlanSchemaVersion": 2,
+    "selectionIdentityVersion": 2,
+    "packageManifestSchemaVersion": 2,
+    "tempoResolutionVersion": "agl-tempo-map-v1",
+    "requiredSemanticExtensions": []
+  },
+  "seedContext": {
+    "algorithm": "agl-mulberry32-named-stream-v2",
+    "algorithmVersion": 2,
+    "encodingVersion": 1,
+    "seed": "fr01-minimal-seed",
+    "defaultStreamId": "project-default"
+  },
+  "meter": {
+    "numerator": 4,
+    "denominator": 4
+  },
+  "tempoMap": [
+    {
+      "id": "tempo-0",
+      "beat": {
+        "numerator": "0",
+        "denominator": "1"
+      },
+      "bpm": 120,
+      "curve": "step"
+    }
+  ],
+  "graph": {
+    "nodes": [],
+    "connections": []
+  },
+  "tracks": [],
+  "materials": [],
+  "sourceRecipes": [],
+  "materializationReceipts": [],
+  "assets": [],
+  "extensions": [],
+  "futureCore": {
+    "required": false,
+    "bytesMustRoundTrip": true
+  }
+}
