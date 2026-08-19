@@ -4,28 +4,34 @@
 # (hooks/provision-artifacts.sh) is BINDING-GATED on. An artifact absent from this file is
 # invisible to the gate even when the gate runs.
 #
-# THIS FILE IS THE package.json OF THE AOS ARTIFACT LAYER. The deployed directories it
-# describes — .claude/skills, .claude/agents, .claude/commands, .claude/workflows — are the
-# node_modules: gitignored, reproducible, never hand-edited. Edit an artifact at its UPSTREAM
-# (docs/ARTIFACT-UPSTREAM-REGISTRY.md in agentic_meta_dev), never the deployed copy here.
+# THIS FILE IS THE package.json OF THE AOS ARTIFACT LAYER. The directories it describes —
+# .claude/{skills,agents,commands,workflows,hooks} — are the node_modules: gitignored,
+# reproducible, never hand-edited. Edit an artifact at its UPSTREAM
+# (agentic_meta_dev/docs/ARTIFACT-UPSTREAM-REGISTRY.md), never the deployed copy here.
+# The committed companions are .claude/.skillmeat-deployed.toml (the lockfile, with content
+# hashes) and .claude/settings.json.
 #
-# Reprovision a fresh clone with:
+# REPROVISION A FRESH CLONE — deploy artifacts INDIVIDUALLY, not via the bundle:
 #   set -a; . ~/.config/aos/secrets.env; set +a
-#   SKILLMEAT_EDITION=enterprise skillmeat bundle deploy aos-workflow-set-v4.1 --project .
-#   # then see KNOWN DEPLOY DEFECTS below — the bundle alone does NOT produce a working set.
+#   export SKILLMEAT_EDITION=enterprise
+#   skillmeat deploy <name> --type <skill|agent|command|orchestration|hook> --project .
+# `skillmeat bundle deploy aos-workflow-set-v4.1` is NOT a working provision path today; see below.
 #
-# KNOWN DEPLOY DEFECTS as of 2026-08-18 (filed against the skillmeat tree; do not
-# treat a clean `bundle deploy` as a working provision until these close):
+# KNOWN DEPLOY DEFECTS as of 2026-08-18 (filed against the skillmeat IntentTree tree).
+# Do not treat a clean `bundle deploy` as a working provision until these close:
 #   node_01M0BSDQ8SKJMK5BVGSSDNESMB  bundle deploy writes orchestrations to a NON-RESOLVING
-#                                    .claude/orchestration/<name>/<name>.js — deploy each
-#                                    orchestration individually to get .claude/workflows/<name>.js
-#   node_01M0BSE6PRJDBF651PTJ5NVSD0  bundle deploy records NOTHING in .skillmeat-deployed.toml
+#                                    .claude/orchestration/<name>/<name>.js
+#   node_01M0BSE6PRJDBF651PTJ5NVSD0  bundle deploy records NOTHING in .skillmeat-deployed.toml,
+#                                    which makes `skillmeat project reconcile` refuse every
+#                                    artifact at gate row 6 (unknown provenance, fail-closed)
 #   node_01M0BSQNJZ1CQXN7YGBR6TXMDB  command:execute-plan/execute-contract/explore/spike serve
-#                                    orchestration .js — the four marked tuned:true below are
+#                                    orchestration .js; the four marked tuned:true below are
 #                                    hand-placed from the pinned v4.1 snapshot as a result
 #   node_01M0BSFKG0NBNX400Y7EJ5569N  the bundle omits reviewer-gate
 #   node_01M0BSFJWRTVZG0SKMZFVN6HEM  bundle content is older than catalog latest for 4/7 workflows
 #   node_01M0BSENGDCTD98KX48YNVCW44  skillmeat init/register resolve to a PARENT manifest
+#   node_01M0BT9JSPPHAZ3T6X68SKYJYK  command deploy has no namespace concept, so commands land
+#                                    FLAT here (/autopilot) where the launchpad has /dev:autopilot
 #
 schema_version: 1
 project: "aural-geometry-lab"
@@ -34,128 +40,210 @@ policy:
   mode: auto            # auto | sign-off | off
 
 artifacts:
-  # --- Skills (7) — deployed from bundle aos-workflow-set-v4.1 ---
+
+  # --- Skills (10) ---
+  - name: artifact-tracking
+    type: skill
+    lifecycle: permanent
+    status: active
+    source: catalog
+    tuned: false
+    scope: null
+    version: null
+    note: "deployed individually via skillmeat deploy"
+  - name: council-review
+    type: skill
+    lifecycle: permanent
+    status: active
+    source: catalog
+    tuned: false
+    scope: null
+    version: null
+    note: "deployed individually via skillmeat deploy"
   - name: delegation-router
     type: skill
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "aos-workflow-set-v4.1 baseline"
+    note: "deployed individually via skillmeat deploy"
   - name: delivery-report
     type: skill
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "aos-workflow-set-v4.1 baseline"
+    note: "deployed individually via skillmeat deploy"
   - name: dev-execution
     type: skill
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "aos-workflow-set-v4.1 baseline"
+    note: "deployed individually via skillmeat deploy"
   - name: model-playbook
     type: skill
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "aos-workflow-set-v4.1 baseline"
+    note: "deployed individually via skillmeat deploy"
   - name: op
     type: skill
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "aos-workflow-set-v4.1 baseline"
+    note: "deployed individually via skillmeat deploy"
   - name: planning
     type: skill
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "aos-workflow-set-v4.1 baseline"
+    note: "deployed individually via skillmeat deploy"
   - name: skillmeat-cli
     type: skill
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "aos-workflow-set-v4.1 baseline"
+    note: "deployed individually via skillmeat deploy"
+  - name: workflow-authoring
+    type: skill
+    lifecycle: permanent
+    status: active
+    source: catalog
+    tuned: false
+    scope: null
+    version: null
+    note: "deployed individually via skillmeat deploy"
 
-  # --- Agents (6) — deployed from bundle aos-workflow-set-v4.1 ---
+  # --- Agents (12) ---
   - name: artifact-tracker
     type: agent
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "aos-workflow-set-v4.1 baseline"
+    note: "deployed individually via skillmeat deploy"
+  - name: bob-delegate-executor
+    type: agent
+    lifecycle: permanent
+    status: active
+    source: catalog
+    tuned: false
+    scope: null
+    version: null
+    note: "deployed individually via skillmeat deploy"
+  - name: code-reviewer
+    type: agent
+    lifecycle: permanent
+    status: active
+    source: catalog
+    tuned: false
+    scope: null
+    version: null
+    note: "deployed individually via skillmeat deploy"
+  - name: codebase-explorer
+    type: agent
+    lifecycle: permanent
+    status: active
+    source: catalog
+    tuned: false
+    scope: null
+    version: null
+    note: "deployed individually via skillmeat deploy"
+  - name: codex-executor
+    type: agent
+    lifecycle: permanent
+    status: active
+    source: catalog
+    tuned: false
+    scope: null
+    version: null
+    note: "deployed individually via skillmeat deploy"
   - name: feature-sprint-executor
     type: agent
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "aos-workflow-set-v4.1 baseline"
+    note: "deployed individually via skillmeat deploy"
   - name: implementation-planner
     type: agent
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "aos-workflow-set-v4.1 baseline"
+    note: "deployed individually via skillmeat deploy"
   - name: karen
     type: agent
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "aos-workflow-set-v4.1 baseline"
+    note: "deployed individually via skillmeat deploy"
   - name: phase-owner
     type: agent
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "aos-workflow-set-v4.1 baseline"
+    note: "deployed individually via skillmeat deploy"
+  - name: senior-code-reviewer
+    type: agent
+    lifecycle: permanent
+    status: active
+    source: catalog
+    tuned: false
+    scope: null
+    version: null
+    note: "deployed individually via skillmeat deploy"
   - name: task-completion-validator
     type: agent
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "aos-workflow-set-v4.1 baseline"
+    note: "deployed individually via skillmeat deploy"
+  - name: ui-engineer-enhanced
+    type: agent
+    lifecycle: permanent
+    status: active
+    source: catalog
+    tuned: false
+    scope: null
+    version: null
+    note: "deployed individually via skillmeat deploy"
 
-  # --- Workflows (7) — deployed INDIVIDUALLY; bundle path does not resolve ---
+  # --- Workflows (7) — .claude/workflows/<name>.js is the ONLY resolving path ---
   - name: auto-feature
     type: workflow
     lifecycle: permanent
@@ -164,7 +252,7 @@ artifacts:
     tuned: false
     scope: null
     version: null
-    note: "deployed individually to .claude/workflows/ (bundle path is non-resolving)"
+    note: "deployed individually; the bundle path does not resolve"
   - name: execute-contract
     type: workflow
     lifecycle: permanent
@@ -173,7 +261,7 @@ artifacts:
     tuned: false
     scope: null
     version: null
-    note: "deployed individually to .claude/workflows/ (bundle path is non-resolving)"
+    note: "deployed individually; the bundle path does not resolve"
   - name: execute-plan
     type: workflow
     lifecycle: permanent
@@ -182,7 +270,7 @@ artifacts:
     tuned: false
     scope: null
     version: null
-    note: "deployed individually to .claude/workflows/ (bundle path is non-resolving)"
+    note: "deployed individually; the bundle path does not resolve"
   - name: explore
     type: workflow
     lifecycle: permanent
@@ -191,7 +279,7 @@ artifacts:
     tuned: false
     scope: null
     version: null
-    note: "deployed individually to .claude/workflows/ (bundle path is non-resolving)"
+    note: "deployed individually; the bundle path does not resolve"
   - name: review-council
     type: workflow
     lifecycle: permanent
@@ -200,7 +288,7 @@ artifacts:
     tuned: false
     scope: null
     version: null
-    note: "deployed individually to .claude/workflows/ (bundle path is non-resolving)"
+    note: "deployed individually; the bundle path does not resolve"
   - name: reviewer-gate
     type: workflow
     lifecycle: permanent
@@ -209,7 +297,7 @@ artifacts:
     tuned: false
     scope: null
     version: null
-    note: "reviewer gate; absent from the bundle, deployed individually"
+    note: "reviewer gate; absent from the bundle"
   - name: spike
     type: workflow
     lifecycle: permanent
@@ -218,27 +306,45 @@ artifacts:
     tuned: false
     scope: null
     version: null
-    note: "deployed individually to .claude/workflows/ (bundle path is non-resolving)"
+    note: "deployed individually; the bundle path does not resolve"
 
-  # --- Commands (14) — namespaced /dev:* and /plan:* ---
+  # --- Commands (14) — FLAT/un-namespaced; see node_01M0BT9JSPPHAZ3T6X68SKYJYK ---
+  - name: architecture-scenario-explorer
+    type: command
+    lifecycle: permanent
+    status: active
+    source: catalog
+    tuned: false
+    scope: null
+    version: null
+    note: "aos-workflow-set-v4.1 baseline"
   - name: autopilot
     type: command
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "/dev:autopilot"
+    note: "aos-workflow-set-v4.1 baseline"
   - name: create-feature
     type: command
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "/dev:create-feature"
+    note: "aos-workflow-set-v4.1 baseline"
+  - name: design
+    type: command
+    lifecycle: permanent
+    status: active
+    source: catalog
+    tuned: false
+    scope: null
+    version: null
+    note: "aos-workflow-set-v4.1 baseline"
   - name: execute-contract
     type: command
     lifecycle: permanent
@@ -247,16 +353,16 @@ artifacts:
     tuned: true
     scope: null
     version: null
-    note: "/dev:execute-contract — HAND-PLACED from MeatySkills workflow-sets/v4.1/artifacts/command/execute-contract.md because the catalog command: row serves orchestration .js (node_01M0BSQNJZ1CQXN7YGBR6TXMDB). Do not overwrite from catalog until that closes."
+    note: "HAND-PLACED from MeatySkills workflow-sets/v4.1/artifacts/command/execute-contract.md; catalog command: row serves orchestration .js (node_01M0BSQNJZ1CQXN7YGBR6TXMDB). Do NOT overwrite from catalog."
   - name: execute-phase
     type: command
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "/dev:execute-phase"
+    note: "aos-workflow-set-v4.1 baseline"
   - name: execute-plan
     type: command
     lifecycle: permanent
@@ -265,34 +371,7 @@ artifacts:
     tuned: true
     scope: null
     version: null
-    note: "/dev:execute-plan — HAND-PLACED from MeatySkills workflow-sets/v4.1/artifacts/command/execute-plan.md because the catalog command: row serves orchestration .js (node_01M0BSQNJZ1CQXN7YGBR6TXMDB). Do not overwrite from catalog until that closes."
-  - name: quick-feature
-    type: command
-    lifecycle: permanent
-    status: active
-    source: bundle:aos-workflow-set-v4.1
-    tuned: false
-    scope: null
-    version: null
-    note: "/dev:quick-feature"
-  - name: architecture-scenario-explorer
-    type: command
-    lifecycle: permanent
-    status: active
-    source: bundle:aos-workflow-set-v4.1
-    tuned: false
-    scope: null
-    version: null
-    note: "/plan:architecture-scenario-explorer"
-  - name: design
-    type: command
-    lifecycle: permanent
-    status: active
-    source: bundle:aos-workflow-set-v4.1
-    tuned: false
-    scope: null
-    version: null
-    note: "/plan:design"
+    note: "HAND-PLACED from MeatySkills workflow-sets/v4.1/artifacts/command/execute-plan.md; catalog command: row serves orchestration .js (node_01M0BSQNJZ1CQXN7YGBR6TXMDB). Do NOT overwrite from catalog."
   - name: explore
     type: command
     lifecycle: permanent
@@ -301,34 +380,43 @@ artifacts:
     tuned: true
     scope: null
     version: null
-    note: "/plan:explore — HAND-PLACED from MeatySkills workflow-sets/v4.1/artifacts/command/explore.md because the catalog command: row serves orchestration .js (node_01M0BSQNJZ1CQXN7YGBR6TXMDB). Do not overwrite from catalog until that closes."
+    note: "HAND-PLACED from MeatySkills workflow-sets/v4.1/artifacts/command/explore.md; catalog command: row serves orchestration .js (node_01M0BSQNJZ1CQXN7YGBR6TXMDB). Do NOT overwrite from catalog."
   - name: plan-feature
     type: command
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "/plan:plan-feature"
+    note: "aos-workflow-set-v4.1 baseline"
   - name: plan-from-gh
     type: command
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "/plan:plan-from-gh"
+    note: "aos-workflow-set-v4.1 baseline"
   - name: plan-story
     type: command
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "/plan:plan-story"
+    note: "aos-workflow-set-v4.1 baseline"
+  - name: quick-feature
+    type: command
+    lifecycle: permanent
+    status: active
+    source: catalog
+    tuned: false
+    scope: null
+    version: null
+    note: "aos-workflow-set-v4.1 baseline"
   - name: spike
     type: command
     lifecycle: permanent
@@ -337,13 +425,134 @@ artifacts:
     tuned: true
     scope: null
     version: null
-    note: "/plan:spike — HAND-PLACED from MeatySkills workflow-sets/v4.1/artifacts/command/spike.md because the catalog command: row serves orchestration .js (node_01M0BSQNJZ1CQXN7YGBR6TXMDB). Do not overwrite from catalog until that closes."
+    note: "HAND-PLACED from MeatySkills workflow-sets/v4.1/artifacts/command/spike.md; catalog command: row serves orchestration .js (node_01M0BSQNJZ1CQXN7YGBR6TXMDB). Do NOT overwrite from catalog."
   - name: ultra_think
     type: command
     lifecycle: permanent
     status: active
-    source: bundle:aos-workflow-set-v4.1
+    source: catalog
     tuned: false
     scope: null
     version: null
-    note: "/plan:ultra_think"
+    note: "aos-workflow-set-v4.1 baseline"
+
+  # --- Hooks (1) ---
+  - name: aos-writeback
+    type: hook
+    lifecycle: permanent
+    status: active
+    source: catalog
+    tuned: false
+    scope: null
+    version: null
+    note: "Stop-hook AOS writeback; wired in .claude/settings.json. Deploy lands <name>.sh.sh at 0644 -- rename + chmod 755 (node_01M00NT0DQ7F7BZ4WDTW8JZFRP)"
+
+  # --- Rules (12) — GITIGNORED, hand-copied; skillmeat cannot deploy rule_file ---
+  - name: aos-operating-rules
+    type: rule_file
+    lifecycle: permanent
+    status: active
+    source: project-local
+    tuned: true
+    scope: null
+    version: null
+    note: "hand-copied from agentic_meta_dev/.claude/rules/; rule_file is catalogable but NOT deployable (pending skillmeat PR #422, sweep node_01M0B43PSG15ZBQ39QN4QYENAT). NOT COMMITTED -- carries internal infra detail; this repo is public. See .claude/rules/README-PROVENANCE.md"
+  - name: artifact-provisioning
+    type: rule_file
+    lifecycle: permanent
+    status: active
+    source: project-local
+    tuned: true
+    scope: null
+    version: null
+    note: "hand-copied from agentic_meta_dev/.claude/rules/; rule_file is catalogable but NOT deployable (pending skillmeat PR #422, sweep node_01M0B43PSG15ZBQ39QN4QYENAT). NOT COMMITTED -- carries internal infra detail; this repo is public. See .claude/rules/README-PROVENANCE.md"
+  - name: artifact-registration
+    type: rule_file
+    lifecycle: permanent
+    status: active
+    source: project-local
+    tuned: true
+    scope: null
+    version: null
+    note: "hand-copied from agentic_meta_dev/.claude/rules/; rule_file is catalogable but NOT deployable (pending skillmeat PR #422, sweep node_01M0B43PSG15ZBQ39QN4QYENAT). NOT COMMITTED -- carries internal infra detail; this repo is public. See .claude/rules/README-PROVENANCE.md"
+  - name: claim-verification
+    type: rule_file
+    lifecycle: permanent
+    status: active
+    source: project-local
+    tuned: true
+    scope: null
+    version: null
+    note: "hand-copied from agentic_meta_dev/.claude/rules/; rule_file is catalogable but NOT deployable (pending skillmeat PR #422, sweep node_01M0B43PSG15ZBQ39QN4QYENAT). NOT COMMITTED -- carries internal infra detail; this repo is public. See .claude/rules/README-PROVENANCE.md"
+  - name: delegation-modes
+    type: rule_file
+    lifecycle: permanent
+    status: active
+    source: project-local
+    tuned: true
+    scope: null
+    version: null
+    note: "hand-copied from agentic_meta_dev/.claude/rules/; rule_file is catalogable but NOT deployable (pending skillmeat PR #422, sweep node_01M0B43PSG15ZBQ39QN4QYENAT). NOT COMMITTED -- carries internal infra detail; this repo is public. See .claude/rules/README-PROVENANCE.md"
+  - name: finding-capture
+    type: rule_file
+    lifecycle: permanent
+    status: active
+    source: project-local
+    tuned: true
+    scope: null
+    version: null
+    note: "hand-copied from agentic_meta_dev/.claude/rules/; rule_file is catalogable but NOT deployable (pending skillmeat PR #422, sweep node_01M0B43PSG15ZBQ39QN4QYENAT). NOT COMMITTED -- carries internal infra detail; this repo is public. See .claude/rules/README-PROVENANCE.md"
+  - name: finding-filing
+    type: rule_file
+    lifecycle: permanent
+    status: active
+    source: project-local
+    tuned: true
+    scope: null
+    version: null
+    note: "hand-copied from agentic_meta_dev/.claude/rules/; rule_file is catalogable but NOT deployable (pending skillmeat PR #422, sweep node_01M0B43PSG15ZBQ39QN4QYENAT). NOT COMMITTED -- carries internal infra detail; this repo is public. See .claude/rules/README-PROVENANCE.md"
+  - name: intenttree-integration
+    type: rule_file
+    lifecycle: permanent
+    status: active
+    source: project-local
+    tuned: true
+    scope: null
+    version: null
+    note: "hand-copied from agentic_meta_dev/.claude/rules/; rule_file is catalogable but NOT deployable (pending skillmeat PR #422, sweep node_01M0B43PSG15ZBQ39QN4QYENAT). NOT COMMITTED -- carries internal infra detail; this repo is public. See .claude/rules/README-PROVENANCE.md"
+  - name: mode-d-enforcement
+    type: rule_file
+    lifecycle: permanent
+    status: active
+    source: project-local
+    tuned: true
+    scope: null
+    version: null
+    note: "hand-copied from agentic_meta_dev/.claude/rules/; rule_file is catalogable but NOT deployable (pending skillmeat PR #422, sweep node_01M0B43PSG15ZBQ39QN4QYENAT). NOT COMMITTED -- carries internal infra detail; this repo is public. See .claude/rules/README-PROVENANCE.md"
+  - name: remediation-sweeps-state
+    type: rule_file
+    lifecycle: permanent
+    status: active
+    source: project-local
+    tuned: true
+    scope: null
+    version: null
+    note: "hand-copied from agentic_meta_dev/.claude/rules/; rule_file is catalogable but NOT deployable (pending skillmeat PR #422, sweep node_01M0B43PSG15ZBQ39QN4QYENAT). NOT COMMITTED -- carries internal infra detail; this repo is public. See .claude/rules/README-PROVENANCE.md"
+  - name: shared-checkout-safety
+    type: rule_file
+    lifecycle: permanent
+    status: active
+    source: project-local
+    tuned: true
+    scope: null
+    version: null
+    note: "hand-copied from agentic_meta_dev/.claude/rules/; rule_file is catalogable but NOT deployable (pending skillmeat PR #422, sweep node_01M0B43PSG15ZBQ39QN4QYENAT). NOT COMMITTED -- carries internal infra detail; this repo is public. See .claude/rules/README-PROVENANCE.md"
+  - name: token-budget-ledger
+    type: rule_file
+    lifecycle: permanent
+    status: active
+    source: project-local
+    tuned: true
+    scope: null
+    version: null
+    note: "hand-copied from agentic_meta_dev/.claude/rules/; rule_file is catalogable but NOT deployable (pending skillmeat PR #422, sweep node_01M0B43PSG15ZBQ39QN4QYENAT). NOT COMMITTED -- carries internal infra detail; this repo is public. See .claude/rules/README-PROVENANCE.md"

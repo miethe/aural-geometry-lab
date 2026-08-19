@@ -36,3 +36,8 @@ coverage/
 .claude/*.skillmeat-lock
 .claude/**/.*.skillmeat-lock
 .skillmeat/
+
+# AOS rule files — hand-copied because skillmeat cannot deploy type rule_file (pending PR #422).
+# NEVER PUBLISH: all 12 carry LAN addresses, credential paths, IntentTree node ids and incident
+# narratives. This repository is PUBLIC. See .claude/rules/README-PROVENANCE.md.
+.claude/rules/
