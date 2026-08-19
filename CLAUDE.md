@@ -48,7 +48,7 @@ yet (`node_01M0DX6B8638F4JYXM4AMTRE82`).
 | `npm run schema:validate` | `python3 scripts/validate-json-schemas.py` — Draft 2020-12 validation of every `schemas/*.schema.json` against its `conformance/` fixtures/examples. Currently 12/12. |
 | `npm run verify` | `scripts/verify.mjs` — structural/contract checks, including design-token presence (`design/tokens.json`). |
 | `npm run check` | `clean && build && test && schema:validate && verify` — the dev-loop gate. |
-| `npm run check:all` | `scripts/check-all.mjs` — the release-grade gate: everything in `check`, plus Swift tests (11/11), 142 backlog-item dependency checks, 51 FR-01 finding-ownership checks (46/46 Critical/High owned), 11 public-contract hash/runtime-validator checks, Wave-1 evidence-hash and native-fixture-mirror checks, a deterministic release-archive build/re-extract (`scripts/release-check.mjs`), and a 9-endpoint static HTTP smoke test (`scripts/smoke-http.mjs`). |
+| `npm run check:all` | `scripts/check-all.mjs` — the release-grade gate: everything in `check`, plus Swift tests (14 passed, 1 skipped under AGL-191), 142 backlog-item dependency checks, 51 FR-01 finding-ownership checks (46/46 Critical/High owned), 11 public-contract hash/runtime-validator checks, Wave-1 evidence-hash and native-fixture-mirror checks, a deterministic release-archive build/re-extract (`scripts/release-check.mjs`), and a 9-endpoint static HTTP smoke test (`scripts/smoke-http.mjs`). |
 | `npm run release:archive` | `python3 scripts/make-release.py` — builds a deterministic, reproducible release archive. Its file list comes from `git ls-files`, so `.gitignore` governs what ships; a filesystem walk previously swept gitignored local state (including `.claude/`) into a public artifact. |
 | `npm run clean` | `scripts/clean.mjs` — clears build output. |
 
@@ -140,8 +140,16 @@ in `docs/` described it and why "no web app" kept getting repeated.
 - **`conformance/`** — language-neutral fixtures/examples validated against those schemas
   (`npm run schema:validate`, 12/12), plus the FR-01 (`conformance/fr01/`) and Wave-1
   (`conformance/wave1/`) hostile-input corpora, and the Swift portable-contract package
-  (`native/AuralGeometryCore/`, 11/11 tests) that proves the *same* fixtures parse identically in a
-  second language.
+  (`native/AuralGeometryCore/`, 14 passing tests + 1 skipped under AGL-191) that proves the
+  *same* fixtures parse identically in a second language.
+- **`conformance/fr02/`** — the FR-02 project-format torture corpus (38 declared cases). 14 are
+  committed fixtures — including `raw/`, which is **deliberately unparseable** and therefore
+  exempt from `verify.mjs`'s must-parse walk. **The other 24 are generator specs for a runner
+  that does not exist yet** (AGL-173): there is no `tests/fr02.test.mjs`, and no code consumes
+  `corpus.json`'s dispositions or `error-identities.json`. `npm run verify` holds the corpus's
+  *declaration* (unique ids, source-file-or-generator, no unclaimed file in `raw/`) — it does
+  not execute a single case. Treat the corpus as a contract awaiting an implementation, not as
+  coverage.
 - **`tests/`** — `core.test.mjs` (rational arithmetic, pattern timing, operator kernels, stable
   IDs/PRNG, registry versioning, event budgets) and `fr01.test.mjs` (the hostile suite: strict JSON,
   canonical digest, migration receipts, materialization, selection v2, package v2, export manifest,

@@ -39,7 +39,7 @@ npm run release:archive  # python3 scripts/make-release.py — deterministic rel
 npm run clean            # scripts/clean.mjs
 ```
 
-`npm run check:all` also runs: Swift tests (11/11), 142 backlog-item dependency checks, 51 FR-01
+`npm run check:all` also runs: Swift tests (14 passed, 1 skipped under AGL-191), 142 backlog-item dependency checks, 51 FR-01
 finding-ownership checks (46/46 Critical/High owned), 11 public-contract hash/runtime-validator
 checks, Wave-1 evidence-hash/native-fixture-mirror checks, a deterministic release-archive
 build/re-extract, and a 9-endpoint static HTTP smoke test. Run it before calling anything "done."

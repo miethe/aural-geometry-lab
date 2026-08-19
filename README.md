@@ -114,7 +114,7 @@ npm run check:all
 It currently passes:
 
 - **85/85 TypeScript/Node tests**;
-- **11/11 Swift tests**;
+- **14 Swift tests passing** (1 skipped: AGL-191 strict-byte parser);
 - **12/12 Draft 2020-12 public JSON Schema fixtures/examples**;
 - 142 backlog-item dependency checks;
 - 51 finding ownership/status checks, including 46/46 Critical/High ownership checks;
