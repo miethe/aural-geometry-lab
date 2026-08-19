@@ -7,10 +7,21 @@ Shepard accelerating rhythm, Tonnetz harmonic-lattice walks, recursive fractal m
 automata, Lorenz chaotic attractors, Penrose aperiodic tilings). Audience: curious explorers, music
 learners/educators, composer/producers, and creative coders/researchers.
 
-**Read this before writing code here:** the repo today is a hardened *contracts + reference-kernel*
-release (v0.4.0, FR-01 complete). The production React studio, the Worker-based graph evaluator, and
-the production audio scheduler are **not built**. `src/ui/*` is an explicitly disposable native-DOM
-demo shell (ADR/roadmap), not the target architecture — do not extend it as if it were.
+**Read this before writing code here.** Two things are true at once, and conflating them has
+already produced wrong answers:
+
+1. **A working app exists and is deployed.** `src/ui/*` compiles to a real single-page app with its
+   own hash router (`app-shell.ts`, `hashchange` → `#/<lab.id>`), all seven labs reachable and six
+   of them audible. It runs on the LAN — see "Deployment" below. It is *not* a mockup, and "there is
+   no web app" is a false statement about this repository.
+2. **It is not the target architecture.** The repo is a hardened *contracts + reference-kernel*
+   release (v0.4.0, FR-01 complete). The production React studio, the Worker-based graph evaluator,
+   and the production audio scheduler are **not built**. `src/ui/*` is an explicitly disposable
+   native-DOM shell (ADR/roadmap) — do not extend it as if it were the studio.
+
+The practical consequence: **AGL-144 (React production shell) is a replacement, not a greenfield
+build.** Whatever ships has to not regress what is already serving. No backlog item states that bar
+yet (`node_01M0DX6B8638F4JYXM4AMTRE82`).
 
 ## Tech stack
 
@@ -37,8 +48,8 @@ demo shell (ADR/roadmap), not the target architecture — do not extend it as if
 | `npm run schema:validate` | `python3 scripts/validate-json-schemas.py` — Draft 2020-12 validation of every `schemas/*.schema.json` against its `conformance/` fixtures/examples. Currently 12/12. |
 | `npm run verify` | `scripts/verify.mjs` — structural/contract checks, including design-token presence (`design/tokens.json`). |
 | `npm run check` | `clean && build && test && schema:validate && verify` — the dev-loop gate. |
-| `npm run check:all` | `scripts/check-all.mjs` — the release-grade gate: everything in `check`, plus Swift tests (11/11), 142 backlog-item dependency checks, 51 FR-01 finding-ownership checks (46/46 Critical/High owned), 11 public-contract hash/runtime-validator checks, Wave-1 evidence-hash and native-fixture-mirror checks, a deterministic release-archive build/re-extract, and an 8-endpoint static HTTP smoke test. |
-| `npm run release:archive` | `python3 scripts/make-release.py` — builds a deterministic, reproducible release archive. |
+| `npm run check:all` | `scripts/check-all.mjs` — the release-grade gate: everything in `check`, plus Swift tests (11/11), 142 backlog-item dependency checks, 51 FR-01 finding-ownership checks (46/46 Critical/High owned), 11 public-contract hash/runtime-validator checks, Wave-1 evidence-hash and native-fixture-mirror checks, a deterministic release-archive build/re-extract (`scripts/release-check.mjs`), and a 9-endpoint static HTTP smoke test (`scripts/smoke-http.mjs`). |
+| `npm run release:archive` | `python3 scripts/make-release.py` — builds a deterministic, reproducible release archive. Its file list comes from `git ls-files`, so `.gitignore` governs what ships; a filesystem walk previously swept gitignored local state (including `.claude/`) into a public artifact. |
 | `npm run clean` | `scripts/clean.mjs` — clears build output. |
 
 `npm run check:all` is the command to run before claiming anything is "done." Do not invent
@@ -66,8 +77,8 @@ commands not listed above or in `scripts/`.
    identity/topology foundations (`penrose.ts`). The exact tiling *generator* is not built
    (research-gated behind DR-09).
 5. **Audio** (`src/audio/`) — `audio-runtime.ts`, `euclidean-player.ts`, `risset-player.ts`,
-   `note-sequence-player.ts`: ad hoc browser demonstrators for 3 of 7 labs. This is not the planned
-   `ResolvedAudioPlan`-driven scheduler.
+   `note-sequence-player.ts`: ad hoc browser demonstrators covering 6 of 7 labs — every lab except
+   Penrose instantiates a player. This is not the planned `ResolvedAudioPlan`-driven scheduler.
 6. **UI** (`src/ui/`) — dependency-light native DOM shell (`app-shell.ts`, `dashboard.ts`,
    `lab-layout.ts`, `controls.ts`, `dom.ts`). Disposable; do not build the production studio on it.
 
@@ -83,15 +94,42 @@ commands not listed above or in `scripts/`.
 - Exact Penrose patch generator, adjacency graph, traversal engine (the placeholder UI is
   intentional — AGL-124).
 - IndexedDB persistence/autosave/recovery, a project command bus wired to a UI, undo/redo UI.
-- Accessibility implementation beyond the `accessibility.ts` data model (no keyboard/focus/
-  reduced-motion UI — there is no production UI yet).
+- Accessibility implementation beyond the `accessibility.ts` data model. The shipped demo shell
+  carries only 3 aria/role attributes total; the keyboard/focus/reduced-motion work is specified
+  against the *production* UI, which does not exist yet.
 - Native iPad/SwiftUI app (only the SwiftPM conformance-fixture package exists) — explicit stretch
   milestone M7, not committed MVP scope.
-- CI configuration (no `.github/workflows`; `program/toolchain-lock.json` and risk R-24 assume one
-  exists and none is checked in yet).
+- ~~CI configuration~~ — **built 2026-08-19.** `.github/workflows/ci.yml` runs `check:all` on
+  macOS (the Swift conformance package needs it) plus a job proving the Node floor still refuses a
+  below-floor runtime. Green on `main`. `package-lock.json` is committed, so risk R-24's mitigation
+  is complete.
 
 Full milestone/backlog breakdown: `docs/04-delivery-roadmap.md`, `docs/05-backlog.md`,
 `program/program-plan.json`, `program/backlog.json`.
+
+## Deployment — the app is running
+
+**An internal LAN host, port 3060** — the address lives in the AOS node inventory and is
+deliberately not recorded in this public repo. It serves a `dist/` build of this repo through
+`scripts/serve.mjs`. Verified 2026-08-19: the served `/src/app.js` is byte-identical to a local
+`npm run build` output, response headers carry `serve.mjs`'s signature (`Cache-Control: no-store`),
+and all seven lab routes return 200. `serve.mjs` binds `0.0.0.0`, so any host on the LAN reaches it.
+
+What it actually does today — **this is the regression bar for AGL-144**, and until that bar is
+written into the backlog it exists only here:
+
+| Surface | State |
+|---|---|
+| Seven lab routes (`#/<lab.id>`) | all reachable |
+| Audio | 6 of 7 labs instantiate a player; Penrose has none (intentional, AGL-124) |
+| Served data | `schemas/`, `examples/`, `conformance/`, `docs/`, `program/`, `research/`, `design/` all served as static files |
+| Routing | hash-based, `src/ui/app-shell.ts`; unknown paths fall back to `index.html` |
+| Persistence | none — no IndexedDB, no autosave; state is per-session |
+| Accessibility | 3 aria/role attributes total |
+
+Locally: `npm run dev` (port 4173) or `npm run serve` over a built `dist/` (`PORT` env). There is no
+deploy automation in this repo — the node deployment is operated out-of-band, which is why nothing
+in `docs/` described it and why "no web app" kept getting repeated.
 
 ## Validation regime
 

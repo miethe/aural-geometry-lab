@@ -15,3 +15,7 @@ run("python3", ["scripts/validate-json-schemas.py"]);
 // SwiftPM caches embed absolute paths; clean before every release-grade conformance run.
 run("swift", ["package", "--package-path", "native/AuralGeometryCore", "clean"]);
 run("swift", ["test", "--package-path", "native/AuralGeometryCore"]);
+// CLAUDE.md and AGENTS.md have described these two as part of check:all since 0.4.0; neither was
+// wired, and the release archive turned out to be broken at every commit as a result.
+run("node", ["scripts/release-check.mjs"]);
+run("node", ["scripts/smoke-http.mjs"]);

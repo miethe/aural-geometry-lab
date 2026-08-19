@@ -30,7 +30,7 @@ Scales: probability and impact are **Low / Medium / High**. Owner roles are prov
 | R-21 | Scope drifts toward an academic demo with weak export/composition value | Medium | High | Composer journeys, MIDI/WAV export, cross-lab projects, usability testing | Product lead |
 | R-22 | Performance differs substantially across hardware | High | Medium | tiered profiles, adaptive visuals, explicit budgets, diagnostics, minimum supported profile | QA/runtime |
 | R-23 | User-created extreme parameters produce painful or unsafe levels | Medium | High | conservative gains, parameter bounds, normalization, master dynamics, global stop | Audio lead |
-| R-24 | No package lock/build reproducibility in Sprint 0 due restricted environment | High now | Medium | Run package install in connected CI, commit lockfile, build matrix before M1 acceptance | Technical lead |
+| R-24 | No package lock/build reproducibility in Sprint 0 due restricted environment | Mitigated 2026-08-19 | Medium | Run package install in connected CI, commit lockfile, build matrix before M1 acceptance | Technical lead |
 | R-25 | Current native-DOM preview is mistaken for production UI architecture | Medium | Medium | ADR and roadmap explicitly frame it as disposable shell/reusable kernel | Technical lead |
 
 ## Risk review cadence

@@ -54,7 +54,8 @@
   ],
   "notes": [
     "Contract and reference implementation validation is not production browser/audio/native acceptance.",
-    "Every unresolved Critical/High finding has a backlog item and workstream owner."
+    "Every unresolved Critical/High finding has a backlog item and workstream owner.",
+    "sourceFilesInArchive re-baselined 228 -> 243 on 2026-08-19. The 228 described the upstream v0.4.0 tree before AOS onboarding, so make-release.py exited 1 at every commit in this repository and the archive had never been built. Re-baselined only AFTER make-release.py was changed to take its file list from git ls-files: until then the stale count was the sole thing aborting a run that would have packaged gitignored .claude/ state into a public archive."
   ],
   "validation": {
     "deterministicArchiveBuildsCompared": 2,
@@ -63,7 +64,7 @@
     "cleanExtractionCheckAll": "pass",
     "cleanExtractionSchemaValidation": "pass",
     "staticHttpSmokeEndpoints": 8,
-    "sourceFilesInArchive": 228,
+    "sourceFilesInArchive": 243,
     "generatedBuildStateExcluded": true
   }
 }

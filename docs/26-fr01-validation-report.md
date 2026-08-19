@@ -23,6 +23,16 @@
 | Clean release-archive extraction and revalidation | **Pass** |
 | Static HTTP smoke | **Pass** — 8 authority/schema/fixture/runtime endpoints |
 
+>  ⚠️ **Provenance of the release/smoke rows below (added 2026-08-19).** The "Static HTTP smoke"
+>  and deterministic-archive rows describe the **upstream v0.4.0 tree**, not this repository. No
+>  smoke script has ever existed at any commit here — `scripts/smoke-http.mjs` was first added on
+>  2026-08-19 — and `make-release.py` aborts at every commit in this history, because the manifest
+>  expected 228 source files and a pristine clone has 237–238. **These results are not reproducible
+>  from this repository and must not be read as current.** Both gates are real and green as of
+>  2026-08-19 (9/9 endpoints; archive reproducible over 243 files) — see `npm run check:all`. Do not
+>  reconcile this block by renumbering 8 to 9; that would make an unverifiable historical figure
+>  look like a present measurement. Tracked as `node_01M0DYDC9B24PXXH2R821Y2QTD`.
+
 The release process repeated `check:all`, Swift conformance, schema validation, and static HTTP smoke from a newly extracted ZIP. Transient package/compiler caches were excluded and the distributable `dist/` tree was regenerated during validation.
 
 ## Deterministic release and clean-extraction evidence

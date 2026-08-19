@@ -42,7 +42,7 @@ npm run clean            # scripts/clean.mjs
 `npm run check:all` also runs: Swift tests (11/11), 142 backlog-item dependency checks, 51 FR-01
 finding-ownership checks (46/46 Critical/High owned), 11 public-contract hash/runtime-validator
 checks, Wave-1 evidence-hash/native-fixture-mirror checks, a deterministic release-archive
-build/re-extract, and an 8-endpoint static HTTP smoke test. Run it before calling anything "done."
+build/re-extract, and a 9-endpoint static HTTP smoke test. Run it before calling anything "done."
 Do not invent commands beyond this list or `scripts/`.
 
 ## Real vs. planned
@@ -52,8 +52,10 @@ stable IDs, PRNG v2, project schema v3, semantic commands v2, sealed operator re
 compiler, pattern/event model, tempo-map v1, resolved-audio-plan v2 model, materialization,
 export/accessibility/claim models); `src/operators/` (Euclidean, Risset, Tonnetz, fractal, cellular,
 chaos kernels); `src/geometry/` (exact `Q(φ)`, bounded Penrose identity/topology); `src/labs/`
-(seven lab wrappers); `src/audio/` (four ad hoc browser demonstrators — Euclidean, Risset,
-note-sequence, plus runtime); `src/ui/` (disposable native-DOM shell). 15 versioned JSON Schemas,
+(seven lab wrappers); `src/audio/` (four demonstrator modules — Euclidean, Risset,
+note-sequence, plus runtime — wired into 6 of 7 labs; only Penrose has no player); `src/ui/` (a
+native-DOM SPA with its own hash router — disposable as ARCHITECTURE, but it is built, it works,
+and it is deployed: see Deployment below). 15 versioned JSON Schemas,
 12 conformance fixtures, 11 Swift conformance tests, 5 example project files.
 
 **Specified, not implemented:** React/Vite/React Flow/Three.js/Tone.js studio (timeline, mixer,
@@ -62,8 +64,23 @@ autosave/recovery; Worker-based graph evaluator (cache/budgets are data contract
 enforcing runtime); `ResolvedAudioPlan`-driven scheduler, AudioWorklet bridge, offline
 (OfflineAudioContext) renderer; real MIDI/WAV/MusicXML export codecs; exact Penrose patch generator/
 adjacency graph/traversal engine (placeholder UI is intentional, AGL-124); accessibility UI beyond
-the `accessibility.ts` data model; native iPad/SwiftUI app (stretch milestone M7 only); CI config
-(none checked in — risk R-24).
+the `accessibility.ts` data model; native iPad/SwiftUI app (stretch milestone M7 only).
+
+**CI now exists** (2026-08-19): `.github/workflows/ci.yml`, two jobs, green on `main`.
+`package-lock.json` is committed, so risk R-24's stated mitigation is complete.
+
+## Deployment — it is running
+
+An internal LAN host on port 3060 — address in the AOS node inventory, deliberately not recorded in
+this public repo. Runs as `aural-geometry-lab.service` (systemd --user), serving a `dist/` build of
+this repo via `scripts/serve.mjs` bound to `0.0.0.0:3060`. Verified 2026-08-19: served
+`/src/app.js` is byte-identical to a local build, all seven lab routes return 200, 6 of 7 labs are
+audible, no persistence, 3 aria/role attributes total.
+
+**This is the regression bar for AGL-144.** The React studio is a REPLACEMENT for a working app,
+not a greenfield build; no backlog item states that bar yet
+(`node_01M0DX6B8638F4JYXM4AMTRE82`). Deployment is operated out-of-band — there is no deploy
+automation in this repo, which is why nothing in `docs/` described it.
 
 ## Validation regime
 
