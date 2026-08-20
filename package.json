@@ -15,6 +15,7 @@
     "test": "node scripts/test.mjs",
     "check": "npm run clean && npm run build && npm run test && npm run schema:validate && npm run verify",
     "verify": "node scripts/verify.mjs",
+    "figures": "node scripts/build-figures.mjs",
     "check:all": "node scripts/check-all.mjs",
     "schema:validate": "python3 scripts/validate-json-schemas.py",
     "release:archive": "python3 scripts/make-release.py"

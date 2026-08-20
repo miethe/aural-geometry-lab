@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="429.8" height="1624" viewBox="0 0 429.8 1624" role="img" aria-label="Semantic state encoding specimens, monochrome">
+<defs><pattern id="fill-hatch-45" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#111111" stroke-width="0.75"/></pattern><pattern id="fill-hatch-135" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(135)"><line x1="0" y1="0" x2="0" y2="4" stroke="#111111" stroke-width="0.75"/></pattern><pattern id="fill-crosshatch" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0 L4 4 M4 0 L0 4" stroke="#111111" stroke-width="0.6"/></pattern><pattern id="fill-stipple" width="4" height="4" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="#111111"/></pattern></defs>
+<rect x="0" y="0" width="429.8" height="1624" fill="#ffffff"/>
+<text x="16" y="24" font-family="ui-monospace, monospace" font-size="13" font-weight="600" fill="#111111">Semantic state encodings — carrier-only, single ink</text>
+<text x="226" y="44" font-family="ui-monospace, monospace" font-size="9" fill="#111111">12px clip</text>
+<text x="314" y="44" font-family="ui-monospace, monospace" font-size="9" fill="#111111">16px row</text>
+<text x="16" y="76" font-family="ui-monospace, monospace" font-size="12" font-weight="600" fill="#111111">materialKind</text>
+<text x="16" y="104" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">user-authored (lineStyle)</text>
+<rect x="226.5" y="98.5" width="35" height="11" fill="none" stroke="#111111" stroke-width="1"/>
+<rect x="314.5" y="96.5" width="47" height="15" fill="none" stroke="#111111" stroke-width="1"/>
+<text x="16" y="132" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">live-generated (lineStyle)</text>
+<rect x="226.5" y="126.5" width="35" height="11" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="0.75 1.5"/>
+<rect x="314.5" y="124.5" width="47" height="15" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="1 2"/>
+<text x="16" y="160" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">snapshot (fill)</text>
+<rect x="226" y="154" width="36" height="12" fill="url(#fill-hatch-45)" stroke="#111111" stroke-width="0.75"/>
+<rect x="314" y="152" width="48" height="16" fill="url(#fill-hatch-45)" stroke="#111111" stroke-width="0.75"/>
+<text x="16" y="188" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">edited-derivative (shape)</text>
+<polygon points="226.5,182.5 257.1,182.5 261.5,186.9 261.5,193.5 226.5,193.5" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="3 1.5"/>
+<polygon points="314.5,180.5 355.5,180.5 361.5,186.5 361.5,195.5 314.5,195.5" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="3 1.5"/>
+<text x="16" y="228" font-family="ui-monospace, monospace" font-size="12" font-weight="600" fill="#111111">sourceStatus</text>
+<text x="16" y="256" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">not-applicable (shape)</text>
+
+
+<text x="16" y="284" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">current (lineStyle)</text>
+<rect x="226.5" y="278.5" width="35" height="11" fill="none" stroke="#111111" stroke-width="1"/>
+<rect x="314.5" y="276.5" width="47" height="15" fill="none" stroke="#111111" stroke-width="1"/>
+<text x="16" y="312" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">changed (lineStyle)</text>
+<rect x="226.5" y="306.5" width="35" height="11" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="3 1.5"/>
+<rect x="314.5" y="304.5" width="47" height="15" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="4 2"/>
+<text x="16" y="340" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">missing (fill)</text>
+<rect x="226" y="334" width="36" height="12" fill="url(#fill-stipple)" stroke="#111111" stroke-width="0.75"/>
+<rect x="314" y="332" width="48" height="16" fill="url(#fill-stipple)" stroke="#111111" stroke-width="0.75"/>
+<text x="16" y="368" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">detached (shape)</text>
+<polygon points="244,362.5 261.5,368 244,373.5 226.5,368" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="3 1.5"/>
+<polygon points="338,360.5 361.5,368 338,375.5 314.5,368" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="3 1.5"/>
+<text x="16" y="396" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">unresolved (glyph)</text>
+<text x="244" y="396" font-family="ui-monospace, monospace" font-size="12" fill="#111111" text-anchor="middle" dominant-baseline="central">?</text>
+<text x="338" y="396" font-family="ui-monospace, monospace" font-size="16" fill="#111111" text-anchor="middle" dominant-baseline="central">?</text>
+<text x="16" y="436" font-family="ui-monospace, monospace" font-size="12" font-weight="600" fill="#111111">derivation</text>
+<text x="16" y="464" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">idle (lineStyle)</text>
+<rect x="226.5" y="458.5" width="35" height="11" fill="none" stroke="#111111" stroke-width="1"/>
+<rect x="314.5" y="456.5" width="47" height="15" fill="none" stroke="#111111" stroke-width="1"/>
+<text x="16" y="492" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">preview (lineStyle)</text>
+<rect x="226.5" y="486.5" width="35" height="11" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="0.75 1.5"/>
+<rect x="314.5" y="484.5" width="47" height="15" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="1 2"/>
+<text x="16" y="520" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">evaluating (shape)</text>
+<polygon points="226.5,514.5 256,514.5 261.5,520 256,525.5 226.5,525.5 232,520" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="3 1.5"/>
+<polygon points="314.5,512.5 354,512.5 361.5,520 354,527.5 314.5,527.5 322,520" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="3 1.5"/>
+<text x="16" y="548" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">current (fill)</text>
+<rect x="226" y="542" width="36" height="12" fill="#111111" stroke="#111111" stroke-width="0.75"/>
+<rect x="314" y="540" width="48" height="16" fill="#111111" stroke="#111111" stroke-width="0.75"/>
+<text x="16" y="576" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">cache-only (fill)</text>
+<rect x="226" y="570" width="36" height="12" fill="url(#fill-hatch-45)" stroke="#111111" stroke-width="0.75"/>
+<rect x="314" y="568" width="48" height="16" fill="url(#fill-hatch-45)" stroke="#111111" stroke-width="0.75"/>
+<text x="16" y="604" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">stale (fill)</text>
+<rect x="226" y="598" width="36" height="12" fill="url(#fill-crosshatch)" stroke="#111111" stroke-width="0.75"/>
+<rect x="314" y="596" width="48" height="16" fill="url(#fill-crosshatch)" stroke="#111111" stroke-width="0.75"/>
+<text x="16" y="632" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">error (glyph)</text>
+<text x="244" y="632" font-family="ui-monospace, monospace" font-size="12" fill="#111111" text-anchor="middle" dominant-baseline="central">!</text>
+<text x="338" y="632" font-family="ui-monospace, monospace" font-size="16" fill="#111111" text-anchor="middle" dominant-baseline="central">!</text>
+<text x="16" y="660" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">cancelled (shape)</text>
+<polygon points="244,654.5 261.5,660 244,665.5 226.5,660" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="3 1.5 0.75 1.5"/>
+<polygon points="338,652.5 361.5,660 338,667.5 314.5,660" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="3 1.5 0.75 1.5"/>
+<text x="16" y="700" font-family="ui-monospace, monospace" font-size="12" font-weight="600" fill="#111111">audio</text>
+<text x="16" y="728" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">disabled (shape)</text>
+
+
+<text x="16" y="756" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">arming (lineStyle)</text>
+<rect x="226.5" y="750.5" width="35" height="11" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="0.75 1.5"/>
+<rect x="314.5" y="748.5" width="47" height="15" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="1 2"/>
+<text x="16" y="784" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">playing (fill)</text>
+<rect x="226" y="778" width="36" height="12" fill="#111111" stroke="#111111" stroke-width="0.75"/>
+<rect x="314" y="776" width="48" height="16" fill="#111111" stroke="#111111" stroke-width="0.75"/>
+<text x="16" y="812" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">paused (lineStyle)</text>
+<rect x="226.5" y="806.5" width="35" height="11" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="3 1.5"/>
+<rect x="314.5" y="804.5" width="47" height="15" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="4 2"/>
+<text x="16" y="840" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">interrupted (shape)</text>
+<polygon points="226.5,834.5 257.1,834.5 261.5,838.9 261.5,845.5 226.5,845.5" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="3 1.5"/>
+<polygon points="314.5,832.5 355.5,832.5 361.5,838.5 361.5,847.5 314.5,847.5" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="3 1.5"/>
+<text x="16" y="868" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">reconfiguring (fill)</text>
+<rect x="226" y="862" width="36" height="12" fill="url(#fill-stipple)" stroke="#111111" stroke-width="0.75"/>
+<rect x="314" y="860" width="48" height="16" fill="url(#fill-stipple)" stroke="#111111" stroke-width="0.75"/>
+<text x="16" y="896" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">error (glyph)</text>
+<text x="244" y="896" font-family="ui-monospace, monospace" font-size="12" fill="#111111" text-anchor="middle" dominant-baseline="central">!</text>
+<text x="338" y="896" font-family="ui-monospace, monospace" font-size="16" fill="#111111" text-anchor="middle" dominant-baseline="central">!</text>
+<text x="16" y="924" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">panic (glyph)</text>
+<text x="244" y="924" font-family="ui-monospace, monospace" font-size="12" fill="#111111" text-anchor="middle" dominant-baseline="central">!!</text>
+<text x="338" y="924" font-family="ui-monospace, monospace" font-size="16" fill="#111111" text-anchor="middle" dominant-baseline="central">!!</text>
+<text x="16" y="964" font-family="ui-monospace, monospace" font-size="12" font-weight="600" fill="#111111">evidence</text>
+<text x="16" y="992" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">established (fill)</text>
+<rect x="226" y="986" width="36" height="12" fill="#111111" stroke="#111111" stroke-width="0.75"/>
+<rect x="314" y="984" width="48" height="16" fill="#111111" stroke="#111111" stroke-width="0.75"/>
+<text x="16" y="1020" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">strong-inference (fill)</text>
+<rect x="226" y="1014" width="36" height="12" fill="url(#fill-hatch-45)" stroke="#111111" stroke-width="0.75"/>
+<rect x="314" y="1012" width="48" height="16" fill="url(#fill-hatch-45)" stroke="#111111" stroke-width="0.75"/>
+<text x="16" y="1048" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">engineering-default (fill)</text>
+<rect x="226" y="1042" width="36" height="12" fill="url(#fill-hatch-135)" stroke="#111111" stroke-width="0.75"/>
+<rect x="314" y="1040" width="48" height="16" fill="url(#fill-hatch-135)" stroke="#111111" stroke-width="0.75"/>
+<text x="16" y="1076" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">experimental (fill)</text>
+<rect x="226" y="1070" width="36" height="12" fill="url(#fill-stipple)" stroke="#111111" stroke-width="0.75"/>
+<rect x="314" y="1068" width="48" height="16" fill="url(#fill-stipple)" stroke="#111111" stroke-width="0.75"/>
+<text x="16" y="1104" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">research-gated (glyph)</text>
+<text x="244" y="1104" font-family="ui-monospace, monospace" font-size="12" fill="#111111" text-anchor="middle" dominant-baseline="central">🔒</text>
+<text x="338" y="1104" font-family="ui-monospace, monospace" font-size="16" fill="#111111" text-anchor="middle" dominant-baseline="central">🔒</text>
+<text x="16" y="1144" font-family="ui-monospace, monospace" font-size="12" font-weight="600" fill="#111111">mappingStage</text>
+<text x="16" y="1172" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">source (glyph)</text>
+<text x="244" y="1172" font-family="ui-monospace, monospace" font-size="12" fill="#111111" text-anchor="middle" dominant-baseline="central">S</text>
+<text x="338" y="1172" font-family="ui-monospace, monospace" font-size="16" fill="#111111" text-anchor="middle" dominant-baseline="central">S</text>
+<text x="16" y="1200" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">sample (glyph)</text>
+<text x="244" y="1200" font-family="ui-monospace, monospace" font-size="12" fill="#111111" text-anchor="middle" dominant-baseline="central">•</text>
+<text x="338" y="1200" font-family="ui-monospace, monospace" font-size="16" fill="#111111" text-anchor="middle" dominant-baseline="central">•</text>
+<text x="16" y="1228" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">normalize (glyph)</text>
+<text x="244" y="1228" font-family="ui-monospace, monospace" font-size="12" fill="#111111" text-anchor="middle" dominant-baseline="central">N</text>
+<text x="338" y="1228" font-family="ui-monospace, monospace" font-size="16" fill="#111111" text-anchor="middle" dominant-baseline="central">N</text>
+<text x="16" y="1256" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">smooth (glyph)</text>
+<text x="244" y="1256" font-family="ui-monospace, monospace" font-size="12" fill="#111111" text-anchor="middle" dominant-baseline="central">~</text>
+<text x="338" y="1256" font-family="ui-monospace, monospace" font-size="16" fill="#111111" text-anchor="middle" dominant-baseline="central">~</text>
+<text x="16" y="1284" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">transform (glyph)</text>
+<text x="244" y="1284" font-family="ui-monospace, monospace" font-size="12" fill="#111111" text-anchor="middle" dominant-baseline="central">T</text>
+<text x="338" y="1284" font-family="ui-monospace, monospace" font-size="16" fill="#111111" text-anchor="middle" dominant-baseline="central">T</text>
+<text x="16" y="1312" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">quantize-threshold (glyph)</text>
+<text x="244" y="1312" font-family="ui-monospace, monospace" font-size="12" fill="#111111" text-anchor="middle" dominant-baseline="central">Q</text>
+<text x="338" y="1312" font-family="ui-monospace, monospace" font-size="16" fill="#111111" text-anchor="middle" dominant-baseline="central">Q</text>
+<text x="16" y="1340" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">constrain (glyph)</text>
+<text x="244" y="1340" font-family="ui-monospace, monospace" font-size="12" fill="#111111" text-anchor="middle" dominant-baseline="central">C</text>
+<text x="338" y="1340" font-family="ui-monospace, monospace" font-size="16" fill="#111111" text-anchor="middle" dominant-baseline="central">C</text>
+<text x="16" y="1368" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">target (glyph)</text>
+<text x="244" y="1368" font-family="ui-monospace, monospace" font-size="12" fill="#111111" text-anchor="middle" dominant-baseline="central">◎</text>
+<text x="338" y="1368" font-family="ui-monospace, monospace" font-size="16" fill="#111111" text-anchor="middle" dominant-baseline="central">◎</text>
+<text x="16" y="1408" font-family="ui-monospace, monospace" font-size="12" font-weight="600" fill="#111111">selection</text>
+<text x="16" y="1436" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">selected (lineStyle)</text>
+<rect x="226.5" y="1430.5" width="35" height="11" fill="none" stroke="#111111" stroke-width="1"/>
+<rect x="314.5" y="1428.5" width="47" height="15" fill="none" stroke="#111111" stroke-width="1"/>
+<text x="16" y="1464" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">primary (lineStyle)</text>
+<rect x="226.5" y="1458.5" width="35" height="11" fill="none" stroke="#111111" stroke-width="1"/><rect x="228" y="1460" width="32" height="8" fill="none" stroke="#111111" stroke-width="1"/>
+<rect x="314.5" y="1456.5" width="47" height="15" fill="none" stroke="#111111" stroke-width="1"/><rect x="316" y="1458" width="44" height="12" fill="none" stroke="#111111" stroke-width="1"/>
+<text x="16" y="1492" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">focused (shape)</text>
+<rect x="226.5" y="1486.5" width="35" height="11" rx="2" ry="2" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="3 1.5"/>
+<rect x="314.5" y="1484.5" width="47" height="15" rx="2" ry="2" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="3 1.5"/>
+<text x="16" y="1520" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">hovered (shape)</text>
+<rect x="226.5" y="1514.5" width="35" height="11" rx="5.5" ry="5.5" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="0.75 1.5"/>
+<rect x="314.5" y="1512.5" width="47" height="15" rx="7.5" ry="7.5" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="0.75 1.5"/>
+<text x="16" y="1548" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">related (fill)</text>
+<rect x="226" y="1542" width="36" height="12" fill="url(#fill-hatch-45)" stroke="#111111" stroke-width="0.75"/>
+<rect x="314" y="1540" width="48" height="16" fill="url(#fill-hatch-45)" stroke="#111111" stroke-width="0.75"/>
+<text x="16" y="1576" font-family="ui-monospace, monospace" font-size="10" fill="#111111" dominant-baseline="central">orphaned (fill)</text>
+<rect x="226" y="1570" width="36" height="12" fill="url(#fill-stipple)" stroke="#111111" stroke-width="0.75"/>
+<rect x="314" y="1568" width="48" height="16" fill="url(#fill-stipple)" stroke="#111111" stroke-width="0.75"/>
+</svg>

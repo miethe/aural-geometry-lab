@@ -13,6 +13,14 @@ ROOT = Path(__file__).resolve().parents[1]
 PREFIX = "aural-geometry-lab"
 EXCLUDED_PARTS = {".git", ".build", ".swiftpm", "node_modules", "dist", "coverage", "__pycache__", ".pytest_cache", ".mypy_cache"}
 EXCLUDED_NAMES = {".DS_Store"}
+# Paths kept OUT of the release archive even though git tracks them.
+# design/mockups/images/ is Git-LFS-tracked (see .gitattributes). This script reads bytes from the
+# WORKING TREE (path.read_bytes()), so on a checkout with LFS smudged it would archive ~39 MB of
+# real PNGs, and on a clone where LFS objects were never fetched it would archive the ~130-byte
+# pointer files instead -- silently producing two different "deterministic" archives from the same
+# commit. Excluding the directory removes the ambiguity rather than papering over it. The images
+# remain in git; they are design evidence, not source.
+EXCLUDED_PREFIXES = ("design/mockups/images",)
 
 
 def include(path: Path, output: Path) -> bool:
@@ -22,6 +30,8 @@ def include(path: Path, output: Path) -> bool:
     if any(part in EXCLUDED_PARTS for part in relative.parts):
         return False
     if path.name in EXCLUDED_NAMES or path.suffix in {".pyc", ".pyo"}:
+        return False
+    if relative.as_posix().startswith(EXCLUDED_PREFIXES):
         return False
     return path.is_file() and not path.is_symlink()
 

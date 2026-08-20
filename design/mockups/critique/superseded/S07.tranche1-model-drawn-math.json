@@ -1,0 +1,140 @@
+{
+  "screen": "S07",
+  "variants": {
+    "A-instrument": {
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 3,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 3,
+        "error/budget visibility": 2,
+        "accessibility cues": 0,
+        "responsive plausibility": 1,
+        "implementation plausibility": 2,
+        "visual restraint": 2,
+        "consistency with design tokens": 3
+      },
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "verdict": "reject",
+      "requiredStates": {
+        "MaterialKind + SourceStatus": "present - left Material Legend and timeline distinguish solid manual, dashed generated, hatched snapshot, and derivative end-corner; inspector Source status lists Current, Changed, Missing, Detached",
+        "generated edit choice": "present - centered 'Edit generated material' dialog offers Add downstream transform, Fork the generator, and Freeze a snapshot",
+        "materialization receipt": "present - right inspector 'Materialization receipt', Receipt MR-0142 / Snapshot S-14",
+        "orphaned event state": "present - red dashed E-31 'source missing' clip on Accent Weave lane"
+      },
+      "defects": [
+        "Mathematical correctness fails: the canvas says '7 / 12 Euclidean pulse field' and '7:12', but only five cyan filled onset circles are visible, at steps 12, 10, 9, 6, and 4. E(7,12) must contain seven onsets; no rotation can make five onsets correct.",
+        "The rendered onset positions also fail the expected Euclidean spacing: the visible five-onset pattern has cyclic gaps 2,1,3,2,4, whereas E(7,12) has five 2-step gaps and two 1-step gaps in some rotation.",
+        "Accessibility reject fails: icon-only toolbar controls (skip, pause, stop, undo, redo, export/share, overflow, settings) have no visible text labels, accessibility annotation, focus treatment, or keyboard counterpart. S3 requires visible accessibility-friendly labels for icon-only controls in annotation versions.",
+        "The image does not visibly establish non-color-only treatments for every semanticStates value: derivation shows only 'Current', audio only 'Playing', and selection only PRIMARY/related. The unshown values have no visible shape, texture, glyph, or line-style evidence.",
+        "'Source status: current' duplicates the Current row and makes the state labeling redundant rather than clarifying the selected orphaned item.",
+        "S8 handoff gate fails: no visible component-to-manifest mapping; no recorded token deviations; interactions are not described beyond a static menu; content/math values are invalid; no accessibility annotation; no paired responsive mockup or written responsive rule."
+      ],
+      "strengths": [
+        "Selection is explicitly linked from ring to event callout, timeline playhead, inspector title, and bottom 'Selected in' chain.",
+        "Material treatments are genuinely non-color-dependent where shown: solid outline, dashed outline, diagonal hatch, and folded-corner derivative; the missing source has a dashed red box, broken-link glyph, and text.",
+        "The required edit dialog, receipt, automation lane, 5:3 rational-grid marker, and orphaned source are all visible without relying on hidden state."
+      ]
+    },
+    "B-laboratory": {
+      "scores": {
+        "immediate playability": 2,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 2,
+        "linked-selection clarity": 2,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 3,
+        "error/budget visibility": 2,
+        "accessibility cues": 0,
+        "responsive plausibility": 1,
+        "implementation plausibility": 2,
+        "visual restraint": 2,
+        "consistency with design tokens": 2
+      },
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "verdict": "reject",
+      "requiredStates": {
+        "MaterialKind + SourceStatus": "present - legend and timeline show manual solid, live dotted, snapshot hatch, and derivative corner; track chips show current and changed, and orphaned clip says source missing",
+        "generated edit choice": "present - centered 'Edit live-generated material' dialog lists all three required choices",
+        "materialization receipt": "present - right inspector shows 'Materialization receipt MR-0471'",
+        "orphaned event state": "present - red timeline callout explicitly says 'orphaned · source missing'"
+      },
+      "defects": [
+        "Mathematical correctness fails: 'Beat positions (5/7 pulse set)' shows seven cyan onset dots, at beat labels 0, 1, 2, 3, 4, 5, and 7. E(5,7) must have five onsets; its canonical Bjorklund form has onsets at 0,1,3,4,6 (or a rotation), not seven.",
+        "The plot title 'Euclidean 5:7' uses a colon while the legend says '5/7 pulse set'; neither repairs the visible seven-onset contradiction.",
+        "Accessibility reject fails: the transport, undo/redo, overflow, and settings are icon-only with no visible labels, focus state, shortcut, or accessibility annotation. No annotation version is supplied.",
+        "The semanticStates requirement is not visibly met for every state: only current/changed source status, current derivation, playing audio, three evidence types, and selected/related selection are shown. Missing, detached, unresolved, idle, preview, error, and the other listed states lack a visible non-hue encoding.",
+        "The color treatment drifts from the specified dark-instrument shell: broad blue-gray selected navigation and large raised top-button blocks dominate instead of the restrained dark neutral panels shown by the token set.",
+        "S8 handoff gate fails: no visible component-to-manifest mapping, token-deviation record, accessibility annotation, paired responsive rule, or behavior specification; the visible E(5,7) content is mathematically invalid."
+      ],
+      "strengths": [
+        "The provenance table explicitly names source through target and keeps a per-stage current/changed treatment alongside text.",
+        "Generated, snapshot, manual, and derivative clips are distinguishable without hue through dotted outline, hatch, solid outline, and derivative corner mark.",
+        "The orphaned event is unusually explicit: broken-link glyph plus 'orphaned · source missing' text, not red alone."
+      ]
+    },
+    "C-spatial": {
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 2,
+        "linked-selection clarity": 3,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 2,
+        "error/budget visibility": 1,
+        "accessibility cues": 0,
+        "responsive plausibility": 2,
+        "implementation plausibility": 2,
+        "visual restraint": 2,
+        "consistency with design tokens": 2
+      },
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "verdict": "reject",
+      "requiredStates": {
+        "MaterialKind + SourceStatus": "present - legend and timeline use solid manual, dotted generated, hatched frozen, and corner-marked derivative; a dashed clip with broken-link glyph says 'source missing'",
+        "generated edit choice": "present - 'Edit live-generated material' menu visibly offers Add downstream transform, Fork the generator, and Freeze a snapshot",
+        "materialization receipt": "present - inspector reads 'Snapshot r-17 · receipt 2F91-A8C4'",
+        "orphaned event state": "present - Manual Accent lane contains a broken-link dashed 'source missing' region"
+      },
+      "defects": [
+        "Mathematical correctness fails: the ring is labelled 'E(5,13)' and 'phase 3/13', yet only four cyan filled onsets are visible: steps 1, 4, 9, and 12. E(5,13) requires five onsets; rotation cannot change that count.",
+        "The timeline label '5:3 · 13/8 grid' is visually adjacent to an E(5,13) source but does not state a coherent relationship between the 13-step rhythm, the 7/8 meter, and the asserted 13/8 grid.",
+        "Accessibility reject fails: top-bar icon controls have no visible labels or accessibility annotations. The canvas Select, Draw, Quantize, and Freeze blocks use text, but that does not label the icon-only global controls or supply keyboard/focus alternatives.",
+        "The semanticStates requirement is not visibly proven for every state. Current derivation and playing audio are text-plus-color; no visible glyph/line/texture demonstrates their alternative values, and source status shows only missing. Unshown states cannot be credited from pixels.",
+        "The selected relationship is partly color-load-bearing: the ring's selected step, cross-canvas dashed connector, playhead, and selected clip rely predominantly on cyan/blue; their only non-color distinction is a numeric '12' tag at one endpoint.",
+        "S8 handoff gate fails: no visible component inventory mapping, token-deviation record, interaction description, accessibility annotation, or paired responsive rule; the E(5,13) content is mathematically invalid."
+      ],
+      "strengths": [
+        "The spatial canvas gives a direct visible link between the selected Euclidean step, small 7/8 wheel, inspector, and timeline playhead.",
+        "Material semantics are strong where rendered: dotted generated source, hatched Frozen r-17, solid manual clip, and broken-link dashed missing-source region all remain distinguishable without hue.",
+        "The choice dialog is concise and its three choices are individually named and iconed."
+      ]
+    }
+  },
+  "screenNotes": "All three make every S07 required state visibly findable and use useful texture/line/glyph treatments for the material kinds. All three nevertheless reject: each claims a Euclidean rhythm while rendering the wrong number of onsets, and none includes the accessibility annotation, icon labels, responsive rule, component mapping, token-deviation record, or behavioral specification required for S8 implementation-authoritative handoff. No text is visibly garbled or misspelled; the defects are semantic and mathematical, not OCR noise.",
+  "recommendedVariant": "A-instrument",
+  "recommendationReason": "A-instrument is the least compromised visual base: it has the clearest cross-surface selection chain, the most complete source-status/evidence treatment, and the strongest compact instrument shell. It remains rejected until its E(7,12) ring is corrected to seven Euclidean onsets and the absent S8 accessibility, behavior, responsive, component-mapping, and token-deviation evidence is supplied."
+}

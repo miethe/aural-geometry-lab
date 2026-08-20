@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# post-merge — Git LFS only. Created by hand rather than by `git lfs install`, which would have
+# overwritten .githooks/pre-push (this repo's check:all gate). See that file's LFS section.
+command -v git-lfs >/dev/null 2>&1 || {
+  printf >&2 "\n%s\n\n" "This repository is configured for Git LFS but 'git-lfs' was not found on your path."
+  exit 2
+}
+git lfs post-merge "$@"

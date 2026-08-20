@@ -24,6 +24,21 @@ set -uo pipefail
 
 case "${AOS_CHECK_GATE:-1}" in 0|false|no|off) exit 0 ;; esac
 
+# --- Git LFS -----------------------------------------------------------------
+# Appended, never overwritten: `git lfs install` wanted to REPLACE this file, which would have
+# deleted the check:all gate above. LFS runs FIRST because the check gate below has several
+# legitimate no-op `exit 0` paths (no package.json, no npm, no check:all, CHECK_GATE_SKIP), and
+# an LFS call placed after them would be silently skipped on exactly those paths — leaving
+# pointer files pushed with no objects behind them.
+if command -v git-lfs >/dev/null 2>&1; then
+  git lfs pre-push "$@" || exit $?
+else
+  echo "[lfs] git-lfs not found, but this repo tracks design/mockups/**/*.png with LFS." >&2
+  echo "[lfs] Install it (brew install git-lfs && git lfs install) or the pushed pointers will have no objects." >&2
+  exit 2
+fi
+# -----------------------------------------------------------------------------
+
 cd "$(git rev-parse --show-toplevel)" || exit 0
 
 [ -f package.json ] || exit 0

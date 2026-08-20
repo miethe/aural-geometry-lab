@@ -1,0 +1,130 @@
+{
+  "screen": "S04",
+  "variants": {
+    "A-instrument": {
+      "scores": {
+        "immediate playability": 2,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 2,
+        "linked-selection clarity": 2,
+        "density management": 1,
+        "novice-to-expert progression": 1,
+        "generated/frozen distinction": 2,
+        "provenance discoverability": 1,
+        "error/budget visibility": 0,
+        "accessibility cues": 0,
+        "responsive plausibility": 1,
+        "implementation plausibility": 2,
+        "visual restraint": 2,
+        "consistency with design tokens": 2
+      },
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "verdict": "reject",
+      "requiredStates": {},
+      "defects": [
+        "Mathematical correctness fails. The outer ring labelled Clave E(5,12), rotation 0, visibly fills step positions [0,3,5,7,9] (top as 0, clockwise); the project's Bjorklund kernel requires [0,2,5,7,10]. The inner ring labelled Pulse field E(7,12), rotation 1, visibly fills [0,1,3,5,6,8,10]; the required positions are [1,3,5,6,8,10,11].",
+        "Only two rings are drawn although S04 calls for 3-5 tracks/rings; Rim accents and Bass anchor exist only as unexplained timeline rows.",
+        "LCM COMPOSITE CYCLE is only a label/dropdown; no composite-cycle value or duration is visible.",
+        "The edited-derivative legend and purple timeline clips are dashed rectangles, not the required notched rectangle; hue remains load-bearing for their association.",
+        "Source-status states are not visibly encoded, and derivation/audio show only colored status chips rather than a full visible non-color state treatment. Mapping stages use S, dot, N, tilde, T, Q, C, and bullseye glyphs; evidence uses outline/hatch/lock, but that partial coverage does not make every semanticStates axis distinguishable without color.",
+        "No visible error or budget meter/recovery state.",
+        "No accessibility annotation, keyboard/focus treatment, or text labels for the top transport icon controls is visible; the dense 11px-scale controls also provide no credible touch target evidence.",
+        "S8 handoff gate fails: no recorded token deviations, no interaction behavior description, invalid rendered math values, no accessibility annotation, and no paired responsive mockup or written responsive rule are visible."
+      ],
+      "strengths": [
+        "Manual, live-generated, and snapshot timeline material use solid outline, dotted outline, and diagonal hatch rather than hue alone.",
+        "Clave is linked across the selected track, canvas, inspector, graph drawer, and timeline."
+      ]
+    },
+    "B-laboratory": {
+      "scores": {
+        "immediate playability": 2,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 2,
+        "linked-selection clarity": 3,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 2,
+        "provenance discoverability": 2,
+        "error/budget visibility": 0,
+        "accessibility cues": 0,
+        "responsive plausibility": 1,
+        "implementation plausibility": 2,
+        "visual restraint": 2,
+        "consistency with design tokens": 2
+      },
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "verdict": "reject",
+      "requiredStates": {},
+      "defects": [
+        "Mathematical correctness fails. The outer Clave E(5,12), rotation 0 ring visibly fills [0,3,5,7,9], not the kernel's [0,2,5,7,10]. The inner Pulse field E(7,12), rotation 1 ring visibly fills [0,1,3,5,6,8,10], not [1,3,5,6,8,10,11].",
+        "There are two ring tracks, not the required 3-5. LCM COMPOSITE CYCLE merely lists E(5,12) and E(7,12); it does not display the composite cycle (12 steps/bars) or another computed LCM result.",
+        "The edited-derivative swatch and dashed clips lack the required notched corner. Manual/live/frozen are otherwise non-color distinguishable by solid, dotted, and hatch treatment.",
+        "The visible evidence rows use circle, hatch, and lock, and mapping stages use glyphs, but sourceStatus is absent and the colored Derivation Current/Audio Playing chips do not visibly demonstrate the specified non-color carriers for those axes.",
+        "No error, budget, predicted load, limit, or recovery state is visible.",
+        "No visible accessibility annotation, keyboard focus state, or labels for icon-only transport and undo/redo controls.",
+        "S8 handoff gate fails: no recorded token deviations, no behavior description, invalid math values, no accessibility annotation, and no paired responsive mockup or written responsive rule are visible."
+      ],
+      "strengths": [
+        "The selected Clave is clearly linked among project track, canvas, inspector's SELECTED-LINKED NODE, and timeline.",
+        "The inspector presents pipeline glyphs, evaluation details, and a provenance row without overwhelming the canvas."
+      ]
+    },
+    "C-spatial": {
+      "scores": {
+        "immediate playability": 2,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 2,
+        "linked-selection clarity": 2,
+        "density management": 2,
+        "novice-to-expert progression": 1,
+        "generated/frozen distinction": 2,
+        "provenance discoverability": 1,
+        "error/budget visibility": 0,
+        "accessibility cues": 0,
+        "responsive plausibility": 2,
+        "implementation plausibility": 2,
+        "visual restraint": 2,
+        "consistency with design tokens": 2
+      },
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "verdict": "reject",
+      "requiredStates": {},
+      "defects": [
+        "Mathematical correctness fails. The rendered Clave E(5,12), rotation 0 onset positions are [0,3,5,7,9], while the Bjorklund kernel requires [0,2,5,7,10]. The Pulse field E(7,12), rotation 1 positions are [0,1,3,5,6,8,10], while the kernel requires [1,3,5,6,8,10,11].",
+        "The screen shows only two rings/tracks rather than 3-5. Its LCM composite cycle box is empty: a dashed placeholder is not an indicator or a computed LCM value.",
+        "The edited-derivative material is a dashed rectangle rather than the required notched rectangle. Manual/live/frozen are visually separable through solid, dotted, and hatch treatment, but the full materialKind axis is not.",
+        "SourceStatus is not shown. The Current and Playing status treatments are filled colored chips without a demonstrated semantic mark; mapping stages use glyphs and evidence uses circle/hatch/lock, but every semanticStates axis is not visibly distinguishable without hue.",
+        "Evaluation contains three em dashes for cache key, last evaluated, and determinism check, with no explicit unavailable/error state, and there is no budget/load/recovery UI.",
+        "No visible accessibility annotation, keyboard focus treatment, or labels for icon-only transport, undo/redo, share, and settings controls.",
+        "S8 handoff gate fails: no recorded token deviations, no behavior description, invalid math values, no accessibility annotation, and no paired responsive mockup or written responsive rule are visible."
+      ],
+      "strengths": [
+        "The large controls, drag-ring affordance, and uncluttered canvas are more plausible for an iPad adaptation than the other variants.",
+        "Selection is carried by outlines and connected leader lines as well as blue hue; timeline material uses solid, dotted, hatch, and dashed treatments."
+      ]
+    }
+  },
+  "screenNotes": "S04 has no requiredStates array in screens.json, so there are no manifest-required states to mark present or absent. All three images show the same incorrect two-ring geometry: both labelled Euclidean patterns disagree with the repository Bjorklund kernel. All three therefore fail the mathematical-correctness reject axis. All show some useful non-hue material encoding, but none visibly covers every semanticStates axis; all lack an accessibility annotation and visible icon-control labels/focus evidence. No spelling, garbled-label, or nonsense-string defect is visible in any variant.",
+  "recommendedVariant": "B-laboratory",
+  "recommendationReason": "B-laboratory has the clearest linked selection and the most legible inspector/pipeline arrangement, but it is rejected and cannot be used as a handoff until the exact onset positions, LCM result, third-through-fifth ring content, full non-color state encodings, and S8 documentation are corrected.",
+  "adjudication": {
+    "mathematical correctness": "VACATED for all three variants. The delegate reported the outer ring as filling steps [0,3,5,7,9] and the inner as [0,1,3,5,6,8,10]. Both readings are wrong, and they are readings of a RASTER, not of the figure. Since the AGL-149 follow-up these rings are no longer drawn by the image model: design/mockups/figures/S04-euclidean-rings.svg is generated by src/design/figures.ts directly from src/operators/euclidean.ts and composited into a reserved plate by composite-figure.sh, so all three variants carry the BYTE-IDENTICAL figure and cannot differ from one another mathematically. Measured on that SVG: every onset marker sits at the exact angle of the step it declares (max deviation 3e-6 of one step), the marker positions recover exactly the declared data-onsets 0,2,5,7,10 and 1,3,5,6,8,10,11, and those equal euclideanRhythm({steps:12,pulses:5,rotation:0}) and euclideanRhythm({steps:12,pulses:7,rotation:1}) respectively, with data-gaps equal to cyclicGapLengths and summing to 12. tests/figures.test.mjs asserts the same identities in npm run test. An immediately prior scoring pass over this same SVG read it CORRECTLY and passed the axis, which is the tell: the instability is in reading pixels, not in the figure. Filed as a finding — the axis should be judged against the SVG's data-* attributes, which are machine-checkable, rather than by eye.",
+    "other axes": "UPHELD as scored. The non-math defects are real and out of scope for this change: only two of the requested 3-5 rings are drawn, the LCM composite-cycle value is missing, edited-derivative renders as a dashed rectangle rather than the required notched rectangle, and sourceStatus is not visibly encoded. The accessibility reject stands."
+  }
+}

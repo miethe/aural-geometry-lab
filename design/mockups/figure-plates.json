@@ -1,0 +1,20 @@
+{
+  "$comment": "AGL-149 follow-up. Reserved canvas regions where a KERNEL-GENERATED figure is composited after the render, instead of being drawn by the image model. Every one of the 20 rejected tranche-1 mockups failed the `mathematical correctness` reject axis; generative image models cannot render mathematically-constrained content, and in AGL the mathematics IS the content. Geometry is FRACTIONAL (0..1 of the rendered image's own width/height) so it survives whatever pixel size the model actually emits. build-prompts.py reads this to reserve the plate in the prompt; composite-figure.sh reads the same entries to place the figure. One file so the two halves cannot drift.",
+  "version": 1,
+  "plates": {
+    "S04": {
+      "figure": "figures/S04-euclidean-rings.svg",
+      "generator": "npm run figures",
+      "rect": { "x": 0.205, "y": 0.135, "w": 0.545, "h": 0.615 },
+      "description": "Central concentric Euclidean ring stack. The rings, their onset markers, the E(k,n) notation and the gap sequence are all emitted from src/operators/euclidean.ts.",
+      "reserveAs": "an empty flat recessed panel with its normal border, corner radius and section header, and nothing at all inside it"
+    },
+    "S07": {
+      "figure": "figures/S07-euclidean-pulse-field.svg",
+      "generator": "npm run figures",
+      "rect": { "x": 0.155, "y": 0.245, "w": 0.700, "h": 0.400 },
+      "description": "Pulse-field ring for the timeline-focus screen. Onset positions come from src/operators/euclidean.ts, so the rendered onset count cannot contradict the printed ratio -- the tranche-1 defect here was a canvas claiming a 7/12 pulse field while drawing five onsets.",
+      "reserveAs": "an empty flat canvas panel with its normal border and section header, and nothing at all inside it -- the timeline, ruler and track lanes below it are unaffected and should still be fully designed"
+    }
+  }
+}

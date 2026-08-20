@@ -1,0 +1,137 @@
+Design a high-fidelity production interface for Aural Geometry Lab, a mathematical music studio that lets users hear, see, manipulate, and explain mathematical structures as music. The product should feel like a serious creative instrument crossed with a scientific visualization environment: precise, calm, luminous, tactile, and deeply interactive - not a generic analytics dashboard, not a game, and not a sci-fi HUD. Use the supplied design tokens and layout specification. The default studio is dark neutral with restrained high-contrast semantic accents. Mathematical geometry and musical time should dominate the canvas. Controls should be compact, professional, and legible. Use progressive disclosure: a novice can play immediately while an expert can open the timeline, typed operator graph, and mathematical inspector. Make selected entities visibly linked across canvas, graph, timeline, and inspector. Generated material, frozen clips, provenance, research-gated content, and evaluation states must each have distinct visual treatments that do not rely on color alone. Avoid decorative equations, fake waveforms, meaningless neon grids, excessive glassmorphism, giant cards, marketing-page spacing, and arbitrary gradients. The interface must look implementable in React and adaptable to SwiftUI on iPad.
+
+LOCKED SHELL ADAPTATION - the desktop shell above is NOT to be shrunk onto this device. The
+adaptation rule is fixed: ONE dominant canvas surface; the transport persists; the navigator and
+inspector become contextual zones, sheets, or drawers rather than permanent columns; the same
+material legend (solid / dotted / hatched) and the same derivation, audio, and evidence status
+vocabulary survive the adaptation; touch targets are 44pt-class. Panel identity and status
+vocabulary carry over; panel geometry does not.
+
+
+SCREEN S16 - iPhone Companion (Explore workspace, iphone-native).
+iPhone Companion. Project playback plus one lab canvas, parameter cards, a compact inspector, and no operator graph at all. Bottom transport, and a sheet for parameter editing. A companion, not a miniature DAW.
+
+REQUIRED STATES for this screen (design/screens.json v0.3.0) - each must be visibly present and identifiable:
+  - companion not miniature DAW
+  - play/control/inspect/share only
+
+VARIANT A - INSTRUMENT. Optimize for professional creative-tool density and speed. Compact controls, minimal decoration, high information density, tight 4/8/12px rhythm, small 11-13px labels, many simultaneously visible parameters. Think Ableton/Bitwig/Logic seriousness rather than consumer polish.
+
+CANVAS: iPhone portrait device screen, 19.5:9, no browser chrome. Render the full interface edge to edge, straight-on, no perspective, no device
+mockup shadows, no marketing background, no annotations outside the interface itself.
+
+DESIGN TOKENS - dark-instrument theme, use these exact hues:
+  bg.canvas = #0B0D10
+  bg.panel = #11151A
+  bg.raised = #181E25
+  bg.input = #0F1318
+  text.primary = #F3F6F8
+  text.secondary = #B8C0C8
+  text.muted = #7E8995
+  border.default = #2A333D
+  border.strong = #3A4653
+  accent.selection = #7DD3FC
+  accent.music = #67E8F9
+  accent.math = #C4B5FD
+  accent.mapping = #FDE68A
+  provenance.related = #A7F3D0
+  status.success = #86EFAC
+  status.warning = #FBBF24
+  status.error = #FCA5A5
+  status.research = #D8B4FE
+
+LAYOUT TOKENS - respect these panel sizes:
+  toolbarHeight = 48px
+  navigatorMin = 188px
+  navigatorIdeal = 232px
+  navigatorMax = 280px
+  inspectorMin = 280px
+  inspectorIdeal = 336px
+  inspectorMax = 420px
+  timelineMin = 160px
+  timelineIdeal = 240px
+  timelineMax = 360px
+  graphCollapsed = 28px
+  graphExpandedMin = 260px
+  graphExpandedMax = 440px
+  trackHeaderIdeal = 204px
+
+TYPOGRAPHY: system-ui sans for UI at 11px micro / 13px compact / 14px body / 16px section /
+22px lab title; monospace for all numeric and mathematical values. Radii 4/6/8/12px. Spacing
+rhythm 4/8/12/16/24/32px.
+
+SEMANTIC STATE VOCABULARY (design tokens v0.3.0 - these are the states the mockup must be able to show, each with a distinct non-color-only treatment):
+  materialKind: user-authored, live-generated, snapshot, edited-derivative
+  sourceStatus: not-applicable, current, changed, missing, detached, unresolved
+  derivation: idle, preview, evaluating, current, cache-only, stale, error, cancelled
+  audio: disabled, arming, playing, paused, interrupted, reconfiguring, error, panic
+  evidence: established, strong-inference, engineering-default, experimental, research-gated
+  mappingStage: source, sample, normalize, smooth, transform, quantize-threshold, constrain, target
+  selection: selected, primary, focused, hovered, related, orphaned
+
+NON-COLOUR CARRIERS - mandatory. Hue may be used as a REDUNDANT second channel, but each state below must remain identifiable with all colour removed, using the mark named for it. Do not substitute a coloured chip, a coloured dot or a coloured outline for any of these marks, and keep the marks consistent everywhere the same state appears:
+  materialKind:
+    user-authored: lineStyle=solid - Solid unbroken outline with no fill pattern, read at a glance even on a thin timeline-clip border.
+    live-generated: lineStyle=dotted - Dotted outline in place of the solid line, signalling the clip is a live projection rather than committed material.
+    snapshot: fill=hatch-45 - Diagonal hatch fill over a solid outline, the frozen-snapshot mark the mockup campaign's material legend already converged on.
+    edited-derivative: shape=notched-rect - A notched corner on an otherwise dashed outline, the distinct mark that separates a hand-edited derivative from its source.
+  sourceStatus:
+    not-applicable: shape=rect - Plain rectangle with no border pattern or fill, meaning this axis does not apply to the item.
+    current: lineStyle=solid - Solid unbroken outline, the same baseline mark used elsewhere, signalling the source is current.
+    changed: lineStyle=dashed - Dashed outline replacing the solid line, signalling the upstream source has changed since it was last checked.
+    missing: fill=stipple - Sparse stippled fill inside a solid outline, signalling the source file could not be found.
+    detached: shape=diamond - Diamond badge on a dashed outline, signalling the link to the source was deliberately detached.
+    unresolved: glyph=? - A question-mark glyph on a broken dash-dot outline; this ambiguous state needs the extra room of an inspector row and cannot be read reliably at timeline-clip scale.
+  derivation:
+    idle: lineStyle=solid - Solid unbroken outline with no fill, the same baseline mark used elsewhere, meaning nothing is being computed.
+    preview: lineStyle=dotted - Dotted outline signalling a tentative, not-yet-committed computation preview.
+    evaluating: shape=chevron - Chevron-shaped badge on a dashed outline, signalling active computation in progress.
+    current: fill=solid - Fully solid fill inside a solid outline, signalling the result is up to date.
+    cache-only: fill=hatch-45 - Diagonal hatch fill, the same mark used for a frozen snapshot on the material axis, signalling the value is served from cache rather than freshly computed.
+    stale: fill=crosshatch - Denser crosshatch fill than the cache-only mark, plus a dashed outline, signalling the cached result has drifted from its inputs.
+    error: glyph=! - A single exclamation glyph on a notched badge, signalling computation failed.
+    cancelled: shape=diamond - Diamond badge on a broken dash-dot outline, signalling the computation was deliberately cancelled rather than failing.
+  audio:
+    disabled: shape=rect - Plain rectangle with no border or fill, signalling audio is disabled.
+    arming: lineStyle=dotted - Dotted outline signalling audio is arming to start.
+    playing: fill=solid - Solid fill inside a solid outline, signalling audio is actively playing.
+    paused: lineStyle=dashed - Dashed outline signalling audio is paused mid-stream.
+    interrupted: shape=notched-rect - Notched badge on a dashed outline, signalling playback was interrupted before it finished.
+    reconfiguring: fill=stipple - Stippled fill over a dotted outline, signalling the audio engine is reconfiguring.
+    error: glyph=! - A single exclamation glyph, signalling a recoverable audio error.
+    panic: glyph=!! - A doubled exclamation glyph on a double-lined notched badge, escalating past the single-error mark to signal an unrecoverable panic stop.
+  evidence:
+    established: fill=solid - Fully solid fill, the top of the confidence ramp, signalling a fully established claim.
+    strong-inference: fill=hatch-45 - Diagonal hatch fill, the same mark used for a frozen snapshot elsewhere, one step down the confidence ramp for a strongly inferred but not directly established claim.
+    engineering-default: fill=hatch-135 - Hatch fill on the opposite diagonal from strong-inference, signalling a pragmatic engineering default rather than a verified claim.
+    experimental: fill=stipple - Sparse stippled fill plus a dashed outline, signalling an experimental, unverified claim.
+    research-gated: glyph=🔒 - A lock glyph on a notched badge, the bottom of the confidence ramp, signalling the claim is gated behind pending research and not yet actionable.
+  mappingStage:
+    source: glyph=S - The letter S on a plain rectangle, marking the first stage of the pipeline; this whole axis needs inspector-row room and cannot be told apart at timeline-clip scale.
+    sample: glyph=• - A single dot on a circular badge, marking the discrete-sampling stage.
+    normalize: glyph=N - The letter N on a rounded rectangle, marking the normalization stage.
+    smooth: glyph=~ - A tilde mark on a pill-shaped badge, marking the smoothing stage.
+    transform: glyph=T - The letter T on a diamond badge, marking the transform stage.
+    quantize-threshold: glyph=Q - The letter Q on a notched badge with a dashed outline, marking the quantize/threshold stage.
+    constrain: glyph=C - The letter C on a chevron badge, marking the constraint stage.
+    target: glyph=◎ - A bullseye mark on a double-outlined circular badge, marking the final target stage of the pipeline.
+  selection:
+    selected: lineStyle=solid - Solid unbroken outline, the same baseline mark used elsewhere, marking a selected item.
+    primary: lineStyle=double - Double-lined outline, one step up from the plain selected mark, marking the primary item within a multi-selection.
+    focused: shape=rounded-rect - Dashed rounded-corner outline marking keyboard focus.
+    hovered: shape=pill - Dotted pill-shaped outline marking a pointer hover target.
+    related: fill=hatch-45 - Diagonal hatch fill, the same mark used for a frozen snapshot elsewhere, marking an item related through provenance to the current selection.
+    orphaned: fill=stipple - Sparse stippled fill on a broken dash-dot outline, marking an item whose provenance link has been lost.
+
+FIDELITY RULES - every one of these is mandatory:
+  - use real labels from the screen manifest, never lorem ipsum
+  - show coherent musical and mathematical values (real tempi, real step/pulse counts, real note names)
+  - preserve the same transport and primary navigation locations within a platform class
+  - show a believable selection state linked across at least two surfaces
+  - show enough content to judge information density
+  - avoid impossible graph connections; keep operator port shapes and types consistent
+  - distinguish generated / frozen / manual material by shape and texture, not by hue alone
+  - do not fabricate an exact Penrose tiling; illustrative rhomb motifs must be labelled as such
+  - render all text crisply and spell every label exactly as given
+
+Produce one single image: the complete interface as it would appear on screen.

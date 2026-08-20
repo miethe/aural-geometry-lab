@@ -223,19 +223,22 @@
       "id": "status.material",
       "name": "MaterialStateBadge",
       "family": "status",
-      "purpose": "Combines MaterialKind and derived SourceStatus without flattening them into one enum."
+      "purpose": "Combines MaterialKind (line style plus notch) and derived SourceStatus (line style, fill, and shape badge) as independent non-color carriers without flattening them into one enum.",
+      "encodingRef": ["materialKind", "sourceStatus"]
     },
     {
       "id": "status.derivation",
       "name": "DerivationStatus",
       "family": "status",
-      "purpose": "Shows preview/evaluation/current/cache-only/stale/error/cancelled state with text and non-color cues."
+      "purpose": "Shows idle/preview/evaluating/current/cache-only/stale/error/cancelled via line style, fill pattern, and shape badge with text, never by color alone.",
+      "encodingRef": "derivation"
     },
     {
       "id": "status.evidence",
       "name": "EvidenceBadge",
       "family": "status",
-      "purpose": "Declares established, inferred, engineering-default, experimental, or research-gated claims."
+      "purpose": "Declares established, strong-inference, engineering-default, experimental, or research-gated claims as a fill-density confidence ramp ending in a locked glyph, never by color alone.",
+      "encodingRef": "evidence"
     },
     {
       "id": "control.parameter",

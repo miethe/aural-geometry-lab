@@ -23,7 +23,7 @@
     "criticalHighOwned": 46,
     "backlogItems": 142,
     "publicContracts": 11,
-    "nodeTests": 98,
+    "nodeTests": 102,
     "swiftTests": 14,
     "schemaFixtures": 12
   },
@@ -57,7 +57,8 @@
     "Every unresolved Critical/High finding has a backlog item and workstream owner.",
     "sourceFilesInArchive re-baselined 228 -> 243 on 2026-08-19. The 228 described the upstream v0.4.0 tree before AOS onboarding, so make-release.py exited 1 at every commit in this repository and the archive had never been built. Re-baselined only AFTER make-release.py was changed to take its file list from git ls-files: until then the stale count was the sole thing aborting a run that would have packaged gitignored .claude/ state into a public archive.",
     "sourceFilesInArchive re-baselined 243 -> 272 on 2026-08-19 for the FR-02 hostile corpus (29 conformance/native fixtures). The count is a tripwire on what git ls-files ships, not an invariant; it moves whenever tracked files are added, and every move is recorded here. swiftTests re-baselined 11 -> 14: the FR-02 native parity tests add three passing cases plus one deliberately skipped case (AGL-191, strict-byte parser not implemented in Swift).",
-    "sourceFilesInArchive re-baselined 272 -> 277 on 2026-08-19 for the FR-02 follow-up (report, ADR 0025, tests/fr02.test.mjs, findings register, artifact manifest). nodeTests re-baselined 85 -> 98: tests/fr02.test.mjs adds 13 passing property tests plus 10 owner-tagged TODO gates (108 declared, 98 passing, 10 todo)."
+    "sourceFilesInArchive re-baselined 272 -> 277 on 2026-08-19 for the FR-02 follow-up (report, ADR 0025, tests/fr02.test.mjs, findings register, artifact manifest). nodeTests re-baselined 85 -> 98: tests/fr02.test.mjs adds 13 passing property tests plus 10 owner-tagged TODO gates (108 declared, 98 passing, 10 todo).",
+    "sourceFilesInArchive re-baselined 345 -> 356 on 2026-08-20 for the kernel-composited mockup figures and the semantic-state encoding carriers: src/design/figures.ts, tests/figures.test.mjs, scripts/build-figures.mjs, scripts/build-state-specimens.mjs, design/state-encoding-specimens.svg, design/mockups/figure-plates.json, design/mockups/composite-figure.sh, design/mockups/figures/{S04-euclidean-rings,S07-euclidean-pulse-field}.svg, and the retained tranche-1 critiques under design/mockups/critique/superseded/. nodeTests re-baselined 98 -> 102: tests/figures.test.mjs adds 4 passing tests that assert the emitted figure SVG's onsets, gaps, notation and Tonnetz tuples against the operator kernels themselves (112 declared, 102 passing, 10 todo)."
   ],
   "validation": {
     "deterministicArchiveBuildsCompared": 2,
@@ -66,7 +67,7 @@
     "cleanExtractionCheckAll": "pass",
     "cleanExtractionSchemaValidation": "pass",
     "staticHttpSmokeEndpoints": 8,
-    "sourceFilesInArchive": 277,
+    "sourceFilesInArchive": 356,
     "generatedBuildStateExcluded": true
   }
 }
