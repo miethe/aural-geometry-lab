@@ -7,6 +7,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const failures = [];
+let designEncodingValueCount = 0;
 function fail(message) { failures.push(message); }
 function requiredString(value, label) {
   if (typeof value !== "string" || value.length === 0) { fail(`${label} must be a non-empty string.`); return undefined; }
@@ -246,6 +247,64 @@ for (const stateFamily of ["materialKind", "sourceStatus", "derivation", "audio"
   if (!Array.isArray(designTokens?.semanticStates?.[stateFamily])) fail(`Design tokens missing semantic state family ${stateFamily}.`);
 }
 
+// Semantic-state encoding contract: every state must be distinguishable without color. Each
+// axis and each of its values needs a non-color carrier assignment, and no two values in an
+// axis may share the same (glyph, lineStyle, fill, shape) tuple. Removing hue must never remove
+// a state, so the block itself must contain no color at all.
+const ENCODING_CARRIERS = new Set(["glyph", "lineStyle", "fill", "shape", "weight", "position"]);
+const ENCODING_LINE_STYLES = new Set(["solid", "dotted", "dashed", "dash-dot", "double", "none"]);
+const ENCODING_FILLS = new Set(["solid", "hatch-45", "hatch-135", "crosshatch", "stipple", "none"]);
+const ENCODING_SHAPES = new Set(["rect", "rounded-rect", "pill", "circle", "diamond", "notched-rect", "chevron"]);
+const ENCODING_COLOR_WORDS = /\b(red|green|blue|amber|yellow|orange|purple|violet|cyan|magenta|teal|grey|gray|pink|brown)\b/i;
+const ENCODING_HEX = /#[0-9a-fA-F]{3,8}\b/;
+const semanticStateEncodings = designTokens?.semanticStateEncodings;
+if (typeof semanticStateEncodings !== "object" || semanticStateEncodings === null || Array.isArray(semanticStateEncodings)) {
+  fail("Design tokens missing semanticStateEncodings object.");
+} else {
+  let encodedValueCount = 0;
+  for (const [axis, values] of Object.entries(designTokens?.semanticStates ?? {})) {
+    if (!Array.isArray(values)) continue;
+    const axisEncoding = semanticStateEncodings[axis];
+    if (typeof axisEncoding !== "object" || axisEncoding === null || Array.isArray(axisEncoding)) {
+      fail(`semanticStateEncodings is missing axis ${axis}.`);
+      continue;
+    }
+    const declaredValues = new Set(values);
+    for (const extra of Object.keys(axisEncoding)) {
+      if (!declaredValues.has(extra)) fail(`semanticStateEncodings.${axis} declares value ${extra}, which semanticStates.${axis} does not list.`);
+    }
+    const tuples = new Map();
+    for (const value of values) {
+      const entry = axisEncoding[value];
+      if (typeof entry !== "object" || entry === null || Array.isArray(entry)) {
+        fail(`semanticStateEncodings.${axis} has no encoding entry for value ${value}.`);
+        continue;
+      }
+      encodedValueCount += 1;
+      for (const [key, keyValue] of Object.entries(entry)) {
+        if (/colou?r/i.test(key)) fail(`semanticStateEncodings.${axis}.${value} uses a color key ${key}.`);
+        if (typeof keyValue === "string" && ENCODING_HEX.test(keyValue)) fail(`semanticStateEncodings.${axis}.${value}.${key} contains a hex color.`);
+      }
+      if (!ENCODING_CARRIERS.has(entry.carrier)) fail(`semanticStateEncodings.${axis}.${value}.carrier ${String(entry.carrier)} is not an allowed channel.`);
+      else {
+        const carried = entry[entry.carrier];
+        if (carried === null || carried === undefined || carried === "none") fail(`semanticStateEncodings.${axis}.${value}.carrier names ${entry.carrier}, but that channel is absent, null, or "none".`);
+      }
+      if (entry.glyph !== null && (typeof entry.glyph !== "string" || entry.glyph.length === 0)) fail(`semanticStateEncodings.${axis}.${value}.glyph must be a non-empty string or null.`);
+      if (!ENCODING_LINE_STYLES.has(entry.lineStyle)) fail(`semanticStateEncodings.${axis}.${value}.lineStyle ${String(entry.lineStyle)} is not an allowed line style.`);
+      if (!ENCODING_FILLS.has(entry.fill)) fail(`semanticStateEncodings.${axis}.${value}.fill ${String(entry.fill)} is not an allowed fill.`);
+      if (!ENCODING_SHAPES.has(entry.shape)) fail(`semanticStateEncodings.${axis}.${value}.shape ${String(entry.shape)} is not an allowed shape.`);
+      if (!Number.isInteger(entry.minLegibleSizePx) || entry.minLegibleSizePx <= 0) fail(`semanticStateEncodings.${axis}.${value}.minLegibleSizePx must be a positive integer.`);
+      const description = requiredString(entry.description, `semanticStateEncodings.${axis}.${value}.description`);
+      if (typeof description === "string" && ENCODING_COLOR_WORDS.test(description)) fail(`semanticStateEncodings.${axis}.${value}.description names a color.`);
+      const tuple = `${entry.glyph ?? "∅"}|${entry.lineStyle}|${entry.fill}|${entry.shape}`;
+      if (tuples.has(tuple)) fail(`semanticStateEncodings.${axis} reuses the same (glyph, lineStyle, fill, shape) tuple for ${tuples.get(tuple)} and ${value}.`);
+      else tuples.set(tuple, value);
+    }
+  }
+  designEncodingValueCount = encodedValueCount;
+}
+
 if (existsSync(distIndex)) {
   const core = await import(pathToFileURL(distIndex).href);
   const exampleNames = (await readdir(path.join(root, "examples"))).filter((name) => name.endsWith(".project.json"));
@@ -443,5 +502,5 @@ if (failures.length > 0) {
 console.log(
   `Verified ${backlogIds.size} backlog items, ${researchIds.size} research runs, ${decisionIds.size} Wave-1 decisions, ` +
   `${labIds.size} labs, ${findingIds.size} FR-01 findings (${criticalHighCount} Critical/High owned), ` +
-  `${publicContractIds.size} public contracts, ${fr02CaseCount} FR-02 corpus cases, ${fr02FindingIds.size} FR-02 findings (${fr02CriticalHighCount} Critical/High owned), ${fr02Declared.size} manifest-hashed FR-02 artifacts, evidence/contract hashes, native conformance mirrors, runtime validators, and required authority artifacts.`,
+  `${publicContractIds.size} public contracts, ${fr02CaseCount} FR-02 corpus cases, ${fr02FindingIds.size} FR-02 findings (${fr02CriticalHighCount} Critical/High owned), ${fr02Declared.size} manifest-hashed FR-02 artifacts, ${designEncodingValueCount} color-free semantic-state encodings, evidence/contract hashes, native conformance mirrors, runtime validators, and required authority artifacts.`,
 );

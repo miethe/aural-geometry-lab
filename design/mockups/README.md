@@ -14,8 +14,11 @@ v0.3.0, `design/components.json`.
 |---|---|
 | `build-prompts.py` | Assembles the 48 prompts (16 screens × 3 interpretations) from the repo-canonical sources above. Deterministic — rerunning reproduces the pack byte-for-byte. |
 | `prompts/` | The 48 assembled prompts, one `.txt` per (screen, variant). |
-| `run-one.sh` | One render leg. Shells the routed provider and writes `images/<name>.png`. |
+| `run-one.sh` | One render leg. Shells the routed provider, writes `images/<name>.png`, then composites any reserved figure plate into it. |
 | `images/` | Rendered mockups + the raw provider log for each render. |
+| `figure-plates.json` | Which screens reserve a canvas region for a kernel-generated figure, and where. Read by **both** `build-prompts.py` and `composite-figure.sh`, so the reserved rectangle and the composited rectangle cannot drift. |
+| `figures/` | Generated SVG figures. Build with `npm run figures`; never hand-edit — they are output. |
+| `composite-figure.sh` | Rasterises a figure and composites it into its plate. No-ops for screens without one. |
 | `critique.json` | Per-mockup rubric scores (§6), reject flags, and the synthesis verdict. |
 | `../../docs/reports/agl-149-mockup-critique.md` | The human-readable critique and synthesis. |
 
@@ -56,3 +59,34 @@ correct musical values, or legible small type; every such detail in these images
 be checked against the tokens, never a measurement of them.
 
 The annotation pass (§7) and the handoff gate (§8) remain open work.
+
+## Figure plates — the mathematics is composited, never prompted
+
+Every one of the 20 rejected tranche-1 mockups failed the `mathematical correctness` reject axis:
+a rendered figure contradicting a number printed beside it. S04-B labelled a ring `E(12,5)` whose
+onsets were `{0,1,2,3,4}` — the arguments inverted — and S07-A claimed a "7/12 pulse field" while
+drawing five onsets. That was never a prompting deficiency: the prompts already stated the exact
+counts and §S3 already forbade contradicting them. **Generative image models cannot render
+mathematically-constrained content, and in AGL the mathematics is the content.**
+
+So for the screens listed in `figure-plates.json` the model is no longer asked to draw it:
+
+1. `npm run figures` generates the figure as SVG from `src/design/figures.ts`, which obtains every
+   onset, gap, notation string, lattice node and edge by calling `src/operators/*.ts` directly.
+2. `tests/figures.test.mjs` asserts the emitted SVG's `data-onsets` / `data-gaps` /
+   `data-notation` and lattice tuples **against those same kernels**, so a wrong figure fails
+   `npm run test` rather than a reviewer's eye. `data-notation` is derived as `E(pulses,steps)`
+   from the arguments the kernel was called with, which makes the inverted-argument defect
+   unrepresentable rather than merely discouraged.
+3. `build-prompts.py` injects a RESERVED FIGURE PLATE block telling the model to leave that
+   rectangle empty — and, when the figure is already built, lifts its labels out of the SVG and
+   gives the model a closed list to copy, so control panels *outside* the plate cannot contradict
+   it either.
+4. `run-one.sh` calls `composite-figure.sh`, which rasterises the figure with `rsvg-convert` and
+   composites it into the plate at the rendered image's actual pixel size (the plate rectangle is
+   fractional for exactly this reason).
+
+`rsvg-convert` (`brew install librsvg`) is required and is deliberately **not** given an
+ImageMagick fallback: ImageMagick decodes SVG with its own internal renderer, which supports
+neither the figure's CSS nor its text, and silently accepting an approximate rasteriser would
+defeat the correctness this path exists for.

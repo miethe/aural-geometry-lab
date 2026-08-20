@@ -9,13 +9,81 @@ Sources (all repo-canonical, nothing invented here):
 
 Writes one .txt prompt per (screen, variant) into design/mockups/prompts/.
 """
-import json, pathlib, textwrap
+import json, pathlib, re, textwrap
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 tokens = json.loads((ROOT / "design/tokens.json").read_text())
 screens = json.loads((ROOT / "design/screens.json").read_text())
 OUT = ROOT / "design/mockups/prompts"
 OUT.mkdir(parents=True, exist_ok=True)
+
+# Reserved figure plates. A screen listed here does NOT get its mathematics drawn by the image
+# model; the model is asked to leave the region empty and composite-figure.sh drops in SVG
+# generated from src/operators/*.ts afterwards. Same file both halves read, so the reserved
+# rectangle and the composited rectangle cannot drift apart.
+PLATES = json.loads((ROOT / "design/mockups/figure-plates.json").read_text())["plates"]
+
+
+def plate_facts(p):
+    """Notation/step/pulse strings taken from the ALREADY-GENERATED figure, if it is built.
+
+    The S04-B defect was not only a wrong drawing: a control panel OUTSIDE the canvas read
+    'Steps 12, Pulses 5' beside a ring labelled 'E(12,5)'. Compositing fixes the drawing but not
+    the surrounding chrome, so when the figure exists we lift its own derived labels out of the
+    SVG and give the model a closed list to copy. Empty when the figure has not been built yet -
+    prompts stay buildable without a prior `npm run figures`.
+    """
+    svg_path = ROOT / "design/mockups" / p["figure"]
+    if not svg_path.exists():
+        return ""
+    svg = svg_path.read_text()
+    facts = []
+    # Rotation is included deliberately. The S04 re-score confirmed the composited onsets were
+    # correct but noted that one ring is a +1 rotation of the canonical Bjorklund result with "no
+    # displayed rotation value to explain that offset" — i.e. the render was silently omitting a
+    # kernel parameter the reader needs to reconcile what they are counting.
+    for m in re.finditer(r'data-label="([^"]*)"[^>]*?data-steps="(\d+)"[^>]*?'
+                         r'data-pulses="(\d+)"[^>]*?data-rotation="(-?\d+)"[^>]*?'
+                         r'data-notation="([^"]*)"', svg):
+        label, steps, pulses, rotation, notation = m.groups()
+        facts.append(
+            f'    "{label}" - {notation}, steps {steps}, pulses {pulses}, rotation {rotation} '
+            f'(this screen must show a rotation control reading {rotation} for this ring)')
+    if not facts:
+        for m in re.finditer(r'data-notation="([^"]*)"', svg):
+            facts.append(f"    {m.group(1)}")
+    if not facts:
+        return ""
+    return (
+        "\n  Any numeric or notational label ANYWHERE on this screen that refers to the figure - "
+        "including in control panels, inspector rows, track headers and section titles outside the "
+        "reserved plate - must be copied verbatim from this list and from nowhere else. Do not "
+        "invent, reorder or reformat these values, and do not print a step/pulse pair that "
+        "contradicts its notation:\n" + "\n".join(facts)
+    )
+
+
+def plate_block(sid):
+    """The prompt hunk that reserves a screen's figure region, or '' when it has no plate."""
+    p = PLATES.get(sid)
+    if not p:
+        return ""
+    r = p["rect"]
+    return (
+        "\n\nRESERVED FIGURE PLATE - this overrides every other instruction about this region.\n"
+        f"  A rectangle occupying {r['w']:.1%} of the image width and {r['h']:.1%} of its height, "
+        f"with its top-left corner at {r['x']:.1%} across and {r['y']:.1%} down, is a RESERVED "
+        "PLATE. Render it as " + p["reserveAs"] + ".\n"
+        "  Do NOT draw the mathematical figure there. Do not draw rings, onset dots, beat marks, "
+        "lattice nodes, pulse positions, step grids, connecting edges, or any numeric annotation "
+        "inside that rectangle. Leave it genuinely empty.\n"
+        "  The real figure is generated from the project's own operator kernels and is composited "
+        "into that exact rectangle after this render. Anything you draw there will be covered, and "
+        "anything you draw that OVERLAPS its edges will collide with it - so keep the surrounding "
+        "chrome clear of the boundary.\n"
+        "  Every other part of the interface should still be fully designed and populated."
+        + plate_facts(p)
+    )
 
 MASTER = (
  "Design a high-fidelity production interface for Aural Geometry Lab, a mathematical music "
@@ -218,6 +286,40 @@ SEMANTIC = (
  + "\n".join(f"  {axis}: {', '.join(vals)}" for axis, vals in sem.items())
 )
 
+
+def _carrier_mark(spec):
+    """The visible mark a state is carried by, taken from its own declared primary channel."""
+    channel = spec.get("carrier")
+    value = spec.get(channel) if channel else None
+    if value in (None, "", "none"):
+        return None
+    return f"{channel}={value}"
+
+
+# The non-colour carrier for every state, dumped from design/tokens.json.semanticStateEncodings.
+# Telling the model that states "must not rely on colour alone" was already in the master prompt
+# and was not enough: across 21 tranche-1 mockups only materialKind came back with a real
+# non-colour carrier, because it was the only axis whose marks were actually SPECIFIED anywhere.
+# Naming the mark per value is the difference between a requirement and an instruction. Absent
+# until the encoding block exists, so the pack stays buildable either way.
+_enc = tokens.get("semanticStateEncodings") or {}
+if _enc:
+    _lines = []
+    for axis, values in _enc.items():
+        _lines.append(f"  {axis}:")
+        for value, spec in values.items():
+            mark = _carrier_mark(spec)
+            note = spec.get("description") or ""
+            _lines.append(f"    {value}: {mark or 'unspecified'}"
+                          + (f" - {note}" if note else ""))
+    SEMANTIC += (
+        "\n\nNON-COLOUR CARRIERS - mandatory. Hue may be used as a REDUNDANT second channel, but "
+        "each state below must remain identifiable with all colour removed, using the mark named "
+        "for it. Do not substitute a coloured chip, a coloured dot or a coloured outline for any "
+        "of these marks, and keep the marks consistent everywhere the same state appears:\n"
+        + "\n".join(_lines)
+    )
+
 for s in screens["screens"]:
     sid = s["id"]
     canvas = CANVAS_OVERRIDE.get(sid, CANVAS[s["platform"]])
@@ -237,7 +339,7 @@ SCREEN {sid} - {s['name']} ({s['mode']} workspace, {s['platform']}).
 {vtxt}
 
 CANVAS: {canvas}. Render the full interface edge to edge, straight-on, no perspective, no device
-mockup shadows, no marketing background, no annotations outside the interface itself.
+mockup shadows, no marketing background, no annotations outside the interface itself.{plate_block(sid)}
 
 DESIGN TOKENS - dark-instrument theme, use these exact hues:
 {palette}

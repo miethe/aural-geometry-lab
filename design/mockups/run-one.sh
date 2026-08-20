@@ -15,4 +15,14 @@ overwriting anything there: $OUT
 Do not resize or crop it afterwards. Do not write any other file. Do not modify the repository."
 cd "$ROOT/design/mockups/images"
 timeout 900 codex exec --sandbox workspace-write --model gpt-5.6-terra "$PROMPT" </dev/null >"$LOG" 2>&1
-if [ -s "$OUT" ]; then echo "OK   $NAME  $(du -h "$OUT" | cut -f1)"; else echo "FAIL $NAME (see $LOG)"; fi
+if [ ! -s "$OUT" ]; then echo "FAIL $NAME (see $LOG)"; exit 0; fi
+
+# Composite the kernel-generated figure into the reserved plate, if this screen has one. The
+# image model was told to leave that region empty; the mathematics is generated from
+# src/operators/*.ts and asserted against those kernels in tests/figures.test.mjs, so a figure
+# that contradicts its own labels can no longer be produced. No-ops for screens with no plate.
+SID="${NAME%%-*}"
+if ! "$ROOT/design/mockups/composite-figure.sh" "$SID" "$OUT" >>"$LOG" 2>&1; then
+  echo "FAIL $NAME (render OK, composite failed - see $LOG)"; exit 0
+fi
+echo "OK   $NAME  $(du -h "$OUT" | cut -f1)"
