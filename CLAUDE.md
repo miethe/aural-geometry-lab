@@ -15,7 +15,9 @@ already produced wrong answers:
    of them audible. It runs on the LAN — see "Deployment" below. It is *not* a mockup, and "there is
    no web app" is a false statement about this repository.
 2. **It is not the target architecture.** The repo is a hardened *contracts + reference-kernel*
-   release (v0.4.0, FR-01 complete). The production React studio, the Worker-based graph evaluator,
+   release (v0.4.0; FR-01 complete, FR-02 complete as contract+corpus — its verdict is that
+   project v3 is freezable as-is, but *nothing has declared the freeze*, which is AGL-172). The
+   production React studio, the Worker-based graph evaluator,
    and the production audio scheduler are **not built**. `src/ui/*` is an explicitly disposable
    native-DOM shell (ADR/roadmap) — do not extend it as if it were the studio.
 
