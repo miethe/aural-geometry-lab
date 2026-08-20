@@ -1,0 +1,140 @@
+{
+  "screen": "S03",
+  "variants": {
+    "A-instrument": {
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 2,
+        "musical legibility": 3,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 3,
+        "density management": 3,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 3,
+        "error/budget visibility": 1,
+        "accessibility cues": 2,
+        "responsive plausibility": 1,
+        "implementation plausibility": 3,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "pass"
+      },
+      "verdict": "reject",
+      "requiredStates": {
+        "wrapped/unwrapped views": "present - the left circular pitch view is headed WRAPPED OCTAVE and the main plot is headed UNWRAPPED PHASE.",
+        "mapping/provenance trace": "present - the right inspector shows the eight-stage MAPPING PIPELINE and Generator, Seed, and Derived from provenance rows.",
+        "Risset reset/relabel explanation": "present - the right Math tab has RESET / RELABEL and states that the amplitude envelope masks octave relabel at phi = 12.00.",
+        "experimental controls separated": "present - Reset threshold and Envelope reveal are inside a separately bordered, hatched EXPERIMENTAL block."
+      },
+      "defects": [
+        "Mathematical correctness fails: the wrapped octave explicitly indexes C as 0, C# as 1, D as 2, D# as 3, E as 4, F as 5, and F# as 6, but the selected callout says F#5. The selected pitch class is therefore one semitone/index wrong.",
+        "The selected event's cyan colour is reinforced by a ring and text, but the selected mapping stage Transform is differentiated from the other stage pills only by cyan border/fill; that state is hue-load-bearing.",
+        "No error state, event budget, limit, predicted load, or recovery action is visible; the Evaluation block only reports PASS.",
+        "The 11px-scale inspector, toolbar, and timeline controls do not demonstrate 44px iPad touch targets; this full-width three-pane layout is not responsive evidence.",
+        "S8 handoff gate failures visible or unavoidable from this unannotated single image: no accessibility annotation; no paired responsive mockup or written responsive rule; interaction behavior is not described by pixels. The mathematical-value condition also fails because F#5 conflicts with the displayed C=0 pitch-class scale."
+      ],
+      "strengths": [
+        "Transport, numerical tempo/meter/position readout, selected track, timeline playhead, and selection line make the screen immediately operable.",
+        "All four material kinds have non-hue encodings: solid user-authored, dotted live generated, diagonal hatch frozen snapshot, and the distinct notched/outlined edited derivative; the same treatments recur in the timeline.",
+        "Derivation CURRENT, Audio PLAYING, source/current provenance, evidence rows with check/wrench/lock icons, and the selected-event ring provide text, glyph, or shape support beyond colour.",
+        "The collapsed 12-node operator-graph drawer, exact-looking pipeline, and dense timeline read as a coherent professional instrument shell."
+      ]
+    },
+    "B-laboratory": {
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 3,
+        "musical legibility": 2,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 2,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 2,
+        "error/budget visibility": 1,
+        "accessibility cues": 2,
+        "responsive plausibility": 1,
+        "implementation plausibility": 3,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "pass"
+      },
+      "verdict": "reject",
+      "requiredStates": {
+        "wrapped/unwrapped views": "present - the segmented Wrapped/Unwrapped control has Unwrapped active, while the inset is explicitly titled Wrapped view.",
+        "mapping/provenance trace": "present - the inspector displays source through target and the canvas metadata states Source: current and Derived from Risset preset v2.",
+        "Risset reset/relabel explanation": "present - the canvas labels a masked reset point and the inspector says relabeling preserves ascent while the amplitude envelope masks the discontinuity.",
+        "experimental controls separated": "present - Reset reveal and Unwrapped phase appear in their own EXPERIMENTAL CONTROLS block."
+      },
+      "defects": [
+        "Mathematical correctness fails: the displayed formula f(t) = sin(2pi * 2^(t/12) * t + phi3) does not produce a clean exponential octave progression. Its instantaneous frequency is proportional to 2^(t/12) * (1 + (ln 2)t/12): at t=12 it is 2(1+ln 2)=3.386 times the initial frequency, not 2 times; at t=24 it is 4(1+2ln 2)=9.545 times, not 4 times.",
+        "The plot calls the left-hand reset a continuous perceived ascent, but the selected cyan partial has a visible vertical jump from about +3 to about -3 at bar 45; the image supplies no continuous wrapped trajectory at that discontinuity.",
+        "The selected Layer 03 is mainly distinguished from the other partials by cyan; the canvas label helps, but the selection treatment itself has no robust non-colour pattern/shape counterpart.",
+        "No error, budget meter, predicted load, limit, or recovery state is shown; exact determinism is not an error/budget affordance.",
+        "S8 handoff gate failures: no accessibility annotation; no paired responsive mockup or written responsive rule; interaction behavior is not described by the pixels. The content/math-values condition fails because the displayed formula is wrong for the claimed octave law."
+      ],
+      "strengths": [
+        "The graph, the labelled reset boundary, the amplitude-envelope bounds, and the Wrapped view inset make the intended explanatory comparison unusually readable.",
+        "Material kinds are visibly non-colour-only in both legend and timeline: solid, dotted, diagonal hatch, and the clipped-corner derivative form.",
+        "The evidence rows use check, compass-like engineering, and lock glyphs; live-generated metadata is written as text rather than left to colour alone."
+      ]
+    },
+    "C-spatial": {
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 3,
+        "musical legibility": 2,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 3,
+        "density management": 2,
+        "novice-to-expert progression": 3,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 3,
+        "error/budget visibility": 1,
+        "accessibility cues": 2,
+        "responsive plausibility": 2,
+        "implementation plausibility": 2,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "rejectAxes": {
+        "mathematical correctness": "pass",
+        "generated/frozen semantics": "pass",
+        "accessibility": "pass"
+      },
+      "verdict": "accept-with-fixes",
+      "requiredStates": {
+        "wrapped/unwrapped views": "partial - the circular canvas is visibly a wrapped pitch-class view and Wrapped is active, but Unwrapped appears only as an inactive control label; the narrow adjacent plot is not labelled Unwrapped.",
+        "mapping/provenance trace": "present - the inspector explicitly shows the source-to-target mapping pipeline and a Mapping / provenance trace from Risset kernel v2 through envelope A to Layer 3.",
+        "Risset reset/relabel explanation": "present - the Reset / relabel section says the quietest layer is relabeled and the summed pitch continues upward, alongside the envelope/raw-layer A/B plot.",
+        "experimental controls separated": "present - Reset crossfade and Relabel threshold are contained in the separately bordered Experimental controls panel with a lock glyph."
+      },
+      "defects": [
+        "Wrapped/unwrapped is incomplete: the image renders a wrapped circle and offers an inactive Unwrapped button, but does not visibly identify the adjacent linear plot as the unwrapped view.",
+        "No error, budget meter, predicted load, limit, or recovery state is visible; cache key, last evaluated time, and Determinism Match do not satisfy error/budget visibility.",
+        "The small selected Layer 3 timeline pattern is mainly cyan/purple plus an outline; its non-colour selection signal is limited to resize handles and a link glyph, which are not explained in the legend.",
+        "The dense polar canvas and narrow unlabelled side plot are plausible but do not themselves establish a touch-safe iPad adaptation; several inspector controls remain visually below the stated 44px touch target.",
+        "S8 handoff gate failures: no accessibility annotation; no paired responsive mockup or written responsive rule; interaction behavior is not described by pixels. No visible content/math-value defect was found."
+      ],
+      "strengths": [
+        "The displayed exponential relation f(t) = f0 * 2^(t/T) is coherent with f0 = 220 Hz and T = 12.0 s: at t=12.0 s it gives 440 Hz, exactly one octave above 220 Hz.",
+        "The selected phase point links the polar canvas, Layer 3 clip, provenance target, and inspector, with a visible connector/link glyph and non-colour resize handles.",
+        "Material kinds have non-hue treatments: solid authored bed, dotted live-generated Layer 3, diagonal-hatched frozen snapshot, and a distinctly edged/linked derivative; the legend exposes those treatments.",
+        "Evidence has check, wrench, and lock glyphs; the experimental section has explicit text and a lock rather than colour alone.",
+        "The large direct-manipulation canvas, simple transport, and still-visible expert inspector make this the clearest novice-to-expert progression of the three."
+      ]
+    }
+  },
+  "screenNotes": "All three visibly preserve the dark instrument shell, a working transport, material legend, mapping stages, evaluation evidence, a timeline, and a separated experimental area. All three omit a visible error/budget state and lack the non-pixel artifacts required by S8: accessibility annotation, described interaction behavior, and paired/written responsive behavior. A and B must be rejected for visible mathematical contradictions; C is the only variant without one found in the rendered values.",
+  "recommendedVariant": "C-spatial",
+  "recommendationReason": "C-spatial is the only variant that passes all three reject axes and its displayed exponential octave relation is numerically coherent. It still needs a clearly labelled rendered unwrapped view, explicit non-colour selection treatment, error/budget state, and S8 annotation/interaction/responsive handoff artifacts."
+}

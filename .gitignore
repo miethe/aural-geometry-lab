@@ -43,3 +43,16 @@ coverage/
 .claude/rules/
 .scratch/
 .operator/
+
+# AGL-149 mockup campaign — provider transcripts and local report artifacts.
+# The .log files are raw delegate stdout: 1.3 MB of noise, and a demonstrated egress
+# channel — a codex leg echoed its own ~/.codex/memories/MEMORY.md into the transcript,
+# carrying the AOS LAN address and IntentTree node ids. This repository is PUBLIC.
+# The images, prompts, harness, and critique.json ARE committed; the transcripts are not.
+design/mockups/**/*.log
+design/mockups/images/.run-*.out
+design/mockups/campaign.log
+
+# Agent working area: delivery-report renders and manifests. Local artifacts that
+# reference .claude/ paths and internal tracker ids; the durable reports live in docs/.
+.claude/reports/

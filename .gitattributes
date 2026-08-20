@@ -1,0 +1,12 @@
+# Git LFS — generated mockup rasters (AGL-149 campaign).
+# These are ~1.5 MB each and there are 48+; they are design evidence, not source.
+#
+# Prerequisite, once per machine:  brew install git-lfs && git lfs install
+#
+# NOTE for scripts/make-release.py: it reads bytes from the WORKING TREE
+# (path.read_bytes()), not from git. On a checkout where LFS objects have been
+# smudged it archives the real PNGs; on a clone where they have not, it would
+# archive the 130-byte pointer files instead — silently, and the archive would
+# no longer be reproducible across checkouts. Either keep these paths out of the
+# archive, or make the release gate assert real PNG bytes.
+design/mockups/images/**/*.png filter=lfs diff=lfs merge=lfs -text

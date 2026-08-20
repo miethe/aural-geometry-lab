@@ -1,0 +1,137 @@
+{
+  "screen": "S06",
+  "variants": {
+    "A-instrument": {
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 3,
+        "density management": 3,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 2,
+        "error/budget visibility": 2,
+        "accessibility cues": 1,
+        "responsive plausibility": 1,
+        "implementation plausibility": 3,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "verdict": "reject",
+      "requiredStates": {
+        "compiler-driven compatibility": "present - the red dashed pitch-to-pattern preview says \"REFUSED · pitch → pattern incompatible\" and the footer reports \"8 valid · 1 refused\".",
+        "atomic rewire": "present - the selected node has \"Atomic rewire armed\" and the edge replacement label \"replace Rotate → Quantize\".",
+        "dependency categories": "present - Source, Transform, Mapping, Target, and Dependency are named in the graph header and use distinct port glyphs.",
+        "keyboard/non-drag path": "present - footer says \"Keyboard route: select output → select input ← connect\" and shows ⌘K, Tab, and Enter."
+      },
+      "defects": [
+        "MATHEMATICAL CORRECTNESS: the inspector claims Steps 16, Pulses 5, Rotation 3 and the timeline claims \"Euclid 5/16\", but its 16 step positions are rendered as the same small vertical glyphs. A 5-pulse Euclidean cycle must expose five onsets (canonical E(5,16) gaps 3,3,3,3,4; a +3 rotation gives onset positions 3,6,9,12,15 under zero-based indexing), not sixteen indistinguishable marks. The claimed result is not visually verifiable.",
+        "NON-COLOR-ONLY ENCODING: material kind is good (solid, dotted, hatch, and stepped derivative line), but sourceStatus is not shown at all; derivation/audio rely on colored status chips with text rather than demonstrated state-specific shape/texture; the selected graph node is primarily a cyan outline. The full semanticStates vocabulary is therefore not distinguishable without hue.",
+        "No BudgetMeter, predicted load, limit, or recovery is visible; one refused edge is not budget visibility.",
+        "Accessibility fails: icon-only transport, undo/redo, export/share, overflow, track controls, and graph toolbar controls have no visible text labels or accessibility annotation. This single desktop image supplies neither a responsive rule nor a paired adaptation.",
+        "S8 handoff gate fails: Atomic rewire is visibly a component but has no canonical component entry; no component mapping, token-deviation record, interaction description beyond a few pixels, accessibility annotation, or paired responsive mockup/written rule is visible. Content/math validity also fails."
+      ],
+      "strengths": [
+        "The compact shell, selected-node outline/chip, inspector, graph, and timeline make the selection trace unusually clear.",
+        "All four material kinds are simultaneously legible by line/clip texture, not hue alone."
+      ]
+    },
+    "B-laboratory": {
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 3,
+        "density management": 2,
+        "novice-to-expert progression": 3,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 3,
+        "error/budget visibility": 2,
+        "accessibility cues": 2,
+        "responsive plausibility": 2,
+        "implementation plausibility": 2,
+        "visual restraint": 2,
+        "consistency with design tokens": 3
+      },
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "verdict": "reject",
+      "requiredStates": {
+        "compiler-driven compatibility": "present - dashed red control-to-pitch preview is stopped with \"Refused: control → pitch incompatible\".",
+        "atomic rewire": "present - \"Atomic rewire / Replace existing edge / event stream\" is visible.",
+        "dependency categories": "present - the dependency card explicitly says \"source + mapping + constraint\" and shows category glyphs.",
+        "keyboard/non-drag path": "present - the lower-left card gives steps 1–3 and the button says \"Connect without dragging\"."
+      },
+      "defects": [
+        "MATHEMATICAL CORRECTNESS: \"Euclidean 13:5\" and \"13 steps / 5 pulses\" require five onsets across 13 positions, with cyclic gap multiset 3,3,3,2,2. The supposed pattern inside that node is an unreadable smear, not thirteen countable positions or five distinguishable onsets. It cannot substantiate the claimed Euclidean rhythm.",
+        "The displayed formula \"p(n) = nearest_D_dorian(f(n))\" is not a defined mathematical operation in the image: neither D_dorian nor its pitch-class distance/tie rule is defined. The adjacent claim \"pitch class / semitone\" does not repair it.",
+        "TEXT DEFECTS: the value/pattern line directly below \"Euclidean 13:5\" is garbled and unreadable; the Normalize node's value is also unreadable glyph-like text, not a label or value.",
+        "NON-COLOR-ONLY ENCODING: material clips/legend have solid, dashed, hatched, and edited-line encodings, but sourceStatus is absent. Selected/focused relation is dominated by blue outline, and no non-color state treatment is shown for derivation/audio variants.",
+        "No numerical budget, load limit, or recovery path is visible.",
+        "Accessibility fails: several icon-only toolbar controls and minimap/list controls are unlabeled, and there is no accessibility annotation. Responsive behavior is not provided; the compact text and dense graph have no demonstrated iPad rule.",
+        "S8 handoff gate fails: the image does not show a component-to-inventory mapping or recorded token deviations; Atomic rewire/dependency cards are not canonical component entries; behavior is only implied; there is no accessibility annotation or paired responsive rule; valid math/content is not established."
+      ],
+      "strengths": [
+        "The selected Pitch Quantize node is linked to the inspector, operator list, provenance card, and timeline clearly.",
+        "The provenance block explicitly surfaces derived, frozen-input, and edited-derivative states with texture/glyph support."
+      ]
+    },
+    "C-spatial": {
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 2,
+        "linked-selection clarity": 2,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 3,
+        "error/budget visibility": 1,
+        "accessibility cues": 1,
+        "responsive plausibility": 3,
+        "implementation plausibility": 3,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "verdict": "reject",
+      "requiredStates": {
+        "compiler-driven compatibility": "present - the dashed control edge terminates at a red × and the card says \"Refused by compiler — control → event requires Map to Pattern\".",
+        "atomic rewire": "present - the \"Atomic rewire\" card names the replacement and offers \"Apply rewire\".",
+        "dependency categories": "present - the Dependencies card names Upstream and Downstream and shows Tonnetz Walk, Normalize, Harmonic Orbit, and MIDI Target category glyphs.",
+        "keyboard/non-drag path": "present - palette is titled \"Add node / connect by keyboard\" and its footer says \"Tab ports · Enter connect · Esc cancel\"."
+      },
+      "defects": [
+        "MATHEMATICAL CORRECTNESS: the source claims \"Euclidean 5/8\" but the rendered ring has eight visually identical white step dots. E(5,8) requires exactly five onsets and three rests (cyclic gap pattern 2,1,2,1,2); the image shows no active/rest distinction, so it depicts eight equivalent marks, not a 5-of-8 rhythm.",
+        "The Tonnetz Walk is an unlabeled hex motif: it provides no pitch labels and no fifth/major-third adjacency evidence, so the claimed Tonnetz cannot be checked for duplicated or incoherent vertices.",
+        "NON-COLOR-ONLY ENCODING: material kind has solid/dotted/hatch/edited-line treatments, but sourceStatus is absent. The selected Mapping state and provenance path are largely gold/green color cues; no complete shape/texture alternative is visible for the semantic-state axes.",
+        "Error is shown, but BudgetMeter/predicted load/limit/recovery are completely absent.",
+        "Accessibility fails: tiny icon-only controls (transport, close, share, settings, minimap zoom) have no visible labels or accessibility annotation; no reduced-motion, focus, or responsive behavior annotation is supplied.",
+        "S8 handoff gate fails: no visible component mapping or deviation record; Atomic rewire and Dependencies lack canonical inventory entries; behavior is inferred from pixels; no accessibility annotation or paired responsive mockup/written rule is present; content/math values are invalid."
+      ],
+      "strengths": [
+        "The graph is spatially organized and the keyboard connection palette is conspicuous.",
+        "The provenance path has a readable source → selected mapping → target sequence, and material clips preserve non-color texture."
+      ]
+    }
+  },
+  "screenNotes": "All variants visibly cover the four S06 required states and use strong non-color material-kind textures. All three nevertheless fail the S6 reject gate: their Euclidean claims are either contradicted by identical step markers (C) or not countably rendered (A, B); sourceStatus and full non-color semantic-state coverage are absent; and no accessibility annotation is visible. Each also lacks a visible S8-authoritative handoff package.",
+  "recommendedVariant": "B-laboratory",
+  "recommendationReason": "B is the least bad foundation because its selection, provenance, dependency categories, keyboard route, and material lineage are clearest. It remains rejected until the mathematical renderings are made countable/correct, garbled text is replaced, accessibility is annotated, and the S8 handoff evidence is supplied."
+}

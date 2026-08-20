@@ -1,0 +1,132 @@
+{
+  "screen": "S01",
+  "variants": {
+    "A-instrument": {
+      "scores": {
+        "immediate playability": 1,
+        "mathematical legibility": 1,
+        "musical legibility": 1,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 3,
+        "density management": 3,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 1,
+        "error/budget visibility": 0,
+        "accessibility cues": 1,
+        "responsive plausibility": 1,
+        "implementation plausibility": 3,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "verdict": "reject",
+      "requiredStates": {},
+      "defects": [
+        "MATHEMATICAL CORRECTNESS: the selected project is labelled Tonnetz Walks, but every lattice vertex is unlabeled and neither of the two edge directions is labelled as a fifth or a major/minor third. The pixels therefore provide no value mapping from an edge to +7 or +/-3/4 semitones; its advertised Tonnetz adjacency is not verifiable without inference.",
+        "There is no visible error, overload, predicted load, limit, recovery, or budget meter.",
+        "The empty-library transport is correctly disabled, but that leaves no immediate play action or other first-use action beyond New blank project and the lab cards.",
+        "Non-color-only encoding is incomplete. Generated material is a dotted lavender line, frozen is a gray hatched locked region, and manual annotations are a yellow dotted line, so material kind has texture/glyph support. But current, snapshot, user-authored, and research-gated are principally hue-outline pills; only research-gated also has a flask and dashed border. The selection/related relationship is principally cyan outline plus link icon, and no focused/hovered/orphaned counterpart is visible.",
+        "The only provenance-like content is the seed and a generic linked-selection icon; no causal ancestry or operator steps are shown.",
+        "Accessibility is not annotated. Icon-only controls such as transport, undo/redo, settings, and overflow have no visible labels, focus treatment, keyboard path, or canvas semantic counterpart.",
+        "TEXT DEFECTS: none visible.",
+        "S8 HANDOFF GATE: fails visible component-to-manifest mapping, recorded token deviations, described interaction behavior, accessibility annotation, and paired responsive mockup/written responsive rule. The S01 screen identity exists in screens.json, but the image alone supplies none of the other handoff evidence; valid math content also fails."
+      ],
+      "strengths": [
+        "The locked library shell is respected: Library is active, transport/undo/redo are disabled, the navigator has seven labs and no track list, there is no timeline or graph drawer, and the right panel explicitly says it is read-only preview.",
+        "The selected Fifth Lattice Sketch row and preview share a cyan selection outline/link treatment.",
+        "The preview visibly contains lab type, 96 BPM, modified date, seed 9A21, material summary, and a local-first status line; the Penrose card is explicitly labelled illustrative rhomb motif."
+      ]
+    },
+    "B-laboratory": {
+      "scores": {
+        "immediate playability": 1,
+        "mathematical legibility": 2,
+        "musical legibility": 1,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 2,
+        "density management": 2,
+        "novice-to-expert progression": 3,
+        "generated/frozen distinction": 2,
+        "provenance discoverability": 2,
+        "error/budget visibility": 0,
+        "accessibility cues": 1,
+        "responsive plausibility": 1,
+        "implementation plausibility": 2,
+        "visual restraint": 2,
+        "consistency with design tokens": 3
+      },
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "verdict": "reject",
+      "requiredStates": {},
+      "defects": [
+        "MATHEMATICAL CORRECTNESS: both the selected-row preview and right preview say 5 pulses / 8 steps and E(5, 8), but the rendered ring has four cyan filled pulse nodes and two visible hollow silence nodes, with the remaining positions rendered only as cardinal ticks/blank circumference rather than eight discrete steps. The claimed value is k=5, n=8; the visible filled count is 4, not 5. A valid E(5,8), up to rotation, needs five onsets with cyclic gap lengths 2,1,2,1,2 steps.",
+        "The Tonnetz guided-lab miniature labels vertices A, E, C, G, D, and B but gives no edge direction or interval values, so fifth and third adjacency cannot be checked from the image.",
+        "There is no visible error state, evaluation limit, predicted load, recovery, or budget meter.",
+        "Non-color-only encoding is partial. Generated is a dotted-grid swatch, frozen is a hatched swatch plus lock, and manual is represented as zero manual clips; this is adequate for the displayed material rows. Current source, derivation current, engineering default, provenance related, and selection depend on colored outlined pills/blue borders plus text, rather than a complete shape/texture/glyph system for every semanticStates axis.",
+        "The mapping pipeline is labelled read-only and skips the required visible smooth, transform, and constrain stages; it is not an explicit full source-to-target trace.",
+        "Accessibility is not annotated. The transport and undo/redo are icon-only, no focus/keyboard/semantic-canvas treatment is shown, and no annotation version supplies their labels.",
+        "TEXT DEFECTS: none visible.",
+        "S8 HANDOFF GATE: fails visible component-to-manifest mapping, recorded token deviations, described interaction behavior, accessibility annotation, and paired responsive mockup/written responsive rule. It also fails the valid-content/math condition because the displayed E(5,8) ring is inconsistent."
+      ],
+      "strengths": [
+        "It visibly maintains library semantics: Library is active, transport and undo/redo are disabled, no timeline or graph drawer appears, and the inspector says READ-ONLY LIBRARY PREVIEW.",
+        "The selected Euclidean project is linked to the preview and exposes tempo, date, deterministic seed, material summary, status pills, formula, and annotation.",
+        "The guided-lab set includes all seven labs and the Penrose card says illustrative rhomb motif — not exact tiling."
+      ]
+    },
+    "C-spatial": {
+      "scores": {
+        "immediate playability": 1,
+        "mathematical legibility": 1,
+        "musical legibility": 1,
+        "professional-tool credibility": 2,
+        "linked-selection clarity": 3,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 1,
+        "error/budget visibility": 0,
+        "accessibility cues": 1,
+        "responsive plausibility": 2,
+        "implementation plausibility": 2,
+        "visual restraint": 1,
+        "consistency with design tokens": 2
+      },
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "verdict": "reject",
+      "requiredStates": {},
+      "defects": [
+        "MATHEMATICAL CORRECTNESS: Chromatic Drift is labelled Tonnetz Walk, but its lattice provides no fifth/third axes, interval labels, or edge-type legend. Although C, G, and E are visible, the image does not state whether an edge is a fifth (+7), major third (+4), or minor third (+3), so the required Tonnetz adjacency cannot be verified without inference.",
+        "The selected Euclidean card/right preview shows 7 / 12, but no E(7,12) label, step indices, or onset-gap values. The outer ring visually shows seven cyan and five gray nodes, but the Bjorklund distribution cannot be checked: a valid E(7,12), up to rotation, requires cyclic gaps 2,2,1,2,2,1,2 steps.",
+        "There is no visible error state, evaluation budget, predicted load, limit, or recovery affordance.",
+        "Non-color-only material encoding is comparatively strong: generated uses a dotted event row, frozen uses diagonal hatching and a lock, and manual uses a pencil with discrete vertical marks. It is still incomplete across semanticStates: source current and derivation current use text and icons, selection is cyan border/link treatment, and no focused/hovered/orphaned state is visible.",
+        "The full-width multicolored/glitch-like canvas background is decorative and visually competes with library cards and mathematical previews.",
+        "The library shows only five recent projects rather than enough coverage to make a full seven-lab project set intelligible; musical information is limited to BPM and silent diagrams.",
+        "Accessibility is not annotated. Icon-only transport, undo/redo, settings, overflow, history/template navigation, and canvas controls have no visible labels, focus treatment, keyboard alternative, or semantic-canvas counterpart.",
+        "TEXT DEFECTS: none visible.",
+        "S8 HANDOFF GATE: fails visible component-to-manifest mapping, recorded token deviations, described interaction behavior, accessibility annotation, and paired responsive mockup/written responsive rule. Valid math content is not demonstrated because the Tonnetz edge semantics and Euclidean distribution are not inspectable."
+      ],
+      "strengths": [
+        "The selected Seven against Four card and right preview are clearly linked through cyan border, selection label, and chain glyph.",
+        "The locked library structure is mostly correct: Library is active, transport is disabled, no timeline/graph drawer is visible, the preview says Open project to inspect parameters, and local-only/no-cloud status is shown.",
+        "Material kinds have the clearest visible non-color differentiation of the three variants, and the Penrose card is labelled illustrative rhomb motifs and research-gated."
+      ]
+    }
+  },
+  "screenNotes": "S01 has no requiredStates array in screens.json. All three visibly cover the core library items and preserve the no-project shell better than they cover S6/S8 proof. None visibly shows a budget/error state, an accessibility annotation, responsive rule, interaction behavior, or a complete non-color-only treatment for every semanticStates axis. A and C use Tonnetz-looking lattices without verifiable fifth/third semantics; B additionally renders an E(5,8) preview with four visible pulses rather than five.",
+  "recommendedVariant": "A-instrument",
+  "recommendationReason": "A-instrument is the strongest visual/library-shell direction: it is restrained, dense, plausibly implementable, and clearest on selected project plus material treatment. It is still rejected as supplied because its Tonnetz math is not verifiable and its accessibility/S8 handoff evidence is absent."
+}

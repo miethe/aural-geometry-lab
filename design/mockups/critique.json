@@ -1,0 +1,1104 @@
+{
+  "schema": "agl.design.mockup-critique",
+  "schemaVersion": 1,
+  "backlogItem": "AGL-149",
+  "asOf": "2026-08-20",
+  "designBaseline": "0.3.0",
+  "rubricSource": "docs/15-mockup-generation-spec.md#6-critique-rubric",
+  "scoringProvider": {
+    "chosen_plugin_id": "codex",
+    "model": "gpt-5.6-terra",
+    "effort": "high",
+    "agent_type_id": "codex-executor",
+    "task_class": "code_review",
+    "requires_write": true,
+    "note": "Per-mockup scoring delegated. Adjudication, synthesis and verdict retained on claude-primary (MUST-stay-primary task classes)."
+  },
+  "adjudication": {
+    "mathematical correctness": "UPHELD as scored. The delegate performed checkable arithmetic (log2 band spacing, Bjorklund gap multisets, onset counts, LCM-vs-duration, E(k,n) argument order, Tonnetz interval adjacency) and its findings reproduce. It also CREDITED one ring as correct (S05-A, E(5,13) gaps 2,3,2,3,3 = a rotation of 3,2,3,2,3), which overturns an earlier hand-check by the orchestrator that had called it wrong.",
+    "accessibility": "PARTIALLY VACATED. The axis conflated two claims. (a) 'no accessibility annotation; icon-only controls unlabelled' scores an un-annotated raster against docs/15 S7, which the spec explicitly defers to the annotation pass ('include visible accessibility-friendly labels for icon-only controls IN ANNOTATION VERSIONS'). Not a defect of these mockups. (b) 'sourceStatus and mappingStage carry no non-colour encoding; derivation and audio rely on coloured chips' is real, in scope, and substantively true. The reject stands only on (b).",
+    "S8 handoff gate": "NOT A DEFECT. Pixels cannot supply a component mapping, an interaction description, a token-deviation record, or a responsive rule. docs/15 S8 states these are the conditions a mockup must LATER satisfy to become implementation-authoritative; their absence in a raster is the expected state, not a finding."
+  },
+  "mockups": [
+    {
+      "id": "S01--A-instrument",
+      "screen": "S01",
+      "variant": "A-instrument",
+      "image": "design/mockups/images/S01-*--A-instrument.png",
+      "scores": {
+        "immediate playability": 1,
+        "mathematical legibility": 1,
+        "musical legibility": 1,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 3,
+        "density management": 3,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 1,
+        "error/budget visibility": 0,
+        "accessibility cues": 1,
+        "responsive plausibility": 1,
+        "implementation plausibility": 3,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "scoreTotal": 29,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {},
+      "defects": [
+        "MATHEMATICAL CORRECTNESS: the selected project is labelled Tonnetz Walks, but every lattice vertex is unlabeled and neither of the two edge directions is labelled as a fifth or a major/minor third. The pixels therefore provide no value mapping from an edge to +7 or +/-3/4 semitones; its advertised Tonnetz adjacency is not verifiable without inference.",
+        "There is no visible error, overload, predicted load, limit, recovery, or budget meter.",
+        "The empty-library transport is correctly disabled, but that leaves no immediate play action or other first-use action beyond New blank project and the lab cards.",
+        "Non-color-only encoding is incomplete. Generated material is a dotted lavender line, frozen is a gray hatched locked region, and manual annotations are a yellow dotted line, so material kind has texture/glyph support. But current, snapshot, user-authored, and research-gated are principally hue-outline pills; only research-gated also has a flask and dashed border. The selection/related relationship is principally cyan outline plus link icon, and no focused/hovered/orphaned counterpart is visible.",
+        "The only provenance-like content is the seed and a generic linked-selection icon; no causal ancestry or operator steps are shown.",
+        "Accessibility is not annotated. Icon-only controls such as transport, undo/redo, settings, and overflow have no visible labels, focus treatment, keyboard path, or canvas semantic counterpart.",
+        "TEXT DEFECTS: none visible.",
+        "S8 HANDOFF GATE: fails visible component-to-manifest mapping, recorded token deviations, described interaction behavior, accessibility annotation, and paired responsive mockup/written responsive rule. The S01 screen identity exists in screens.json, but the image alone supplies none of the other handoff evidence; valid math content also fails."
+      ],
+      "strengths": [
+        "The locked library shell is respected: Library is active, transport/undo/redo are disabled, the navigator has seven labs and no track list, there is no timeline or graph drawer, and the right panel explicitly says it is read-only preview.",
+        "The selected Fifth Lattice Sketch row and preview share a cyan selection outline/link treatment.",
+        "The preview visibly contains lab type, 96 BPM, modified date, seed 9A21, material summary, and a local-first status line; the Penrose card is explicitly labelled illustrative rhomb motif."
+      ]
+    },
+    {
+      "id": "S01--B-laboratory",
+      "screen": "S01",
+      "variant": "B-laboratory",
+      "image": "design/mockups/images/S01-*--B-laboratory.png",
+      "scores": {
+        "immediate playability": 1,
+        "mathematical legibility": 2,
+        "musical legibility": 1,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 2,
+        "density management": 2,
+        "novice-to-expert progression": 3,
+        "generated/frozen distinction": 2,
+        "provenance discoverability": 2,
+        "error/budget visibility": 0,
+        "accessibility cues": 1,
+        "responsive plausibility": 1,
+        "implementation plausibility": 2,
+        "visual restraint": 2,
+        "consistency with design tokens": 3
+      },
+      "scoreTotal": 27,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {},
+      "defects": [
+        "MATHEMATICAL CORRECTNESS: both the selected-row preview and right preview say 5 pulses / 8 steps and E(5, 8), but the rendered ring has four cyan filled pulse nodes and two visible hollow silence nodes, with the remaining positions rendered only as cardinal ticks/blank circumference rather than eight discrete steps. The claimed value is k=5, n=8; the visible filled count is 4, not 5. A valid E(5,8), up to rotation, needs five onsets with cyclic gap lengths 2,1,2,1,2 steps.",
+        "The Tonnetz guided-lab miniature labels vertices A, E, C, G, D, and B but gives no edge direction or interval values, so fifth and third adjacency cannot be checked from the image.",
+        "There is no visible error state, evaluation limit, predicted load, recovery, or budget meter.",
+        "Non-color-only encoding is partial. Generated is a dotted-grid swatch, frozen is a hatched swatch plus lock, and manual is represented as zero manual clips; this is adequate for the displayed material rows. Current source, derivation current, engineering default, provenance related, and selection depend on colored outlined pills/blue borders plus text, rather than a complete shape/texture/glyph system for every semanticStates axis.",
+        "The mapping pipeline is labelled read-only and skips the required visible smooth, transform, and constrain stages; it is not an explicit full source-to-target trace.",
+        "Accessibility is not annotated. The transport and undo/redo are icon-only, no focus/keyboard/semantic-canvas treatment is shown, and no annotation version supplies their labels.",
+        "TEXT DEFECTS: none visible.",
+        "S8 HANDOFF GATE: fails visible component-to-manifest mapping, recorded token deviations, described interaction behavior, accessibility annotation, and paired responsive mockup/written responsive rule. It also fails the valid-content/math condition because the displayed E(5,8) ring is inconsistent."
+      ],
+      "strengths": [
+        "It visibly maintains library semantics: Library is active, transport and undo/redo are disabled, no timeline or graph drawer appears, and the inspector says READ-ONLY LIBRARY PREVIEW.",
+        "The selected Euclidean project is linked to the preview and exposes tempo, date, deterministic seed, material summary, status pills, formula, and annotation.",
+        "The guided-lab set includes all seven labs and the Penrose card says illustrative rhomb motif \u2014 not exact tiling."
+      ]
+    },
+    {
+      "id": "S01--C-spatial",
+      "screen": "S01",
+      "variant": "C-spatial",
+      "image": "design/mockups/images/S01-*--C-spatial.png",
+      "scores": {
+        "immediate playability": 1,
+        "mathematical legibility": 1,
+        "musical legibility": 1,
+        "professional-tool credibility": 2,
+        "linked-selection clarity": 3,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 1,
+        "error/budget visibility": 0,
+        "accessibility cues": 1,
+        "responsive plausibility": 2,
+        "implementation plausibility": 2,
+        "visual restraint": 1,
+        "consistency with design tokens": 2
+      },
+      "scoreTotal": 24,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {},
+      "defects": [
+        "MATHEMATICAL CORRECTNESS: Chromatic Drift is labelled Tonnetz Walk, but its lattice provides no fifth/third axes, interval labels, or edge-type legend. Although C, G, and E are visible, the image does not state whether an edge is a fifth (+7), major third (+4), or minor third (+3), so the required Tonnetz adjacency cannot be verified without inference.",
+        "The selected Euclidean card/right preview shows 7 / 12, but no E(7,12) label, step indices, or onset-gap values. The outer ring visually shows seven cyan and five gray nodes, but the Bjorklund distribution cannot be checked: a valid E(7,12), up to rotation, requires cyclic gaps 2,2,1,2,2,1,2 steps.",
+        "There is no visible error state, evaluation budget, predicted load, limit, or recovery affordance.",
+        "Non-color-only material encoding is comparatively strong: generated uses a dotted event row, frozen uses diagonal hatching and a lock, and manual uses a pencil with discrete vertical marks. It is still incomplete across semanticStates: source current and derivation current use text and icons, selection is cyan border/link treatment, and no focused/hovered/orphaned state is visible.",
+        "The full-width multicolored/glitch-like canvas background is decorative and visually competes with library cards and mathematical previews.",
+        "The library shows only five recent projects rather than enough coverage to make a full seven-lab project set intelligible; musical information is limited to BPM and silent diagrams.",
+        "Accessibility is not annotated. Icon-only transport, undo/redo, settings, overflow, history/template navigation, and canvas controls have no visible labels, focus treatment, keyboard alternative, or semantic-canvas counterpart.",
+        "TEXT DEFECTS: none visible.",
+        "S8 HANDOFF GATE: fails visible component-to-manifest mapping, recorded token deviations, described interaction behavior, accessibility annotation, and paired responsive mockup/written responsive rule. Valid math content is not demonstrated because the Tonnetz edge semantics and Euclidean distribution are not inspectable."
+      ],
+      "strengths": [
+        "The selected Seven against Four card and right preview are clearly linked through cyan border, selection label, and chain glyph.",
+        "The locked library structure is mostly correct: Library is active, transport is disabled, no timeline/graph drawer is visible, the preview says Open project to inspect parameters, and local-only/no-cloud status is shown.",
+        "Material kinds have the clearest visible non-color differentiation of the three variants, and the Penrose card is labelled illustrative rhomb motifs and research-gated."
+      ]
+    },
+    {
+      "id": "S02--A-instrument",
+      "screen": "S02",
+      "variant": "A-instrument",
+      "image": "design/mockups/images/S02-*--A-instrument.png",
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 2,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 0,
+        "error/budget visibility": 0,
+        "accessibility cues": 0,
+        "responsive plausibility": 1,
+        "implementation plausibility": 3,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "scoreTotal": 28,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {
+        "analytic log-tempo layers": "present - five wrapped tempo bands and five Layer pulse lanes occupy the central canvas",
+        "engineering-default evidence badge": "present - gear-marked 'Engineering default' badge at lower-right of the canvas",
+        "audio enable/runtime status": "present - top toolbar chip reads 'Audio Playing' with speaker glyph"
+      },
+      "defects": [
+        "Mathematical correctness fails: the image calls the display 'Log tempo / octave wrap' but places 60, 90, 120, 180, and 240 BPM bands at near-equal vertical intervals. Their log2 intervals are 0.58496, 0.41504, 0.58496, and 0.41504 octaves, not equal. An evenly spaced five-band log scale from 60 to 240 BPM would be 60, 84.85, 120, 169.71, 240 BPM (constant sqrt(2) ratio), not the rendered sequence.",
+        "The selected Layer 3 is cyan in the pulse lanes, but the selected timeline item is named 'Live generated \u00b7 Log Tempo Layers'; the correspondence is implied by hue/position rather than explicitly named on both surfaces.",
+        "No provenance trace, mapping-pipeline summary, cache key, evaluation time, determinism check, error state, or budget meter is visible; provenance discoverability and error/budget visibility are therefore zero.",
+        "Accessibility reject: material kinds have non-hue encodings (solid, dots, diagonal hatch, stepped outline), but sourceStatus and mappingStage have no visible encoding at all, derivation/audio depend chiefly on colored chips, and there is no accessibility annotation. The required non-color-only semantic-state evidence is incomplete.",
+        "S8 handoff gate fails: interaction behavior is not described; no accessibility annotation is present; no paired responsive mockup or written responsive rule is present; valid content/math is not satisfied. Component-manifest mapping and token-deviation record cannot be established from the pixels."
+      ],
+      "strengths": [
+        "The transport, status chips, navigator, collapsed inspector, graph drawer, timeline, compact controls, and material legend form a coherent dense instrument shell.",
+        "All four material kinds are explicitly named and use visible line/texture differences rather than hue alone.",
+        "No misspellings, garbled labels, or nonsense strings are visible."
+      ]
+    },
+    {
+      "id": "S02--B-laboratory",
+      "screen": "S02",
+      "variant": "B-laboratory",
+      "image": "design/mockups/images/S02-*--B-laboratory.png",
+      "scores": {
+        "immediate playability": 2,
+        "mathematical legibility": 2,
+        "musical legibility": 2,
+        "professional-tool credibility": 2,
+        "linked-selection clarity": 2,
+        "density management": 2,
+        "novice-to-expert progression": 3,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 0,
+        "error/budget visibility": 0,
+        "accessibility cues": 0,
+        "responsive plausibility": 1,
+        "implementation plausibility": 2,
+        "visual restraint": 2,
+        "consistency with design tokens": 2
+      },
+      "scoreTotal": 25,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {
+        "analytic log-tempo layers": "present - central concentric visualization is labeled 'analytic log-tempo layers' and shows four layer traces",
+        "engineering-default evidence badge": "present - 'Engineering default' badge to the right of the visualization",
+        "audio enable/runtime status": "present - top toolbar chip reads 'Audio \u2022 Playing'"
+      },
+      "defects": [
+        "Mathematical correctness fails: the graphic labels an axis 'log2 tempo' while its 60, 90, 120, 180, and 240 BPM rings are visually near-equidistant. Consecutive log2 intervals are 0.58496, 0.41504, 0.58496, and 0.41504 octaves; equal ring spacing does not represent that logarithmic spacing. The displayed layer multipliers also make the numeric story unverifiable: from 60 BPM, x2.25 is 135 BPM and x3.38 is 202.8 BPM, neither shown as a corresponding labeled tempo.",
+        "The canvas has arrows and a 'wrap seam', but no numeric tick scale on the claimed log2 axis; the claim cannot be checked from the rendered coordinate system.",
+        "No provenance trace, mapping stages, cache/evaluation block, failure state, or budget/limit/recovery information is visible.",
+        "Accessibility reject: the material legend supplies non-hue line/texture treatments, but sourceStatus and mappingStage are absent; derivation and audio are primarily colored status chips; no accessibility annotation or icon-control labels are visible.",
+        "S8 handoff gate fails: interaction behavior is inferred from controls; no accessibility annotation; no paired responsive mockup or written responsive rule; and content/math values are invalid. Component mapping and recorded token deviations are not evidenced by the image."
+      ],
+      "strengths": [
+        "The explanatory guide, visible parameter panel, wrap-seam annotation, layer legend, and labeled pulse lanes provide a better novice-to-expert path than the other variants.",
+        "Selected Layer 3 is outlined and marked with a triangular pointer, and Staircase Pulse is selected in navigator and timeline.",
+        "Generated, user-authored, snapshot, and edited-derivative treatments are visibly differentiated by dots, solid treatment, hatching, and an edited outline/glyph.",
+        "No misspellings, garbled labels, or nonsense strings are visible."
+      ]
+    },
+    {
+      "id": "S02--C-spatial",
+      "screen": "S02",
+      "variant": "C-spatial",
+      "image": "design/mockups/images/S02-*--C-spatial.png",
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 2,
+        "linked-selection clarity": 3,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 0,
+        "error/budget visibility": 0,
+        "accessibility cues": 0,
+        "responsive plausibility": 2,
+        "implementation plausibility": 2,
+        "visual restraint": 2,
+        "consistency with design tokens": 2
+      },
+      "scoreTotal": 26,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {
+        "analytic log-tempo layers": "present - the central wrapped bands carry BPM labels and central 'log2 tempo' text",
+        "engineering-default evidence badge": "present - wrench-marked 'Engineering default' card in the right panel",
+        "audio enable/runtime status": "present - top toolbar chip reads 'Audio \u00b7 Playing'"
+      },
+      "defects": [
+        "Mathematical correctness fails: this is labeled 'log2 tempo' yet the 60, 90, 120, 180, and 240 BPM bands are drawn at roughly equal vertical separations. The actual log2 intervals are 0.58496, 0.41504, 0.58496, and 0.41504 octaves. A constant-log-step sequence spanning 60 to 240 would be 60, 84.85, 120, 169.71, 240 BPM. The rendered equal-spaced 60/90/120/180/240 labels contradict the log claim.",
+        "The screen brief requires the inspector collapsed by default, but the right inspector is visibly open as a substantive 243px panel containing a primary-selection card and evidence card.",
+        "No provenance trace, mapping pipeline, cache/evaluation block, determinism check, failure condition, or budget meter is visible.",
+        "Accessibility reject: material kind is conveyed with non-hue styles (solid, dotted, hatch, edited glyph), but sourceStatus and mappingStage have no visible representation, and derivation/audio status chiefly use colored chips. No accessibility annotation is shown.",
+        "S8 handoff gate fails: interaction behavior is not described; no accessibility annotation; no paired responsive mockup or written responsive rule; valid math is absent; and the visible inspector state conflicts with the screen requirement. Component mapping and token-deviation recording cannot be verified from pixels."
+      ],
+      "strengths": [
+        "The spatial central control makes the 120 BPM focus, direction, and ratio immediately findable.",
+        "Staircase Pulse is linked by name/chain glyph across navigator, inspector card, and selected timeline region, the clearest cross-surface selection treatment of the three.",
+        "The material legend and timeline visibly separate generated dots, a plain counter pattern, and a hatched frozen region.",
+        "No misspellings, garbled labels, or nonsense strings are visible."
+      ]
+    },
+    {
+      "id": "S03--A-instrument",
+      "screen": "S03",
+      "variant": "A-instrument",
+      "image": "design/mockups/images/S03-*--A-instrument.png",
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 2,
+        "musical legibility": 3,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 3,
+        "density management": 3,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 3,
+        "error/budget visibility": 1,
+        "accessibility cues": 2,
+        "responsive plausibility": 1,
+        "implementation plausibility": 3,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "scoreTotal": 38,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "pass"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {
+        "wrapped/unwrapped views": "present - the left circular pitch view is headed WRAPPED OCTAVE and the main plot is headed UNWRAPPED PHASE.",
+        "mapping/provenance trace": "present - the right inspector shows the eight-stage MAPPING PIPELINE and Generator, Seed, and Derived from provenance rows.",
+        "Risset reset/relabel explanation": "present - the right Math tab has RESET / RELABEL and states that the amplitude envelope masks octave relabel at phi = 12.00.",
+        "experimental controls separated": "present - Reset threshold and Envelope reveal are inside a separately bordered, hatched EXPERIMENTAL block."
+      },
+      "defects": [
+        "Mathematical correctness fails: the wrapped octave explicitly indexes C as 0, C# as 1, D as 2, D# as 3, E as 4, F as 5, and F# as 6, but the selected callout says F#5. The selected pitch class is therefore one semitone/index wrong.",
+        "The selected event's cyan colour is reinforced by a ring and text, but the selected mapping stage Transform is differentiated from the other stage pills only by cyan border/fill; that state is hue-load-bearing.",
+        "No error state, event budget, limit, predicted load, or recovery action is visible; the Evaluation block only reports PASS.",
+        "The 11px-scale inspector, toolbar, and timeline controls do not demonstrate 44px iPad touch targets; this full-width three-pane layout is not responsive evidence.",
+        "S8 handoff gate failures visible or unavoidable from this unannotated single image: no accessibility annotation; no paired responsive mockup or written responsive rule; interaction behavior is not described by pixels. The mathematical-value condition also fails because F#5 conflicts with the displayed C=0 pitch-class scale."
+      ],
+      "strengths": [
+        "Transport, numerical tempo/meter/position readout, selected track, timeline playhead, and selection line make the screen immediately operable.",
+        "All four material kinds have non-hue encodings: solid user-authored, dotted live generated, diagonal hatch frozen snapshot, and the distinct notched/outlined edited derivative; the same treatments recur in the timeline.",
+        "Derivation CURRENT, Audio PLAYING, source/current provenance, evidence rows with check/wrench/lock icons, and the selected-event ring provide text, glyph, or shape support beyond colour.",
+        "The collapsed 12-node operator-graph drawer, exact-looking pipeline, and dense timeline read as a coherent professional instrument shell."
+      ]
+    },
+    {
+      "id": "S03--B-laboratory",
+      "screen": "S03",
+      "variant": "B-laboratory",
+      "image": "design/mockups/images/S03-*--B-laboratory.png",
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 3,
+        "musical legibility": 2,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 2,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 2,
+        "error/budget visibility": 1,
+        "accessibility cues": 2,
+        "responsive plausibility": 1,
+        "implementation plausibility": 3,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "scoreTotal": 35,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "pass"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {
+        "wrapped/unwrapped views": "present - the segmented Wrapped/Unwrapped control has Unwrapped active, while the inset is explicitly titled Wrapped view.",
+        "mapping/provenance trace": "present - the inspector displays source through target and the canvas metadata states Source: current and Derived from Risset preset v2.",
+        "Risset reset/relabel explanation": "present - the canvas labels a masked reset point and the inspector says relabeling preserves ascent while the amplitude envelope masks the discontinuity.",
+        "experimental controls separated": "present - Reset reveal and Unwrapped phase appear in their own EXPERIMENTAL CONTROLS block."
+      },
+      "defects": [
+        "Mathematical correctness fails: the displayed formula f(t) = sin(2pi * 2^(t/12) * t + phi3) does not produce a clean exponential octave progression. Its instantaneous frequency is proportional to 2^(t/12) * (1 + (ln 2)t/12): at t=12 it is 2(1+ln 2)=3.386 times the initial frequency, not 2 times; at t=24 it is 4(1+2ln 2)=9.545 times, not 4 times.",
+        "The plot calls the left-hand reset a continuous perceived ascent, but the selected cyan partial has a visible vertical jump from about +3 to about -3 at bar 45; the image supplies no continuous wrapped trajectory at that discontinuity.",
+        "The selected Layer 03 is mainly distinguished from the other partials by cyan; the canvas label helps, but the selection treatment itself has no robust non-colour pattern/shape counterpart.",
+        "No error, budget meter, predicted load, limit, or recovery state is shown; exact determinism is not an error/budget affordance.",
+        "S8 handoff gate failures: no accessibility annotation; no paired responsive mockup or written responsive rule; interaction behavior is not described by the pixels. The content/math-values condition fails because the displayed formula is wrong for the claimed octave law."
+      ],
+      "strengths": [
+        "The graph, the labelled reset boundary, the amplitude-envelope bounds, and the Wrapped view inset make the intended explanatory comparison unusually readable.",
+        "Material kinds are visibly non-colour-only in both legend and timeline: solid, dotted, diagonal hatch, and the clipped-corner derivative form.",
+        "The evidence rows use check, compass-like engineering, and lock glyphs; live-generated metadata is written as text rather than left to colour alone."
+      ]
+    },
+    {
+      "id": "S03--C-spatial",
+      "screen": "S03",
+      "variant": "C-spatial",
+      "image": "design/mockups/images/S03-*--C-spatial.png",
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 3,
+        "musical legibility": 2,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 3,
+        "density management": 2,
+        "novice-to-expert progression": 3,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 3,
+        "error/budget visibility": 1,
+        "accessibility cues": 2,
+        "responsive plausibility": 2,
+        "implementation plausibility": 2,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "scoreTotal": 38,
+      "rejectAxes": {
+        "mathematical correctness": "pass",
+        "generated/frozen semantics": "pass",
+        "accessibility": "pass"
+      },
+      "delegateVerdict": "accept-with-fixes",
+      "adjudicatedVerdict": "accept-with-fixes",
+      "adjudicatedReason": "no upheld reject axis",
+      "requiredStates": {
+        "wrapped/unwrapped views": "partial - the circular canvas is visibly a wrapped pitch-class view and Wrapped is active, but Unwrapped appears only as an inactive control label; the narrow adjacent plot is not labelled Unwrapped.",
+        "mapping/provenance trace": "present - the inspector explicitly shows the source-to-target mapping pipeline and a Mapping / provenance trace from Risset kernel v2 through envelope A to Layer 3.",
+        "Risset reset/relabel explanation": "present - the Reset / relabel section says the quietest layer is relabeled and the summed pitch continues upward, alongside the envelope/raw-layer A/B plot.",
+        "experimental controls separated": "present - Reset crossfade and Relabel threshold are contained in the separately bordered Experimental controls panel with a lock glyph."
+      },
+      "defects": [
+        "Wrapped/unwrapped is incomplete: the image renders a wrapped circle and offers an inactive Unwrapped button, but does not visibly identify the adjacent linear plot as the unwrapped view.",
+        "No error, budget meter, predicted load, limit, or recovery state is visible; cache key, last evaluated time, and Determinism Match do not satisfy error/budget visibility.",
+        "The small selected Layer 3 timeline pattern is mainly cyan/purple plus an outline; its non-colour selection signal is limited to resize handles and a link glyph, which are not explained in the legend.",
+        "The dense polar canvas and narrow unlabelled side plot are plausible but do not themselves establish a touch-safe iPad adaptation; several inspector controls remain visually below the stated 44px touch target.",
+        "S8 handoff gate failures: no accessibility annotation; no paired responsive mockup or written responsive rule; interaction behavior is not described by pixels. No visible content/math-value defect was found."
+      ],
+      "strengths": [
+        "The displayed exponential relation f(t) = f0 * 2^(t/T) is coherent with f0 = 220 Hz and T = 12.0 s: at t=12.0 s it gives 440 Hz, exactly one octave above 220 Hz.",
+        "The selected phase point links the polar canvas, Layer 3 clip, provenance target, and inspector, with a visible connector/link glyph and non-colour resize handles.",
+        "Material kinds have non-hue treatments: solid authored bed, dotted live-generated Layer 3, diagonal-hatched frozen snapshot, and a distinctly edged/linked derivative; the legend exposes those treatments.",
+        "Evidence has check, wrench, and lock glyphs; the experimental section has explicit text and a lock rather than colour alone.",
+        "The large direct-manipulation canvas, simple transport, and still-visible expert inspector make this the clearest novice-to-expert progression of the three."
+      ]
+    },
+    {
+      "id": "S04--A-instrument",
+      "screen": "S04",
+      "variant": "A-instrument",
+      "image": "design/mockups/images/S04-*--A-instrument.png",
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 2,
+        "musical legibility": 3,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 3,
+        "density management": 3,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 2,
+        "error/budget visibility": 0,
+        "accessibility cues": 1,
+        "responsive plausibility": 1,
+        "implementation plausibility": 3,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "scoreTotal": 35,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {},
+      "defects": [
+        "Mathematical correctness fails: the displayed track counts are 13, 16, 11, and 9 steps, whose LCM is correctly shown as 20,592, but the same composite-cycle label claims \"2:51.6 @ 120 BPM\". The toolbar position uses 240 ticks per beat (\"17.3.240\"); 20,592 ticks is 85.8 beats and therefore 42.9 seconds at 120 BPM, not 171.6 seconds. The displayed duration is exactly four times too long.",
+        "No error, overload, predicted-load, limit, or recovery state is visible. The evaluation block only says \"PASS\".",
+        "Accessibility reject: the image has no accessibility annotation and icon-only controls (transport, undo/redo, export/share/settings, graph expander) have no visible text counterpart. Material kind is non-color encoded well (solid line, dotted line, diagonal hatch, stepped line plus edit glyph), but the screenshot does not visibly establish non-hue alternatives for every state of every semanticStates axis.",
+        "S8 handoff gate fails visibly: there is no interaction-behavior description, accessibility annotation, paired responsive mockup/written responsive rule, or recorded token-deviation record. The screen ID exists and the visible shell largely resembles inventory components, but pixels do not provide a component mapping record.",
+        "The ring canvas exposes counts and rotation but no indexed onset listing or formula, so the filled-step claim cannot be independently audited from the small marks alone."
+      ],
+      "strengths": [
+        "The selected Kick is linked across ring, left track, graph-drawer chip, timeline lane, and inspector with text and chain glyphs as well as cyan emphasis.",
+        "All four material kinds are visibly differentiated without hue in both the legend and timeline: solid, dotted, hatch, and stepped/edit-glyph treatments.",
+        "The fixed shell, compact controls, ruler, track lanes, material legend, provenance tab, evidence rows, and collapsed graph drawer are all visibly present."
+      ]
+    },
+    {
+      "id": "S04--B-laboratory",
+      "screen": "S04",
+      "variant": "B-laboratory",
+      "image": "design/mockups/images/S04-*--B-laboratory.png",
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 1,
+        "musical legibility": 3,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 3,
+        "density management": 3,
+        "novice-to-expert progression": 3,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 3,
+        "error/budget visibility": 0,
+        "accessibility cues": 1,
+        "responsive plausibility": 1,
+        "implementation plausibility": 3,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "scoreTotal": 36,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {},
+      "defects": [
+        "Mathematical correctness fails: the selected ring is labelled \"Clave \u00b7 E(12,5)\" while its controls say Steps 12 and Pulses 5. Under the requested E(k,n) notation this must be E(5,12), not E(12,5). The formula \"E(12,5) = [x mod 12 < 5]\" yields the consecutive onset positions {0,1,2,3,4}; it does not yield a 5-pulse Euclidean distribution. The displayed interval claim \"{2, 3}\" instead describes a dispersed 5-in-12 rhythm, contradicting that formula.",
+        "The other track labels repeat the inverted notation: \"E(16,5)\", \"E(9,4)\", and \"E(7,3)\" beside controls showing respectively 16/5, 9/4, and 7/3 steps/pulses.",
+        "No error, budget, limit, overload, or recovery state is visible; the only evaluation outcome is \"CHECK PASSED\".",
+        "Accessibility reject: material kind has visible non-color encodings (solid, dotted, diagonal hatch, and hatch plus pencil), selection has text plus outline/link glyphs, provenance/evidence use words and icons, but icon-only shell controls have no visible accessible labels and there is no accessibility annotation. The image cannot establish non-hue treatment for every semanticStates value.",
+        "S8 handoff gate fails visibly: no interaction-behavior description, accessibility annotation, paired responsive mockup/written responsive rule, or token-deviation record is supplied. Pixels also do not provide the required component-manifest mapping record."
+      ],
+      "strengths": [
+        "The lab view makes the selected Clave legible across the ring, the \"Linked: graph node euclid-clave-12\" chip, inspector, and linked timeline lane.",
+        "The LCM value 1008 is arithmetically correct for the displayed step counts 16, 12, 9, and 7.",
+        "The inspector exposes values, a pipeline, determinism, evidence class, and provenance more clearly than the other variants."
+      ]
+    },
+    {
+      "id": "S04--C-spatial",
+      "screen": "S04",
+      "variant": "C-spatial",
+      "image": "design/mockups/images/S04-*--C-spatial.png",
+      "scores": {
+        "immediate playability": 2,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 2,
+        "linked-selection clarity": 2,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 2,
+        "error/budget visibility": 0,
+        "accessibility cues": 1,
+        "responsive plausibility": 2,
+        "implementation plausibility": 3,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "scoreTotal": 30,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {},
+      "defects": [
+        "Mathematical correctness fails twice. The top canvas says \"LCM composite cycle \u00b7 105 steps \u00b7 8 bars\", while the composite-cycle panel immediately below says \"LCM 240 ticks / 8 bars\". For the visible step counts 16, 12, 10, and 15, LCM(16,12,10,15) = 240, not 105.",
+        "The outer Kick is labelled \"E(5,16) \u00b7 rot 0\" but its ring visibly contains a cyan pulse at every one of the 16 step positions. E(5,16) must contain five onsets, not sixteen. The visible pulse count contradicts the label by 11 onsets.",
+        "No error, budget, limit, overload, or recovery state is visible; the evaluation table only shows \"PASS\".",
+        "Accessibility reject: the material legend does use non-color treatments (solid, dotted, diagonal hatch, clipped corner), and selection is reinforced with a link glyph and text. But icon-only controls have no visible labels or annotation, and the image does not demonstrate non-hue alternatives for every semanticStates value.",
+        "S8 handoff gate fails visibly: no interaction-behavior description, accessibility annotation, paired responsive mockup/written responsive rule, or token-deviation record is supplied. Pixels do not provide a component-manifest mapping record.",
+        "The reduced chrome helps direct manipulation, but the timeline has no visible bars.beats ruler: it uses labels such as \"017.1\" and \"018.1\" without a clear bars.beats.ticks convention."
+      ],
+      "strengths": [
+        "The direct-rotation affordance is unusually explicit: the selected Clave has a hand/rotation graphic beside its numeric controls.",
+        "All four material kinds are visibly differentiated in the legend and lanes without depending only on hue.",
+        "The selected Clave is linked among the ring, operator-graph chip, inspector title, and dotted timeline clip."
+      ]
+    },
+    {
+      "id": "S05--A-instrument",
+      "screen": "S05",
+      "variant": "A-instrument",
+      "image": "design/mockups/images/S05-*--A-instrument.png",
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 1,
+        "musical legibility": 3,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 3,
+        "density management": 3,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 1,
+        "provenance discoverability": 2,
+        "error/budget visibility": 0,
+        "accessibility cues": 0,
+        "responsive plausibility": 1,
+        "implementation plausibility": 2,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "scoreTotal": 30,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "fail",
+        "accessibility": "fail"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {
+        "one project/transport/undo": "present - one top-bar transport and undo/redo pair are visible; project name is Euclidean / Tonnetz Study",
+        "workspace not capability mode": "present - Compose is the selected workspace and Labs is navigation rather than the primary surface",
+        "current derivation/audio status": "present - top bar says Derivation: Current and Audio: Playing"
+      },
+      "defects": [
+        "Mathematical correctness fails at the claimed Tonnetz. The central C has a visible dotted adjacency to F#; C to F# is 6 semitones (a tritone), not a perfect fifth (7) or a major/minor third (4/3). The lattice also repeats C at the center and lower-right with no octave, periodic-cell, or equivalence indication, so the duplicate cannot be read coherently.",
+        "The E(5,13) ring itself has five filled steps at 0, 2, 5, 7, and 10. Its cyclic gaps are 2,3,2,3,3, which is a rotation of the Bjorklund gap sequence 3,2,3,2,3; this one mathematical element is correct.",
+        "Generated/frozen/manual is not a complete visible semantic system. Frozen Clip 01 uses diagonal hatching, but Pulse Source is only identified by a dot-cluster icon and no material-kind label, and no manual/authored clip treatment is visible. The cyan selection outline is doing unrelated semantic work.",
+        "Non-color-only encoding is incomplete: selection has a cyan outline and linked cyan wire, frozen has hatching, and source-state legend uses glyphs; but derivation current, audio playing, evidence, mapping-stage progression, and the material kind of the active source cannot all be distinguished without reading hue-dependent colored text/lines. Error, cancelled, panic, stale, unresolved, and cache-only are not shown.",
+        "No error state, budget meter, predicted load, limit, or recovery action is visible.",
+        "Accessibility cues score zero: the image provides no accessibility annotation or semantic counterpart for the ring, Tonnetz, graph/pipeline, timeline, or icon-only controls. The top transport, save, share, menu, mute, and solo icons have no visible labels.",
+        "S8 handoff gate failures: interaction behavior is not described; there is no accessibility annotation; no paired responsive mockup or written responsive rule is visible; no token-deviation record is visible. Mathematical content also fails validation because of the Tonnetz adjacency."
+      ],
+      "strengths": [
+        "The selected Pulse Source is visibly linked from navigator through canvas/pipeline to the selected timeline region and inspector.",
+        "The compact toolbar, mixer, graph drawer, inspector, and timeline read as one credible desktop instrument."
+      ]
+    },
+    {
+      "id": "S05--B-laboratory",
+      "screen": "S05",
+      "variant": "B-laboratory",
+      "image": "design/mockups/images/S05-*--B-laboratory.png",
+      "scores": {
+        "immediate playability": 2,
+        "mathematical legibility": 2,
+        "musical legibility": 3,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 3,
+        "density management": 2,
+        "novice-to-expert progression": 3,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 3,
+        "error/budget visibility": 1,
+        "accessibility cues": 0,
+        "responsive plausibility": 1,
+        "implementation plausibility": 2,
+        "visual restraint": 2,
+        "consistency with design tokens": 2
+      },
+      "scoreTotal": 32,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {
+        "one project/transport/undo": "present - Spiral Canon, one transport, and Undo/Redo appear in the top bar",
+        "workspace not capability mode": "present - Studio is selected within Compose and the central canvas is a composition workspace",
+        "current derivation/audio status": "present - Derivation current and Audio playing are both explicit in the top bar; Evaluation also says CURRENT"
+      },
+      "defects": [
+        "Mathematical correctness fails. The ring says E(5,8), rotation 1. Bjorklund E(5,8) has cyclic onset gaps 2,1,2,1,2; with the displayed rotation +1 its onsets should be steps 1,3,4,6,7 (one-based). The image fills 1,3,4,5,6, yielding gaps 2,1,1,1,3. It is not an even Euclidean distribution despite the adjacent claim that it distributes five triggers evenly across eight steps.",
+        "The Tonnetz is labeled as a harmonic lattice but does not label its axes or explain its edge relation. The visible C-to-Ab relationship is a minor third while the composition caption calls the path Cmin7 to Abmaj7 to Ebmaj7; the viewer cannot verify fifth/third adjacency from the unlabeled drawn edges.",
+        "The visual state system is strongest for material: Manual is a solid filled clip, Generated live is dotted/particle texture, Frozen snapshot is hatched with snowflake glyph, and Edited derivative uses a page/pencil outline. That distinction does not extend visibly to every semantic-state axis: source changed/missing/detached/unresolved, derivation preview/cache-only/stale/error/cancelled, and audio interruption/panic are absent.",
+        "No budget prediction, limit, overload/error state, or recovery control is visible; the evaluation table only says current/deterministic.",
+        "Accessibility cues score zero: no accessibility annotation or semantic canvas counterpart is visible, and the icon-only transport, pin, chevron, add, expand, overflow, mute/solo/record, mixer gear, and share controls have no visible text labels.",
+        "S8 handoff gate failures: interaction behavior is not described; no accessibility annotation is present; no paired responsive mockup or written responsive rule is visible; no visible token-deviation record exists; and the E(5,8) content/math values are invalid."
+      ],
+      "strengths": [
+        "The selected E(5,8) clip is connected by a dotted cyan provenance line through the source pipeline into the inspector and selected chord event.",
+        "Material legend and timeline make manual, live-generated, frozen snapshot, and edited-derivative treatments visibly non-color-only."
+      ]
+    },
+    {
+      "id": "S05--C-spatial",
+      "screen": "S05",
+      "variant": "C-spatial",
+      "image": "design/mockups/images/S05-*--C-spatial.png",
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 2,
+        "linked-selection clarity": 2,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 2,
+        "provenance discoverability": 1,
+        "error/budget visibility": 0,
+        "accessibility cues": 0,
+        "responsive plausibility": 2,
+        "implementation plausibility": 2,
+        "visual restraint": 2,
+        "consistency with design tokens": 2
+      },
+      "scoreTotal": 25,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {
+        "one project/transport/undo": "present - Untitled Geometry Study, one top transport, and Undo/Redo are visible",
+        "workspace not capability mode": "present - Compose is selected and the surface combines a project canvas, operator graph, inspector, and timeline",
+        "current derivation/audio status": "present - the canvas says Derivation: Current and the top-right status says Audio Playing \u00b7 Current"
+      },
+      "defects": [
+        "Mathematical correctness fails. The control states steps 13, pulses 5, rotation +2, but the ring visibly fills steps 01,03,05,08,11. Its cyclic gaps are 2,2,3,3,3. Bjorklund E(5,13) has gaps 3,2,3,2,3; applying rotation +2 to the normalized one-based onsets 1,4,6,9,11 gives 3,6,8,11,13, not 1,3,5,8,11. Both the gap order and the stated rotation disagree with the drawing.",
+        "The Tonnetz drawing supplies only C4, E4, G4, A3, D4, and F#4, without axis labels or a full fifths-and-thirds lattice. Its edge geometry therefore cannot substantiate the Tonnetz claim; the displayed C4-to-E4 and E4-to-G4 path is not a lattice explanation.",
+        "Text defect: the inspector title is spelled verbatim \"Euclidean Pluse\"; elsewhere it is \"Euclidean Pulse\".",
+        "Material treatment uses solid line plus pencil for User-authored, dotted texture plus sparkle for Live generated, and hatching plus snowflake/lock for Frozen snapshot. Edited-derivative is absent from the legend and timeline, so the full materialKind vocabulary is not visibly represented.",
+        "Non-color-only encoding is partial: material kind has texture/glyphs, selected step has an outline, and snapshot has hatch/lock. Derivation/audio current and evidence/research states use text and some glyphs, but mapping is collapsed to one sentence and no visible treatment covers the other sourceStatus, derivation, audio, mapping-stage, or selection states.",
+        "No error, budget meter, predicted load, limit, or recovery action is visible.",
+        "Accessibility cues score zero: there is no accessibility annotation or semantic counterpart for the circular rhythm, Tonnetz, graph, or automation curve, and the icon-only transport, stop/record, settings, help, close, graph-tab, and track controls have no visible labels.",
+        "S8 handoff gate failures: interaction behavior is not described; no accessibility annotation is visible; no paired responsive mockup or written rule is visible; no token-deviation record is visible; and the shown E(5,13) values are invalid."
+      ],
+      "strengths": [
+        "The large ring and direct numeric controls make the main rhythm immediately actionable.",
+        "The selected Pulse 09-12 region, selected step 08 badge, and cyan playhead give a readable selection chain."
+      ]
+    },
+    {
+      "id": "S06--A-instrument",
+      "screen": "S06",
+      "variant": "A-instrument",
+      "image": "design/mockups/images/S06-*--A-instrument.png",
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 3,
+        "density management": 3,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 2,
+        "error/budget visibility": 2,
+        "accessibility cues": 1,
+        "responsive plausibility": 1,
+        "implementation plausibility": 3,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "scoreTotal": 35,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {
+        "compiler-driven compatibility": "present - the red dashed pitch-to-pattern preview says \"REFUSED \u00b7 pitch \u2192 pattern incompatible\" and the footer reports \"8 valid \u00b7 1 refused\".",
+        "atomic rewire": "present - the selected node has \"Atomic rewire armed\" and the edge replacement label \"replace Rotate \u2192 Quantize\".",
+        "dependency categories": "present - Source, Transform, Mapping, Target, and Dependency are named in the graph header and use distinct port glyphs.",
+        "keyboard/non-drag path": "present - footer says \"Keyboard route: select output \u2192 select input \u2190 connect\" and shows \u2318K, Tab, and Enter."
+      },
+      "defects": [
+        "MATHEMATICAL CORRECTNESS: the inspector claims Steps 16, Pulses 5, Rotation 3 and the timeline claims \"Euclid 5/16\", but its 16 step positions are rendered as the same small vertical glyphs. A 5-pulse Euclidean cycle must expose five onsets (canonical E(5,16) gaps 3,3,3,3,4; a +3 rotation gives onset positions 3,6,9,12,15 under zero-based indexing), not sixteen indistinguishable marks. The claimed result is not visually verifiable.",
+        "NON-COLOR-ONLY ENCODING: material kind is good (solid, dotted, hatch, and stepped derivative line), but sourceStatus is not shown at all; derivation/audio rely on colored status chips with text rather than demonstrated state-specific shape/texture; the selected graph node is primarily a cyan outline. The full semanticStates vocabulary is therefore not distinguishable without hue.",
+        "No BudgetMeter, predicted load, limit, or recovery is visible; one refused edge is not budget visibility.",
+        "Accessibility fails: icon-only transport, undo/redo, export/share, overflow, track controls, and graph toolbar controls have no visible text labels or accessibility annotation. This single desktop image supplies neither a responsive rule nor a paired adaptation.",
+        "S8 handoff gate fails: Atomic rewire is visibly a component but has no canonical component entry; no component mapping, token-deviation record, interaction description beyond a few pixels, accessibility annotation, or paired responsive mockup/written rule is visible. Content/math validity also fails."
+      ],
+      "strengths": [
+        "The compact shell, selected-node outline/chip, inspector, graph, and timeline make the selection trace unusually clear.",
+        "All four material kinds are simultaneously legible by line/clip texture, not hue alone."
+      ]
+    },
+    {
+      "id": "S06--B-laboratory",
+      "screen": "S06",
+      "variant": "B-laboratory",
+      "image": "design/mockups/images/S06-*--B-laboratory.png",
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 3,
+        "density management": 2,
+        "novice-to-expert progression": 3,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 3,
+        "error/budget visibility": 2,
+        "accessibility cues": 2,
+        "responsive plausibility": 2,
+        "implementation plausibility": 2,
+        "visual restraint": 2,
+        "consistency with design tokens": 3
+      },
+      "scoreTotal": 36,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {
+        "compiler-driven compatibility": "present - dashed red control-to-pitch preview is stopped with \"Refused: control \u2192 pitch incompatible\".",
+        "atomic rewire": "present - \"Atomic rewire / Replace existing edge / event stream\" is visible.",
+        "dependency categories": "present - the dependency card explicitly says \"source + mapping + constraint\" and shows category glyphs.",
+        "keyboard/non-drag path": "present - the lower-left card gives steps 1\u20133 and the button says \"Connect without dragging\"."
+      },
+      "defects": [
+        "MATHEMATICAL CORRECTNESS: \"Euclidean 13:5\" and \"13 steps / 5 pulses\" require five onsets across 13 positions, with cyclic gap multiset 3,3,3,2,2. The supposed pattern inside that node is an unreadable smear, not thirteen countable positions or five distinguishable onsets. It cannot substantiate the claimed Euclidean rhythm.",
+        "The displayed formula \"p(n) = nearest_D_dorian(f(n))\" is not a defined mathematical operation in the image: neither D_dorian nor its pitch-class distance/tie rule is defined. The adjacent claim \"pitch class / semitone\" does not repair it.",
+        "TEXT DEFECTS: the value/pattern line directly below \"Euclidean 13:5\" is garbled and unreadable; the Normalize node's value is also unreadable glyph-like text, not a label or value.",
+        "NON-COLOR-ONLY ENCODING: material clips/legend have solid, dashed, hatched, and edited-line encodings, but sourceStatus is absent. Selected/focused relation is dominated by blue outline, and no non-color state treatment is shown for derivation/audio variants.",
+        "No numerical budget, load limit, or recovery path is visible.",
+        "Accessibility fails: several icon-only toolbar controls and minimap/list controls are unlabeled, and there is no accessibility annotation. Responsive behavior is not provided; the compact text and dense graph have no demonstrated iPad rule.",
+        "S8 handoff gate fails: the image does not show a component-to-inventory mapping or recorded token deviations; Atomic rewire/dependency cards are not canonical component entries; behavior is only implied; there is no accessibility annotation or paired responsive rule; valid math/content is not established."
+      ],
+      "strengths": [
+        "The selected Pitch Quantize node is linked to the inspector, operator list, provenance card, and timeline clearly.",
+        "The provenance block explicitly surfaces derived, frozen-input, and edited-derivative states with texture/glyph support."
+      ]
+    },
+    {
+      "id": "S06--C-spatial",
+      "screen": "S06",
+      "variant": "C-spatial",
+      "image": "design/mockups/images/S06-*--C-spatial.png",
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 2,
+        "linked-selection clarity": 2,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 3,
+        "error/budget visibility": 1,
+        "accessibility cues": 1,
+        "responsive plausibility": 3,
+        "implementation plausibility": 3,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "scoreTotal": 34,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {
+        "compiler-driven compatibility": "present - the dashed control edge terminates at a red \u00d7 and the card says \"Refused by compiler \u2014 control \u2192 event requires Map to Pattern\".",
+        "atomic rewire": "present - the \"Atomic rewire\" card names the replacement and offers \"Apply rewire\".",
+        "dependency categories": "present - the Dependencies card names Upstream and Downstream and shows Tonnetz Walk, Normalize, Harmonic Orbit, and MIDI Target category glyphs.",
+        "keyboard/non-drag path": "present - palette is titled \"Add node / connect by keyboard\" and its footer says \"Tab ports \u00b7 Enter connect \u00b7 Esc cancel\"."
+      },
+      "defects": [
+        "MATHEMATICAL CORRECTNESS: the source claims \"Euclidean 5/8\" but the rendered ring has eight visually identical white step dots. E(5,8) requires exactly five onsets and three rests (cyclic gap pattern 2,1,2,1,2); the image shows no active/rest distinction, so it depicts eight equivalent marks, not a 5-of-8 rhythm.",
+        "The Tonnetz Walk is an unlabeled hex motif: it provides no pitch labels and no fifth/major-third adjacency evidence, so the claimed Tonnetz cannot be checked for duplicated or incoherent vertices.",
+        "NON-COLOR-ONLY ENCODING: material kind has solid/dotted/hatch/edited-line treatments, but sourceStatus is absent. The selected Mapping state and provenance path are largely gold/green color cues; no complete shape/texture alternative is visible for the semantic-state axes.",
+        "Error is shown, but BudgetMeter/predicted load/limit/recovery are completely absent.",
+        "Accessibility fails: tiny icon-only controls (transport, close, share, settings, minimap zoom) have no visible labels or accessibility annotation; no reduced-motion, focus, or responsive behavior annotation is supplied.",
+        "S8 handoff gate fails: no visible component mapping or deviation record; Atomic rewire and Dependencies lack canonical inventory entries; behavior is inferred from pixels; no accessibility annotation or paired responsive mockup/written rule is present; content/math values are invalid."
+      ],
+      "strengths": [
+        "The graph is spatially organized and the keyboard connection palette is conspicuous.",
+        "The provenance path has a readable source \u2192 selected mapping \u2192 target sequence, and material clips preserve non-color texture."
+      ]
+    },
+    {
+      "id": "S07--A-instrument",
+      "screen": "S07",
+      "variant": "A-instrument",
+      "image": "design/mockups/images/S07-*--A-instrument.png",
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 3,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 3,
+        "error/budget visibility": 2,
+        "accessibility cues": 0,
+        "responsive plausibility": 1,
+        "implementation plausibility": 2,
+        "visual restraint": 2,
+        "consistency with design tokens": 3
+      },
+      "scoreTotal": 32,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {
+        "MaterialKind + SourceStatus": "present - left Material Legend and timeline distinguish solid manual, dashed generated, hatched snapshot, and derivative end-corner; inspector Source status lists Current, Changed, Missing, Detached",
+        "generated edit choice": "present - centered 'Edit generated material' dialog offers Add downstream transform, Fork the generator, and Freeze a snapshot",
+        "materialization receipt": "present - right inspector 'Materialization receipt', Receipt MR-0142 / Snapshot S-14",
+        "orphaned event state": "present - red dashed E-31 'source missing' clip on Accent Weave lane"
+      },
+      "defects": [
+        "Mathematical correctness fails: the canvas says '7 / 12 Euclidean pulse field' and '7:12', but only five cyan filled onset circles are visible, at steps 12, 10, 9, 6, and 4. E(7,12) must contain seven onsets; no rotation can make five onsets correct.",
+        "The rendered onset positions also fail the expected Euclidean spacing: the visible five-onset pattern has cyclic gaps 2,1,3,2,4, whereas E(7,12) has five 2-step gaps and two 1-step gaps in some rotation.",
+        "Accessibility reject fails: icon-only toolbar controls (skip, pause, stop, undo, redo, export/share, overflow, settings) have no visible text labels, accessibility annotation, focus treatment, or keyboard counterpart. S3 requires visible accessibility-friendly labels for icon-only controls in annotation versions.",
+        "The image does not visibly establish non-color-only treatments for every semanticStates value: derivation shows only 'Current', audio only 'Playing', and selection only PRIMARY/related. The unshown values have no visible shape, texture, glyph, or line-style evidence.",
+        "'Source status: current' duplicates the Current row and makes the state labeling redundant rather than clarifying the selected orphaned item.",
+        "S8 handoff gate fails: no visible component-to-manifest mapping; no recorded token deviations; interactions are not described beyond a static menu; content/math values are invalid; no accessibility annotation; no paired responsive mockup or written responsive rule."
+      ],
+      "strengths": [
+        "Selection is explicitly linked from ring to event callout, timeline playhead, inspector title, and bottom 'Selected in' chain.",
+        "Material treatments are genuinely non-color-dependent where shown: solid outline, dashed outline, diagonal hatch, and folded-corner derivative; the missing source has a dashed red box, broken-link glyph, and text.",
+        "The required edit dialog, receipt, automation lane, 5:3 rational-grid marker, and orphaned source are all visible without relying on hidden state."
+      ]
+    },
+    {
+      "id": "S07--B-laboratory",
+      "screen": "S07",
+      "variant": "B-laboratory",
+      "image": "design/mockups/images/S07-*--B-laboratory.png",
+      "scores": {
+        "immediate playability": 2,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 2,
+        "linked-selection clarity": 2,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 3,
+        "error/budget visibility": 2,
+        "accessibility cues": 0,
+        "responsive plausibility": 1,
+        "implementation plausibility": 2,
+        "visual restraint": 2,
+        "consistency with design tokens": 2
+      },
+      "scoreTotal": 28,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {
+        "MaterialKind + SourceStatus": "present - legend and timeline show manual solid, live dotted, snapshot hatch, and derivative corner; track chips show current and changed, and orphaned clip says source missing",
+        "generated edit choice": "present - centered 'Edit live-generated material' dialog lists all three required choices",
+        "materialization receipt": "present - right inspector shows 'Materialization receipt MR-0471'",
+        "orphaned event state": "present - red timeline callout explicitly says 'orphaned \u00b7 source missing'"
+      },
+      "defects": [
+        "Mathematical correctness fails: 'Beat positions (5/7 pulse set)' shows seven cyan onset dots, at beat labels 0, 1, 2, 3, 4, 5, and 7. E(5,7) must have five onsets; its canonical Bjorklund form has onsets at 0,1,3,4,6 (or a rotation), not seven.",
+        "The plot title 'Euclidean 5:7' uses a colon while the legend says '5/7 pulse set'; neither repairs the visible seven-onset contradiction.",
+        "Accessibility reject fails: the transport, undo/redo, overflow, and settings are icon-only with no visible labels, focus state, shortcut, or accessibility annotation. No annotation version is supplied.",
+        "The semanticStates requirement is not visibly met for every state: only current/changed source status, current derivation, playing audio, three evidence types, and selected/related selection are shown. Missing, detached, unresolved, idle, preview, error, and the other listed states lack a visible non-hue encoding.",
+        "The color treatment drifts from the specified dark-instrument shell: broad blue-gray selected navigation and large raised top-button blocks dominate instead of the restrained dark neutral panels shown by the token set.",
+        "S8 handoff gate fails: no visible component-to-manifest mapping, token-deviation record, accessibility annotation, paired responsive rule, or behavior specification; the visible E(5,7) content is mathematically invalid."
+      ],
+      "strengths": [
+        "The provenance table explicitly names source through target and keeps a per-stage current/changed treatment alongside text.",
+        "Generated, snapshot, manual, and derivative clips are distinguishable without hue through dotted outline, hatch, solid outline, and derivative corner mark.",
+        "The orphaned event is unusually explicit: broken-link glyph plus 'orphaned \u00b7 source missing' text, not red alone."
+      ]
+    },
+    {
+      "id": "S07--C-spatial",
+      "screen": "S07",
+      "variant": "C-spatial",
+      "image": "design/mockups/images/S07-*--C-spatial.png",
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 2,
+        "linked-selection clarity": 3,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 2,
+        "error/budget visibility": 1,
+        "accessibility cues": 0,
+        "responsive plausibility": 2,
+        "implementation plausibility": 2,
+        "visual restraint": 2,
+        "consistency with design tokens": 2
+      },
+      "scoreTotal": 29,
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "delegateVerdict": "reject",
+      "adjudicatedVerdict": "reject",
+      "adjudicatedReason": "mathematical correctness",
+      "requiredStates": {
+        "MaterialKind + SourceStatus": "present - legend and timeline use solid manual, dotted generated, hatched frozen, and corner-marked derivative; a dashed clip with broken-link glyph says 'source missing'",
+        "generated edit choice": "present - 'Edit live-generated material' menu visibly offers Add downstream transform, Fork the generator, and Freeze a snapshot",
+        "materialization receipt": "present - inspector reads 'Snapshot r-17 \u00b7 receipt 2F91-A8C4'",
+        "orphaned event state": "present - Manual Accent lane contains a broken-link dashed 'source missing' region"
+      },
+      "defects": [
+        "Mathematical correctness fails: the ring is labelled 'E(5,13)' and 'phase 3/13', yet only four cyan filled onsets are visible: steps 1, 4, 9, and 12. E(5,13) requires five onsets; rotation cannot change that count.",
+        "The timeline label '5:3 \u00b7 13/8 grid' is visually adjacent to an E(5,13) source but does not state a coherent relationship between the 13-step rhythm, the 7/8 meter, and the asserted 13/8 grid.",
+        "Accessibility reject fails: top-bar icon controls have no visible labels or accessibility annotations. The canvas Select, Draw, Quantize, and Freeze blocks use text, but that does not label the icon-only global controls or supply keyboard/focus alternatives.",
+        "The semanticStates requirement is not visibly proven for every state. Current derivation and playing audio are text-plus-color; no visible glyph/line/texture demonstrates their alternative values, and source status shows only missing. Unshown states cannot be credited from pixels.",
+        "The selected relationship is partly color-load-bearing: the ring's selected step, cross-canvas dashed connector, playhead, and selected clip rely predominantly on cyan/blue; their only non-color distinction is a numeric '12' tag at one endpoint.",
+        "S8 handoff gate fails: no visible component inventory mapping, token-deviation record, interaction description, accessibility annotation, or paired responsive rule; the E(5,13) content is mathematically invalid."
+      ],
+      "strengths": [
+        "The spatial canvas gives a direct visible link between the selected Euclidean step, small 7/8 wheel, inspector, and timeline playhead.",
+        "Material semantics are strong where rendered: dotted generated source, hatched Frozen r-17, solid manual clip, and broken-link dashed missing-source region all remain distinguishable without hue.",
+        "The choice dialog is concise and its three choices are individually named and iconed."
+      ]
+    }
+  ],
+  "screens": {
+    "S01": {
+      "screenNotes": "S01 has no requiredStates array in screens.json. All three visibly cover the core library items and preserve the no-project shell better than they cover S6/S8 proof. None visibly shows a budget/error state, an accessibility annotation, responsive rule, interaction behavior, or a complete non-color-only treatment for every semanticStates axis. A and C use Tonnetz-looking lattices without verifiable fifth/third semantics; B additionally renders an E(5,8) preview with four visible pulses rather than five.",
+      "recommendedVariant": "A-instrument",
+      "recommendationReason": "A-instrument is the strongest visual/library-shell direction: it is restrained, dense, plausibly implementable, and clearest on selected project plus material treatment. It is still rejected as supplied because its Tonnetz math is not verifiable and its accessibility/S8 handoff evidence is absent."
+    },
+    "S02": {
+      "screenNotes": "All three visibly provide the three S02 required states and a dark instrument-style shell, transport, collapsed graph drawer, timeline, material legend, and non-hue material-kind cues. All three nevertheless reject: each makes a checkable logarithmic-tempo claim while rendering the non-logarithmic 60/90/120/180/240 sequence at near-equal spacing; none visibly provides source-status or mapping-stage encodings, provenance/evaluation/error-budget evidence, or an accessibility annotation. S8 conditions requiring described interaction, accessibility annotation, and responsive rule/paired mockup are not fulfilled by any single image.",
+      "recommendedVariant": "A-instrument",
+      "recommendationReason": "A-instrument is the closest visual basis for the required compact professional Explore shell: it keeps the inspector collapsed, makes the required badges/statuses readable, and most clearly applies distinct material textures. It remains rejected until the logarithmic scale is corrected and the missing semantic/accessibility, provenance, budget/error, and S8 handoff evidence are supplied."
+    },
+    "S03": {
+      "screenNotes": "All three visibly preserve the dark instrument shell, a working transport, material legend, mapping stages, evaluation evidence, a timeline, and a separated experimental area. All three omit a visible error/budget state and lack the non-pixel artifacts required by S8: accessibility annotation, described interaction behavior, and paired/written responsive behavior. A and B must be rejected for visible mathematical contradictions; C is the only variant without one found in the rendered values.",
+      "recommendedVariant": "C-spatial",
+      "recommendationReason": "C-spatial is the only variant that passes all three reject axes and its displayed exponential octave relation is numerically coherent. It still needs a clearly labelled rendered unwrapped view, explicit non-colour selection treatment, error/budget state, and S8 annotation/interaction/responsive handoff artifacts."
+    },
+    "S04": {
+      "screenNotes": "S04 has no requiredStates entry in screens.json. All three images visibly deliver a dark desktop shell, concentric rings, four tracks, a timeline, a material legend, a collapsed graph drawer, a selection treatment, provenance/evaluation surfaces, and all four material-kind textures. All three omit any visible error/budget state and the S8 artifacts that cannot be inferred from pixels: interaction description, accessibility annotation, and paired/written responsive behavior. Mathematical correctness rejects A for its contradictory cycle duration, B for its inverted E(k,n) notation and non-Euclidean formula, and C for a false LCM plus an E(5,16) ring rendered with 16 onsets.",
+      "recommendedVariant": "A-instrument",
+      "recommendationReason": "A is the least damaged visual direction: it has the clearest dense creative-tool hierarchy and the strongest cross-surface selection. It is still rejected and must correct the composite-cycle duration, add visible error/budget treatment, and complete the S8 accessibility, interaction, and responsive handoff evidence before use."
+    },
+    "S05": {
+      "screenNotes": "All three visibly satisfy S05's three required states and use a dark, compact studio vocabulary. All three nevertheless fail the S8 handoff gate from pixels alone: no interaction specification, accessibility annotation, responsive pair/rule, or token-deviation record is present. All three also omit visible error/budget handling and do not make every semanticStates axis independently non-color-only. A and C have E(5,13) claims, while B has E(5,8); B and C visibly contradict their stated Euclidean parameters, and A's Tonnetz contains a visible C-to-F# tritone adjacency.",
+      "recommendedVariant": "B-laboratory",
+      "recommendationReason": "B is still rejected because its E(5,8) geometry is mathematically wrong and it has no accessibility annotation, but it is the only variant that visibly distinguishes all four material kinds with labels, texture, and glyphs while exposing a usable provenance/evaluation surface. Correct its five-onset ring to rotated E(5,8) steps 1,3,4,6,7 before using it as a basis."
+    },
+    "S06": {
+      "screenNotes": "All variants visibly cover the four S06 required states and use strong non-color material-kind textures. All three nevertheless fail the S6 reject gate: their Euclidean claims are either contradicted by identical step markers (C) or not countably rendered (A, B); sourceStatus and full non-color semantic-state coverage are absent; and no accessibility annotation is visible. Each also lacks a visible S8-authoritative handoff package.",
+      "recommendedVariant": "B-laboratory",
+      "recommendationReason": "B is the least bad foundation because its selection, provenance, dependency categories, keyboard route, and material lineage are clearest. It remains rejected until the mathematical renderings are made countable/correct, garbled text is replaced, accessibility is annotated, and the S8 handoff evidence is supplied."
+    },
+    "S07": {
+      "screenNotes": "All three make every S07 required state visibly findable and use useful texture/line/glyph treatments for the material kinds. All three nevertheless reject: each claims a Euclidean rhythm while rendering the wrong number of onsets, and none includes the accessibility annotation, icon labels, responsive rule, component mapping, token-deviation record, or behavioral specification required for S8 implementation-authoritative handoff. No text is visibly garbled or misspelled; the defects are semantic and mathematical, not OCR noise.",
+      "recommendedVariant": "A-instrument",
+      "recommendationReason": "A-instrument is the least compromised visual base: it has the clearest cross-surface selection chain, the most complete source-status/evidence treatment, and the strongest compact instrument shell. It remains rejected until its E(7,12) ring is corrected to seven Euclidean onsets and the absent S8 accessibility, behavior, responsive, component-mapping, and token-deviation evidence is supplied."
+    }
+  },
+  "summary": {
+    "mockupsScored": 21,
+    "delegateRejects": 20,
+    "adjudicatedRejects": 20,
+    "meanScore": 2.07,
+    "soleSurvivingRejectAxis": "mathematical correctness"
+  }
+}

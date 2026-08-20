@@ -1,0 +1,123 @@
+{
+  "screen": "S04",
+  "variants": {
+    "A-instrument": {
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 2,
+        "musical legibility": 3,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 3,
+        "density management": 3,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 2,
+        "error/budget visibility": 0,
+        "accessibility cues": 1,
+        "responsive plausibility": 1,
+        "implementation plausibility": 3,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "verdict": "reject",
+      "requiredStates": {},
+      "defects": [
+        "Mathematical correctness fails: the displayed track counts are 13, 16, 11, and 9 steps, whose LCM is correctly shown as 20,592, but the same composite-cycle label claims \"2:51.6 @ 120 BPM\". The toolbar position uses 240 ticks per beat (\"17.3.240\"); 20,592 ticks is 85.8 beats and therefore 42.9 seconds at 120 BPM, not 171.6 seconds. The displayed duration is exactly four times too long.",
+        "No error, overload, predicted-load, limit, or recovery state is visible. The evaluation block only says \"PASS\".",
+        "Accessibility reject: the image has no accessibility annotation and icon-only controls (transport, undo/redo, export/share/settings, graph expander) have no visible text counterpart. Material kind is non-color encoded well (solid line, dotted line, diagonal hatch, stepped line plus edit glyph), but the screenshot does not visibly establish non-hue alternatives for every state of every semanticStates axis.",
+        "S8 handoff gate fails visibly: there is no interaction-behavior description, accessibility annotation, paired responsive mockup/written responsive rule, or recorded token-deviation record. The screen ID exists and the visible shell largely resembles inventory components, but pixels do not provide a component mapping record.",
+        "The ring canvas exposes counts and rotation but no indexed onset listing or formula, so the filled-step claim cannot be independently audited from the small marks alone."
+      ],
+      "strengths": [
+        "The selected Kick is linked across ring, left track, graph-drawer chip, timeline lane, and inspector with text and chain glyphs as well as cyan emphasis.",
+        "All four material kinds are visibly differentiated without hue in both the legend and timeline: solid, dotted, hatch, and stepped/edit-glyph treatments.",
+        "The fixed shell, compact controls, ruler, track lanes, material legend, provenance tab, evidence rows, and collapsed graph drawer are all visibly present."
+      ]
+    },
+    "B-laboratory": {
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 1,
+        "musical legibility": 3,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 3,
+        "density management": 3,
+        "novice-to-expert progression": 3,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 3,
+        "error/budget visibility": 0,
+        "accessibility cues": 1,
+        "responsive plausibility": 1,
+        "implementation plausibility": 3,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "verdict": "reject",
+      "requiredStates": {},
+      "defects": [
+        "Mathematical correctness fails: the selected ring is labelled \"Clave · E(12,5)\" while its controls say Steps 12 and Pulses 5. Under the requested E(k,n) notation this must be E(5,12), not E(12,5). The formula \"E(12,5) = [x mod 12 < 5]\" yields the consecutive onset positions {0,1,2,3,4}; it does not yield a 5-pulse Euclidean distribution. The displayed interval claim \"{2, 3}\" instead describes a dispersed 5-in-12 rhythm, contradicting that formula.",
+        "The other track labels repeat the inverted notation: \"E(16,5)\", \"E(9,4)\", and \"E(7,3)\" beside controls showing respectively 16/5, 9/4, and 7/3 steps/pulses.",
+        "No error, budget, limit, overload, or recovery state is visible; the only evaluation outcome is \"CHECK PASSED\".",
+        "Accessibility reject: material kind has visible non-color encodings (solid, dotted, diagonal hatch, and hatch plus pencil), selection has text plus outline/link glyphs, provenance/evidence use words and icons, but icon-only shell controls have no visible accessible labels and there is no accessibility annotation. The image cannot establish non-hue treatment for every semanticStates value.",
+        "S8 handoff gate fails visibly: no interaction-behavior description, accessibility annotation, paired responsive mockup/written responsive rule, or token-deviation record is supplied. Pixels also do not provide the required component-manifest mapping record."
+      ],
+      "strengths": [
+        "The lab view makes the selected Clave legible across the ring, the \"Linked: graph node euclid-clave-12\" chip, inspector, and linked timeline lane.",
+        "The LCM value 1008 is arithmetically correct for the displayed step counts 16, 12, 9, and 7.",
+        "The inspector exposes values, a pipeline, determinism, evidence class, and provenance more clearly than the other variants."
+      ]
+    },
+    "C-spatial": {
+      "scores": {
+        "immediate playability": 2,
+        "mathematical legibility": 1,
+        "musical legibility": 2,
+        "professional-tool credibility": 2,
+        "linked-selection clarity": 2,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 2,
+        "error/budget visibility": 0,
+        "accessibility cues": 1,
+        "responsive plausibility": 2,
+        "implementation plausibility": 3,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "rejectAxes": {
+        "mathematical correctness": "fail",
+        "generated/frozen semantics": "pass",
+        "accessibility": "fail"
+      },
+      "verdict": "reject",
+      "requiredStates": {},
+      "defects": [
+        "Mathematical correctness fails twice. The top canvas says \"LCM composite cycle · 105 steps · 8 bars\", while the composite-cycle panel immediately below says \"LCM 240 ticks / 8 bars\". For the visible step counts 16, 12, 10, and 15, LCM(16,12,10,15) = 240, not 105.",
+        "The outer Kick is labelled \"E(5,16) · rot 0\" but its ring visibly contains a cyan pulse at every one of the 16 step positions. E(5,16) must contain five onsets, not sixteen. The visible pulse count contradicts the label by 11 onsets.",
+        "No error, budget, limit, overload, or recovery state is visible; the evaluation table only shows \"PASS\".",
+        "Accessibility reject: the material legend does use non-color treatments (solid, dotted, diagonal hatch, clipped corner), and selection is reinforced with a link glyph and text. But icon-only controls have no visible labels or annotation, and the image does not demonstrate non-hue alternatives for every semanticStates value.",
+        "S8 handoff gate fails visibly: no interaction-behavior description, accessibility annotation, paired responsive mockup/written responsive rule, or token-deviation record is supplied. Pixels do not provide a component-manifest mapping record.",
+        "The reduced chrome helps direct manipulation, but the timeline has no visible bars.beats ruler: it uses labels such as \"017.1\" and \"018.1\" without a clear bars.beats.ticks convention."
+      ],
+      "strengths": [
+        "The direct-rotation affordance is unusually explicit: the selected Clave has a hand/rotation graphic beside its numeric controls.",
+        "All four material kinds are visibly differentiated in the legend and lanes without depending only on hue.",
+        "The selected Clave is linked among the ring, operator-graph chip, inspector title, and dotted timeline clip."
+      ]
+    }
+  },
+  "screenNotes": "S04 has no requiredStates entry in screens.json. All three images visibly deliver a dark desktop shell, concentric rings, four tracks, a timeline, a material legend, a collapsed graph drawer, a selection treatment, provenance/evaluation surfaces, and all four material-kind textures. All three omit any visible error/budget state and the S8 artifacts that cannot be inferred from pixels: interaction description, accessibility annotation, and paired/written responsive behavior. Mathematical correctness rejects A for its contradictory cycle duration, B for its inverted E(k,n) notation and non-Euclidean formula, and C for a false LCM plus an E(5,16) ring rendered with 16 onsets.",
+  "recommendedVariant": "A-instrument",
+  "recommendationReason": "A is the least damaged visual direction: it has the clearest dense creative-tool hierarchy and the strongest cross-surface selection. It is still rejected and must correct the composite-cycle duration, add visible error/budget treatment, and complete the S8 accessibility, interaction, and responsive handoff evidence before use."
+}

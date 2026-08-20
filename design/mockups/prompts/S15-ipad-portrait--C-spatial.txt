@@ -1,0 +1,80 @@
+Design a high-fidelity production interface for Aural Geometry Lab, a mathematical music studio that lets users hear, see, manipulate, and explain mathematical structures as music. The product should feel like a serious creative instrument crossed with a scientific visualization environment: precise, calm, luminous, tactile, and deeply interactive - not a generic analytics dashboard, not a game, and not a sci-fi HUD. Use the supplied design tokens and layout specification. The default studio is dark neutral with restrained high-contrast semantic accents. Mathematical geometry and musical time should dominate the canvas. Controls should be compact, professional, and legible. Use progressive disclosure: a novice can play immediately while an expert can open the timeline, typed operator graph, and mathematical inspector. Make selected entities visibly linked across canvas, graph, timeline, and inspector. Generated material, frozen clips, provenance, research-gated content, and evaluation states must each have distinct visual treatments that do not rely on color alone. Avoid decorative equations, fake waveforms, meaningless neon grids, excessive glassmorphism, giant cards, marketing-page spacing, and arbitrary gradients. The interface must look implementable in React and adaptable to SwiftUI on iPad.
+
+LOCKED SHELL ADAPTATION - the desktop shell above is NOT to be shrunk onto this device. The
+adaptation rule is fixed: ONE dominant canvas surface; the transport persists; the navigator and
+inspector become contextual zones, sheets, or drawers rather than permanent columns; the same
+material legend (solid / dotted / hatched) and the same derivation, audio, and evidence status
+vocabulary survive the adaptation; touch targets are 44pt-class. Panel identity and status
+vocabulary carry over; panel geometry does not.
+
+
+SCREEN S15 - iPad Portrait Explore (Explore workspace, ipad-native).
+iPad Portrait Explore. Canvas-first. The sidebar is hidden, the inspector is a sheet, the transport and timeline live in a bottom drawer, touch targets are large while professional density is preserved.
+
+
+VARIANT C - SPATIAL / TACTILE. Optimize for direct manipulation, larger geometric controls, and iPad transferability. Reduce chrome and let the canvas dominate; controls are larger (44pt-class), fewer, and positioned for reach. Panels become contextual overlays rather than permanent columns.
+
+CANVAS: iPad portrait device screen, 3:4, no browser chrome. Render the full interface edge to edge, straight-on, no perspective, no device
+mockup shadows, no marketing background, no annotations outside the interface itself.
+
+DESIGN TOKENS - dark-instrument theme, use these exact hues:
+  bg.canvas = #0B0D10
+  bg.panel = #11151A
+  bg.raised = #181E25
+  bg.input = #0F1318
+  text.primary = #F3F6F8
+  text.secondary = #B8C0C8
+  text.muted = #7E8995
+  border.default = #2A333D
+  border.strong = #3A4653
+  accent.selection = #7DD3FC
+  accent.music = #67E8F9
+  accent.math = #C4B5FD
+  accent.mapping = #FDE68A
+  provenance.related = #A7F3D0
+  status.success = #86EFAC
+  status.warning = #FBBF24
+  status.error = #FCA5A5
+  status.research = #D8B4FE
+
+LAYOUT TOKENS - respect these panel sizes:
+  toolbarHeight = 48px
+  navigatorMin = 188px
+  navigatorIdeal = 232px
+  navigatorMax = 280px
+  inspectorMin = 280px
+  inspectorIdeal = 336px
+  inspectorMax = 420px
+  timelineMin = 160px
+  timelineIdeal = 240px
+  timelineMax = 360px
+  graphCollapsed = 28px
+  graphExpandedMin = 260px
+  graphExpandedMax = 440px
+  trackHeaderIdeal = 204px
+
+TYPOGRAPHY: system-ui sans for UI at 11px micro / 13px compact / 14px body / 16px section /
+22px lab title; monospace for all numeric and mathematical values. Radii 4/6/8/12px. Spacing
+rhythm 4/8/12/16/24/32px.
+
+SEMANTIC STATE VOCABULARY (design tokens v0.3.0 - these are the states the mockup must be able to show, each with a distinct non-color-only treatment):
+  materialKind: user-authored, live-generated, snapshot, edited-derivative
+  sourceStatus: not-applicable, current, changed, missing, detached, unresolved
+  derivation: idle, preview, evaluating, current, cache-only, stale, error, cancelled
+  audio: disabled, arming, playing, paused, interrupted, reconfiguring, error, panic
+  evidence: established, strong-inference, engineering-default, experimental, research-gated
+  mappingStage: source, sample, normalize, smooth, transform, quantize-threshold, constrain, target
+  selection: selected, primary, focused, hovered, related, orphaned
+
+FIDELITY RULES - every one of these is mandatory:
+  - use real labels from the screen manifest, never lorem ipsum
+  - show coherent musical and mathematical values (real tempi, real step/pulse counts, real note names)
+  - preserve the same transport and primary navigation locations within a platform class
+  - show a believable selection state linked across at least two surfaces
+  - show enough content to judge information density
+  - avoid impossible graph connections; keep operator port shapes and types consistent
+  - distinguish generated / frozen / manual material by shape and texture, not by hue alone
+  - do not fabricate an exact Penrose tiling; illustrative rhomb motifs must be labelled as such
+  - render all text crisply and spell every label exactly as given
+
+Produce one single image: the complete interface as it would appear on screen.

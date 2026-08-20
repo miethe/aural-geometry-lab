@@ -1,0 +1,101 @@
+Design a high-fidelity production interface for Aural Geometry Lab, a mathematical music studio that lets users hear, see, manipulate, and explain mathematical structures as music. The product should feel like a serious creative instrument crossed with a scientific visualization environment: precise, calm, luminous, tactile, and deeply interactive - not a generic analytics dashboard, not a game, and not a sci-fi HUD. Use the supplied design tokens and layout specification. The default studio is dark neutral with restrained high-contrast semantic accents. Mathematical geometry and musical time should dominate the canvas. Controls should be compact, professional, and legible. Use progressive disclosure: a novice can play immediately while an expert can open the timeline, typed operator graph, and mathematical inspector. Make selected entities visibly linked across canvas, graph, timeline, and inspector. Generated material, frozen clips, provenance, research-gated content, and evaluation states must each have distinct visual treatments that do not rely on color alone. Avoid decorative equations, fake waveforms, meaningless neon grids, excessive glassmorphism, giant cards, marketing-page spacing, and arbitrary gradients. The interface must look implementable in React and adaptable to SwiftUI on iPad.
+
+LOCKED APPLICATION SHELL - this chrome is already converged. Reproduce it in the same places at
+the same proportions in every desktop screen; only the centre canvas and the inspector contents
+change between screens. Do not redesign it.
+  - TOP TOOLBAR, 48px, full width: product mark and wordmark 'Aural Geometry Lab' at far left;
+    then the project name with its saved/unsaved state; a centred transport cluster
+    (skip-back, play/pause, stop); a monospace readout group of tempo BPM, meter, and
+    bars.beats.ticks position; then a Derivation status chip and an Audio runtime status chip
+    side by side; undo and redo; the Explore/Compose/Inspect workspace switcher; export/share;
+    and an overflow/settings group at far right.
+  - LEFT NAVIGATOR, 232px: workspace and lab navigation at the top, the project's track list
+    below it, and a MATERIAL LEGEND keyed by line style and texture - solid = user-authored,
+    dotted = live generated, diagonal hatch = frozen snapshot, and a distinct mark for edited
+    derivative - never by hue alone.
+  - RIGHT INSPECTOR, 336px: the selected entity's name and a selection chip at the top; tabs
+    for Parameters / Math / Provenance; a compact mapping-pipeline summary; an evaluation block
+    showing cache key, last evaluated time, and a determinism check; and evidence-class rows
+    (established, engineering-default, research-gated) each with its own icon, the research-gated
+    one carrying a lock.
+  - BOTTOM TIMELINE, 240px: a bars.beats ruler, one lane per track, clips textured by material
+    kind per the legend above, and a playhead carrying its position readout.
+  - OPERATOR GRAPH DRAWER, 28px collapsed, sitting between the canvas and the timeline with a
+    visible expand affordance and a node count.
+
+
+SCREEN S07 - Timeline Focus (Compose workspace, web+ipad).
+Timeline Focus. Show generated regions, frozen snapshot clips, a manual clip, an automation lane, a rational-grid tuplet marker, a selected event's provenance chip, and the generated-edit choice dialog (add downstream transform / fork the generator / freeze a snapshot) plus one orphaned event whose source is missing.
+
+REQUIRED STATES for this screen (design/screens.json v0.3.0) - each must be visibly present and identifiable:
+  - MaterialKind + SourceStatus
+  - generated edit choice
+  - materialization receipt
+  - orphaned event state
+
+VARIANT B - LABORATORY. Optimize for mathematical explanation and visualization while preserving composition capability. The inspector, the mapping pipeline, formulas, provenance chips and annotation layers are somewhat more prominent; the canvas carries labelled axes, units, and legends. Think Mathematica/Observable crossed with a DAW.
+
+CANVAS: 16:9 desktop application window, approximately 1600x900 logical pixels. Render the full interface edge to edge, straight-on, no perspective, no device
+mockup shadows, no marketing background, no annotations outside the interface itself.
+
+DESIGN TOKENS - dark-instrument theme, use these exact hues:
+  bg.canvas = #0B0D10
+  bg.panel = #11151A
+  bg.raised = #181E25
+  bg.input = #0F1318
+  text.primary = #F3F6F8
+  text.secondary = #B8C0C8
+  text.muted = #7E8995
+  border.default = #2A333D
+  border.strong = #3A4653
+  accent.selection = #7DD3FC
+  accent.music = #67E8F9
+  accent.math = #C4B5FD
+  accent.mapping = #FDE68A
+  provenance.related = #A7F3D0
+  status.success = #86EFAC
+  status.warning = #FBBF24
+  status.error = #FCA5A5
+  status.research = #D8B4FE
+
+LAYOUT TOKENS - respect these panel sizes:
+  toolbarHeight = 48px
+  navigatorMin = 188px
+  navigatorIdeal = 232px
+  navigatorMax = 280px
+  inspectorMin = 280px
+  inspectorIdeal = 336px
+  inspectorMax = 420px
+  timelineMin = 160px
+  timelineIdeal = 240px
+  timelineMax = 360px
+  graphCollapsed = 28px
+  graphExpandedMin = 260px
+  graphExpandedMax = 440px
+  trackHeaderIdeal = 204px
+
+TYPOGRAPHY: system-ui sans for UI at 11px micro / 13px compact / 14px body / 16px section /
+22px lab title; monospace for all numeric and mathematical values. Radii 4/6/8/12px. Spacing
+rhythm 4/8/12/16/24/32px.
+
+SEMANTIC STATE VOCABULARY (design tokens v0.3.0 - these are the states the mockup must be able to show, each with a distinct non-color-only treatment):
+  materialKind: user-authored, live-generated, snapshot, edited-derivative
+  sourceStatus: not-applicable, current, changed, missing, detached, unresolved
+  derivation: idle, preview, evaluating, current, cache-only, stale, error, cancelled
+  audio: disabled, arming, playing, paused, interrupted, reconfiguring, error, panic
+  evidence: established, strong-inference, engineering-default, experimental, research-gated
+  mappingStage: source, sample, normalize, smooth, transform, quantize-threshold, constrain, target
+  selection: selected, primary, focused, hovered, related, orphaned
+
+FIDELITY RULES - every one of these is mandatory:
+  - use real labels from the screen manifest, never lorem ipsum
+  - show coherent musical and mathematical values (real tempi, real step/pulse counts, real note names)
+  - preserve the same transport and primary navigation locations within a platform class
+  - show a believable selection state linked across at least two surfaces
+  - show enough content to judge information density
+  - avoid impossible graph connections; keep operator port shapes and types consistent
+  - distinguish generated / frozen / manual material by shape and texture, not by hue alone
+  - do not fabricate an exact Penrose tiling; illustrative rhomb motifs must be labelled as such
+  - render all text crisply and spell every label exactly as given
+
+Produce one single image: the complete interface as it would appear on screen.
