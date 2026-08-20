@@ -203,6 +203,17 @@ for (const contract of contractManifest?.publicContracts ?? []) {
 const fr01Run = (frontierRuns?.runs ?? []).find((run) => run.id === "FR-01");
 if (fr01Run?.status !== "completed-repository-hardening") fail("Frontier register does not mark FR-01 completed-repository-hardening.");
 if (fr01Run?.hardenedRelease !== contractManifest?.release) fail("FR-01 frontier release diverges from contract manifest.");
+// A frontier run that names an artifact must name one that exists. A completed run whose
+// result/findings path has drifted reports green while pointing at nothing.
+for (const run of frontierRuns?.runs ?? []) {
+  for (const field of ["spec", "result", "findings", "artifactManifest", "corpus", "tests", "baselineResult", "validation"]) {
+    const declared = run?.[field];
+    if (typeof declared === "string" && declared.length > 0) fileExists(declared, `frontier run ${run.id} ${field}`);
+  }
+  if (typeof run?.status === "string" && run.status.startsWith("completed") && typeof run.result !== "string") {
+    fail(`Frontier run ${run.id} is ${run.status} without a result artifact.`);
+  }
+}
 
 if (releaseManifest?.release !== contractManifest?.release || releaseManifest?.milestone !== "M0.9") fail("FR-01 release manifest diverges from the contract baseline.");
 for (const authorityPath of Object.values(releaseManifest?.authority ?? {})) {

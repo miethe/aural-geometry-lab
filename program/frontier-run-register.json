@@ -2,7 +2,7 @@
   "schema": "agl.program.frontier-run-register",
   "schemaVersion": 1,
   "program": "Aural Geometry Lab",
-  "asOf": "2026-08-18",
+  "asOf": "2026-08-20",
   "runs": [
     {
       "id": "FR-01",
@@ -25,8 +25,20 @@
       "id": "FR-02",
       "title": "Project Format and Migration Torture Test",
       "cadence": "before-project-v2",
-      "status": "ready",
-      "spec": "docs/17-frontier-model-runbook.md"
+      "status": "completed-contract-and-corpus",
+      "spec": "docs/17-frontier-model-runbook.md",
+      "result": "docs/28-fr02-project-format-torture-test.md",
+      "completedAt": "2026-08-20",
+      "findings": "program/fr02-findings-register.json",
+      "artifactManifest": "program/fr02-artifact-manifest.json",
+      "corpus": "conformance/fr02/corpus.json",
+      "tests": "tests/fr02.test.mjs",
+      "findingCount": 16,
+      "criticalHighOwned": 9,
+      "acceptedAdrs": "0025",
+      "verdict": "Project schema v3 is freezable as-is; no project-v4 wire delta is justified. Remaining work is enforcement and recovery around the frozen contract, not a wire change.",
+      "landedCommits": "b2d9d6d, c434f8d",
+      "followUp": "The reasoning run is complete; the executable half is not. Nothing reads conformance/fr02/corpus.json and the 24 generator-sourced cases have no runner (AGL-173). 10 of the 16 findings' property tests are owner-tagged TODO gates in tests/fr02.test.mjs. Declaring project v3 frozen is AGL-172; this run's verdict says it may be, it does not itself declare it."
     },
     {
       "id": "FR-03",
