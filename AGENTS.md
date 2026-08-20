@@ -30,7 +30,7 @@ npm install
 npm run dev              # scripts/dev.mjs — native-DOM demo at http://localhost:4173
 npm run build            # scripts/build.mjs
 npm run serve            # scripts/serve.mjs — static preview (PORT env, default 4173)
-npm run test             # scripts/test.mjs — tests/core.test.mjs + tests/fr01.test.mjs (85/85)
+npm run test             # scripts/test.mjs — every tests/*.test.mjs (108: 98 pass, 10 todo)
 npm run schema:validate  # python3 scripts/validate-json-schemas.py — Draft 2020-12 (12/12)
 npm run verify           # scripts/verify.mjs — structural/contract + design-token checks
 npm run check            # clean && build && test && schema:validate && verify
@@ -86,9 +86,11 @@ automation in this repo, which is why nothing in `docs/` described it.
 
 - `schemas/` — 15 versioned Draft 2020-12 JSON Schemas, one per public contract.
 - `conformance/` — fixtures/examples validated against those schemas, plus FR-01
-  (`conformance/fr01/`) and Wave-1 (`conformance/wave1/`) hostile corpora, mirrored in Swift
+  (`conformance/fr01/`), FR-02 (`conformance/fr02/`) and Wave-1 (`conformance/wave1/`) hostile
+  corpora, mirrored in Swift
   (`native/AuralGeometryCore/`) to prove cross-language parity.
-- `tests/core.test.mjs` + `tests/fr01.test.mjs` — 85 Node-native tests (rational arithmetic, pattern
+- `tests/core.test.mjs` + `fr01.test.mjs` + `fr02.test.mjs` — 108 Node-native tests, 98 passing and
+  10 owner-tagged `todo` gates in fr02 (rational arithmetic, pattern
   timing, operator kernels, stable IDs/PRNG, registry versioning, plus the FR-01 hostile suite:
   strict JSON, canonical digest, migration receipts, materialization, selection v2, package v2,
   export manifest, accessibility mirror, claim register, evaluation-protocol v2, audio-plan v2).

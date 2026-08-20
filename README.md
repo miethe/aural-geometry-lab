@@ -113,7 +113,7 @@ npm run check:all
 
 It currently passes:
 
-- **85/85 TypeScript/Node tests**;
+- **98/108 TypeScript/Node tests** (10 owner-tagged `todo` gates in `tests/fr02.test.mjs`);
 - **14 Swift tests passing** (1 skipped: AGL-191 strict-byte parser);
 - **12/12 Draft 2020-12 public JSON Schema fixtures/examples**;
 - 142 backlog-item dependency checks;

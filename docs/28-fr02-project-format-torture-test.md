@@ -396,6 +396,8 @@ Each corpus entry contains exact bytes, a static fixture path, or a deterministi
 
 `tests/fr02.test.mjs` is the executable landing artifact. It uses deterministic generators rather than one-off examples. Tests blocked on implementation are named `TODO` with owner and property; converting them to passing tests is part of AGL-172/173/179/191.
 
+> **Measured status as landed (2026-08-19).** The property tests below generate their own inputs, but **no code reads `conformance/fr02/corpus.json`**: the suite reaches its fixtures by hardcoded path, and the 24 generator-sourced corpus cases (`mutate-rational`, `repeat-digit`, `flip-byte`, …) are neither implemented nor dispatched — they are silently absent, not skipped. So a case listed in the corpus manifest gains no executable coverage from being listed, and the "must be implemented identically in TypeScript and Swift" requirement in section 8 is a requirement, not a description. Dispatching the corpus is owned by AGL-173. `npm run verify` gates what is checkable today: that every corpus case declares a source file that exists or a generator, that every generator `base` resolves, and that every finding's `regressionTest` names a real test or case.
+
 | Property | Universal statement and generator strategy |
 |---|---|
 | FR02-P01 | ∀ strict JSON byte encodings B1/B2 that decode to equal values, semantic digest is equal while raw-byte digest may differ. Generate whitespace/key-order/number-spelling variants. |

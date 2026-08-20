@@ -6,8 +6,8 @@
   "entries": [
     {
       "path": "conformance/fr02/corpus.json",
-      "sha256": "0450b5df0f5676c46457ad6deb2b51ad8c96724eecbcd577227179fe68a94e94",
-      "bytes": 13278
+      "sha256": "7b8c263a92cb397213a9634809c6ab85272f79d691a2259203156dfd1bbac1dc",
+      "bytes": 13326
     },
     {
       "path": "conformance/fr02/error-identities.json",
@@ -126,8 +126,8 @@
     },
     {
       "path": "docs/28-fr02-project-format-torture-test.md",
-      "sha256": "7378fd9d824039c44c49c9a6544ce31965734cdeb36ba39622afa0f2a21e17bd",
-      "bytes": 33910
+      "sha256": "3a0cfb1976a4eeb7a7956aaa788140f62fc23d70bb208c96c5988f044ed518d3",
+      "bytes": 34780
     },
     {
       "path": "docs/adr/0025-project-import-quarantine-byte-recovery-and-catalog-rebinding.md",
