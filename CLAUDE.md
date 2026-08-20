@@ -44,7 +44,7 @@ yet (`node_01M0DX6B8638F4JYXM4AMTRE82`).
 | `npm run dev` | `scripts/dev.mjs` — serves the native-DOM demo shell at `http://localhost:4173`. |
 | `npm run build` | `scripts/build.mjs` — compiles `src/` with the pinned TypeScript. |
 | `npm run serve` | `scripts/serve.mjs` — static preview server over a built output (`PORT` env, default 4173). |
-| `npm run test` | `scripts/test.mjs` — runs `tests/core.test.mjs` + `tests/fr01.test.mjs` (Node's native test runner). Currently 85/85. |
+| `npm run test` | `scripts/test.mjs` — runs every `tests/*.test.mjs` (Node's native test runner). Currently 108 declared: 98 pass, 10 owner-tagged `todo` gates in `fr02.test.mjs`. |
 | `npm run schema:validate` | `python3 scripts/validate-json-schemas.py` — Draft 2020-12 validation of every `schemas/*.schema.json` against its `conformance/` fixtures/examples. Currently 12/12. |
 | `npm run verify` | `scripts/verify.mjs` — structural/contract checks, including design-token presence (`design/tokens.json`). |
 | `npm run check` | `clean && build && test && schema:validate && verify` — the dev-loop gate. |
@@ -144,16 +144,27 @@ in `docs/` described it and why "no web app" kept getting repeated.
   *same* fixtures parse identically in a second language.
 - **`conformance/fr02/`** — the FR-02 project-format torture corpus (38 declared cases). 14 are
   committed fixtures — including `raw/`, which is **deliberately unparseable** and therefore
-  exempt from `verify.mjs`'s must-parse walk. **The other 24 are generator specs for a runner
-  that does not exist yet** (AGL-173): there is no `tests/fr02.test.mjs`, and no code consumes
-  `corpus.json`'s dispositions or `error-identities.json`. `npm run verify` holds the corpus's
-  *declaration* (unique ids, source-file-or-generator, no unclaimed file in `raw/`) — it does
-  not execute a single case. Treat the corpus as a contract awaiting an implementation, not as
-  coverage.
+  exempt from `verify.mjs`'s must-parse walk; the other 24 are generator specs with no committed
+  bytes. `tests/fr02.test.mjs` exercises the committed side (13 passing property tests) and
+  declares 10 owner-tagged `todo` gates for the behavior AGL-172/173/179/182/191 have not built
+  yet. **The suite reaches its fixtures by hardcoded path — it does not read `corpus.json`, and
+  nothing consumes `error-identities.json`**, so a case added to the corpus manifest gains no
+  coverage by being listed. `npm run verify` holds the corpus's *declaration* (unique ids,
+  source-file-or-generator, no unclaimed file in `raw/`) and the FR-02 registers (see below).
+- **FR-02 registers** — `program/fr02-findings-register.json` (16 findings, 9 Critical/High, all
+  `open-owned` against real backlog ids) and `program/fr02-artifact-manifest.json` (sha256 for
+  all 33 FR-02 artifacts). `verify.mjs` enforces both: every manifest digest is recomputed, every
+  file under `conformance/fr02/` must be declared, and every finding's `regressionTest` must
+  resolve to an `FR02-Pnn` test in the suite or an `FR02-Cnn` case in the corpus. That proves the
+  citation *resolves*, not that the gate tests the finding — FR02-013 cites `FR02-C006`, an
+  unrelated v3 unknown-field case, so it has no real gate.
 - **`tests/`** — `core.test.mjs` (rational arithmetic, pattern timing, operator kernels, stable
   IDs/PRNG, registry versioning, event budgets) and `fr01.test.mjs` (the hostile suite: strict JSON,
   canonical digest, migration receipts, materialization, selection v2, package v2, export manifest,
-  accessibility mirror, claim register, evaluation-protocol v2, audio-plan v2). 85/85 today.
+  accessibility mirror, claim register, evaluation-protocol v2, audio-plan v2), plus
+  `fr02.test.mjs` (project-format properties: source-byte vs semantic identity, extension
+  round-tripping, migration determinism and exact sequential composition, rational wire
+  canonicality, package member closure). 108 declared today: 98 pass, 10 `todo`.
 - **Claim register** (`src/core/claims.ts`, schema `agl-claim-register-v1`) — any research-gated
   psychoacoustic or mathematical claim requires a *trusted evidence record*; a caller-supplied
   evidence string cannot unlock a scientific/product claim. This exists to stop overstated

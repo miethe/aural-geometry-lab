@@ -301,12 +301,13 @@ for (let adr = 19; adr <= 24; adr += 1) {
 // file under the unparseable-by-design directory must be claimed by a case. Without this the
 // corpus is inert data that no gate holds.
 const fr02Corpus = await readJson("conformance/fr02/corpus.json");
+const fr02CaseIds = new Set();
 let fr02CaseCount = 0;
 if (fr02Corpus !== undefined) {
   const cases = Array.isArray(fr02Corpus.cases) ? fr02Corpus.cases : [];
   if (cases.length === 0) fail("conformance/fr02/corpus.json declares no cases.");
   const claimed = new Set();
-  const ids = new Set();
+  const ids = fr02CaseIds;
   for (const entry of cases) {
     const id = requiredString(entry?.id, "FR-02 corpus case id");
     if (id !== undefined) {
@@ -325,6 +326,13 @@ if (fr02Corpus !== undefined) {
     // them. Hold the declaration shape so a case can never lose its provenance silently.
     if (typeof entry?.source?.generator !== "string" || entry.source.generator.length === 0) {
       fail(`FR-02 corpus case ${id ?? "?"} declares neither a source file nor a generator.`);
+      continue;
+    }
+    // A generator base that does not resolve is a spec no runner can ever execute. Four of
+    // these pointed at conformance/fr01-minimal.v3.project.json, which has never existed.
+    const base = entry.source.base;
+    if (typeof base === "string" && base.length > 0 && !base.includes("*")) {
+      fileExists(path.join("conformance", "fr02", base), `FR-02 corpus case ${id ?? "?"} generator base`);
     }
   }
   fr02CaseCount = ids.size;
@@ -338,6 +346,85 @@ if (fr02Corpus !== undefined) {
   }
 }
 
+// FR-02 registers. Landing them ungated would repeat the FR-02 corpus's own failure mode:
+// an artifact that describes work nothing checks. The manifest is the strong half — it carries
+// sha256 for every FR-02 file, so it detects silent edits to the corpus.
+const fr02Findings = await readJson("program/fr02-findings-register.json");
+const fr02Manifest = await readJson("program/fr02-artifact-manifest.json");
+const fr02FindingIds = new Set();
+let fr02CriticalHighCount = 0;
+const fr02SuiteSource = existsSync(path.join(root, "tests", "fr02.test.mjs"))
+  ? await readFile(path.join(root, "tests", "fr02.test.mjs"), "utf8")
+  : undefined;
+if (fr02SuiteSource === undefined) fail("Missing FR-02 executable suite: tests/fr02.test.mjs");
+for (const finding of Array.isArray(fr02Findings?.findings) ? fr02Findings.findings : []) {
+  const id = requiredString(finding?.id, "FR-02 finding id");
+  if (id === undefined) continue;
+  if (fr02FindingIds.has(id)) fail(`Duplicate FR-02 finding id: ${id}`);
+  fr02FindingIds.add(id);
+  if (!["Critical", "High", "Medium", "Low"].includes(finding.severity)) fail(`${id} uses unknown severity ${String(finding.severity)}.`);
+  for (const field of ["status", "title", "affectedFilesOrContracts", "failureScenario", "repair", "regressionTest"]) {
+    requiredString(finding[field], `${id}.${field}`);
+  }
+  // The register's value is that each finding names a gate that RESOLVES. Two id spaces are
+  // legitimate: FR02-Pnn is a property test in the suite, FR02-Cnn is a corpus case. This
+  // proves the citation points at something real; it cannot prove the gate tests the finding.
+  if (typeof finding.regressionTest === "string") {
+    for (const gateId of finding.regressionTest.split(/[\s,;]+/).filter(Boolean)) {
+      if (gateId.startsWith("FR02-C")) {
+        if (!fr02CaseIds.has(gateId)) fail(`${id} names corpus case ${gateId}, which conformance/fr02/corpus.json does not declare.`);
+      } else if (fr02SuiteSource !== undefined && !fr02SuiteSource.includes(gateId)) {
+        fail(`${id} names regression test ${gateId}, which tests/fr02.test.mjs does not define.`);
+      }
+    }
+  }
+  if (["Critical", "High"].includes(finding.severity)) {
+    fr02CriticalHighCount += 1;
+    const owner = finding.backlogOwner;
+    if (typeof owner?.backlogId !== "string" || typeof owner?.workstream !== "string") {
+      fail(`${id} is ${finding.severity} without backlogId and workstream ownership.`);
+      continue;
+    }
+    const backlogItem = backlogById.get(owner.backlogId);
+    if (backlogItem === undefined) fail(`${id} references unknown backlog owner ${owner.backlogId}.`);
+    else if (Array.isArray(backlogItem.owner) && !backlogItem.owner.includes(owner.workstream)) fail(`${id} workstream ${owner.workstream} is not an owner of ${owner.backlogId}.`);
+  }
+}
+if (fr02FindingIds.size === 0) fail("program/fr02-findings-register.json declares no findings.");
+const fr02ManifestEntries = Array.isArray(fr02Manifest?.entries) ? fr02Manifest.entries : [];
+if (fr02ManifestEntries.length === 0) fail("program/fr02-artifact-manifest.json declares no entries.");
+const fr02Declared = new Set();
+for (const entry of fr02ManifestEntries) {
+  const relative = requiredString(entry?.path, "FR-02 manifest entry path");
+  if (relative === undefined) continue;
+  fr02Declared.add(relative);
+  if (!fileExists(relative, "FR-02 manifest artifact")) continue;
+  const declaredDigest = typeof entry.sha256 === "string" ? entry.sha256.replace(/^sha256:/, "") : undefined;
+  if (declaredDigest !== undefined && await sha256(relative) !== declaredDigest) {
+    fail(`FR-02 manifest digest mismatch for ${relative}.`);
+  }
+}
+async function walkFiles(directory, out = []) {
+  for (const entry of await readdir(path.join(root, directory), { withFileTypes: true })) {
+    const relative = path.join(directory, entry.name);
+    if (entry.isDirectory()) await walkFiles(relative, out);
+    else out.push(relative);
+  }
+  return out;
+}
+// Coverage in the other direction: the corpus cannot grow a file the manifest does not hash.
+for (const relative of await walkFiles(path.join("conformance", "fr02"))) {
+  if (!fr02Declared.has(relative)) fail(`${relative} is an FR-02 artifact that program/fr02-artifact-manifest.json does not declare.`);
+}
+for (const relative of [
+  "docs/28-fr02-project-format-torture-test.md",
+  "docs/adr/0025-project-import-quarantine-byte-recovery-and-catalog-rebinding.md",
+  "tests/fr02.test.mjs",
+  "program/fr02-findings-register.json",
+]) {
+  if (!fr02Declared.has(relative)) fail(`${relative} is not declared in program/fr02-artifact-manifest.json.`);
+}
+
 if (failures.length > 0) {
   console.error("Verification failed:\n" + failures.map((failure) => `- ${failure}`).join("\n"));
   process.exit(1);
@@ -345,5 +432,5 @@ if (failures.length > 0) {
 console.log(
   `Verified ${backlogIds.size} backlog items, ${researchIds.size} research runs, ${decisionIds.size} Wave-1 decisions, ` +
   `${labIds.size} labs, ${findingIds.size} FR-01 findings (${criticalHighCount} Critical/High owned), ` +
-  `${publicContractIds.size} public contracts, ${fr02CaseCount} FR-02 corpus cases, evidence/contract hashes, native conformance mirrors, runtime validators, and required authority artifacts.`,
+  `${publicContractIds.size} public contracts, ${fr02CaseCount} FR-02 corpus cases, ${fr02FindingIds.size} FR-02 findings (${fr02CriticalHighCount} Critical/High owned), ${fr02Declared.size} manifest-hashed FR-02 artifacts, evidence/contract hashes, native conformance mirrors, runtime validators, and required authority artifacts.`,
 );

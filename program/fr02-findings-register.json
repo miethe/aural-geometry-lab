@@ -1,0 +1,251 @@
+{
+  "schema": "agl.program.fr02-findings-register",
+  "schemaVersion": 1,
+  "program": "Aural Geometry Lab",
+  "review": "FR-02 Project Format and Migration Torture Test",
+  "baselineCommit": "352f10374f48e21a885b1041fd67af919b7bc166",
+  "asOf": "2026-08-19",
+  "completionRule": "Every Critical/High finding is assigned to an existing backlog owner; v3 freeze is conditional on the listed gates.",
+  "findings": [
+    {
+      "id": "FR02-001",
+      "severity": "Critical",
+      "status": "open-owned",
+      "title": "Connected v2 migrations retain v2-only affectsResult and produce invalid v3",
+      "affectedFilesOrContracts": "src/core/project-schema.ts migrateProjectV2ToV3; examples/infinite-staircase.v2.project.json",
+      "failureScenario": "The function builds migratedConnections but writes sorted project.graph.connections. Any connected v2 target retains affectsResult, which v3 rejects.",
+      "repair": "Write migratedConnections, detect affectsResult/kind conflicts, validate target before receipt.",
+      "regressionTest": "FR02-P15",
+      "adr": "ADR 0025",
+      "backlogOwner": {
+        "backlogId": "AGL-173",
+        "workstream": "WS-RUNTIME"
+      }
+    },
+    {
+      "id": "FR02-002",
+      "severity": "Critical",
+      "status": "open-owned",
+      "title": "Legacy node and catalog placeholder digests use incompatible formulas",
+      "affectedFilesOrContracts": "src/core/project-schema.ts migrateProjectV2ToV3",
+      "failureScenario": "requiredOperators uses an array-tag placeholder while target nodes use a legacyOperatorContract object placeholder; the catalog cannot authoritatively bind the graph.",
+      "repair": "Never present placeholders as executable semantics. Quarantine, then atomically rebind every node to one sealed catalog and record a resolution receipt.",
+      "regressionTest": "FR02-P23",
+      "adr": "ADR 0025",
+      "backlogOwner": {
+        "backlogId": "AGL-173",
+        "workstream": "WS-RUNTIME"
+      }
+    },
+    {
+      "id": "FR02-003",
+      "severity": "Critical",
+      "status": "open-owned",
+      "title": "v2→v3 silently changes stable-ID and PRNG semantics",
+      "affectedFilesOrContracts": "src/core/project-schema.ts; src/core/random.ts; ADR 0021",
+      "failureScenario": "Target declares v2 ID/PRNG while source declared v1, but the migration receipt has no loss for changed generated identities or streams.",
+      "repair": "Emit blocking LEGACY_PRNG_AND_STABLE_ID_SEMANTICS_CHANGED; preserve source bytes; require replay/materialization/review.",
+      "regressionTest": "FR02-P16",
+      "adr": "ADR 0025",
+      "backlogOwner": {
+        "backlogId": "AGL-173",
+        "workstream": "WS-RUNTIME"
+      }
+    },
+    {
+      "id": "FR02-004",
+      "severity": "Critical",
+      "status": "open-owned",
+      "title": "Migration may issue a receipt for an invalid target",
+      "affectedFilesOrContracts": "src/core/project-schema.ts migrateProjectToLatest",
+      "failureScenario": "The target is digested without mandatory target runtime/schema validation; legacy receipts/material kinds can create dangling or illegal v3 state.",
+      "repair": "Validate every edge output and final target; no receipt/commit on invalid output.",
+      "regressionTest": "FR02-P17",
+      "adr": "ADR 0025",
+      "backlogOwner": {
+        "backlogId": "AGL-173",
+        "workstream": "WS-RUNTIME"
+      }
+    },
+    {
+      "id": "FR02-005",
+      "severity": "High",
+      "status": "open-owned",
+      "title": "Legacy connection affectsResult conflicts are not surfaced",
+      "affectedFilesOrContracts": "schemas/agl-project-v2.schema.json; src/core/graph.ts connectionAffectsResult",
+      "failureScenario": "v2 persisted a Boolean while v3 derives result effect from kind. Contradictory legacy values cannot be silently discarded.",
+      "repair": "Emit blocking LEGACY_CONNECTION_AFFECTS_RESULT_CONFLICT and preserve exact source.",
+      "regressionTest": "FR02-P15",
+      "adr": "ADR 0025",
+      "backlogOwner": {
+        "backlogId": "AGL-173",
+        "workstream": "WS-RUNTIME"
+      }
+    },
+    {
+      "id": "FR02-006",
+      "severity": "High",
+      "status": "open-owned",
+      "title": "Project asset metadata and package asset members lack closure validation",
+      "affectedFilesOrContracts": "src/core/project-package.ts verifyPackageMembersV2; schemas/agl-project-v3.schema.json asset",
+      "failureScenario": "Manifest/member integrity is checked, but each project asset is not required to have exactly one measured content-addressed member with matching digest/bytes/media type.",
+      "repair": "Add project↔member closure plus migration source-blob closure.",
+      "regressionTest": "FR02-P18",
+      "adr": "ADR 0025",
+      "backlogOwner": {
+        "backlogId": "AGL-179",
+        "workstream": "WS-RUNTIME"
+      }
+    },
+    {
+      "id": "FR02-007",
+      "severity": "High",
+      "status": "open-owned",
+      "title": "Migration receipt v2 is audit-capable but not rollback-sufficient by itself",
+      "affectedFilesOrContracts": "schemas/agl-migration-receipt-v2.schema.json; src/core/project-schema.ts MigrationReceipt",
+      "failureScenario": "sourceBytesDigest is optional and no retained byte location is bound. A digest cannot reconstruct source bytes.",
+      "repair": "Require sourceBytesDigest for persisted migration and retain measured source bytes as a content-addressed package/repository blob.",
+      "regressionTest": "FR02-P19",
+      "adr": "ADR 0025",
+      "backlogOwner": {
+        "backlogId": "AGL-172",
+        "workstream": "WS-RUNTIME"
+      }
+    },
+    {
+      "id": "FR02-008",
+      "severity": "High",
+      "status": "open-owned",
+      "title": "Compatibility negotiation omits required numerical profile",
+      "affectedFilesOrContracts": "src/core/project-schema.ts checkProjectCompatibilityV3; ADR 0024",
+      "failureScenario": "Profile-numeric graphs can pass project compatibility without confirming numerical profile/backend support.",
+      "repair": "When a graph contains profile-numeric operators, require supported numerical profile identity before execution.",
+      "regressionTest": "FR02-P21",
+      "adr": "ADR 0025",
+      "backlogOwner": {
+        "backlogId": "AGL-170",
+        "workstream": "WS-QUALITY"
+      }
+    },
+    {
+      "id": "FR02-009",
+      "severity": "High",
+      "status": "open-owned",
+      "title": "Swift DTO decode is not the strict JSON trust boundary",
+      "affectedFilesOrContracts": "native/AuralGeometryCore/Sources/AuralGeometryCore/Contracts.swift; native tests; AGL-191",
+      "failureScenario": "Foundation JSONDecoder DTO tests do not prove duplicate-key, unsafe-number, malformed-UTF8, or boundedness parity.",
+      "repair": "Preflight identical bytes with agl-strict-json-v1-equivalent native parser and run native-parity-cases.json.",
+      "regressionTest": "FR02-P20",
+      "adr": "ADR 0025",
+      "backlogOwner": {
+        "backlogId": "AGL-191",
+        "workstream": "WS-NATIVE"
+      }
+    },
+    {
+      "id": "FR02-010",
+      "severity": "Medium",
+      "status": "open-owned",
+      "title": "payloadRef has no portable addressing contract",
+      "affectedFilesOrContracts": "schemas/agl-project-v3.schema.json material.payloadRef; src/core/project-schema.ts",
+      "failureScenario": "The field is accepted but no resolver namespace, digest binding, package member, or cross-client semantics exists.",
+      "repair": "Treat payloadAssetId as portable authority; quarantine payloadRef unless a required semantic extension defines its resolver.",
+      "regressionTest": "FR02-P22",
+      "adr": "ADR 0025",
+      "backlogOwner": {
+        "backlogId": "AGL-172",
+        "workstream": "WS-RUNTIME"
+      }
+    },
+    {
+      "id": "FR02-011",
+      "severity": "Medium",
+      "status": "open-owned",
+      "title": "Lab presets are presentation hints rather than versioned semantic presets",
+      "affectedFilesOrContracts": "src/labs/*.ts metadata; project presentation.defaultLab",
+      "failureScenario": "Lab IDs exist, but no persisted lab-preset contract binds result-affecting defaults.",
+      "repair": "Unknown defaultLab falls back harmlessly; result-affecting presets must compile into graph/material state or required semantic extensions.",
+      "regressionTest": "FR02-P11",
+      "adr": "ADR 0025",
+      "backlogOwner": {
+        "backlogId": "AGL-038",
+        "workstream": "WS-PRODUCT"
+      }
+    },
+    {
+      "id": "FR02-012",
+      "severity": "Medium",
+      "status": "open-owned",
+      "title": "Migration receipt invariants are not enforced as a relationship",
+      "affectedFilesOrContracts": "schemas/agl-migration-receipt-v2.schema.json",
+      "failureScenario": "Schema permits requiresUserReview=false with blocking losses and does not prove source/target bytes/digests.",
+      "repair": "Add runtime receipt validation: blocking iff review; applied edge chain; measured source and target digest closure.",
+      "regressionTest": "FR02-P19",
+      "adr": "ADR 0025",
+      "backlogOwner": {
+        "backlogId": "AGL-173",
+        "workstream": "WS-RUNTIME"
+      }
+    },
+    {
+      "id": "FR02-013",
+      "severity": "Medium",
+      "status": "open-owned",
+      "title": "v2 schema and runtime disagree on optional operatorSemanticDigest",
+      "affectedFilesOrContracts": "schemas/agl-project-v2.schema.json; src/core/project-schema.ts ProjectOperatorNodeV2",
+      "failureScenario": "Runtime type/validator admits operatorSemanticDigest while public v2 additionalProperties:false does not.",
+      "repair": "Public v2 schema wins; private dialect is refused or handled by an explicitly versioned importer, never silently.",
+      "regressionTest": "FR02-C006",
+      "adr": "No new ADR",
+      "backlogOwner": {
+        "backlogId": "AGL-172",
+        "workstream": "WS-RUNTIME"
+      }
+    },
+    {
+      "id": "FR02-014",
+      "severity": "Medium",
+      "status": "open-owned",
+      "title": "FR-01 source-byte migration test uses the wrong input property",
+      "affectedFilesOrContracts": "tests/fr01.test.mjs; src/core/project-schema.ts migrateProjectToLatest input",
+      "failureScenario": "The test passes sourceBytesSha256 while implementation expects sourceBytesDigest, so source-byte carry-through is not exercised.",
+      "repair": "Correct the test and add FR02-P08.",
+      "regressionTest": "FR02-P08",
+      "adr": "No new ADR",
+      "backlogOwner": {
+        "backlogId": "AGL-172",
+        "workstream": "WS-QUALITY"
+      }
+    },
+    {
+      "id": "FR02-015",
+      "severity": "Medium",
+      "status": "open-owned",
+      "title": "Unicode normalization is not stated as part of canonical identity",
+      "affectedFilesOrContracts": "src/core/canonical.ts assertWellFormedUnicodeV1/compareUtf8",
+      "failureScenario": "Well-formed Unicode is enforced, but NFC/NFD are not normalized; visually equal seeds/IDs/semantic strings can hash differently.",
+      "repair": "Freeze the actual rule: no Unicode normalization in canonical v1; add cross-language vectors and UI warnings for seed copy/paste.",
+      "regressionTest": "FR02-P24",
+      "adr": "ADR 0025",
+      "backlogOwner": {
+        "backlogId": "AGL-182",
+        "workstream": "WS-NATIVE"
+      }
+    },
+    {
+      "id": "FR02-016",
+      "severity": "Medium",
+      "status": "open-owned",
+      "title": "Legacy sourceSemanticDigest is not comparable to project-v3 semantic digest",
+      "affectedFilesOrContracts": "src/core/project-schema.ts migrateProjectToLatest",
+      "failureScenario": "For v1/v2 the field is canonicalDigestV1 of the full parsed project, including editorial/opaque state; v3 uses a result-affecting projection. The identical field name hides version-specific meaning.",
+      "repair": "Document it as the normalized source-version digest, bind its algorithm to the source schema, and never compare it across schema versions as execution equality.",
+      "regressionTest": "FR02-P01",
+      "adr": "ADR 0025",
+      "backlogOwner": {
+        "backlogId": "AGL-172",
+        "workstream": "WS-RUNTIME"
+      }
+    }
+  ]
+}

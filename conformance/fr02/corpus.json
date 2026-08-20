@@ -110,7 +110,7 @@
       "attackClass": "rational-alias",
       "source": {
         "generator": "mutate-rational",
-        "base": "../fr01-minimal.v3.project.json",
+        "base": "../../examples/fr01-minimal.v3.project.json",
         "path": "tempoMap[0].beat.numerator",
         "value": "00"
       },
@@ -123,7 +123,7 @@
       "attackClass": "rational-invalid",
       "source": {
         "generator": "mutate-rational",
-        "base": "../fr01-minimal.v3.project.json",
+        "base": "../../examples/fr01-minimal.v3.project.json",
         "path": "tempoMap[0].beat.denominator",
         "value": "0"
       },
@@ -136,7 +136,7 @@
       "attackClass": "rational-alias",
       "source": {
         "generator": "mutate-rational-pair",
-        "base": "../fr01-minimal.v3.project.json",
+        "base": "../../examples/fr01-minimal.v3.project.json",
         "numerator": "2",
         "denominator": "2"
       },
@@ -162,7 +162,7 @@
       "attackClass": "seed-alias",
       "source": {
         "generator": "set",
-        "base": "../fr01-minimal.v3.project.json",
+        "base": "../../examples/fr01-minimal.v3.project.json",
         "path": "seedContext.seed",
         "value": ""
       },
