@@ -56,3 +56,4 @@ design/mockups/campaign.log
 # Agent working area: delivery-report renders and manifests. Local artifacts that
 # reference .claude/ paths and internal tracker ids; the durable reports live in docs/.
 .claude/reports/
+__pycache__/
