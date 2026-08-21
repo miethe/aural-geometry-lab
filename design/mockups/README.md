@@ -90,3 +90,49 @@ So for the screens listed in `figure-plates.json` the model is no longer asked t
 ImageMagick fallback: ImageMagick decodes SVG with its own internal renderer, which supports
 neither the figure's CSS nor its text, and silently accepting an approximate rasteriser would
 defeat the correctness this path exists for.
+
+`figure-plates.json` and `scripts/build-figures.mjs` share one figure list, `scripts/figure-specs.mjs`
+— one file so the generator and the checker below cannot drift about what was meant to be drawn.
+
+### The mathematical-correctness reject axis is machine-derived for plated screens
+
+Because a plated screen's figure is kernel-generated and byte-identical across all three variants,
+the `mathematical correctness` reject axis is decided by a deterministic zero-model check, not by
+the model reading pixels — the earlier by-eye path was unstable (two passes over the same
+byte-identical S04 figure returned opposite onset readings, adjudicated and vacated in
+`critique/S04.json`).
+
+- `scripts/check-figures.mjs` asserts, for every plate, that the referenced figure exists, that its
+  committed bytes equal the current `npm run figures` output (a stale committed SVG fails), that
+  each layer's `data-onsets`/`data-gaps`/`data-notation` equal `euclideanRhythm`/`cyclicGapLengths`/
+  `E(pulses,steps)` from the compiled `src/operators/euclidean.ts`, that the drawn `data-step`
+  values are a bijection over `0..steps-1`, and that every onset marker sits at the angle its step
+  implies on its ring (recomputed from the ring's own centre and radius). `node
+  scripts/check-figures.mjs --screen S04 --json` prints the verdict; `npm run verify` runs it over
+  every plate. `tests/figure-plates.test.mjs` proves the gate bites: a marker moved off its angle,
+  a corrupted `data-onsets` entry, and a duplicated `data-step` are each reported as a failure.
+
+  It reaches the kernel and the renderer through `dist/`, so it is a statement about the last
+  build. `checkBuildFreshness()` therefore fails when `src/operators/euclidean.ts` or
+  `src/design/figures.ts` is newer than its compiled output — otherwise a bare `npm run verify`
+  after a source edit would re-render from stale code, compare it to the equally stale committed
+  SVG, and report green. `npm run check` builds first and never had that exposure.
+- `score-one.sh` runs the checker before scoring a plated screen (a failed check aborts the run — a
+  broken figure is never stamped "pass"), replaces the by-eye mathematical-correctness prompt bullet
+  with a plate-integrity bullet (the model reports only that the plate is present, uncovered and
+  correctly placed), and after the model writes its critique overwrites every variant's
+  `rejectAxes["mathematical correctness"]` with the machine verdict via
+  `scripts/stamp-math-verdict.py`, recording provenance under a top-level `mathVerdict` key. The
+  stamp is idempotent and model-free, so re-running the critique yields the same math verdict. The
+  model's own variant `verdict` is left untouched — a variant rejected only on the vacated math axis
+  is not silently flipped to accept; the human reads `mathVerdict` for that axis.
+
+Screens with no plate keep the by-eye mathematical-correctness path unchanged, and still take the
+`SKIP`/`OK` exit-0 path they always did.
+
+**What the stamp does NOT establish.** The checker reads the figure SVG on disk; it never opens the
+rendered PNG. If compositing did not happen — no `rsvg-convert`, or a composite failure that
+`run-one.sh` swallowed with `exit 0` — the verdict is still `pass` while the reviewed raster
+contains no correct figure. Whether the plate actually landed in the image is the model's
+plate-integrity report, and that report is **not** a gate today. Each stamped `mathVerdict` carries
+`attests`/`doesNotAttest` saying exactly this, so the record cannot be read as more than it is.
