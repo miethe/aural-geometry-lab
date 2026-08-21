@@ -4,6 +4,7 @@ import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { checkFigures } from "./check-figures.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const failures = [];
@@ -495,6 +496,17 @@ for (const relative of [
   if (!fr02Declared.has(relative)) fail(`${relative} is not declared in program/fr02-artifact-manifest.json.`);
 }
 
+// Composited figure plates: the committed SVG must be byte-identical to the generator output and
+// mathematically faithful to the operator kernel. This is the link that binds design/mockups/
+// figures/*.svg to src/operators/*.ts — a stale committed figure, or one whose markers drift off
+// their step angle, fails here rather than being read off the raster by a model or a reviewer.
+let figurePlateCount = 0;
+for (const result of await checkFigures()) {
+  if (!result.plated) continue;
+  figurePlateCount += 1;
+  for (const violation of result.failures ?? []) fail(`Figure plate ${result.screen}: ${violation}`);
+}
+
 if (failures.length > 0) {
   console.error("Verification failed:\n" + failures.map((failure) => `- ${failure}`).join("\n"));
   process.exit(1);
@@ -502,5 +514,5 @@ if (failures.length > 0) {
 console.log(
   `Verified ${backlogIds.size} backlog items, ${researchIds.size} research runs, ${decisionIds.size} Wave-1 decisions, ` +
   `${labIds.size} labs, ${findingIds.size} FR-01 findings (${criticalHighCount} Critical/High owned), ` +
-  `${publicContractIds.size} public contracts, ${fr02CaseCount} FR-02 corpus cases, ${fr02FindingIds.size} FR-02 findings (${fr02CriticalHighCount} Critical/High owned), ${fr02Declared.size} manifest-hashed FR-02 artifacts, ${designEncodingValueCount} color-free semantic-state encodings, evidence/contract hashes, native conformance mirrors, runtime validators, and required authority artifacts.`,
+  `${publicContractIds.size} public contracts, ${fr02CaseCount} FR-02 corpus cases, ${fr02FindingIds.size} FR-02 findings (${fr02CriticalHighCount} Critical/High owned), ${fr02Declared.size} manifest-hashed FR-02 artifacts, ${designEncodingValueCount} color-free semantic-state encodings, ${figurePlateCount} kernel-faithful figure plates, evidence/contract hashes, native conformance mirrors, runtime validators, and required authority artifacts.`,
 );

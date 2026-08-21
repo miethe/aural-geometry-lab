@@ -1,1 +1,153 @@
-{"screen":"S07","variants":{"A-instrument":{"scores":{"immediate playability":3,"mathematical legibility":2,"musical legibility":2,"professional-tool credibility":3,"linked-selection clarity":2,"density management":2,"novice-to-expert progression":2,"generated/frozen distinction":3,"provenance discoverability":2,"error/budget visibility":1,"accessibility cues":2,"responsive plausibility":1,"implementation plausibility":2,"visual restraint":3,"consistency with design tokens":3},"rejectAxes":{"mathematical correctness":"pass","generated/frozen semantics":"pass","accessibility":"pass"},"verdict":"accept-with-fixes","requiredStates":{"MaterialKind + SourceStatus":"present - left Material Legend and timeline show solid manual, dotted live-generated, diagonal-hatched snapshot, dashed/notched derivative, and the stippled/question-mark Source missing item","generated edit choice":"present - the Edit live-generated material dialog offers Add downstream transform, Fork the generator, and Freeze a snapshot","materialization receipt":"partial - the frozen Snapshot 01 clip carries Receipt M-024, but the image never identifies it as a materialization receipt or shows its provenance/details","orphaned event state":"present - bottom timeline item is visibly stippled, question-marked, and labelled Source missing"},"defects":["S8 handoff gate fails: the visible Edit live-generated material dialog has no canonical component entry in components.json, and no explicit new-component entry, interaction behavior, token-deviation record, accessibility annotation, or paired/written responsive rule is visible.","No budget meter or budget-limit/recovery state is visible; Source missing is an error/provenance condition, not budget visibility.","The selected timeline clip is E(7,12), the inspector is E(7,12), and the ring is related, but the selected event provenance chip is only a generic link icon plus Euclidean rhythm; the event-to-inspector connection is not explicit.","The source-missing row is shown only as an item, not as an event with an identifiable time/track lineage.","The 12-step ring is mathematically correct: filled onsets are at positions 0, 2, 4, 5, 7, 9, and 10 (cyclic gaps 2,2,1,2,2,1,2), a rotation of the Bjorklund E(7,12) pattern. No mathematical discrepancy is visible.","Non-colour carriers are visible for the rendered material/source states: solid outline for manual/current, dotted outline for live-generated, diagonal hatch for snapshot, dashed/notched treatment for derivative, and stipple plus ? for missing. The selected state is reinforced by a double outline and text, not hue alone.","No misspelling, garbled label, or nonsense string is visible."],"strengths":["The required timeline surfaces are all visible at once: generated, frozen, manual, derivative, automation, tuplet marker, playhead, edit-choice dialog, and orphaned source.","The dense 48px toolbar, navigator, 28px graph drawer, inspector, and 240px-class timeline read as a credible professional instrument." ]},"B-laboratory":{"scores":{"immediate playability":3,"mathematical legibility":3,"musical legibility":2,"professional-tool credibility":3,"linked-selection clarity":1,"density management":2,"novice-to-expert progression":2,"generated/frozen distinction":3,"provenance discoverability":3,"error/budget visibility":1,"accessibility cues":2,"responsive plausibility":1,"implementation plausibility":2,"visual restraint":2,"consistency with design tokens":3},"rejectAxes":{"mathematical correctness":"pass","generated/frozen semantics":"pass","accessibility":"pass"},"verdict":"accept-with-fixes","requiredStates":{"MaterialKind + SourceStatus":"present - legend and lanes visibly use solid, dotted, hatched, dashed/notched, and stippled/? treatments; current source and snapshot lineage also appear in Provenance Links","generated edit choice":"present - centered Edit generated material dialog visibly offers Add downstream transform, Fork the generator, and Freeze a snapshot","materialization receipt":"present - inspector has a MATERIALIZATION RECEIPT section with a hatched receipt mark and Snapshot 09.03","orphaned event state":"present - Manual Accent lane visibly includes a stippled/dash-dot question-mark item labelled Source missing"},"defects":["S8 handoff gate fails: the visible Edit generated material dialog is not in components.json and no explicit new component entry is shown; no interaction specification, token-deviation record, accessibility annotation, or paired/written responsive rule is present.","Linked selection is contradictory: the cyan/double-outlined timeline clip says Offset Derivative, while the inspector's selected entity says Pulse 05. The ring does not visibly identify Pulse 05. This is not a believable linked selection across surfaces.","No budget meter or numeric budget/limit/recovery state is visible; the source-missing state does not satisfy error/budget visibility by itself.","The canvas formula/definition is legible, but the central ring is small and the generated/frozen editing decision hides part of the manual lane.","The rendered E(7,12) ring is mathematically correct: onsets occur at 0, 2, 4, 5, 7, 9, and 10, yielding cyclic gaps 2,2,1,2,2,1,2. This is a rotation of Bjorklund E(7,12); no discrepancy is visible.","Non-colour carriers are present for visible semantic states: dotted live clips, diagonal-hatched snapshots, solid manual clip, notched/dashed derivatives, stipple plus ? for missing, mapping glyphs, and lock-marked research gating. Hue is not load-bearing for those shown states.","No misspelling, garbled label, or nonsense string is visible."],"strengths":["It is the clearest variant for materialization and provenance: receipt, source-current, and from-snapshot links are named and spatially grouped.","The definition explicitly names Bjorklund, k, n, start 0, and forward direction, giving the screen usable mathematical context." ]},"C-spatial":{"scores":{"immediate playability":3,"mathematical legibility":3,"musical legibility":2,"professional-tool credibility":3,"linked-selection clarity":1,"density management":2,"novice-to-expert progression":2,"generated/frozen distinction":3,"provenance discoverability":3,"error/budget visibility":1,"accessibility cues":2,"responsive plausibility":1,"implementation plausibility":2,"visual restraint":2,"consistency with design tokens":3},"rejectAxes":{"mathematical correctness":"pass","generated/frozen semantics":"pass","accessibility":"pass"},"verdict":"reject","requiredStates":{"MaterialKind + SourceStatus":"present - the same visible legend, dotted generated lanes, hatched snapshots, solid manual clip, dashed/notched derivatives, and stippled/? Source missing treatment establish the states","generated edit choice":"present - the centered Edit generated material dialog displays all three requested choices","materialization receipt":"present - the inspector visibly names MATERIALIZATION RECEIPT and Snapshot 09.03","orphaned event state":"present - Source missing is visibly marked with stipple, ? glyph, and broken/dash-dot boundary in the Manual Accent lane"},"defects":["This is visually near-duplicate of B-laboratory, not a Spatial/Tactile variant: it retains the same dense chrome, same small controls, same canvas, and no visible direct-manipulation affordance. It fails the stated C variant objective to reduce chrome and prioritize larger geometric/tactile controls.","S8 handoff gate fails: the visible Edit generated material dialog has no component-manifest entry or explicit new-component entry, and the image supplies no interaction behavior, token-deviation record, accessibility annotation, or paired/written responsive rule.","The cyan/double-outlined timeline clip is Offset Derivative while the inspector selects Pulse 05; neither the canvas nor inspector visibly resolves that mismatch.","No budget meter or predicted/current limit/recovery information is visible.","The E(7,12) ring is mathematically correct: visible onsets are positions 0, 2, 4, 5, 7, 9, and 10, with cyclic gaps 2,2,1,2,2,1,2. No mathematical discrepancy is visible.","Non-colour carriers are visible for the states actually rendered: dotted, hatch, solid, dashed/notched, stipple/?; mapping-stage glyphs; and the research lock. Hue is redundant for those states.","No misspelling, garbled label, or nonsense string is visible."],"strengths":["It preserves the complete S07 material-editing evidence set and readable provenance/receipt blocks.","Its dark palette, compact panels, and material textures align closely with the v0.3.0 tokens." ]}},"screenNotes":"All three visibly satisfy the core S07 content set and show a correct E(7,12) rhythm rather than a decorative ring. All three use visible non-hue texture/glyph carriers for the material and missing-source states shown. All omit budget evidence and cannot pass S8 as implementation-authoritative images: no visible interaction specification, accessibility annotation, responsive pair/rule, token-deviation record, or manifest treatment for the generated-edit dialog. B and C also use an internally inconsistent selected entity (Pulse 05) versus selected clip (Offset Derivative).","recommendedVariant":"B-laboratory","recommendationReason":"B-laboratory is the strongest visible basis because it makes the materialization receipt, mathematical definition, and provenance links explicit while preserving the required timeline states. Fix its false linked selection, add budget visibility, and complete the S8 handoff evidence before implementation."}
+{
+  "screen": "S07",
+  "variants": {
+    "A-instrument": {
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 2,
+        "musical legibility": 2,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 2,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 2,
+        "error/budget visibility": 1,
+        "accessibility cues": 2,
+        "responsive plausibility": 1,
+        "implementation plausibility": 2,
+        "visual restraint": 3,
+        "consistency with design tokens": 3
+      },
+      "rejectAxes": {
+        "mathematical correctness": "pass",
+        "generated/frozen semantics": "pass",
+        "accessibility": "pass"
+      },
+      "verdict": "accept-with-fixes",
+      "requiredStates": {
+        "MaterialKind + SourceStatus": "present - left Material Legend and timeline show solid manual, dotted live-generated, diagonal-hatched snapshot, dashed/notched derivative, and the stippled/question-mark Source missing item",
+        "generated edit choice": "present - the Edit live-generated material dialog offers Add downstream transform, Fork the generator, and Freeze a snapshot",
+        "materialization receipt": "partial - the frozen Snapshot 01 clip carries Receipt M-024, but the image never identifies it as a materialization receipt or shows its provenance/details",
+        "orphaned event state": "present - bottom timeline item is visibly stippled, question-marked, and labelled Source missing"
+      },
+      "defects": [
+        "S8 handoff gate fails: the visible Edit live-generated material dialog has no canonical component entry in components.json, and no explicit new-component entry, interaction behavior, token-deviation record, accessibility annotation, or paired/written responsive rule is visible.",
+        "No budget meter or budget-limit/recovery state is visible; Source missing is an error/provenance condition, not budget visibility.",
+        "The selected timeline clip is E(7,12), the inspector is E(7,12), and the ring is related, but the selected event provenance chip is only a generic link icon plus Euclidean rhythm; the event-to-inspector connection is not explicit.",
+        "The source-missing row is shown only as an item, not as an event with an identifiable time/track lineage.",
+        "The 12-step ring is mathematically correct: filled onsets are at positions 0, 2, 4, 5, 7, 9, and 10 (cyclic gaps 2,2,1,2,2,1,2), a rotation of the Bjorklund E(7,12) pattern. No mathematical discrepancy is visible.",
+        "Non-colour carriers are visible for the rendered material/source states: solid outline for manual/current, dotted outline for live-generated, diagonal hatch for snapshot, dashed/notched treatment for derivative, and stipple plus ? for missing. The selected state is reinforced by a double outline and text, not hue alone.",
+        "No misspelling, garbled label, or nonsense string is visible."
+      ],
+      "strengths": [
+        "The required timeline surfaces are all visible at once: generated, frozen, manual, derivative, automation, tuplet marker, playhead, edit-choice dialog, and orphaned source.",
+        "The dense 48px toolbar, navigator, 28px graph drawer, inspector, and 240px-class timeline read as a credible professional instrument."
+      ]
+    },
+    "B-laboratory": {
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 3,
+        "musical legibility": 2,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 1,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 3,
+        "error/budget visibility": 1,
+        "accessibility cues": 2,
+        "responsive plausibility": 1,
+        "implementation plausibility": 2,
+        "visual restraint": 2,
+        "consistency with design tokens": 3
+      },
+      "rejectAxes": {
+        "mathematical correctness": "pass",
+        "generated/frozen semantics": "pass",
+        "accessibility": "pass"
+      },
+      "verdict": "accept-with-fixes",
+      "requiredStates": {
+        "MaterialKind + SourceStatus": "present - legend and lanes visibly use solid, dotted, hatched, dashed/notched, and stippled/? treatments; current source and snapshot lineage also appear in Provenance Links",
+        "generated edit choice": "present - centered Edit generated material dialog visibly offers Add downstream transform, Fork the generator, and Freeze a snapshot",
+        "materialization receipt": "present - inspector has a MATERIALIZATION RECEIPT section with a hatched receipt mark and Snapshot 09.03",
+        "orphaned event state": "present - Manual Accent lane visibly includes a stippled/dash-dot question-mark item labelled Source missing"
+      },
+      "defects": [
+        "S8 handoff gate fails: the visible Edit generated material dialog is not in components.json and no explicit new component entry is shown; no interaction specification, token-deviation record, accessibility annotation, or paired/written responsive rule is present.",
+        "Linked selection is contradictory: the cyan/double-outlined timeline clip says Offset Derivative, while the inspector's selected entity says Pulse 05. The ring does not visibly identify Pulse 05. This is not a believable linked selection across surfaces.",
+        "No budget meter or numeric budget/limit/recovery state is visible; the source-missing state does not satisfy error/budget visibility by itself.",
+        "The canvas formula/definition is legible, but the central ring is small and the generated/frozen editing decision hides part of the manual lane.",
+        "The rendered E(7,12) ring is mathematically correct: onsets occur at 0, 2, 4, 5, 7, 9, and 10, yielding cyclic gaps 2,2,1,2,2,1,2. This is a rotation of Bjorklund E(7,12); no discrepancy is visible.",
+        "Non-colour carriers are present for visible semantic states: dotted live clips, diagonal-hatched snapshots, solid manual clip, notched/dashed derivatives, stipple plus ? for missing, mapping glyphs, and lock-marked research gating. Hue is not load-bearing for those shown states.",
+        "No misspelling, garbled label, or nonsense string is visible."
+      ],
+      "strengths": [
+        "It is the clearest variant for materialization and provenance: receipt, source-current, and from-snapshot links are named and spatially grouped.",
+        "The definition explicitly names Bjorklund, k, n, start 0, and forward direction, giving the screen usable mathematical context."
+      ]
+    },
+    "C-spatial": {
+      "scores": {
+        "immediate playability": 3,
+        "mathematical legibility": 3,
+        "musical legibility": 2,
+        "professional-tool credibility": 3,
+        "linked-selection clarity": 1,
+        "density management": 2,
+        "novice-to-expert progression": 2,
+        "generated/frozen distinction": 3,
+        "provenance discoverability": 3,
+        "error/budget visibility": 1,
+        "accessibility cues": 2,
+        "responsive plausibility": 1,
+        "implementation plausibility": 2,
+        "visual restraint": 2,
+        "consistency with design tokens": 3
+      },
+      "rejectAxes": {
+        "mathematical correctness": "pass",
+        "generated/frozen semantics": "pass",
+        "accessibility": "pass"
+      },
+      "verdict": "reject",
+      "requiredStates": {
+        "MaterialKind + SourceStatus": "present - the same visible legend, dotted generated lanes, hatched snapshots, solid manual clip, dashed/notched derivatives, and stippled/? Source missing treatment establish the states",
+        "generated edit choice": "present - the centered Edit generated material dialog displays all three requested choices",
+        "materialization receipt": "present - the inspector visibly names MATERIALIZATION RECEIPT and Snapshot 09.03",
+        "orphaned event state": "present - Source missing is visibly marked with stipple, ? glyph, and broken/dash-dot boundary in the Manual Accent lane"
+      },
+      "defects": [
+        "This is visually near-duplicate of B-laboratory, not a Spatial/Tactile variant: it retains the same dense chrome, same small controls, same canvas, and no visible direct-manipulation affordance. It fails the stated C variant objective to reduce chrome and prioritize larger geometric/tactile controls.",
+        "S8 handoff gate fails: the visible Edit generated material dialog has no component-manifest entry or explicit new-component entry, and the image supplies no interaction behavior, token-deviation record, accessibility annotation, or paired/written responsive rule.",
+        "The cyan/double-outlined timeline clip is Offset Derivative while the inspector selects Pulse 05; neither the canvas nor inspector visibly resolves that mismatch.",
+        "No budget meter or predicted/current limit/recovery information is visible.",
+        "The E(7,12) ring is mathematically correct: visible onsets are positions 0, 2, 4, 5, 7, 9, and 10, with cyclic gaps 2,2,1,2,2,1,2. No mathematical discrepancy is visible.",
+        "Non-colour carriers are visible for the states actually rendered: dotted, hatch, solid, dashed/notched, stipple/?; mapping-stage glyphs; and the research lock. Hue is redundant for those states.",
+        "No misspelling, garbled label, or nonsense string is visible."
+      ],
+      "strengths": [
+        "It preserves the complete S07 material-editing evidence set and readable provenance/receipt blocks.",
+        "Its dark palette, compact panels, and material textures align closely with the v0.3.0 tokens."
+      ]
+    }
+  },
+  "screenNotes": "All three visibly satisfy the core S07 content set and show a correct E(7,12) rhythm rather than a decorative ring. All three use visible non-hue texture/glyph carriers for the material and missing-source states shown. All omit budget evidence and cannot pass S8 as implementation-authoritative images: no visible interaction specification, accessibility annotation, responsive pair/rule, token-deviation record, or manifest treatment for the generated-edit dialog. B and C also use an internally inconsistent selected entity (Pulse 05) versus selected clip (Offset Derivative).",
+  "recommendedVariant": "B-laboratory",
+  "recommendationReason": "B-laboratory is the strongest visible basis because it makes the materialization receipt, mathematical definition, and provenance links explicit while preserving the required timeline states. Fix its false linked selection, add budget visibility, and complete the S8 handoff evidence before implementation.",
+  "mathVerdict": {
+    "source": "scripts/check-figures.mjs",
+    "screen": "S07",
+    "verdict": "pass",
+    "basis": [
+      "S07: figures/S07-euclidean-pulse-field.svg present (1994 bytes).",
+      "S07: committed bytes are identical to the generator output.",
+      "S07 layer 0 (E(7,12)): onsets [0,2,4,5,7,9,10] match euclideanRhythm({steps:12,pulses:7,rotation:0}).",
+      "S07 layer 0: 12 markers within 0.0001 of their step angle on the r=192 ring; filled set recovers the onsets exactly."
+    ],
+    "attests": "The kernel-generated figure SVG named above is mathematically faithful to src/operators/euclidean.ts: its data-onsets/data-gaps/data-notation re-derive from euclideanRhythm/cyclicGapLengths, its drawn steps are a bijection over 0..steps-1, and every marker sits at its step's angle on its ring.",
+    "doesNotAttest": "That the figure was actually composited into the reviewed PNG, or that it is uncovered and correctly placed there. Read the variants' plate-integrity defects for that; it is not machine-checked."
+  }
+}

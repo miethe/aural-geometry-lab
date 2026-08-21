@@ -158,6 +158,27 @@ Score each mockup 0–3 on:
 
 Any score of 0 on mathematical correctness, generated/frozen semantics, or accessibility rejects the mockup regardless of aesthetics.
 
+For a screen with a `design/mockups/figure-plates.json` entry the mathematical-correctness reject
+axis is **machine-derived, not scored by the model**. Its central figure is generated from the
+operator kernels and composited into a reserved panel (§S3, `composite-figure.sh`), so all three
+variants carry the byte-identical figure and any per-variant disagreement on the mathematics is by
+construction a reading error. `scripts/check-figures.mjs` decides the axis against the SVG's own
+`data-*` attributes and the compiled `src/operators/euclidean.ts` — it re-derives
+`data-onsets`/`data-gaps`/`data-notation` from `euclideanRhythm`/`cyclicGapLengths`, requires the
+drawn `data-step` values to be a bijection over `0..steps-1`, and recomputes every onset marker's
+angle from its ring — and `score-one.sh` stamps that verdict onto the critique after scoring. `npm
+run verify` runs the same check; a stale committed figure fails it, and so does a `dist/` older than
+the sources the check reads through. The model is asked only whether the composited plate is
+present, uncovered and correctly placed; it does not read the mathematics off the raster, and for a
+plated screen it is not asked to judge the mathematical-correctness reject axis at all. Screens with
+no plate keep the by-eye check above unchanged.
+
+The stamp is scoped, and says so in its own `attests`/`doesNotAttest` fields: it establishes that
+the figure **SVG** is kernel-faithful, **not** that the figure reached the reviewed PNG. Compositing
+is not gated — `run-one.sh` swallows a composite failure with `exit 0` — so an uncomposited render
+can still carry a `pass` on this axis. Treat the model's plate-integrity defects as the only signal
+about that until composition itself is gated.
+
 ## 7. Annotation pass
 
 After a visual direction is selected, produce annotated mockups showing:
