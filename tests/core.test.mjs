@@ -54,6 +54,29 @@ import {
   canonicalTileId,
   canonicalEdgeId,
 } from "../dist/src/geometry/index.js";
+import { analyzeCompositeCycle } from "../dist/src/labs/euclidean-analysis.js";
+
+test("Euclidean composite-cycle analysis counts shared steps and pairwise alignments", () => {
+  const analysis = analyzeCompositeCycle([
+    { steps: 4, pattern: [true, false, true, false] },
+    { steps: 6, pattern: [true, false, false, true, false, false] },
+    { steps: 3, pattern: [false, true, false] },
+  ]);
+  assert.deepEqual(analysis, { cycleSteps: 12, sharedOnsetSteps: 4, pairwiseAlignments: 4 });
+  assert.deepEqual(analyzeCompositeCycle([]), {
+    cycleSteps: 0,
+    sharedOnsetSteps: 0,
+    pairwiseAlignments: 0,
+  });
+});
+
+test("Euclidean composite-cycle analysis rejects malformed rings and oversized cycles", () => {
+  assert.throws(() => analyzeCompositeCycle([{ steps: 2, pattern: [true] }]), /matching its pattern/);
+  assert.throws(() => analyzeCompositeCycle([
+    { steps: 5, pattern: [true, false, false, false, false] },
+    { steps: 7, pattern: [true, false, false, false, false, false, false] },
+  ], 30), /analysis bound/);
+});
 
 test("Rational arithmetic remains exact", () => {
   const third = new Rational(1n, 3n);
