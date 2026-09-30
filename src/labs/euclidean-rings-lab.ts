@@ -1,4 +1,5 @@
 import { EuclideanPlayer } from "../audio/euclidean-player.js";
+import { analyzeCompositeCycle } from "./euclidean-analysis.js";
 import { cyclicGapLengths, euclideanRhythm } from "../operators/euclidean.js";
 import { metric, rangeControl } from "../ui/controls.js";
 import { button, clear, el, svgEl } from "../ui/dom.js";
@@ -220,14 +221,15 @@ export const euclideanRingsLab: LabModule = {
     }
 
     function renderMetrics(): void {
-      const lcmSteps = rings.reduce((value, ring) => leastCommonMultiple(value, ring.steps), 1);
+      const cycle = analyzeCompositeCycle(rings);
       const totalPulses = rings.reduce((sum, ring) => sum + ring.pulses, 0);
       const totalSteps = rings.reduce((sum, ring) => sum + ring.steps, 0);
       clear(metrics);
       metrics.append(
         metric("Tempo", `${bpm} BPM`, "Shared sixteenth-note clock"),
         metric("Onsets", String(totalPulses), `${totalSteps} total ring positions`),
-        metric("Composite cycle", `${lcmSteps} steps`, `${(lcmSteps * 60 / bpm / 4).toFixed(1)} seconds`),
+        metric("Composite cycle", `${cycle.cycleSteps} steps`, `${(cycle.cycleSteps * 60 / bpm / 4).toFixed(1)} seconds`),
+        metric("Shared onsets", String(cycle.sharedOnsetSteps), `${cycle.pairwiseAlignments} pairwise alignments per cycle`),
         metric("Aggregate density", `${Math.round(totalPulses / totalSteps * 100)}%`, "Across all rings"),
       );
     }
@@ -294,17 +296,4 @@ function createRing(
 
 function explanation(title: string, text: string): HTMLElement {
   return el("article", { className: "explanation-card" }, el("h3", { text: title }), el("p", { text }));
-}
-
-function greatestCommonDivisor(left: number, right: number): number {
-  let a = Math.abs(left);
-  let b = Math.abs(right);
-  while (b !== 0) {
-    [a, b] = [b, a % b];
-  }
-  return a;
-}
-
-function leastCommonMultiple(left: number, right: number): number {
-  return Math.abs(left * right) / greatestCommonDivisor(left, right);
 }
