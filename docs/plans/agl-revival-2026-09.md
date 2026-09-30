@@ -22,4 +22,4 @@ Extend the running native-DOM studio in reviewable slices while its seven routes
 
 ## Probe notes
 
-The local toolchain has Node 24.14.0 and the locked TypeScript 5.8.3, which can build and test the repo. Node 20.19.3 is correctly refused by the build. The source catalog exposes seven hash routes; six labs instantiate audio players and Penrose does not. A browser is unavailable in this sandbox, so route delivery can be checked over HTTP but actual rendering and sound still need a browser-side listening pass.
+The local toolchain has Node 24.14.0 and the locked TypeScript 5.8.3, which can build and test the repo. Node 20.19.3 is correctly refused by the build. The compiled catalog exposes seven hash routes. Audio player wiring exists in Infinite Staircase, Euclidean Rings, Tonnetz Walk, Fractal Motif, Cellular Automaton, and Chaos Attractor; Penrose has no player. A browser is unavailable in this sandbox, so actual rendering and audible output still need a browser-side listening pass.
