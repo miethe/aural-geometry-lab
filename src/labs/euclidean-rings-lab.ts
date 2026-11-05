@@ -37,6 +37,7 @@ export const euclideanRingsLab: LabModule = {
     let activeTick = -1;
     let selectedRing = 0;
     let disposed = false;
+    let timelineWindowStart = 0;
     let rings: readonly EuclideanRingState[] = [
       createRing("kick", "Low pulse", "sine body", 16, 5, 0, 1),
       createRing("hat", "High pulse", "noise click", 12, 7, 1, 0.8),
@@ -48,6 +49,14 @@ export const euclideanRingsLab: LabModule = {
     const audioStatus = el("p", { className: "audio-notice", attributes: { role: "status" }, text: "Audio stopped · browser synthesis" });
     const metrics = el("div", { className: "metric-grid metric-grid-four" });
     const ringControls = el("div", { className: "ring-controls" });
+    const timelineRows = el("div", { className: "timeline-rows" });
+    const timelineCursor = el("div", { className: "timeline-cursor", attributes: { "aria-hidden": "true" } });
+    const timelineRuler = el("div", { className: "timeline-ruler" });
+    const timeline = el("details", { className: "studio-timeline" },
+      el("summary", { text: "Timeline · 4-bar window · live generated" }),
+      el("p", { className: "audio-notice", text: "Derived · repeating ring onsets on a shared 1/16 grid in 4/4. Read-only preview; playhead timing is estimated." }),
+      timelineRuler,
+      el("div", { className: "timeline-body" }, timelineRows, timelineCursor));
     const startButton = button("Play rings", {
       className: "button button-primary",
       onClick: async () => {
@@ -58,13 +67,17 @@ export const euclideanRingsLab: LabModule = {
           startButton.classList.remove("is-playing");
           activeTick = -1;
           renderVisualization();
+          updateTimelineCursor();
           return;
         }
         startButton.disabled = true;
         try {
           await player.start((tick) => {
+            if (disposed || (tick >= 0 && !player.playing)) return;
             activeTick = tick;
-            if (!disposed) renderVisualization();
+            renderVisualization();
+            if (Math.floor(Math.max(0, tick) / 64) * 64 !== timelineWindowStart) renderTimeline();
+            updateTimelineCursor();
           });
           if (disposed) { player.stop(); return; }
           startButton.textContent = "Stop";
@@ -125,6 +138,7 @@ export const euclideanRingsLab: LabModule = {
           panel("Math & timing", metrics, { kicker: "DERIVED · current parameters" }),
           panel("Provenance", el("p", { text: "Patterns: Euclidean kernel. Voices: demo synthesis. Timing readout: rounded estimate; browser scheduling is approximate." }), { kicker: "ENGINEERING DEFAULT" }))),
     );
+    container.append(timeline);
     visualization.addEventListener("pointerdown", (event) => {
       const target = event.target as Element;
       const index = target.getAttribute("data-ring");
@@ -149,6 +163,7 @@ export const euclideanRingsLab: LabModule = {
     renderRingControls();
     renderVisualization();
     renderMetrics();
+    renderTimeline();
 
     return () => { disposed = true; player.stop(); container.classList.remove("spatial-studio"); };
 
@@ -171,6 +186,7 @@ export const euclideanRingsLab: LabModule = {
 
     function updatePlayer(): void {
       player.update({ bpm, rings, masterGain });
+      renderTimeline();
     }
 
     function renderRingControls(): void {
@@ -235,6 +251,32 @@ export const euclideanRingsLab: LabModule = {
           ),
         );
       }
+    }
+
+    function renderTimeline(): void {
+      timelineWindowStart = Math.floor(Math.max(0, activeTick) / 64) * 64;
+      clear(timelineRuler);
+      timelineRuler.append(...[1, 2, 3, 4].map((bar) => el("span", { text: `Bar ${timelineWindowStart / 16 + bar}` })));
+      clear(timelineRows);
+      for (const ring of rings) {
+        const row = el("div", { className: `timeline-track ring-${ring.id}` },
+          el("strong", { className: "timeline-track-name", text: ring.name }));
+        const cells = el("div", { className: "timeline-cells", attributes: { "aria-label": `Derived · ${ring.name}, 64 sixteenth-note steps` } });
+        for (let step = 0; step < 64; step++) {
+          const active = ring.pattern[(timelineWindowStart + step) % ring.steps] === true;
+          cells.append(el("span", { className: `timeline-cell ${active ? "is-on" : "is-off"}`,
+            title: `Derived · bar ${Math.floor((timelineWindowStart + step) / 16) + 1}, step ${step % 16 + 1}: ${active ? "onset" : "rest"}`,
+            attributes: { "aria-hidden": "true", "data-onset": String(active), "data-step": String(step) } }));
+        }
+        row.append(cells);
+        timelineRows.append(row);
+      }
+      updateTimelineCursor();
+    }
+
+    function updateTimelineCursor(): void {
+      timelineCursor.hidden = activeTick < 0;
+      timelineCursor.style.left = `${Math.max(0, activeTick % 64) / 64 * 100}%`;
     }
 
     function renderMetrics(): void {

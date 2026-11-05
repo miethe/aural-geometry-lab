@@ -569,7 +569,7 @@ test("Shared material-status fixtures match TypeScript derivation", () => {
 class StudioTestNode {
   constructor(tag = "text", text = "") {
     this.tagName = tag; this.children = []; this.attributes = {}; this.listeners = {};
-    this.className = ""; this._text = text; this.value = "";
+    this.className = ""; this._text = text; this.value = ""; this.style = {};
     this.classList = {
       add: (name) => { this.className += ` ${name}`; },
       remove: (name) => { this.className = this.className.split(" ").filter((x) => x !== name).join(" "); },
@@ -622,5 +622,22 @@ test("spatial AC2: derived counts and rounded timing carry honesty labels at zer
   assert.match(root.textContent, /Estimated · aggregate density0%/);
   assert.match(root.textContent, /Estimated · \d+\.\d seconds/);
   assert.match(root.textContent, /Derived · cyclic gaps: none/);
+  stop();
+}));
+
+
+test("spatial AC3: timeline starts collapsed and reflects changed ring events behind one summary", () => withStudioDOM((root) => {
+  const stop = euclideanRingsLab.mount(root);
+  const drawer = root.all((node) => node.tagName === "details")[0];
+  assert.equal(drawer.getAttribute("open"), null);
+  assert.equal(drawer.children[0].tagName, "summary");
+  assert.match(drawer.children[0].textContent, /Timeline/);
+  const pulses = root.all((node) => node.tagName === "input" && node.id?.startsWith("range-pulses-"))[0];
+  pulses.value = "0"; pulses.fire("input");
+  const tracks = drawer.all((node) => node.className.startsWith("timeline-track ring-"));
+  const cells = tracks[0].all((node) => node.attributes["data-step"] !== undefined);
+  assert.equal(cells.length, 64);
+  assert.ok(cells.every((cell) => cell.attributes["data-onset"] === "false"));
+  assert.ok(tracks[1].all((node) => node.attributes["data-onset"] === "true").length > 0);
   stop();
 }));

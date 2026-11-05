@@ -1576,3 +1576,17 @@ pre {
 .spatial-inspector p { font-size: 12px; line-height: 1.8; color: var(--muted); }
 @media(max-width:1150px) { .spatial-workspace { grid-template-columns: minmax(0,1fr); } .spatial-inspector { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; } }
 @media(max-width:700px) { .spatial-studio .ring-controls,.spatial-inspector { grid-template-columns: 1fr; } .spatial-tracks .button { min-height: 44px; } .spatial-canvas svg { max-height: none; } }
+.studio-timeline { border: 1px solid var(--line-strong); background: #0c1219; border-radius: 6px; margin-top: 16px; padding: 0 16px 16px; }
+.studio-timeline summary { cursor: pointer; padding: 16px 0; min-height: 48px; font-size: 13px; color: var(--cyan); }
+.studio-timeline:not([open]) { padding-bottom: 0; }
+.studio-timeline summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+.timeline-ruler { display: grid; grid-template-columns: repeat(4,1fr); font: 11px ui-monospace,monospace; color: var(--muted); margin: 20px 0 10px 100px; }
+.timeline-body { position: relative; margin-left: 100px; }
+.timeline-track { position: relative; height: 44px; margin-block: 8px; }
+.timeline-track-name { position: absolute; right: calc(100% + 12px); width: 88px; top: 12px; font-size: 11px; }
+.timeline-cells { display: grid; grid-template-columns: repeat(64,minmax(0,1fr)); height: 44px; border: 1px dotted var(--cyan); }
+.timeline-cell { border-right: 1px solid rgba(255,255,255,.06); }
+.timeline-cell:nth-child(16n) { border-right: 1px solid var(--line-strong); }
+.timeline-cell.is-on { background: var(--cyan-soft); box-shadow: inset 2px 0 var(--cyan); margin-block: 6px; }
+.timeline-track.ring-bell .is-on { background: var(--violet-soft); box-shadow: inset 2px 0 var(--violet); }
+.timeline-cursor { position: absolute; top: -12px; bottom: -4px; border-left: 2px solid #fff; pointer-events: none; }
