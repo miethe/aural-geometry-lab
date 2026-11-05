@@ -23,6 +23,8 @@ async function digest(file) {
 
 const work = await mkdtemp(path.join(tmpdir(), "agl-release-"));
 try {
+  // Tracked wrapper bookkeeping must stay out of releases, even in leg checkouts.
+  run("python3", ["-c", "import importlib.util,pathlib,sys; s=importlib.util.spec_from_file_location('release','scripts/make-release.py'); m=importlib.util.module_from_spec(s); s.loader.exec_module(m); m.ROOT=pathlib.Path(sys.argv[1]); p=m.ROOT / '.leg/checkpoints.jsonl'; p.parent.mkdir(); p.touch(); q=m.ROOT / 'source.md'; q.touch(); assert not m.include(p,m.ROOT / 'out.zip'); assert m.include(q,m.ROOT / 'out.zip')", work]);
   // Determinism is the claim: two archives of the same tree must be byte-identical.
   const first = path.join(work, "first.zip");
   const second = path.join(work, "second.zip");
