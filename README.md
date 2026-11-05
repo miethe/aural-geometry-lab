@@ -23,6 +23,23 @@ The FR-01 release contains:
 - hardened analytic Risset and exact Penrose identity foundations;
 - a 142-item owned implementation backlog and amended swarm sequencing.
 
+## Spatial browser workspace
+
+The home route (`#/library`) opens a local project library. Choose **New project** for an empty
+Euclidean study, or open **Euclidean Rings** from the guided labs for the playable demo preset.
+Select a ring, drag its markers to rotate, or use the labelled parameter sliders. The inspector
+labels computed counts as **Derived** and rounded timing/density as **Estimated**.
+
+**Timeline** opens with one tap and starts collapsed. It previews the same three generated ring
+patterns as playback, in an advancing four-bar window. **Save project** stores the project name,
+tempo, levels and ring settings in this browser's local storage. Saving is explicit; changes in
+an unsaved tab are lost when it closes. The library previews and reopens saved Euclidean studies.
+Storage errors leave existing data intact and report that saving failed.
+
+These are local demo studies, separate from the versioned AGL project/package contracts. Other
+labs remain reachable; their settings are not yet saved in the library. See the
+[screen mapping and validation limits](IMPLEMENTATION_REPORT.md#spatial-workspace-addendum-2026-11-05).
+
 ## Authority order
 
 When artifacts conflict, use this order:

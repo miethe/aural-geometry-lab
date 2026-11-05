@@ -13,5 +13,5 @@ export interface LabMetadata {
 }
 
 export interface LabModule extends LabMetadata {
-  mount(container: HTMLElement): () => void;
+  mount(container: HTMLElement, context?: { readonly projectId: string }): () => void;
 }

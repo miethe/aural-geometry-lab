@@ -3,6 +3,7 @@ import { analyzeCompositeCycle } from "./euclidean-analysis.js";
 import { cyclicGapLengths, euclideanRhythm } from "../operators/euclidean.js";
 import { metric, rangeControl } from "../ui/controls.js";
 import { button, clear, el, svgEl } from "../ui/dom.js";
+import { browserStudyStorage, readLocalStudies, saveLocalStudy, newLocalStudy } from "../ui/dashboard.js";
 import { labHeader, panel } from "../ui/lab-layout.js";
 import type { LabModule } from "./types.js";
 
@@ -31,9 +32,22 @@ const metadata = {
 
 export const euclideanRingsLab: LabModule = {
   ...metadata,
-  mount(container): () => void {
-    let bpm = 108;
-    let masterGain = 0.68;
+  mount(container, context): () => void {
+    const storage = browserStudyStorage();
+    const library = readLocalStudies(storage);
+    const saved = context ? library.projects.find((project) => project.id === context.projectId) : undefined;
+    if (context && !saved) {
+      container.append(el("p", { className: "inline-error", attributes: { role: "alert" },
+        text: library.error ?? "This local study was not found in this browser." }),
+        el("a", { className: "button", text: "Return to library", attributes: { href: "#/library" } }));
+      return () => {};
+    }
+    const studyId = saved?.id ?? newLocalStudy().id;
+    const studyName = el("input", { className: "study-name", attributes: { "aria-label": "Project name", maxlength: "80", value: saved?.name ?? "Euclidean study" } });
+    const saveStatus = el("span", { className: "audio-notice", attributes: { role: "status" }, text: saved ? "Saved locally · this browser" : "Unsaved study · this tab" });
+    studyName.addEventListener("input", () => { saveStatus.textContent = "Unsaved changes · this tab"; });
+    let bpm = saved?.bpm ?? 108;
+    let masterGain = saved?.masterGain ?? 0.68;
     let activeTick = -1;
     let selectedRing = 0;
     let disposed = false;
@@ -43,6 +57,7 @@ export const euclideanRingsLab: LabModule = {
       createRing("hat", "High pulse", "noise click", 12, 7, 1, 0.8),
       createRing("bell", "Bell pulse", "triangle ping", 9, 4, 0, 0.72),
     ];
+    if (saved) rings = saved.rings.map((ring) => createRing(ring.id, ring.name, ring.voice, ring.steps, ring.pulses, ring.rotation, ring.gain));
     const player = new EuclideanPlayer({ bpm, rings, masterGain });
 
     const visualization = el("div", { className: "euclidean-visualization spatial-canvas" });
@@ -129,6 +144,15 @@ export const euclideanRingsLab: LabModule = {
         status: metadata.status, statusLabel: "Live generated · demo player" }),
       el("div", { className: "lab-toolbar spatial-transport" }, startButton, audioStatus,
         el("a", { className: "button button-quiet", text: "← Library", attributes: { href: "#/library" } })),
+      el("div", { className: "study-save-bar" }, studyName,
+        button("Save project", { className: "button button-secondary", onClick: () => {
+          const name = studyName.value.trim();
+          if (!name) { saveStatus.textContent = "Enter a project name before saving."; return; }
+          const error = saveLocalStudy(storage, { id: studyId, name, modifiedAt: new Date().toISOString(), bpm, masterGain,
+            rings: rings.map(({ pattern: _pattern, ...settings }) => settings) });
+          saveStatus.textContent = error ?? "Saved locally · this browser";
+          if (!error) window.history.replaceState(null, "", `#/euclidean-rings/${studyId}`);
+        } }), saveStatus),
       ringControls,
       el("div", { className: "spatial-workspace" },
         panel("Rhythm canvas", [trackList, visualization,
@@ -186,6 +210,7 @@ export const euclideanRingsLab: LabModule = {
 
     function updatePlayer(): void {
       player.update({ bpm, rings, masterGain });
+      saveStatus.textContent = "Unsaved changes · this tab";
       renderTimeline();
     }
 

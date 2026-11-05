@@ -587,7 +587,8 @@ class StudioTestNode {
   all(predicate) { return this.children.flatMap((child) => [...(predicate(child) ? [child] : []), ...child.all(predicate)]); }
 }
 function withStudioDOM(run) {
-  const previous = { document: globalThis.document, Node: globalThis.Node };
+  const previous = { document: globalThis.document, Node: globalThis.Node, window: globalThis.window };
+  globalThis.window = { localStorage: undefined, history: { replaceState() {} } };
   globalThis.Node = StudioTestNode;
   globalThis.document = {
     createElement: (tag) => new StudioTestNode(tag),
@@ -640,4 +641,58 @@ test("spatial AC3: timeline starts collapsed and reflects changed ring events be
   assert.ok(cells.every((cell) => cell.attributes["data-onset"] === "false"));
   assert.ok(tracks[1].all((node) => node.attributes["data-onset"] === "true").length > 0);
   stop();
+}));
+
+
+const { newLocalStudy, readLocalStudies, saveLocalStudy, localStudyKey, createProjectLibrary } = await import("../dist/src/ui/dashboard.js");
+
+test("local library: blank study survives reopening and edits save under the same identity", () => withStudioDOM((root) => {
+  let raw = null;
+  const storage = { getItem: () => raw, setItem: (_, value) => { raw = value; } };
+  window.localStorage = storage;
+  const project = { ...newLocalStudy(), name: "<img src=x onerror=alert(1)>" };
+  assert.equal(saveLocalStudy(storage, project), undefined);
+  assert.deepEqual(readLocalStudies(storage).projects, [project]);
+  const stop = euclideanRingsLab.mount(root, { projectId: project.id });
+  const name = root.all((node) => node.className === "study-name")[0];
+  assert.equal(name.value, project.name);
+  const pulses = root.all((node) => node.tagName === "input" && node.id?.startsWith("range-pulses-"))[0];
+  pulses.value = "16"; pulses.fire("input");
+  const save = root.all((node) => node.tagName === "button" && node.textContent === "Save project")[0];
+  save.fire("click");
+  const saved = readLocalStudies(storage).projects;
+  assert.equal(saved.length, 1);
+  assert.equal(saved[0].rings[0].pulses, 16);
+  assert.equal(saved[0].id, project.id);
+  const library = createProjectLibrary([]);
+  assert.ok(library.textContent.includes(project.name));
+  assert.equal(library.all((node) => node.tagName === "img").length, 0);
+  const reopened = new StudioTestNode("main");
+  const close = euclideanRingsLab.mount(reopened, { projectId: project.id });
+  assert.equal(reopened.all((node) => node.className.includes("euclidean-step") && node.attributes["data-ring"] === "0" && node.className.includes("is-on")).length, 16);
+  close(); stop();
+}));
+
+test("worst failure: corrupt or unavailable local storage cannot overwrite existing studies or mount unsafe settings", () => withStudioDOM((root) => {
+  let writes = 0;
+  const project = newLocalStudy();
+  for (const raw of ["{broken", JSON.stringify({ version: 1, projects: [{ ...project, bpm: 0 }] }),
+    JSON.stringify({ version: 1, projects: [project, project] })]) {
+    const storage = { getItem: () => raw, setItem: () => { writes++; } };
+    window.localStorage = storage;
+    assert.ok(readLocalStudies(storage).error);
+    assert.ok(saveLocalStudy(storage, project));
+    assert.equal(writes, 0);
+    root.replaceChildren();
+    euclideanRingsLab.mount(root, { projectId: project.id });
+    assert.match(root.textContent, /unavailable or unreadable/);
+    assert.equal(root.all((node) => node.className === "spatial-canvas").length, 0);
+  }
+  let raw = JSON.stringify({ version: 1, projects: [project] });
+  const before = raw;
+  const fullStorage = { getItem: () => raw, setItem: () => { throw new Error("QuotaExceededError"); } };
+  assert.match(saveLocalStudy(fullStorage, { ...project, name: "changed" }), /Could not save locally/);
+  assert.equal(raw, before);
+  assert.ok(readLocalStudies(undefined).error);
+  assert.equal(localStudyKey, "agl.local-studies.v1");
 }));

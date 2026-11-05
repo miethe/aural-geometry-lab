@@ -1,6 +1,6 @@
 import { audioRuntime } from "../audio/audio-runtime.js";
 import type { LabModule } from "../labs/types.js";
-import { createDashboard, navStatusClass } from "./dashboard.js";
+import { createDashboard, createProjectLibrary, navStatusClass } from "./dashboard.js";
 import { button, clear, el } from "./dom.js";
 
 export class AppShell {
@@ -32,8 +32,8 @@ export class AppShell {
       el(
         "div",
         { className: "sidebar-footer" },
-        el("span", { text: "Foundation build" }),
-        el("strong", { text: "v0.1.0" }),
+        el("span", { text: "Local browser studio" }),
+        el("strong", { text: "v0.4.0" }),
       ),
     );
 
@@ -44,7 +44,7 @@ export class AppShell {
     const topbar = el(
       "header",
       { className: "topbar" },
-      el("div", {}, el("span", { className: "topbar-program", text: "Aural Geometry Lab" }), el("span", { className: "topbar-phase", text: "MVP program start" })),
+      el("div", {}, el("span", { className: "topbar-program", text: "Aural Geometry Lab" }), el("span", { className: "topbar-phase", text: "Spatial workspace · local only" })),
       emergencyStop,
     );
 
@@ -69,14 +69,15 @@ export class AppShell {
 
     const route = window.location.hash.replace(/^#\/?/, "");
     this.updateActiveNavigation(route);
-    if (route === "") {
-      this.content.append(createDashboard(this.labs));
+    if (route === "" || route === "library" || route === "dashboard") {
+      this.content.append(route === "dashboard" ? createDashboard(this.labs) : createProjectLibrary(this.labs));
       document.title = "Aural Geometry Lab";
       this.content.scrollTo({ top: 0 });
       return;
     }
 
-    const lab = this.labs.find((candidate) => candidate.id === route);
+    const [labId, projectId, extra] = route.split("/");
+    const lab = extra !== undefined || (projectId !== undefined && labId !== "euclidean-rings") ? undefined : this.labs.find((candidate) => candidate.id === labId);
     if (lab === undefined) {
       this.content.append(
         el(
@@ -92,7 +93,7 @@ export class AppShell {
 
     document.title = `${lab.name} · Aural Geometry Lab`;
     try {
-      this.cleanupActiveView = lab.mount(this.content);
+      this.cleanupActiveView = lab.mount(this.content, projectId === undefined ? undefined : { projectId });
     } catch (error) {
       this.content.append(
         el(
@@ -111,11 +112,12 @@ export class AppShell {
     this.nav.append(
       el(
         "a",
-        { className: "nav-item nav-home", attributes: { href: "#/", "data-route": "" } },
+        { className: "nav-item nav-home", attributes: { href: "#/library", "data-route": "library" } },
         el("span", { className: "nav-icon", text: "⌂" }),
-        el("span", { text: "Program dashboard" }),
+        el("span", { text: "Project library" }),
       ),
     );
+    this.nav.append(el("a", { className: "nav-item", text: "Program overview", attributes: { href: "#/dashboard", "data-route": "dashboard" } }));
     for (const [index, lab] of this.labs.entries()) {
       this.nav.append(
         el(
@@ -131,7 +133,7 @@ export class AppShell {
 
   private updateActiveNavigation(route: string): void {
     for (const item of this.nav.querySelectorAll<HTMLAnchorElement>("[data-route]")) {
-      item.classList.toggle("is-active", item.dataset["route"] === route);
+      item.classList.toggle("is-active", item.dataset["route"] === (route === "" ? "library" : route.split("/")[0]));
     }
   }
 }
