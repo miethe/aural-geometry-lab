@@ -11,7 +11,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 PREFIX = "aural-geometry-lab"
-EXCLUDED_PARTS = {".git", ".build", ".swiftpm", "node_modules", "dist", "coverage", "__pycache__", ".pytest_cache", ".mypy_cache"}
+EXCLUDED_PARTS = {".leg", ".git", ".build", ".swiftpm", "node_modules", "dist", "coverage", "__pycache__", ".pytest_cache", ".mypy_cache"}
 EXCLUDED_NAMES = {".DS_Store"}
 # Paths kept OUT of the release archive even though git tracks them.
 # design/mockups/images/ is Git-LFS-tracked (see .gitattributes). This script reads bytes from the
