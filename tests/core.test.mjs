@@ -563,3 +563,64 @@ test("Shared material-status fixtures match TypeScript derivation", () => {
     }), item.expected, item.name);
   }
 });
+
+// A small DOM port for exercising view boundaries without a browser. Native layout,
+// focus and pointer capture still require the hub's real-browser inspection.
+class StudioTestNode {
+  constructor(tag = "text", text = "") {
+    this.tagName = tag; this.children = []; this.attributes = {}; this.listeners = {};
+    this.className = ""; this._text = text; this.value = "";
+    this.classList = {
+      add: (name) => { this.className += ` ${name}`; },
+      remove: (name) => { this.className = this.className.split(" ").filter((x) => x !== name).join(" "); },
+    };
+  }
+  set textContent(value) { this._text = value; this.children = []; }
+  get textContent() { return this._text + this.children.map((x) => x.textContent).join(""); }
+  setAttribute(key, value) { this.attributes[key] = String(value); if (key === "class") this.className = value; if (key === "value") this.value = value; }
+  getAttribute(key) { return this.attributes[key] ?? null; }
+  appendChild(child) { this.children.push(child); return child; }
+  append(...children) { this.children.push(...children); }
+  replaceChildren(...children) { this.children = children; this._text = ""; }
+  addEventListener(name, listener) { (this.listeners[name] ??= []).push(listener); }
+  fire(name, event = {}) { for (const listener of this.listeners[name] ?? []) listener({ target: this, ...event }); }
+  all(predicate) { return this.children.flatMap((child) => [...(predicate(child) ? [child] : []), ...child.all(predicate)]); }
+}
+function withStudioDOM(run) {
+  const previous = { document: globalThis.document, Node: globalThis.Node };
+  globalThis.Node = StudioTestNode;
+  globalThis.document = {
+    createElement: (tag) => new StudioTestNode(tag),
+    createElementNS: (_, tag) => new StudioTestNode(tag),
+    createTextNode: (text) => new StudioTestNode("text", text),
+  };
+  try { return run(new StudioTestNode("main")); }
+  finally { Object.assign(globalThis, previous); }
+}
+const { euclideanRingsLab } = await import("../dist/src/labs/euclidean-rings-lab.js");
+
+test("spatial AC1: zero pulses and minimum steps remain editable and match the kernel", () => withStudioDOM((root) => {
+  const stop = euclideanRingsLab.mount(root);
+  const input = (name) => root.all((node) => node.tagName === "input" && node.id?.startsWith(`range-${name}-`))[0];
+  input("pulses").value = "0"; input("pulses").fire("input");
+  input("steps").value = "3"; input("steps").fire("input");
+  const points = root.all((node) => node.className.includes("euclidean-step") && node.attributes["data-ring"] === "0");
+  assert.equal(points.length, 3);
+  assert.ok(points.every((point) => point.className.includes("is-off")));
+  assert.ok(root.className.includes("spatial-studio"));
+  stop();
+}));
+
+test("spatial AC2: derived counts and rounded timing carry honesty labels at zero density", () => withStudioDOM((root) => {
+  const stop = euclideanRingsLab.mount(root);
+  for (let ring = 0; ring < 3; ring++) {
+    const inputs = root.all((node) => node.tagName === "input" && node.id?.startsWith("range-pulses-"));
+    inputs[ring].value = "0"; inputs[ring].fire("input");
+  }
+  const metrics = root.all((node) => node.className === "metric");
+  assert.ok(metrics.filter((metric) => !metric.textContent.startsWith("Tempo")).every((metric) => /^(Derived|Estimated) ·/.test(metric.textContent)));
+  assert.match(root.textContent, /Estimated · aggregate density0%/);
+  assert.match(root.textContent, /Estimated · \d+\.\d seconds/);
+  assert.match(root.textContent, /Derived · cyclic gaps: none/);
+  stop();
+}));
