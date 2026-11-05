@@ -1547,3 +1547,81 @@ pre {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* Direction C: spatial canvas, with B's explicit value provenance. */
+.spatial-studio { --accent: #62e6ff; --accent-soft: rgba(98,230,255,.12); }
+.spatial-studio .lab-header { margin-bottom: 18px; }
+.spatial-studio .lab-header h1 { font-size: clamp(26px, 3vw, 38px); }
+.spatial-transport { border-block: 1px solid var(--line); padding-block: 12px; }
+.spatial-studio .ring-controls { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; margin-bottom: 16px; }
+.spatial-studio .ring-card { padding: 14px; border-radius: 6px; }
+.spatial-studio .ring-card-header { flex-wrap: wrap; }
+.spatial-studio .ring-card-header code { font-size: 11px; }
+.spatial-studio .ring-pattern-text { display: none; }
+.spatial-studio .ring-control-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+.spatial-studio .ring-gap-line { font: 11px ui-monospace, monospace; }
+.spatial-workspace { display: grid; grid-template-columns: minmax(0,1fr) 280px; gap: 16px; align-items: start; }
+.spatial-studio .panel { border-radius: 6px; padding: 18px; }
+.spatial-field { position: relative; overflow: hidden; background: radial-gradient(ellipse at 45% 45%,#11202c 0%,#090d12 70%); }
+.spatial-canvas { touch-action: none; max-width: 750px; margin-inline: auto; }
+.spatial-canvas svg { width: 100%; max-height: 66vh; display: block; }
+.spatial-canvas [data-ring] { cursor: grab; }
+.spatial-canvas .is-selected { stroke: var(--cyan); stroke-width: 2; }
+.spatial-tracks { display: flex; flex-wrap: wrap; gap: 8px; }
+.ring-select[aria-pressed="true"] { border-color: var(--cyan); background: var(--cyan-soft); box-shadow: inset 3px 0 var(--cyan); }
+.spatial-legend { font: 11px/1.8 ui-monospace,monospace; color: var(--muted); }
+.spatial-inspector .control-grid,.spatial-inspector .metric-grid { grid-template-columns: 1fr; }
+.spatial-inspector .metric { padding: 12px; background: transparent; border-width: 0 0 1px; border-radius: 0; }
+.spatial-inspector .metric-value { font-size: 23px; }
+.spatial-inspector p { font-size: 12px; line-height: 1.8; color: var(--muted); }
+@media(max-width:1150px) { .spatial-workspace { grid-template-columns: minmax(0,1fr); } .spatial-inspector { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; } }
+@media(max-width:700px) { .spatial-studio .ring-controls,.spatial-inspector { grid-template-columns: 1fr; } .spatial-tracks .button { min-height: 44px; } .spatial-canvas svg { max-height: none; } }
+.studio-timeline { border: 1px solid var(--line-strong); background: #0c1219; border-radius: 6px; margin-top: 16px; padding: 0 16px 16px; }
+.studio-timeline summary { cursor: pointer; padding: 16px 0; min-height: 48px; font-size: 13px; color: var(--cyan); }
+.studio-timeline:not([open]) { padding-bottom: 0; }
+.studio-timeline summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+.timeline-ruler { display: grid; grid-template-columns: repeat(4,1fr); font: 11px ui-monospace,monospace; color: var(--muted); margin: 20px 0 10px 100px; }
+.timeline-body { position: relative; margin-left: 100px; }
+.timeline-track { position: relative; height: 44px; margin-block: 8px; }
+.timeline-track-name { position: absolute; right: calc(100% + 12px); width: 88px; top: 12px; font-size: 11px; }
+.timeline-cells { display: grid; grid-template-columns: repeat(64,minmax(0,1fr)); height: 44px; border: 1px dotted var(--cyan); }
+.timeline-cell { border-right: 1px solid rgba(255,255,255,.06); }
+.timeline-cell:nth-child(16n) { border-right: 1px solid var(--line-strong); }
+.timeline-cell.is-on { background: var(--cyan-soft); box-shadow: inset 2px 0 var(--cyan); margin-block: 6px; }
+.timeline-track.ring-bell .is-on { background: var(--violet-soft); box-shadow: inset 2px 0 var(--violet); }
+.timeline-cursor { position: absolute; top: -12px; bottom: -4px; border-left: 2px solid #fff; pointer-events: none; }
+/* S01-C local library. Preview geometry uses saved parameters, never raster data. */
+.project-library { --accent: var(--cyan); --accent-soft: var(--cyan-soft); }
+.library-heading { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 24px; }
+.library-heading h1 { font-size: clamp(28px,4vw,42px); margin: 8px 0; letter-spacing: -.04em; }
+.library-heading p { color: var(--muted); }
+.library-workspace { display: grid; grid-template-columns: minmax(0,1fr) 300px; gap: 24px; margin-bottom: 24px; align-items: start; }
+.project-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(230px,1fr)); gap: 14px; }
+.project-card,.project-new,.project-preview { border: 1px solid var(--line-strong); border-radius: 8px; background: linear-gradient(130deg,#13202a,#0a0f15 70%); overflow: hidden; }
+.project-new { border-style: dashed; min-height: 300px; color: var(--muted); font: inherit; cursor: pointer; }
+.project-new:hover { color: var(--cyan); border-color: var(--cyan); }
+.project-card { display: flex; flex-direction: column; padding: 12px; gap: 10px; }
+.project-card small { color: var(--muted); font-size: 11px; }
+.project-card code { font-size: 11px; color: var(--muted); }
+.project-select { color: var(--text); background: none; border: 1px solid transparent; border-radius: 4px; text-align: left; font-size: 17px; font-weight: 600; padding: 8px 2px; cursor: pointer; }
+.project-select[aria-pressed="true"] { color: var(--cyan); border-color: var(--cyan); }
+.project-kind { color: var(--cyan); font-size: 11px; }
+.study-thumbnail { width: 100%; height: 180px; background: radial-gradient(ellipse at center,#122530,#080d12 80%); border: 1px solid var(--line); border-radius: 5px; }
+.thumbnail-ring { fill: none; stroke: #687c8b; stroke-dasharray: 2 4; }
+.thumbnail-step.is-on { fill: var(--cyan); }
+.thumbnail-step.is-off { fill: #8695a6; }
+.project-preview { padding: 20px; position: sticky; top: 0; }
+.project-preview h2 { font-size: 24px; overflow-wrap: anywhere; }
+.project-preview p { font-size: 12px; color: var(--muted); line-height: 1.8; }
+.project-material { border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+.guided-labs { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); gap: 10px; }
+.guided-lab { border: 1px solid var(--line); border-radius: 6px; padding: 12px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.guided-lab strong { font-size: 12px; }
+.guided-lab .status-pill { white-space: normal; font-size: 9px; }
+.guided-symbol { color: var(--cyan); font-size: 38px; text-align: center; }
+.library-storage { border-top: 1px solid var(--line); padding-top: 16px; color: var(--muted); font-size: 12px; }
+.study-save-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 16px; }
+.study-name { min-height: 44px; padding: 10px; border: 1px solid var(--line-strong); border-radius: 5px; color: var(--text); background: var(--panel-soft); max-width: 100%; }
+@media(max-width:1200px) { .library-workspace { grid-template-columns: 1fr; } .project-preview { position: static; } .project-preview .study-thumbnail { max-width: 400px; } .guided-labs { grid-template-columns: repeat(4,minmax(0,1fr)); } }
+@media(max-width:600px) { .library-heading { align-items: start; flex-direction: column; } .guided-labs { grid-template-columns: repeat(2,minmax(0,1fr)); } .project-grid { grid-template-columns: 1fr; } }
+@media(prefers-reduced-motion:reduce) { .spatial-studio * { transition: none !important; } }

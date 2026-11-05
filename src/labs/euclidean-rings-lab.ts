@@ -3,6 +3,7 @@ import { analyzeCompositeCycle } from "./euclidean-analysis.js";
 import { cyclicGapLengths, euclideanRhythm } from "../operators/euclidean.js";
 import { metric, rangeControl } from "../ui/controls.js";
 import { button, clear, el, svgEl } from "../ui/dom.js";
+import { browserStudyStorage, readLocalStudies, saveLocalStudy, newLocalStudy } from "../ui/dashboard.js";
 import { labHeader, panel } from "../ui/lab-layout.js";
 import type { LabModule } from "./types.js";
 
@@ -31,39 +32,74 @@ const metadata = {
 
 export const euclideanRingsLab: LabModule = {
   ...metadata,
-  mount(container): () => void {
-    let bpm = 108;
-    let masterGain = 0.68;
+  mount(container, context): () => void {
+    const storage = browserStudyStorage();
+    const library = readLocalStudies(storage);
+    const saved = context ? library.projects.find((project) => project.id === context.projectId) : undefined;
+    if (context && !saved) {
+      container.append(el("p", { className: "inline-error", attributes: { role: "alert" },
+        text: library.error ?? "This local study was not found in this browser." }),
+        el("a", { className: "button", text: "Return to library", attributes: { href: "#/library" } }));
+      return () => {};
+    }
+    const studyId = saved?.id ?? newLocalStudy().id;
+    const studyName = el("input", { className: "study-name", attributes: { "aria-label": "Project name", maxlength: "80", value: saved?.name ?? "Euclidean study" } });
+    const saveStatus = el("span", { className: "audio-notice", attributes: { role: "status" }, text: saved ? "Saved locally · this browser" : "Unsaved study · this tab" });
+    studyName.addEventListener("input", () => { saveStatus.textContent = "Unsaved changes · this tab"; });
+    let bpm = saved?.bpm ?? 108;
+    let masterGain = saved?.masterGain ?? 0.68;
     let activeTick = -1;
+    let selectedRing = 0;
+    let disposed = false;
+    let timelineWindowStart = 0;
     let rings: readonly EuclideanRingState[] = [
       createRing("kick", "Low pulse", "sine body", 16, 5, 0, 1),
       createRing("hat", "High pulse", "noise click", 12, 7, 1, 0.8),
       createRing("bell", "Bell pulse", "triangle ping", 9, 4, 0, 0.72),
     ];
+    if (saved) rings = saved.rings.map((ring) => createRing(ring.id, ring.name, ring.voice, ring.steps, ring.pulses, ring.rotation, ring.gain));
     const player = new EuclideanPlayer({ bpm, rings, masterGain });
 
-    const visualization = el("div", { className: "euclidean-visualization" });
+    const visualization = el("div", { className: "euclidean-visualization spatial-canvas" });
+    const audioStatus = el("p", { className: "audio-notice", attributes: { role: "status" }, text: "Audio stopped · browser synthesis" });
     const metrics = el("div", { className: "metric-grid metric-grid-four" });
     const ringControls = el("div", { className: "ring-controls" });
+    const timelineRows = el("div", { className: "timeline-rows" });
+    const timelineCursor = el("div", { className: "timeline-cursor", attributes: { "aria-hidden": "true" } });
+    const timelineRuler = el("div", { className: "timeline-ruler" });
+    const timeline = el("details", { className: "studio-timeline" },
+      el("summary", { text: "Timeline · 4-bar window · live generated" }),
+      el("p", { className: "audio-notice", text: "Derived · repeating ring onsets on a shared 1/16 grid in 4/4. Read-only preview; playhead timing is estimated." }),
+      timelineRuler,
+      el("div", { className: "timeline-body" }, timelineRows, timelineCursor));
     const startButton = button("Play rings", {
       className: "button button-primary",
       onClick: async () => {
         if (player.playing) {
           player.stop();
           startButton.textContent = "Play rings";
+          audioStatus.textContent = "Audio stopped · browser synthesis";
           startButton.classList.remove("is-playing");
           activeTick = -1;
           renderVisualization();
+          updateTimelineCursor();
           return;
         }
         startButton.disabled = true;
         try {
           await player.start((tick) => {
+            if (disposed || (tick >= 0 && !player.playing)) return;
             activeTick = tick;
             renderVisualization();
+            if (Math.floor(Math.max(0, tick) / 64) * 64 !== timelineWindowStart) renderTimeline();
+            updateTimelineCursor();
           });
+          if (disposed) { player.stop(); return; }
           startButton.textContent = "Stop";
           startButton.classList.add("is-playing");
+          audioStatus.textContent = "Audio playing · browser synthesis";
+        } catch {
+          audioStatus.textContent = "Audio unavailable. Check browser audio permissions and try again.";
         } finally {
           startButton.disabled = false;
         }
@@ -100,46 +136,60 @@ export const euclideanRingsLab: LabModule = {
       }).root,
     );
 
+    container.classList.add("spatial-studio");
+    const trackList = el("div", { className: "spatial-tracks", attributes: { "aria-label": "Select a ring" } });
     container.append(
-      labHeader({
-        eyebrow: metadata.category,
-        title: metadata.name,
-        summary: metadata.summary,
-        status: metadata.status,
-        statusLabel: metadata.statusLabel,
-      }),
-      el(
-        "div",
-        { className: "lab-toolbar" },
-        startButton,
-        el("span", { className: "audio-notice", text: "Every ring advances on the same sixteenth-note clock." }),
-      ),
-      metrics,
-      el(
-        "div",
-        { className: "two-column-layout euclidean-layout" },
-        panel("Concentric sequencer", visualization, { className: "panel-visual" }),
-        panel("Global controls", globalControls),
-      ),
-      panel("Ring definitions", ringControls, { kicker: "k onsets across n steps" }),
-      panel(
-        "How to read it",
-        el(
-          "div",
-          { className: "explanation-grid" },
-          explanation("Evenness", "The Bjorklund construction keeps cyclic gaps between onsets as balanced as the integer grid allows."),
-          explanation("Rotation", "Rotation preserves the rhythm’s interval structure while changing its phase against the other rings."),
-          explanation("Composite cycle", "Rings with different lengths realign after the least common multiple of their step counts."),
-        ),
-        { kicker: "Inspector" },
-      ),
+      labHeader({ eyebrow: "COMPOSE / RHYTHM GEOMETRY", title: metadata.name,
+        summary: "Select a ring. Drag to rotate. Hear the geometry.",
+        status: metadata.status, statusLabel: "Live generated · demo player" }),
+      el("div", { className: "lab-toolbar spatial-transport" }, startButton, audioStatus,
+        el("a", { className: "button button-quiet", text: "← Library", attributes: { href: "#/library" } })),
+      el("div", { className: "study-save-bar" }, studyName,
+        button("Save project", { className: "button button-secondary", onClick: () => {
+          const name = studyName.value.trim();
+          if (!name) { saveStatus.textContent = "Enter a project name before saving."; return; }
+          const error = saveLocalStudy(storage, { id: studyId, name, modifiedAt: new Date().toISOString(), bpm, masterGain,
+            rings: rings.map(({ pattern: _pattern, ...settings }) => settings) });
+          saveStatus.textContent = error ?? "Saved locally · this browser";
+          if (!error) window.history.replaceState(null, "", `#/euclidean-rings/${studyId}`);
+        } }), saveStatus),
+      ringControls,
+      el("div", { className: "spatial-workspace" },
+        panel("Rhythm canvas", [trackList, visualization,
+          el("p", { className: "spatial-legend", text: "● Onset   ○ Rest   ◉ Selected ring · drag to rotate; use Rotation controls with a keyboard" })], { className: "panel-visual spatial-field", kicker: "LIVE GENERATED · Euclidean kernel" }),
+        el("aside", { className: "spatial-inspector", attributes: { "aria-label": "Rhythm inspector" } },
+          panel("Parameters", globalControls, { kicker: "USER AUTHORED" }),
+          panel("Math & timing", metrics, { kicker: "DERIVED · current parameters" }),
+          panel("Provenance", el("p", { text: "Patterns: Euclidean kernel. Voices: demo synthesis. Timing readout: rounded estimate; browser scheduling is approximate." }), { kicker: "ENGINEERING DEFAULT" }))),
     );
+    container.append(timeline);
+    visualization.addEventListener("pointerdown", (event) => {
+      const target = event.target as Element;
+      const index = target.getAttribute("data-ring");
+      if (index === null) return;
+      selectedRing = Number(index);
+      visualization.setPointerCapture(event.pointerId);
+      rotateAt(event);
+    });
+    visualization.addEventListener("pointermove", (event) => {
+      if (visualization.hasPointerCapture(event.pointerId)) rotateAt(event);
+    });
+    function rotateAt(event: PointerEvent): void {
+      const svg = visualization.querySelector("svg");
+      const ring = rings[selectedRing];
+      if (!svg || !ring) return;
+      const bounds = svg.getBoundingClientRect();
+      const angle = Math.atan2(event.clientY - bounds.top - bounds.height / 2,
+        event.clientX - bounds.left - bounds.width / 2) + Math.PI / 2;
+      updateRing(selectedRing, { rotation: (Math.round(angle / (2 * Math.PI) * ring.steps) + ring.steps) % ring.steps });
+    }
 
     renderRingControls();
     renderVisualization();
     renderMetrics();
+    renderTimeline();
 
-    return () => player.stop();
+    return () => { disposed = true; player.stop(); container.classList.remove("spatial-studio"); };
 
     function updateRing(index: number, patch: Partial<Pick<EuclideanRingState, "steps" | "pulses" | "rotation" | "gain">>): void {
       rings = rings.map((ring, ringIndex) => {
@@ -148,7 +198,7 @@ export const euclideanRingsLab: LabModule = {
         }
         const steps = patch.steps ?? ring.steps;
         const pulses = Math.min(patch.pulses ?? ring.pulses, steps);
-        const rotation = patch.rotation ?? ring.rotation;
+        const rotation = (patch.rotation ?? ring.rotation) % steps;
         const gain = patch.gain ?? ring.gain;
         return createRing(ring.id, ring.name, ring.voice, steps, pulses, rotation, gain);
       });
@@ -160,11 +210,19 @@ export const euclideanRingsLab: LabModule = {
 
     function updatePlayer(): void {
       player.update({ bpm, rings, masterGain });
+      saveStatus.textContent = "Unsaved changes · this tab";
+      renderTimeline();
     }
 
     function renderRingControls(): void {
       clear(ringControls);
+      clear(trackList);
       for (const [index, ring] of rings.entries()) {
+        const select = button(ring.name, { className: `button ring-select ring-${ring.id}`, onClick: () => {
+          selectedRing = index; renderRingControls(); renderVisualization();
+        } });
+        select.setAttribute("aria-pressed", String(index === selectedRing));
+        trackList.append(select);
         const stepsControl = rangeControl({
           label: "Steps",
           value: ring.steps,
@@ -210,14 +268,40 @@ export const euclideanRingsLab: LabModule = {
               "header",
               { className: "ring-card-header" },
               el("div", {}, el("h3", { text: ring.name }), el("span", { text: ring.voice })),
-              el("code", { text: `E(${ring.pulses}, ${ring.steps})` }),
+              el("code", { text: `Derived · E(${ring.pulses}, ${ring.steps})` }),
             ),
             el("div", { className: "ring-pattern-text", text: ring.pattern.map((active) => active ? "●" : "·").join(" ") }),
             el("div", { className: "ring-control-grid" }, stepsControl.root, pulsesControl.root, rotationControl.root, gainControl.root),
-            el("p", { className: "ring-gap-line", text: `Cyclic gaps: ${gaps.length === 0 ? "none" : gaps.join(" · ")}` }),
+            el("p", { className: "ring-gap-line", text: `Derived · cyclic gaps: ${gaps.length === 0 ? "none" : gaps.join(" · ")}` }),
           ),
         );
       }
+    }
+
+    function renderTimeline(): void {
+      timelineWindowStart = Math.floor(Math.max(0, activeTick) / 64) * 64;
+      clear(timelineRuler);
+      timelineRuler.append(...[1, 2, 3, 4].map((bar) => el("span", { text: `Bar ${timelineWindowStart / 16 + bar}` })));
+      clear(timelineRows);
+      for (const ring of rings) {
+        const row = el("div", { className: `timeline-track ring-${ring.id}` },
+          el("strong", { className: "timeline-track-name", text: ring.name }));
+        const cells = el("div", { className: "timeline-cells", attributes: { "aria-label": `Derived · ${ring.name}, 64 sixteenth-note steps` } });
+        for (let step = 0; step < 64; step++) {
+          const active = ring.pattern[(timelineWindowStart + step) % ring.steps] === true;
+          cells.append(el("span", { className: `timeline-cell ${active ? "is-on" : "is-off"}`,
+            title: `Derived · bar ${Math.floor((timelineWindowStart + step) / 16) + 1}, step ${step % 16 + 1}: ${active ? "onset" : "rest"}`,
+            attributes: { "aria-hidden": "true", "data-onset": String(active), "data-step": String(step) } }));
+        }
+        row.append(cells);
+        timelineRows.append(row);
+      }
+      updateTimelineCursor();
+    }
+
+    function updateTimelineCursor(): void {
+      timelineCursor.hidden = activeTick < 0;
+      timelineCursor.style.left = `${Math.max(0, activeTick % 64) / 64 * 100}%`;
     }
 
     function renderMetrics(): void {
@@ -227,10 +311,10 @@ export const euclideanRingsLab: LabModule = {
       clear(metrics);
       metrics.append(
         metric("Tempo", `${bpm} BPM`, "Shared sixteenth-note clock"),
-        metric("Onsets", String(totalPulses), `${totalSteps} total ring positions`),
-        metric("Composite cycle", `${cycle.cycleSteps} steps`, `${(cycle.cycleSteps * 60 / bpm / 4).toFixed(1)} seconds`),
-        metric("Shared onsets", String(cycle.sharedOnsetSteps), `${cycle.pairwiseAlignments} pairwise alignments per cycle`),
-        metric("Aggregate density", `${Math.round(totalPulses / totalSteps * 100)}%`, "Across all rings"),
+        metric("Derived · onsets", String(totalPulses), `Derived · ${totalSteps} total ring positions`),
+        metric("Derived · composite cycle", `${cycle.cycleSteps} steps`, `Estimated · ${(cycle.cycleSteps * 60 / bpm / 4).toFixed(1)} seconds`),
+        metric("Derived · shared onsets", String(cycle.sharedOnsetSteps), `Derived · ${cycle.pairwiseAlignments} pairwise alignments per cycle`),
+        metric("Estimated · aggregate density", `${Math.round(totalPulses / totalSteps * 100)}%`, "Across all rings"),
       );
     }
 
@@ -253,7 +337,7 @@ export const euclideanRingsLab: LabModule = {
 
       rings.forEach((ring, ringIndex) => {
         const radius = radii[ringIndex] ?? Math.max(70, 220 - ringIndex * 58);
-        svg.append(svgEl("circle", { cx: center, cy: center, r: radius, class: `euclidean-ring-line ring-${ring.id}` }));
+        svg.append(svgEl("circle", { cx: center, cy: center, r: radius, class: `euclidean-ring-line ring-${ring.id} ${ringIndex === selectedRing ? "is-selected" : ""}`, "data-ring": ringIndex }));
         ring.pattern.forEach((active, step) => {
           const angle = -Math.PI / 2 + (step / ring.steps) * Math.PI * 2;
           const x = center + Math.cos(angle) * radius;
@@ -263,6 +347,7 @@ export const euclideanRingsLab: LabModule = {
             cx: x,
             cy: y,
             r: active ? (isCurrent ? 13 : 9) : (isCurrent ? 7 : 4),
+            "data-ring": ringIndex,
             class: `euclidean-step ${active ? "is-on" : "is-off"} ${isCurrent ? "is-current" : ""} ring-${ring.id}`,
           });
           svg.append(point);
