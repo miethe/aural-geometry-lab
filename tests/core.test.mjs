@@ -586,7 +586,7 @@ class StudioTestNode {
   fire(name, event = {}) { for (const listener of this.listeners[name] ?? []) listener({ target: this, ...event }); }
   all(predicate) { return this.children.flatMap((child) => [...(predicate(child) ? [child] : []), ...child.all(predicate)]); }
 }
-function withStudioDOM(run) {
+async function withStudioDOM(run) {
   const previous = { document: globalThis.document, Node: globalThis.Node, window: globalThis.window };
   globalThis.window = { localStorage: undefined, history: { replaceState() {} } };
   globalThis.Node = StudioTestNode;
@@ -595,7 +595,7 @@ function withStudioDOM(run) {
     createElementNS: (_, tag) => new StudioTestNode(tag),
     createTextNode: (text) => new StudioTestNode("text", text),
   };
-  try { return run(new StudioTestNode("main")); }
+  try { return await run(new StudioTestNode("main")); }
   finally { Object.assign(globalThis, previous); }
 }
 const { euclideanRingsLab } = await import("../dist/src/labs/euclidean-rings-lab.js");
@@ -695,4 +695,53 @@ test("worst failure: corrupt or unavailable local storage cannot overwrite exist
   assert.equal(raw, before);
   assert.ok(readLocalStudies(undefined).error);
   assert.equal(localStudyKey, "agl.local-studies.v1");
+}));
+
+
+const { audioRuntime } = await import("../dist/src/audio/audio-runtime.js");
+
+test("local library: saved master level reaches the runtime on load and before Play schedules audio", (t) => withStudioDOM(async (root) => {
+  const blank = newLocalStudy();
+  const project = { ...blank, masterGain: 0.15, rings: blank.rings.map((ring) => ({ ...ring, pulses: ring.steps })) };
+  window.localStorage = { getItem: () => JSON.stringify({ version: 1, projects: [project] }) };
+  window.setInterval = () => 1;
+  window.clearInterval = () => {};
+  window.setTimeout = () => 1;
+  const calls = [];
+  let runtimeGain = 0.83; // A level left by another lab in an already initialized runtime.
+  t.mock.method(audioRuntime, "setMasterGain", (value) => { runtimeGain = value; calls.push(["gain", value]); });
+  t.mock.method(audioRuntime, "ensureStarted", async () => {
+    calls.push(["started"]);
+    runtimeGain = 0.72; // Fresh audio initialization can replace any earlier gain request.
+    return { currentTime: 0 };
+  });
+  t.mock.method(audioRuntime, "stopGroup", () => {});
+  t.mock.method(audioRuntime, "scheduleTone", () => calls.push(["tone", runtimeGain]));
+  t.mock.method(audioRuntime, "scheduleNoise", () => calls.push(["noise", runtimeGain]));
+  t.mock.getter(audioRuntime, "currentTime", () => 0);
+  const stop = euclideanRingsLab.mount(root, { projectId: project.id });
+  try {
+    const loadedGain = runtimeGain;
+    const master = root.all((node) => node.tagName === "input" && node.id?.startsWith("range-master-level-"))[0];
+    assert.equal(master.value, "0.15");
+    const play = root.all((node) => node.tagName === "button" && node.textContent === "Play rings")[0];
+    play.fire("click");
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(play.textContent, "Stop");
+    assert.match(root.textContent, /Audio playing/);
+    const scheduled = calls.filter(([kind]) => kind === "tone" || kind === "noise");
+    assert.ok(scheduled.length > 0, "Play schedules the restored ring patterns");
+    assert.ok(scheduled.every(([, gain]) => gain === 0.15), "Every voice uses the saved master level");
+    const started = calls.findIndex(([kind]) => kind === "started");
+    assert.deepEqual(calls[started + 1], ["gain", 0.15], "Apply gain after initialization, before scheduling");
+    assert.equal(loadedGain, 0.15, "Loading a study updates an existing runtime");
+    play.fire("click");
+    runtimeGain = 0.9;
+    play.fire("click");
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(play.textContent, "Stop");
+    assert.equal(runtimeGain, 0.15, "Restart reapplies the study level");
+  } finally {
+    stop();
+  }
 }));

@@ -22,6 +22,7 @@ export class EuclideanPlayer {
 
   public constructor(parameters: EuclideanPlayerParameters) {
     this.parameters = parameters;
+    audioRuntime.setMasterGain(parameters.masterGain);
   }
 
   public get playing(): boolean {
@@ -31,6 +32,7 @@ export class EuclideanPlayer {
   public async start(onTick: (tick: number) => void): Promise<void> {
     this.stop();
     const context = await audioRuntime.ensureStarted();
+    audioRuntime.setMasterGain(this.parameters.masterGain);
     this.onTick = onTick;
     this.nextStepTime = context.currentTime + 0.08;
     this.tick = 0;
