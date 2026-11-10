@@ -563,3 +563,136 @@ test("Shared material-status fixtures match TypeScript derivation", () => {
     }), item.expected, item.name);
   }
 });
+
+// A small DOM port for exercising view boundaries without a browser. Native layout,
+// focus and pointer capture still require the hub's real-browser inspection.
+class StudioTestNode {
+  constructor(tag = "text", text = "") {
+    this.tagName = tag; this.children = []; this.attributes = {}; this.listeners = {};
+    this.className = ""; this._text = text; this.value = ""; this.style = {};
+    this.classList = {
+      add: (name) => { this.className += ` ${name}`; },
+      remove: (name) => { this.className = this.className.split(" ").filter((x) => x !== name).join(" "); },
+    };
+  }
+  set textContent(value) { this._text = value; this.children = []; }
+  get textContent() { return this._text + this.children.map((x) => x.textContent).join(""); }
+  setAttribute(key, value) { this.attributes[key] = String(value); if (key === "class") this.className = value; if (key === "value") this.value = value; }
+  getAttribute(key) { return this.attributes[key] ?? null; }
+  appendChild(child) { this.children.push(child); return child; }
+  append(...children) { this.children.push(...children); }
+  replaceChildren(...children) { this.children = children; this._text = ""; }
+  addEventListener(name, listener) { (this.listeners[name] ??= []).push(listener); }
+  fire(name, event = {}) { for (const listener of this.listeners[name] ?? []) listener({ target: this, ...event }); }
+  all(predicate) { return this.children.flatMap((child) => [...(predicate(child) ? [child] : []), ...child.all(predicate)]); }
+}
+function withStudioDOM(run) {
+  const previous = { document: globalThis.document, Node: globalThis.Node, window: globalThis.window };
+  globalThis.window = { localStorage: undefined, history: { replaceState() {} } };
+  globalThis.Node = StudioTestNode;
+  globalThis.document = {
+    createElement: (tag) => new StudioTestNode(tag),
+    createElementNS: (_, tag) => new StudioTestNode(tag),
+    createTextNode: (text) => new StudioTestNode("text", text),
+  };
+  try { return run(new StudioTestNode("main")); }
+  finally { Object.assign(globalThis, previous); }
+}
+const { euclideanRingsLab } = await import("../dist/src/labs/euclidean-rings-lab.js");
+
+test("spatial AC1: zero pulses and minimum steps remain editable and match the kernel", () => withStudioDOM((root) => {
+  const stop = euclideanRingsLab.mount(root);
+  const input = (name) => root.all((node) => node.tagName === "input" && node.id?.startsWith(`range-${name}-`))[0];
+  input("pulses").value = "0"; input("pulses").fire("input");
+  input("steps").value = "3"; input("steps").fire("input");
+  const points = root.all((node) => node.className.includes("euclidean-step") && node.attributes["data-ring"] === "0");
+  assert.equal(points.length, 3);
+  assert.ok(points.every((point) => point.className.includes("is-off")));
+  assert.ok(root.className.includes("spatial-studio"));
+  stop();
+}));
+
+test("spatial AC2: derived counts and rounded timing carry honesty labels at zero density", () => withStudioDOM((root) => {
+  const stop = euclideanRingsLab.mount(root);
+  for (let ring = 0; ring < 3; ring++) {
+    const inputs = root.all((node) => node.tagName === "input" && node.id?.startsWith("range-pulses-"));
+    inputs[ring].value = "0"; inputs[ring].fire("input");
+  }
+  const metrics = root.all((node) => node.className === "metric");
+  assert.ok(metrics.filter((metric) => !metric.textContent.startsWith("Tempo")).every((metric) => /^(Derived|Estimated) ·/.test(metric.textContent)));
+  assert.match(root.textContent, /Estimated · aggregate density0%/);
+  assert.match(root.textContent, /Estimated · \d+\.\d seconds/);
+  assert.match(root.textContent, /Derived · cyclic gaps: none/);
+  stop();
+}));
+
+
+test("spatial AC3: timeline starts collapsed and reflects changed ring events behind one summary", () => withStudioDOM((root) => {
+  const stop = euclideanRingsLab.mount(root);
+  const drawer = root.all((node) => node.tagName === "details")[0];
+  assert.equal(drawer.getAttribute("open"), null);
+  assert.equal(drawer.children[0].tagName, "summary");
+  assert.match(drawer.children[0].textContent, /Timeline/);
+  const pulses = root.all((node) => node.tagName === "input" && node.id?.startsWith("range-pulses-"))[0];
+  pulses.value = "0"; pulses.fire("input");
+  const tracks = drawer.all((node) => node.className.startsWith("timeline-track ring-"));
+  const cells = tracks[0].all((node) => node.attributes["data-step"] !== undefined);
+  assert.equal(cells.length, 64);
+  assert.ok(cells.every((cell) => cell.attributes["data-onset"] === "false"));
+  assert.ok(tracks[1].all((node) => node.attributes["data-onset"] === "true").length > 0);
+  stop();
+}));
+
+
+const { newLocalStudy, readLocalStudies, saveLocalStudy, localStudyKey, createProjectLibrary } = await import("../dist/src/ui/dashboard.js");
+
+test("local library: blank study survives reopening and edits save under the same identity", () => withStudioDOM((root) => {
+  let raw = null;
+  const storage = { getItem: () => raw, setItem: (_, value) => { raw = value; } };
+  window.localStorage = storage;
+  const project = { ...newLocalStudy(), name: "<img src=x onerror=alert(1)>" };
+  assert.equal(saveLocalStudy(storage, project), undefined);
+  assert.deepEqual(readLocalStudies(storage).projects, [project]);
+  const stop = euclideanRingsLab.mount(root, { projectId: project.id });
+  const name = root.all((node) => node.className === "study-name")[0];
+  assert.equal(name.value, project.name);
+  const pulses = root.all((node) => node.tagName === "input" && node.id?.startsWith("range-pulses-"))[0];
+  pulses.value = "16"; pulses.fire("input");
+  const save = root.all((node) => node.tagName === "button" && node.textContent === "Save project")[0];
+  save.fire("click");
+  const saved = readLocalStudies(storage).projects;
+  assert.equal(saved.length, 1);
+  assert.equal(saved[0].rings[0].pulses, 16);
+  assert.equal(saved[0].id, project.id);
+  const library = createProjectLibrary([]);
+  assert.ok(library.textContent.includes(project.name));
+  assert.equal(library.all((node) => node.tagName === "img").length, 0);
+  const reopened = new StudioTestNode("main");
+  const close = euclideanRingsLab.mount(reopened, { projectId: project.id });
+  assert.equal(reopened.all((node) => node.className.includes("euclidean-step") && node.attributes["data-ring"] === "0" && node.className.includes("is-on")).length, 16);
+  close(); stop();
+}));
+
+test("worst failure: corrupt or unavailable local storage cannot overwrite existing studies or mount unsafe settings", () => withStudioDOM((root) => {
+  let writes = 0;
+  const project = newLocalStudy();
+  for (const raw of ["{broken", JSON.stringify({ version: 1, projects: [{ ...project, bpm: 0 }] }),
+    JSON.stringify({ version: 1, projects: [project, project] })]) {
+    const storage = { getItem: () => raw, setItem: () => { writes++; } };
+    window.localStorage = storage;
+    assert.ok(readLocalStudies(storage).error);
+    assert.ok(saveLocalStudy(storage, project));
+    assert.equal(writes, 0);
+    root.replaceChildren();
+    euclideanRingsLab.mount(root, { projectId: project.id });
+    assert.match(root.textContent, /unavailable or unreadable/);
+    assert.equal(root.all((node) => node.className === "spatial-canvas").length, 0);
+  }
+  let raw = JSON.stringify({ version: 1, projects: [project] });
+  const before = raw;
+  const fullStorage = { getItem: () => raw, setItem: () => { throw new Error("QuotaExceededError"); } };
+  assert.match(saveLocalStudy(fullStorage, { ...project, name: "changed" }), /Could not save locally/);
+  assert.equal(raw, before);
+  assert.ok(readLocalStudies(undefined).error);
+  assert.equal(localStudyKey, "agl.local-studies.v1");
+}));

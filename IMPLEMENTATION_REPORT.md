@@ -258,3 +258,55 @@ Every Critical/High item is assigned in the findings register and 142-item backl
 10. Execute the bounded native iPad proof only after package/cloud/audio ownership gates pass.
 
 Local swarms must follow [`docs/27-fr01-swarm-handoff-amendment.md`](docs/27-fr01-swarm-handoff-amendment.md).
+
+
+## Spatial workspace addendum (2026-11-05)
+
+The native-DOM demo now implements the selected C spatial direction around the existing
+Euclidean kernel/player, B's explicit honesty labels, A's timeline in a collapsed drawer, and
+an S01-C local study library. No new dependencies, public schema changes or audio/geometry engine
+rewrites were needed. The current reference-kernel release designation stays at 0.4.0.
+
+### Screen-to-reference map
+
+The inspected reference set is pinned at
+[`6058843`](https://github.com/miethe/aural-geometry-lab/blob/605884382485fcf5ebe440e605f41c9247cce2ff/docs/design/index.md).
+The reference images remain at their original paths; they were not copied into this change.
+
+| Surface | Reference image path | Implemented route / behavior |
+|---|---|---|
+| Spatial ring canvas | `design/mockups/images/S04-euclidean-compose--C-spatial.png` | `#/euclidean-rings`: concentric rings, selection, pointer rotation, keyboard sliders, right inspector |
+| Honesty labels | `design/mockups/images/S04-euclidean-compose--B-laboratory.png` | Derived counts/patterns/gaps; estimated rounded density/duration; explicit demo synthesis provenance |
+| Timeline drawer | `design/mockups/images/S07-timeline-focus--A-instrument.png` | One summary tap opens the initially closed drawer; three generated tracks share the playback grid and advance through four-bar windows |
+| Project library | `design/mockups/images/S01-project-library--C-spatial.png` | `#/library` and home: new blank study, saved cards, kernel-derived previews, selected-project summary, guided labs, reopen into `#/euclidean-rings/<id>` |
+
+### Delivered steps and limits
+
+1. Spatial Euclidean view and honesty labels are built. The existing demonstrator supplies audio.
+2. The timeline drawer is built as a generated-event preview. Clip editing, frozen/manual material,
+   automation and the production graph/transport shown elsewhere in the raster remain follow-up work.
+3. The local library saves and reopens Euclidean studies, including names, tempo, levels and ring
+   parameters. It contains real saved studies, rather than prefilled mock projects. Cross-lab project
+   persistence, import/export, deletion and autosave remain follow-up work. The other six labs stay
+   reachable as guided demos. The UI storage envelope is private to the demo and is not AGL project v3.
+
+Storage reads validate bounded parameters before mounting the player. Malformed, duplicate-ID,
+blocked and quota-exhausted libraries report failure and do not silently replace existing data.
+Names enter the DOM as text. The library stores up to 50 studies under `agl.local-studies.v1`;
+patterns regenerate from kernel inputs instead of trusting stored event arrays. Saved status means
+an explicit local write succeeded; unsaved edits are identified in the studio.
+
+### Validation and handoff
+
+`npm run check:all` passed under Node 22: 119 Node tests passed, 10 existing owner-tagged TODOs,
+Swift conformance passed, all schema/structural checks passed, deterministic source archives
+matched (362 files), and 9/9 static HTTP smoke endpoints passed. Five focused view/storage tests
+cover minimum steps/zero pulses, provenance labels, initially collapsed timeline with changed
+patterns, saved-study reopening at full density, and storage corruption/quota failure without loss.
+The DOM port tests behavior, not browser layout or native disclosure activation.
+
+Browser screenshots were deliberately not attempted in the delegated sandbox. The hub must capture
+and inspect: (1) a selected/playing spatial study, (2) the expanded timeline after changing a ring,
+and (3) the library after saving and reopening a named study. Inspect keyboard focus, pointer
+rotation, audio, and narrow-viewport overflow there. Screenshot acceptance remains outstanding;
+this change is not evidence of visual or perceptual approval.
